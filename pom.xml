@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.polimi.ingsw</groupId>
-    <artifactId>PSP6</artifactId>
+    <artifactId>PSP000</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>GalaxyTrucker</name>
+    <name>Galaxy Trucker</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,8 +64,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.polimi.ingsw.galaxytrucker/it.polimi.ingsw.galaxytrucker.HelloApplication
-                            </mainClass>
+                            <mainClass>org.example.test1/org.example.test1.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
