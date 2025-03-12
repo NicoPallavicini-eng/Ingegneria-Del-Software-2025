@@ -9,7 +9,7 @@ public class Ship {
     private Tile[][] floorplan;
     //private Graph<Tile>
 
-    //private Color color;
+    private Color color;
     private int lostTiles;
     private List<Tile> reservedTiles;
 
