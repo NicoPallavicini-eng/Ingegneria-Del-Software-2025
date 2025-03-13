@@ -35,6 +35,10 @@ public class PiratesCard extends Card {
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // only for first player
+
+        // TODO do
     }
 }

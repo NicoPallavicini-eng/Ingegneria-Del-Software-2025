@@ -8,6 +8,8 @@ public class StartdustCard extends Card {
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // specific process
     }
 }

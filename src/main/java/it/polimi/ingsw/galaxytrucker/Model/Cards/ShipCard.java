@@ -27,6 +27,8 @@ public class ShipCard extends Card {
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // specific process
     }
 }

@@ -5,7 +5,6 @@ import it.polimi.ingsw.galaxytrucker.Model.Ship;
 import java.util.List;
 
 public class Planet {
-    // TODO add Ship link
     private final List <Integer> blocks;
     private Ship shipLanded;
 

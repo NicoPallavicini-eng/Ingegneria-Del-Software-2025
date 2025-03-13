@@ -29,6 +29,8 @@ public class StationCard extends Card {
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // specific process
     }
 }

@@ -4,8 +4,9 @@ import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
 
+import java.util.Optional;
+
 public class CombatZoneCard extends Card {
-    // TODO add Ship link
     private final int daysLostLessCrew;
     private Ship lessCrewShip;
     private final int crewLostLessEngine;
@@ -29,12 +30,40 @@ public class CombatZoneCard extends Card {
         return crewLostLessEngine;
     }
 
-    public List<Cannonball> getCannonballList() {
+    public List <Cannonball> getCannonballList() {
         return cannonballList;
     }
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // TODO fix later with ship attributes and methods
+
+        // temp creating a list of ships with different crew sizes
+        List <Ship> ships = List.of(
+                new Ship(),
+                new Ship(),
+                new Ship(),
+                new Ship()
+        );
+
+        // Finding the ship with the least crew using Streams
+        Optional <Ship> lessCrewShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getCrewSize(), s2.getCrewSize(), s3.getCrewSize(), s4.getCrewSize()));
+
+        // Finding the ship with the least engine using Streams
+        Optional <Ship> lessEngineShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getEnginePower(), s2.getEnginePower(), s3.getEnginePower(), s4.getEnginePower()));
+
+        // Finding the ship with the least firepower using Streams
+        Optional <Ship> lessFirepowerShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getFirepower(), s2.getFirepower(), s3.getFirepower(), s4.getFirepower()));
+
+        lessCrewShip.loseDays(daysLostLessCrew);
+
+        lessEngineShip.loseCrew(crewLostLessEngine);
+
+        lessFirepowerShip.getHit(cannonballList);
     }
 }

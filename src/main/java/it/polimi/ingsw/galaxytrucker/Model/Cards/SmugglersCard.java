@@ -34,6 +34,8 @@ public class SmugglersCard extends Card {
 
     @Override
     public void process() {
-        //
+        super.process();
+
+        // specific process
     }
 }

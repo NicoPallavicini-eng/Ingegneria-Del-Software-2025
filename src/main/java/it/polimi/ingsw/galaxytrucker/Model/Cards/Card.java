@@ -22,5 +22,7 @@ public abstract class Card {
         return levelTwo;
     }
 
-    public void process () {}
+    public void process () {
+        System.out.println(this.category + " CARD");
+    }
 }
