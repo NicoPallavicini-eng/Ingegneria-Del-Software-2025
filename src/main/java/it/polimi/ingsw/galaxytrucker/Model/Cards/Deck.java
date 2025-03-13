@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Collections;
 
 public class Deck {
-    private final int cardsNumberLev1 = 4;
+    private final int cardsNumberLev1 = 4; // TODO implement CardNumber logic for also tut
     private final int cardsNumberLev2 = 8;
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
