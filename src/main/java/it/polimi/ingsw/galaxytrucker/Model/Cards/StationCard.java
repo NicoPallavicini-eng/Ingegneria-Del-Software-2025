@@ -26,4 +26,9 @@ public class StationCard extends Card {
     public int getCrewNumberNeeded() {
         return crewNumberNeeded;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

@@ -31,4 +31,9 @@ public class SmugglersCard extends Card {
     public int getLostBlocksNumber() {
         return lostBlocksNumber;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

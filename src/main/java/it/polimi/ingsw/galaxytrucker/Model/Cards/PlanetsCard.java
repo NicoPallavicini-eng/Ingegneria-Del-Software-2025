@@ -20,4 +20,9 @@ public class PlanetsCard extends Card {
     public int getDaysToLose() {
         return daysToLose;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

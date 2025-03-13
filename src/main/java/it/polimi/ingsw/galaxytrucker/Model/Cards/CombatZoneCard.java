@@ -32,4 +32,9 @@ public class CombatZoneCard extends Card {
     public List<Cannonball> getCannonballList() {
         return cannonballList;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

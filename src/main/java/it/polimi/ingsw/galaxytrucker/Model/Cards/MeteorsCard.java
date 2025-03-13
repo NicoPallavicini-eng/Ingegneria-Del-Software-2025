@@ -14,4 +14,9 @@ public class MeteorsCard extends Card {
     public List <Meteor> getMeteorsList() {
         return meteors;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

@@ -30,4 +30,9 @@ public class SlaversCard extends Card {
     public int getNumberOfDaysToLose() {
         return daysToLose;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

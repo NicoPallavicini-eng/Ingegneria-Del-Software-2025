@@ -5,4 +5,9 @@ public class StartdustCard extends Card {
         super(levelTwo, used);
         this.category = CardCategory.STARDUST;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

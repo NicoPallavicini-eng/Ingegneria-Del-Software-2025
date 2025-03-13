@@ -24,4 +24,9 @@ public class ShipCard extends Card {
     public int getCrewNumberLost() {
         return crewNumberLost;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

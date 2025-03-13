@@ -5,4 +5,9 @@ public class OpenSpaceCard extends Card {
         super(levelTwo, used);
         this.category = CardCategory.OPEN_SPACE;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }

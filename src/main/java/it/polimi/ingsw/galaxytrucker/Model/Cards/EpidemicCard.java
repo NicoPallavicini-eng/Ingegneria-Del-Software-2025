@@ -5,4 +5,9 @@ public class EpidemicCard extends Card {
         super(levelTwo, used);
         this.category = CardCategory.EPIDEMIC;
     }
+
+    @Override
+    public void process() {
+        //
+    }
 }
