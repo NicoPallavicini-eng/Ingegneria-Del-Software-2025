@@ -2,23 +2,27 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import java.util.List;
 
+import java.util.Collections;
+
 public class Deck {
-    private final CardNumber cardsNumberLev1;
-    private final CardNumber cardsNumberLev2;
+    private final int cardsNumberLev1 = 4;
+    private final int cardsNumberLev2 = 8;
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
     private List <Card> gameDeck;
 
-    public Deck(CardNumber cardsNumberLev1, CardNumber cardsNumberLev2, List <Card> allCardsLev1, List <Card> allCardsLev2, List <Card> gameDeck) {
-        this.cardsNumberLev1 = cardsNumberLev1;
-        this.cardsNumberLev2 = cardsNumberLev2;
+    public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2, List <Card> gameDeck) {
         this.allCardsLev1 = allCardsLev1;
         this.allCardsLev2 = allCardsLev2;
         this.gameDeck = gameDeck;
     }
 
-    public List <Card> getAllCards() {
-        return allCardsLev1; // TODO concatenate allCardsLev2
+    public List <Card> getAllCardsLev1() {
+        return allCardsLev1;
+    }
+
+    public List <Card> getAllCardsLev2() {
+        return allCardsLev2;
     }
 
     public List <Card> getGameDeck() {
@@ -29,11 +33,27 @@ public class Deck {
         return gameDeck.getFirst();
     }
 
-    public void shuffleDeck() {
-        // TODO add randomizer
+    public void shuffleAllCards() {
+        // Shuffle the deck using Collections.shuffle() with a randomizer
+        Collections.shuffle(allCardsLev1);
+        Collections.shuffle(allCardsLev2);
     }
 
     public void shuffleCardsInUse() {
-        // TODO add randomizer
+        // Shuffle the deck using Collections.shuffle() with a randomizer
+        Collections.shuffle(gameDeck);
+    }
+
+    public List <Card> assembleGameDeck() {
+        this.shuffleAllCards();
+
+        gameDeck = allCardsLev1.subList(1, cardsNumberLev1);
+
+        List <Card> secondPart = allCardsLev2.subList(0, cardsNumberLev2);
+
+        // Concatenate the two parts
+        gameDeck.addAll(secondPart);
+
+        return gameDeck;
     }
 }
