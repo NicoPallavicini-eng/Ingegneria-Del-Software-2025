@@ -37,8 +37,15 @@ public class PiratesCard extends Card {
     public void process() {
         super.process();
 
-        // only for first player
-
-        // TODO do
+        // foreach player until pirates_defeated {
+            // if player.firepower < pirates.firepower {
+                // getShot();
+            // } else if player.firepower > pirates.firepower {
+                // pirates_defeated
+                // if players_wants_credits {
+                    // getCredits && loseDays
+                // }
+            // }
+        // }
     }
 }

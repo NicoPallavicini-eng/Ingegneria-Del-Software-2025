@@ -35,6 +35,15 @@ public class SlaversCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // foreach player until slavers_defeated {
+            // if player.firepower < slavers.firepower {
+                // loseCrew();
+            // } else if player.firepower > slavers.firepower {
+                // slavers_defeated
+                // if players_wants_credits {
+                    // getCredits && loseDays
+                // }
+            // }
+        // }
     }
 }

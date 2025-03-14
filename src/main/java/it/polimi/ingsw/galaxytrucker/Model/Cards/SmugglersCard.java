@@ -36,6 +36,15 @@ public class SmugglersCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // foreach player until smugglers_defeated {
+            // if player.firepower < smugglers.firepower {
+                // loseCargo();
+            // } else if player.firepower > smugglers.firepower {
+                // smugglers_defeated
+                // if players_wants_credits {
+                    // getCargo && loseDays
+                // }
+            // }
+        // }
     }
 }

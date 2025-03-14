@@ -25,6 +25,13 @@ public class PlanetsCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // foreach player until planets_finished {
+            // if players_wants_to_land {
+                // getCargo && loseDays
+                // if planet_number == tot_planets {
+                    // planets_finishes = true
+                // }
+            // }
+        // }
     }
 }
