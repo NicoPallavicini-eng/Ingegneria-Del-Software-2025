@@ -34,13 +34,25 @@ public class Tile {
         return null;
     }
 
-    public void rotateRight(){
-        //TODO need to flip the connectors, do i need a temp variable?
+    public void rotate(Side side){
+
+        ConnectorType tempRotate;
+        if (side == Side.RIGHT) {
+            tempRotate = northConnector;
+            northConnector = westConnector;
+            westConnector = southConnector;
+            southConnector = eastConnector;
+            eastConnector = tempRotate;
+        }
+        else if (side == Side.LEFT) {
+            tempRotate = northConnector;
+            northConnector = eastConnector;
+            eastConnector = southConnector;
+            southConnector = westConnector;
+            westConnector = tempRotate;
+        }
     }
 
-    public void rotateLeft(){
-
-    }
 
     public List<ConnectorType> getConnectors(){
         //NOT TO SURE ABOUT THIS...
