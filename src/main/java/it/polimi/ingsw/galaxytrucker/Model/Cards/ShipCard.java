@@ -1,5 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
+import java.util.List;
+
 public class ShipCard extends Card {
     private final int crewNumberLost;
     private final int credits;
@@ -29,10 +34,16 @@ public class ShipCard extends Card {
     public void process() {
         super.process();
 
-        // forall players until ShipLanded {
-            // if player wants to land {
-                // loseCrew(crewNumberLost); getCredits(credits); loseDays(daysToLose); ShipLanded = true;
-            // }
-        // }
+        List <Player> players = getListOfPlayers();
+
+        for (Player player : players) {
+            if (player.playerEngages) {
+                Ship ship = player.getShip();
+                ship.addCredits(credits);
+                ship.removeCrewMembers(crewNumberLost);
+                ship.setTravelDays(- daysToLose); // negative because deducting
+                break;
+            }
+        }
     }
 }

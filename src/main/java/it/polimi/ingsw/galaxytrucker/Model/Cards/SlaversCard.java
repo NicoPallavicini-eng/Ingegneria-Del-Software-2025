@@ -39,7 +39,7 @@ public class SlaversCard extends Card {
         super.process();
         boolean defeated = false;
 
-        List<Player> players = getListOfPlayers();
+        List <Player> players = getListOfPlayers();
 
         for (Player player : players) {
             Ship ship = player.getShip();
