@@ -7,10 +7,15 @@ public class Player {
     private String playerIp;
     private boolean onlineStatus;
     private Integer travelDays;
+    //private boolean outOfSpace;
 
-    public Player(String playerIp){
+    public Player(String playerIp,String nickname){
         this.playerIp = playerIp;
-
+        setNickname(nickname);
+        setShip(new Ship());
+        setCredits(0);
+        setOnlineStatus(true);
+        setTravelDays(Integer.valueOf(0));
     }
 
     public String getNickname() {
@@ -20,7 +25,7 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public void addCredits(int credits) {
+    public void setCredits(int credits) {
         this.credits = credits;
     }
     public int getCredits() {
@@ -51,4 +56,12 @@ public class Player {
     public void setTravelDays(Integer travelDays) {
         this.travelDays = travelDays;
     }
+    /*
+    public boolean isOutOfSpace() {
+        return outOfSpace;
+    }
+    public void setOutOfSpace(boolean outOfSpace) {
+        this.outOfSpace = outOfSpace;
+    }
+     */
 }
