@@ -1,14 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CombatZoneCard extends Card {
     private final int daysLostLessCrew;
-    private Ship lessCrewShip;
     private final int crewLostLessEngine;
-    private Ship lessEngineShip;
-    private Ship lessFirepowerShip;
     private final List <Cannonball> cannonballList;
 
     public CombatZoneCard(boolean levelTwo, boolean used, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
@@ -35,24 +34,29 @@ public class CombatZoneCard extends Card {
     public void process() {
         super.process();
 
-        // TODO fix with ship attributes and methods
+        List <Player> players = getListOfPlayers();
+
+        // Get list of ships using Streams
+        List <Ship> ships = players.stream()
+                .map(Player::getShip).collect(Collectors.toList());
 
         // Finding the ship with the least crew using Streams
-        Optional <Ship> lessCrewShip = ships.stream()
-                .min((s1, s2, s3, s4) -> Integer.compare(s1.getCrewSize(), s2.getCrewSize(), s3.getCrewSize(), s4.getCrewSize()));
+        Ship lessCrewShip = ships.stream()
+                .min(Comparator.comparingInt(Ship::getNumberOfCrewMembers));
 
         // Finding the ship with the least engine using Streams
-        Optional <Ship> lessEngineShip = ships.stream()
-                .min((s1, s2, s3, s4) -> Integer.compare(s1.getEnginePower(), s2.getEnginePower(), s3.getEnginePower(), s4.getEnginePower()));
+        Ship lessEngineShip = ships.stream()
+                .min(Comparator.comparingInt(Ship::getEnginePower));
 
         // Finding the ship with the least firepower using Streams
-        Optional <Ship> lessFirepowerShip = ships.stream()
-                .min((s1, s2, s3, s4) -> Integer.compare(s1.getFirepower(), s2.getFirepower(), s3.getFirepower(), s4.getFirepower()));
+        Ship lessFirepowerShip = ships.stream()
+                .min(Comparator.comparingInt(Ship::getFirepower));
 
-        lessCrewShip.loseDays(daysLostLessCrew);
+        lessCrewShip.setTravelDays(- daysLostLessCrew); // negative because deducting
 
-        lessEngineShip.loseCrew(crewLostLessEngine);
+        lessEngineShip.removeCrewMembers(crewLostLessEngine);
 
+        // TODO understand how to
         lessFirepowerShip.getHit(cannonballList);
     }
 }
