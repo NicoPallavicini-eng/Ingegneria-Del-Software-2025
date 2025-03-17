@@ -40,22 +40,22 @@ public class CombatZoneCard extends Card {
 
         // TODO fix with ship attributes and methods
 
-//        // Finding the ship with the least crew using Streams
-//        Optional <Ship> lessCrewShip = ships.stream()
-//                .min((s1, s2, s3, s4) -> Integer.compare(s1.getCrewSize(), s2.getCrewSize(), s3.getCrewSize(), s4.getCrewSize()));
-//
-//        // Finding the ship with the least engine using Streams
-//        Optional <Ship> lessEngineShip = ships.stream()
-//                .min((s1, s2, s3, s4) -> Integer.compare(s1.getEnginePower(), s2.getEnginePower(), s3.getEnginePower(), s4.getEnginePower()));
-//
-//        // Finding the ship with the least firepower using Streams
-//        Optional <Ship> lessFirepowerShip = ships.stream()
-//                .min((s1, s2, s3, s4) -> Integer.compare(s1.getFirepower(), s2.getFirepower(), s3.getFirepower(), s4.getFirepower()));
-//
-//        lessCrewShip.loseDays(daysLostLessCrew);
-//
-//        lessEngineShip.loseCrew(crewLostLessEngine);
-//
-//        lessFirepowerShip.getHit(cannonballList);
+        // Finding the ship with the least crew using Streams
+        Optional <Ship> lessCrewShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getCrewSize(), s2.getCrewSize(), s3.getCrewSize(), s4.getCrewSize()));
+
+        // Finding the ship with the least engine using Streams
+        Optional <Ship> lessEngineShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getEnginePower(), s2.getEnginePower(), s3.getEnginePower(), s4.getEnginePower()));
+
+        // Finding the ship with the least firepower using Streams
+        Optional <Ship> lessFirepowerShip = ships.stream()
+                .min((s1, s2, s3, s4) -> Integer.compare(s1.getFirepower(), s2.getFirepower(), s3.getFirepower(), s4.getFirepower()));
+
+        lessCrewShip.loseDays(daysLostLessCrew);
+
+        lessEngineShip.loseCrew(crewLostLessEngine);
+
+        lessFirepowerShip.getHit(cannonballList);
     }
 }

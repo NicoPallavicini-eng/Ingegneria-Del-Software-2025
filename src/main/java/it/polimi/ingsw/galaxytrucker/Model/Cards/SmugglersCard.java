@@ -1,4 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
 
 public class SmugglersCard extends Card {
@@ -35,16 +38,24 @@ public class SmugglersCard extends Card {
     @Override
     public void process() {
         super.process();
+        boolean defeated = false;
 
-        // foreach player until smugglers_defeated {
-            // if player.firepower < smugglers.firepower {
-                // loseCargo();
-            // } else if player.firepower > smugglers.firepower {
-                // smugglers_defeated
-                // if players_wants_credits {
-                    // getCargo && loseDays
-                // }
-            // }
-        // }
+        List <Player> players = getListOfPlayers();
+
+        for (Player player : players) {
+            Ship ship = player.getShip();
+            if (ship.getFirepower() < firepower) {
+                // lose cargo TODO capire
+            } else if (ship.getFirepower() > firepower) {
+                defeated = true;
+                if (player.playerEngages) {
+                    ship.addBlocks(blocks);
+                    ship.setTravelDays(- daysToLose); // negative because deducting
+                }
+            }
+            if (defeated) {
+                break;
+            }
+        }
     }
 }

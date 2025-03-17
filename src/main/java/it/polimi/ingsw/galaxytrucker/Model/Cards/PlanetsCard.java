@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
 
 public class PlanetsCard extends Card {
@@ -24,14 +28,21 @@ public class PlanetsCard extends Card {
     @Override
     public void process() {
         super.process();
+        int planetNumber = 0;
+        Planet planet = planets.get(planetNumber);
 
-        // foreach player until planets_finished {
-            // if players_wants_to_land {
-                // getCargo && loseDays
-                // if planet_number == tot_planets {
-                    // planets_finishes = true
-                // }
-            // }
-        // }
+        List <Player> players = getListOfPlayers();
+
+        for (Player player : players) {
+            if (player.playerEngages) {
+                Ship ship = player.getShip();
+                ship.addBlocks(planet.getBlocksList());
+                ship.setTravelDays(- daysToLose); // negative because deducting
+                planetNumber++;
+                if (planetNumber == planets.size()) {
+                    break;
+                }
+            }
+        }
     }
 }

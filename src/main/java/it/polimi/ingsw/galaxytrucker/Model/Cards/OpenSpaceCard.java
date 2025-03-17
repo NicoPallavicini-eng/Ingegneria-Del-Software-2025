@@ -24,7 +24,6 @@ public class OpenSpaceCard extends Card {
                 new Ship()
         );
 
-        // TODO use threads
         // forall {
             // if no engine {
                 // lostInSpace
