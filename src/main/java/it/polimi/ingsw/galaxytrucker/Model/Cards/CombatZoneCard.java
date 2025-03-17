@@ -38,17 +38,9 @@ public class CombatZoneCard extends Card {
     public void process() {
         super.process();
 
-        // TODO fix later with ship attributes and methods
+        // TODO fix with ship attributes and methods
 
-        // temp creating a list of ships with different crew sizes
-        List <Ship> ships = List.of(
-                new Ship(),
-                new Ship(),
-                new Ship(),
-                new Ship()
-        );
-
-        // Finding the ship with the least crew using Streams
+//        // Finding the ship with the least crew using Streams
 //        Optional <Ship> lessCrewShip = ships.stream()
 //                .min((s1, s2, s3, s4) -> Integer.compare(s1.getCrewSize(), s2.getCrewSize(), s3.getCrewSize(), s4.getCrewSize()));
 //

@@ -24,10 +24,16 @@ public class OpenSpaceCard extends Card {
                 new Ship()
         );
 
-        // if no engine {
-            // lostInSpace
-        // } else {
-            // advanceDays(numberOfEnginesOn)
+        // TODO use threads
+        // forall {
+            // if no engine {
+                // lostInSpace
+            // } else {
+                // setNumberOfEnginesOn(numberOfEnginesOn)
+            // }
+        // }
+        // forall in reverse order {
+            // advance(numberOfEnginesOn)
         // }
     }
 }

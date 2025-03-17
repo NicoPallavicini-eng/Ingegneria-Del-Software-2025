@@ -31,6 +31,10 @@ public class StationCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // forall players until ShipLanded {
+            // if player wants to land {
+                // loseCrew(crewNumberLost); getCargo(blocks); loseDays(daysToLose); ShipLanded = true;
+            // }
+        // }
     }
 }

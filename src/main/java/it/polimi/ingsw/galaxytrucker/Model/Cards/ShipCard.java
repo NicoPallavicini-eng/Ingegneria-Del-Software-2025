@@ -29,6 +29,10 @@ public class ShipCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // forall players until ShipLanded {
+            // if player wants to land {
+                // loseCrew(crewNumberLost); getCredits(credits); loseDays(daysToLose); ShipLanded = true;
+            // }
+        // }
     }
 }

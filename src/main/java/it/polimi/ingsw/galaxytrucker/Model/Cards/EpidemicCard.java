@@ -18,15 +18,7 @@ public class EpidemicCard extends Card {
 
         // TODO link with proper tiles logic and Ship
 
-        // temp creating a list of ships with different crew sizes
-        List <Ship> ships = List.of(
-                new Ship(),
-                new Ship(),
-                new Ship(),
-                new Ship()
-        );
-
-        // foreach ship {
+        // foreach ship { // TODO use threads
             // foreach cabin check adjacent tiles {
                 // if there is at least another cabin in those {
                     // remove one occupant from each of the connected cabins

@@ -10,6 +10,9 @@ public class StartdustCard extends Card {
     public void process() {
         super.process();
 
-        // specific process
+        // TODO use threads
+        // forall players {
+            // go BackDays(exposedConnectorsNumber);
+        // }
     }
 }
