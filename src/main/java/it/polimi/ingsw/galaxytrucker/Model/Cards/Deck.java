@@ -1,7 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import java.util.List;
-
 import java.util.Collections;
 
 public class Deck {

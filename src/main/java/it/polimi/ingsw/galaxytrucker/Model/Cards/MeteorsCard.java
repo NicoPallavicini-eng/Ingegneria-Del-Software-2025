@@ -1,7 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
-
 import java.util.List;
 
 public class MeteorsCard extends Card {

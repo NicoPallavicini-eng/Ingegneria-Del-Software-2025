@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import java.util.List;
 
 public class StationCard extends Card {
