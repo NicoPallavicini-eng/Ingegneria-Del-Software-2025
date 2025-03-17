@@ -12,12 +12,15 @@ public class TilePile {
         return this;
     }
 
-    public Tile pickUpTile(int row, int column){
+    public Tile pickUpTile(Tile tile){
         //TODO logic
-        return null;
+        tile.setChoosable(false);
+        return tile;
     }
 
     public void putDownTile(Tile tile){
         //TODO logic
+        tile.setChoosable(true);
+        tile.flip();
     }
 }

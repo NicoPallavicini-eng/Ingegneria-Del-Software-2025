@@ -13,6 +13,8 @@ public class Tile {
     private boolean attached;
     private boolean upsideDown;
 
+    private boolean choosable;
+
     public Tile(ConnectorType northConnector, ConnectorType westConnector, ConnectorType southConnector, ConnectorType eastConnector, TileType type) {
         this.northConnector = northConnector;
         this.westConnector = westConnector;
@@ -29,8 +31,9 @@ public class Tile {
         return type;
     }
 
-    public List<ConnectorType> getAdiacentTiles(){
-        //TODO add logic for the adiacent tiles
+    public List<Tile> getAdjacentTiles(){
+        //TODO add logic for the adjacent tiles
+
         return null;
     }
 
@@ -55,7 +58,6 @@ public class Tile {
 
 
     public List<ConnectorType> getConnectors(){
-        //NOT TO SURE ABOUT THIS...
         List <ConnectorType> connectors = new ArrayList<ConnectorType>();
         connectors.add(northConnector);
         connectors.add(westConnector);
@@ -73,10 +75,18 @@ public class Tile {
     }
 
     public void flip(){
-        upsideDown = !upsideDown;
+        upsideDown = true;
     }
 
     public boolean getUpsideDown(){
         return upsideDown;
+    }
+
+    public void setChoosable(boolean choosable){
+        this.choosable = choosable;
+    }
+
+    public boolean isChoosable(){
+        return choosable;
     }
 }
