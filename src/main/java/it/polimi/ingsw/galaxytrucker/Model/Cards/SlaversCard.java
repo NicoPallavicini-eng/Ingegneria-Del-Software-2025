@@ -44,7 +44,7 @@ public class SlaversCard extends Card {
         for (Player player : players) {
             Ship ship = player.getShip();
             if (ship.getFirepower() < firepower) {
-                // lose crew TODO capire
+                ship.removeCrewMembers(crewLost);
             } else if (ship.getFirepower() > firepower) {
                 defeated = true;
                 if (player.playerEngages) {
