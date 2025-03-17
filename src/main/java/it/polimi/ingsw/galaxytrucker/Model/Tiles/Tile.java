@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
-
     private ConnectorType northConnector;
     private ConnectorType westConnector;
     private ConnectorType southConnector;

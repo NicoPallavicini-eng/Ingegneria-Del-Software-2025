@@ -27,4 +27,13 @@ public class CargoTile extends Tile {
         tileContent.remove(block);
     }
 
+    public boolean FitsRed() {
+        return fitsRed;
+    }
+
+    public int getSlotsNumber() {
+        return slotsNumber;
+    }
+
+
 }
