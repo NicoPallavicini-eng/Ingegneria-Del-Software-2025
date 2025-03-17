@@ -36,10 +36,9 @@ public class StationCard extends Card {
         List <Player> players = getListOfPlayers();
 
         for (Player player : players) {
-            if (player.playerEngages) {
+            if ((player.getNumberOfCrewMembers >= crewNumberNeeded) && player.playerEngages) {
                 Ship ship = player.getShip();
                 ship.addBlocks(blocks);
-                ship.removeCrewMembers(crewNumberLost);
                 ship.setTravelDays(- daysToLose); // negative because deducting
                 break;
             }
