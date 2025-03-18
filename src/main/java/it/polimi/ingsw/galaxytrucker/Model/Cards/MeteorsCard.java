@@ -1,6 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MeteorsCard extends Card {
     private final List <Meteor> meteors;
@@ -15,14 +20,59 @@ public class MeteorsCard extends Card {
         return meteors;
     }
 
+    public static int rollTwoDice() {
+        Random rand = new Random();
+
+        // Random number between 1-6
+        int die1 = rand.nextInt(6) + 1;
+        int die2 = rand.nextInt(6) + 1;
+
+        // Sum of two dice
+        return die1 + die2;
+    }
+
     @Override
     public void process() {
         super.process();
+        int meteorsNumber = this.meteors.size();
+        int[] diceRoll = new int[meteorsNumber];
 
-        // TODO link with proper tiles and Ship
+        for (int i = 0; i < meteorsNumber; i++) {
+            diceRoll[i] = rollTwoDice();
+        }
 
-        // roll dice
-        // foreach ship { // TODO use threads
+        List <Player> players = getListOfPlayers();
+
+        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+
+        int threadNumber = 0;
+        for (Player player : players) {
+            executor.execute(new MeteorsTask(threadNumber, diceRoll));
+            threadNumber++;
+        }
+
+        // Shut down when all tasks are done
+        executor.shutdown();
+    }
+
+    static class MeteorsTask implements Runnable {
+        private final int threadNumber;
+        private final int[] diceRoll;
+
+        public MeteorsTask(int threadNumber, int[] diceRoll) {
+            this.threadNumber = threadNumber;
+            this.diceRoll = diceRoll;
+        }
+
+        public void run() {
+            List <Player> players = getListOfPlayers();
+            Player player = players.get(threadNumber);
+            Ship ship = player.getShip();
+
+            System.out.println("Thread Meteors stared for ship " + ship.color + " using thread " + threadNumber);
+
+            // TODO logic
+
             // if column/row is part of ship {
                 // if meteor.isBig() && there is a tile {
                     // getHit()
@@ -33,6 +83,8 @@ public class MeteorsCard extends Card {
                     // }
                 // }
             // }
-        // }
+
+            System.out.println("Thread Meteors ended for ship " + ship.color + " using thread " + threadNumber);
+        }
     }
 }

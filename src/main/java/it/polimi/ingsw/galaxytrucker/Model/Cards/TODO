@@ -1,7 +1,7 @@
 TODO Cards:
 CombatZoneCard: getHit(cannonballList);
-EpidemicCard: process() with threads
-MeteorsCard: process() with threads + getHit(MeteorList);
+EpidemicCard: continue process() with threads
+MeteorsCard: continue process() with threads + getHit(MeteorList);
 OpenSpaceCard: player input in enginePower
 PiratesCard: getHit(cannonballList);
 StarDust: process() with threads

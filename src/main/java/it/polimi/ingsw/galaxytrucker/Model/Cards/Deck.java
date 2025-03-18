@@ -9,18 +9,10 @@ public class Deck {
     private final List <Card> allCardsLev2;
     private List <Card> gameDeck;
 
-    public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2, List <Card> gameDeck) {
+    public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2) {
         this.allCardsLev1 = allCardsLev1;
         this.allCardsLev2 = allCardsLev2;
-        this.gameDeck = gameDeck;
-    }
-
-    public List <Card> getAllCardsLev1() {
-        return allCardsLev1;
-    }
-
-    public List <Card> getAllCardsLev2() {
-        return allCardsLev2;
+        this.assembleGameDeck();
     }
 
     public List <Card> getGameDeck() {
@@ -31,27 +23,20 @@ public class Deck {
         return gameDeck.getFirst();
     }
 
-    public void shuffleAllCards() {
+    public void shuffle(List <Card> cards) {
         // Shuffle the deck using Collections.shuffle() with a randomizer
-        Collections.shuffle(allCardsLev1);
-        Collections.shuffle(allCardsLev2);
+        Collections.shuffle(cards);
     }
 
-    public void shuffleCardsInUse() {
-        // Shuffle the deck using Collections.shuffle() with a randomizer
-        Collections.shuffle(gameDeck);
-    }
-
-    public List <Card> assembleGameDeck() {
-        this.shuffleAllCards();
-
-        gameDeck = allCardsLev1.subList(1, cardsNumberLev1);
+    public void assembleGameDeck() {
+        gameDeck = allCardsLev1.subList(0, cardsNumberLev1);
 
         List <Card> secondPart = allCardsLev2.subList(0, cardsNumberLev2);
 
         // Concatenate the two parts
         gameDeck.addAll(secondPart);
 
-        return gameDeck;
+        // Shuffle created gameDeck
+        this.shuffle(gameDeck);
     }
 }
