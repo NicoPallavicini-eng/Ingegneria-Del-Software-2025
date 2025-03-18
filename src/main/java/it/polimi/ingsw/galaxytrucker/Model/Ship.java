@@ -24,10 +24,19 @@ public class Ship {
     private int exposedConnectors;
     private int batteries;
     private int crewMembers;
+    private int credits;
+    private Integer travelDays;
+
+    //serve per vedere se il giocatore decide di atterare;
+    private boolean playerEngaged;
+    //serve per I blocchi di pianeta
+    private ArrayList<Integer> cargoFromCards;
 
     private boolean purpleAllien;
     private boolean orangeAllien;
 
+    //player position
+    private int playerPosition;
    public Ship(){
 
    }
@@ -154,7 +163,31 @@ public class Ship {
         return true;
     }
     */
+    public ArrayList<Integer> getCargoFromCards() {
+        return cargoFromCards;
+    }
+    public void addBlocks(List<Integer> cargoFromCards) {
+        cargoFromCards.forEach(c -> this.cargoFromCards.add(c));
+    }
+    public boolean isPlayerEngaged(){
+        return playerEngaged;
+    }
+    public void setPlayerEngaged(boolean playerEngaged){
+        this.playerEngaged = playerEngaged;
+    }
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
+    public int getCredits() {
+        return credits;
+    }
 
+    public Integer getTravelDays() {
+        return travelDays;
+    }
+    public void setTravelDays(Integer travelDays) {
+        this.travelDays = travelDays;
+    }
 
     public Optional<Tile> getTileOnFloorPlan(int row,int column){
         //return Optional.ofNullable(floorplan[row][column]);
@@ -239,7 +272,7 @@ public class Ship {
     }
 
 
-
+    //direzione dei cannoni è importante!
     public int getFirepower(){
         int firepower = 0;
         for(ArrayList<Tile> list : floorplanArrayList){
@@ -338,16 +371,27 @@ public class Ship {
         }
         return doubleEngineList;
     }
-    public ArrayList<Tile> getListOfShield(){
+    public ArrayList<Tile> getListOfShield() {
         ArrayList<Tile> shieldList = new ArrayList<>();
-        for(ArrayList<Tile> list : floorplanArrayList){
-            for(Tile tile : list){
-                if(tile!=null&&tile.getType()==TileType.SHIELD){
+        for (ArrayList<Tile> list : floorplanArrayList) {
+            for (Tile tile : list) {
+                if (tile != null && tile.getType() == TileType.SHIELD) {
                     shieldList.add(tile);
                 }
             }
         }
         return shieldList;
+    }
+
+    public ArrayList<ShieldOrientation> getListOfShieldOrientation(){
+        ArrayList<ShieldOrientation> shieldOrientationList = new ArrayList<>();
+        ArrayList<Tile> shieldList = new ArrayList<>();
+        shieldList = getListOfShield();
+        for(Tile tile : shieldList){
+            ShieldTile shieldTile = (ShieldTile) tile;
+            shieldOrientationList.add(shieldTile.getShieldOrientation());
+        }
+        return shieldOrientationList;
     }
     public ArrayList<Tile> getListOfCabin(){
         ArrayList<Tile> cabinList = new ArrayList<>();
