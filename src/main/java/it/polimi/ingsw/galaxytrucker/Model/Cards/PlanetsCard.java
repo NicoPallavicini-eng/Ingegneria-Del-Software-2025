@@ -25,20 +25,32 @@ public class PlanetsCard extends Card {
     @Override
     public void process() {
         super.process();
-        int planetNumber = 0;
-        Planet planet = planets.get(planetNumber);
+        int planetsNumber = planets.size();
+        boolean availablePlanets = true;
 
         List <Player> players = getListOfPlayers();
 
         for (Player player : players) {
             if (player.playerEngages) {
-                Ship ship = player.getShip();
-                ship.addBlocks(planet.getBlocksList());
+                // TODO implement player choosing planet
+                Planet chosenPlanet = getChosenPlanet();
+                chosenPlanet.setShipLanded(player.getShip());
+
+                ship.addBlocks(chosenPlanet.getBlocksList());
                 ship.setTravelDays(- daysToLose); // negative because deducting
-                planetNumber++;
-                if (planetNumber == planets.size()) {
-                    break;
+
+                // Check for available planets
+                availablePlanets = false;
+                for (Planet planet : planets) {
+                    if (planet.getShipLanded() == NULL) {
+                        availablePlanets = true;
+                    }
                 }
+            }
+
+            // TODO should be in if?
+            if (!availablePlanets) {
+                break;
             }
         }
     }

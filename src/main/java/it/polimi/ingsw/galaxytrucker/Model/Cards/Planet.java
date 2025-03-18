@@ -17,4 +17,8 @@ public class Planet {
     public Ship getShipLanded() {
         return shipLanded;
     }
+
+    public void setShipLanded(Ship shipLanded) {
+        this.shipLanded = shipLanded;
+    }
 }

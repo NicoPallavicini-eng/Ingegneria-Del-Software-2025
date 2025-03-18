@@ -45,9 +45,7 @@ public class StardustCard extends Card {
 
             System.out.println("Thread Stardust stared for ship " + ship.color + " using thread " + threadNumber);
 
-            // TODO logic
-
-            // go BackDays(exposedConnectorsNumber);
+            ship.setTravelDays(- ship.getExposedConnectors());
 
             System.out.println("Thread Stardust ended for ship " + ship.color + " using thread " + threadNumber);
         }
