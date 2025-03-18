@@ -32,6 +32,7 @@ public class Tile {
 
     public List<Tile> getAdjacentTiles(){
         //TODO add logic for the adjacent tiles
+        //Move to ship class
 
         return null;
     }
