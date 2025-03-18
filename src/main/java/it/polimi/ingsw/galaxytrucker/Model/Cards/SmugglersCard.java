@@ -44,7 +44,7 @@ public class SmugglersCard extends Card {
         for (Player player : players) {
             Ship ship = player.getShip();
             if (ship.getFirepower() < firepower) {
-                ship.removeBlocks(lostBlocksNumber);
+                ship.removeBlocks(lostBlocksNumber); // TODO change logic with getListOfCargo
             } else if (ship.getFirepower() > firepower) {
                 defeated = true;
                 if (player.playerEngages) {
