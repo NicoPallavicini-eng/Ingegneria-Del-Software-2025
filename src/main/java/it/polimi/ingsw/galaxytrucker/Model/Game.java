@@ -11,13 +11,13 @@ public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
     private Card currentCard;
     private int numberOfPlayers;
-    private GamePhase gamePhase = WAITING_ROOM;
+    private GamePhase gamePhase = GamePhase.WAITING_ROOM;
     private final Hourglass hourglass = new Hourglass();
-    private final TilePile tilePile = new TilePile();
-    private final Deck deck = new Deck();
+    private TilePile tilePile;
+    private Deck deck;
 
     public Game (Player firstPlayer){
-        ListOfPlayers.add(firstPlayer);
+        listOfPlayers.add(firstPlayer);
     }
 
     public List<Player> getListOfPlayers() {
@@ -66,6 +66,14 @@ public class Game {
 
     public Deck getDeck() {
         return deck;
+    }
+
+    public void setTilePile(TilePile tilePile) {
+        this.tilePile = tilePile;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 }
 
