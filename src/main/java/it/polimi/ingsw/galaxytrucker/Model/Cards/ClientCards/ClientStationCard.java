@@ -1,4 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.ClientCards;
 
-public class ClientStationCard {
+public class ClientStationCard extends ClientCard {
 }
