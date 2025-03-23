@@ -15,7 +15,6 @@ public class CombatZoneCard extends Card {
 
     public CombatZoneCard(boolean levelTwo, boolean used, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
         super(levelTwo, used);
-        this.category = CardCategory.COMBAT_ZONE;
         this.daysLostLessCrew = daysLostLessCrew;
         this.crewLostLessEngine = crewLostLessEngine;
         this.cannonballList = cannonballList;
@@ -39,8 +38,6 @@ public class CombatZoneCard extends Card {
 
     @Override
     public void process() {
-        super.process();
-
         List <Player> players = getListOfPlayers();
 
         // Get list of ships using Streams

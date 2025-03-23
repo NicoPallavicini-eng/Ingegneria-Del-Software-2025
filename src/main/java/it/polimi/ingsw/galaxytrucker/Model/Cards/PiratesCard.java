@@ -14,7 +14,6 @@ public class PiratesCard extends Card {
 
     public PiratesCard(boolean levelTwo, boolean used, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
         super(levelTwo, used);
-        this.category = CardCategory.PIRATES;
         this.firepower = firepower;
         this.credits = credits;
         this.daysToLose = daysToLose;
@@ -43,7 +42,6 @@ public class PiratesCard extends Card {
 
     @Override
     public void process() {
-        super.process();
         boolean defeated = false;
 
         List <Player> players = getListOfPlayers();

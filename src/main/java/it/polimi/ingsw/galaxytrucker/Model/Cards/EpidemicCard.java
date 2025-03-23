@@ -11,7 +11,6 @@ import java.util.concurrent.Executors;
 public class EpidemicCard extends Card {
     public EpidemicCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
-        this.category = CardCategory.EPIDEMIC;
     }
 
     public void acceptCardVisitor(EpidemicCardVisitor visitor) {
@@ -20,8 +19,6 @@ public class EpidemicCard extends Card {
 
     @Override
     public void process() {
-        super.process();
-
         List <Player> players = getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

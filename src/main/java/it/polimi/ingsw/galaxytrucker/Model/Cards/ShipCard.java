@@ -13,7 +13,6 @@ public class ShipCard extends Card {
 
     public ShipCard(boolean levelTwo, boolean used, int crewNumberLost, int credits, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.SHIP;
         this.crewNumberLost = crewNumberLost;
         this.credits = credits;
         this.daysToLose = daysToLose;
@@ -37,8 +36,6 @@ public class ShipCard extends Card {
 
     @Override
     public void process() {
-        super.process();
-
         List <Player> players = getListOfPlayers();
 
         for (Player player : players) {

@@ -14,7 +14,6 @@ public class MeteorsCard extends Card {
 
     public MeteorsCard(boolean levelTwo, boolean used, List <Meteor> meteors) {
         super(levelTwo, used);
-        this.category = CardCategory.METEORS;
         this.meteors = meteors;
     }
 
@@ -39,7 +38,6 @@ public class MeteorsCard extends Card {
 
     @Override
     public void process() {
-        super.process();
         int meteorsNumber = this.meteors.size();
         int[] diceRoll = new int[meteorsNumber];
 

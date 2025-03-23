@@ -14,7 +14,6 @@ public class SmugglersCard extends Card {
 
     public SmugglersCard(boolean levelTwo, boolean used, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.SMUGGLERS;
         this.firepower = firepower;
         this.blocks = blocks;
         this.lostBlocksNumber = lostBlocksNumber;
@@ -43,7 +42,6 @@ public class SmugglersCard extends Card {
 
     @Override
     public void process() {
-        super.process();
         boolean defeated = false;
 
         List <Player> players = getListOfPlayers();
@@ -51,7 +49,7 @@ public class SmugglersCard extends Card {
         for (Player player : players) {
             Ship ship = player.getShip();
             if (ship.getFirepower() < firepower) {
-                ship.removeBlocks(lostBlocksNumber); // TODO change logic with getListOfCargo
+                ship.removeBlocks(lostBlocksNumber); // TODO change logic with getListOfCargo()
             } else if (ship.getFirepower() > firepower) {
                 defeated = true;
                 if (player.playerEngages) {

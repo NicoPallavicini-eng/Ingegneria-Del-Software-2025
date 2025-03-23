@@ -14,7 +14,6 @@ public class SlaversCard extends Card {
 
     public SlaversCard(boolean levelTwo, boolean used, int firepower, int credits, int crewLost, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.SLAVERS;
         this.firepower = firepower;
         this.credits = credits;
         this.crewLost = crewLost;
@@ -43,7 +42,6 @@ public class SlaversCard extends Card {
 
     @Override
     public void process() {
-        super.process();
         boolean defeated = false;
 
         List <Player> players = getListOfPlayers();

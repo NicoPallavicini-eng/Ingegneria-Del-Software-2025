@@ -11,7 +11,6 @@ public class PlanetsCard extends Card {
 
     public PlanetsCard(boolean levelTwo, boolean used, List <Planet> planets, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.PLANETS;
         this.planets = planets;
         this.daysToLose = daysToLose;
     }
@@ -30,7 +29,6 @@ public class PlanetsCard extends Card {
 
     @Override
     public void process() {
-        super.process();
         int planetsNumber = planets.size();
         boolean availablePlanets = true;
 

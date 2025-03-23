@@ -11,7 +11,6 @@ import java.util.concurrent.Executors;
 public class StardustCard extends Card {
     public StardustCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
-        this.category = CardCategory.STARDUST;
     }
 
     public void acceptCardVisitor(StardustCardVisitor visitor) {
@@ -20,8 +19,6 @@ public class StardustCard extends Card {
 
     @Override
     public void process() {
-        super.process();
-
         List<Player> players = getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

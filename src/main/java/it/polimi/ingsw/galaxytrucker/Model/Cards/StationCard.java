@@ -13,7 +13,6 @@ public class StationCard extends Card {
 
     public StationCard(boolean levelTwo, boolean used, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.STATION;
         this.crewNumberNeeded = crewNumberNeeded;
         this.blocks = blocks;
         this.daysToLose = daysToLose;
@@ -37,8 +36,6 @@ public class StationCard extends Card {
 
     @Override
     public void process() {
-        super.process();
-
         List <Player> players = getListOfPlayers();
 
         for (Player player : players) {

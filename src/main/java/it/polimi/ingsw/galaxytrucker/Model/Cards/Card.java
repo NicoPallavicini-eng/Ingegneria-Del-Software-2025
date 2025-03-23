@@ -4,7 +4,6 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
 
 public abstract class Card {
     private final boolean levelTwo;
-    protected CardCategory category;
     private boolean used;
 
     public Card(boolean levelTwo, boolean used) {
@@ -24,9 +23,7 @@ public abstract class Card {
         return levelTwo;
     }
 
-    public void process () {
-        System.out.println(this.category + " CARD");
-    }
+    public void process () {}
 
     public void acceptCardVisitor(CardVisitor visitor) {}
 }
