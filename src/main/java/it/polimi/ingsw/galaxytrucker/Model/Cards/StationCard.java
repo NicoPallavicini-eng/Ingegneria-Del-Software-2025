@@ -1,4 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.StationCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
@@ -27,6 +29,10 @@ public class StationCard extends Card {
 
     public int getCrewNumberNeeded() {
         return crewNumberNeeded;
+    }
+
+    public void acceptCardVisitor(StationCardVisitor visitor) {
+        visitor.handleStationCard(this);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SlaversCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
 
 public class SlaversCard extends Card {
@@ -32,6 +35,10 @@ public class SlaversCard extends Card {
 
     public int getNumberOfDaysToLose() {
         return daysToLose;
+    }
+
+    public void acceptCardVisitor(SlaversCardVisitor visitor) {
+        visitor.handleSlaversCard(this);
     }
 
     @Override

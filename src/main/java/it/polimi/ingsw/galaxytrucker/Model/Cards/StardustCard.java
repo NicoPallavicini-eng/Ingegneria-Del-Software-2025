@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.StardustCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
@@ -11,6 +12,10 @@ public class StardustCard extends Card {
     public StardustCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
         this.category = CardCategory.STARDUST;
+    }
+
+    public void acceptCardVisitor(StardustCardVisitor visitor) {
+        visitor.handleStardustCard(this);
     }
 
     @Override

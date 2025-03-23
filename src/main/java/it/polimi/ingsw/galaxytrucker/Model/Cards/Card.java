@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
+
 public abstract class Card {
     private final boolean levelTwo;
     protected CardCategory category;
@@ -25,4 +27,6 @@ public abstract class Card {
     public void process () {
         System.out.println(this.category + " CARD");
     }
+
+    public void acceptCardVisitor(CardVisitor visitor) {}
 }

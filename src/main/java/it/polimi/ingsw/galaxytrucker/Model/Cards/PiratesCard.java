@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PiratesCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
 
 public class PiratesCard extends Card {
@@ -32,6 +35,10 @@ public class PiratesCard extends Card {
 
     public List <Cannonball> getCannonballList() {
         return cannonballList;
+    }
+
+    public void acceptCardVisitor(PiratesCardVisitor visitor) {
+        visitor.handlePiratesCard(this);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PlanetsCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
 
 public class PlanetsCard extends Card {
@@ -20,6 +22,10 @@ public class PlanetsCard extends Card {
 
     public int getDaysToLose() {
         return daysToLose;
+    }
+
+    public void acceptCardVisitor(PlanetsCardVisitor visitor) {
+        visitor.handlePlanetsCard(this);
     }
 
     @Override

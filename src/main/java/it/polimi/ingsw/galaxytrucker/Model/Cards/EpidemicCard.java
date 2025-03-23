@@ -1,8 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.EpidemicCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,6 +12,10 @@ public class EpidemicCard extends Card {
     public EpidemicCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
         this.category = CardCategory.EPIDEMIC;
+    }
+
+    public void acceptCardVisitor(EpidemicCardVisitor visitor) {
+        visitor.handleEpidemicCard(this);
     }
 
     @Override

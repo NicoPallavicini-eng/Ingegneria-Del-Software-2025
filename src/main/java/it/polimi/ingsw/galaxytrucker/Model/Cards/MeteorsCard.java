@@ -1,4 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.MeteorsCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
@@ -29,6 +31,10 @@ public class MeteorsCard extends Card {
 
         // Sum of two dice
         return die1 + die2;
+    }
+
+    public void acceptCardVisitor(MeteorsCardVisitor visitor) {
+        visitor.handleMeteorsCard(this);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CombatZoneCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +31,10 @@ public class CombatZoneCard extends Card {
 
     public List <Cannonball> getCannonballList() {
         return cannonballList;
+    }
+
+    public void acceptCardVisitor(CombatZoneCardVisitor visitor) {
+        visitor.handleCombatZoneCard(this);
     }
 
     @Override
