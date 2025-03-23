@@ -23,10 +23,9 @@ public class EpidemicCard extends Card {
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
-        int threadNumber = 0;
         for (Player player : players) {
-            executor.execute(new EpidemicTask(threadNumber));
-            threadNumber++;
+            Ship ship = player.getShip();
+            executor.execute(new EpidemicTask(ship));
         }
 
         // foreach ship {
@@ -43,22 +42,18 @@ public class EpidemicCard extends Card {
     }
 
     static class EpidemicTask implements Runnable {
-        private final int threadNumber;
+        private final Ship ship;
 
-        public EpidemicTask(int threadNumber) {
-            this.threadNumber = threadNumber;
+        public EpidemicTask(Ship ship) {
+            this.ship = ship;
         }
 
         public void run() {
-            List <Player> players = getListOfPlayers();
-            Player player = players.get(threadNumber);
-            Ship ship = player.getShip();
-
-            System.out.println("Thread Epidemic stared for ship " + ship.color + " using thread " + threadNumber);
+            System.out.println("Thread Epidemic started for ship " + ship.color);
 
             // TODO logic
 
-            System.out.println("Thread Epidemic ended for ship " + ship.color + " using thread " + threadNumber);
+            System.out.println("Thread Epidemic ended for ship " + ship.color);
         }
     }
 }

@@ -1,7 +1,7 @@
 TODO Cards:
 CombatZoneCard:
     manage getHit(cannonballList);
-    threads;
+    logic in thread task;
 EpidemicCard:
     logic;
 MeteorsCard:

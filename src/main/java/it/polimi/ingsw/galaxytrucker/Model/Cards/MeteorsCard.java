@@ -49,10 +49,9 @@ public class MeteorsCard extends Card {
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
-        int threadNumber = 0;
         for (Player player : players) {
-            executor.execute(new MeteorsTask(threadNumber, diceRoll));
-            threadNumber++;
+            Ship ship = player.getShip();
+            executor.execute(new MeteorsTask(ship, diceRoll));
         }
 
         // Shut down when all tasks are done
@@ -60,20 +59,16 @@ public class MeteorsCard extends Card {
     }
 
     static class MeteorsTask implements Runnable {
-        private final int threadNumber;
+        private final Ship ship;
         private final int[] diceRoll;
 
-        public MeteorsTask(int threadNumber, int[] diceRoll) {
-            this.threadNumber = threadNumber;
+        public MeteorsTask(Ship ship, int[] diceRoll) {
+            this.ship = ship;
             this.diceRoll = diceRoll;
         }
 
         public void run() {
-            List <Player> players = getListOfPlayers();
-            Player player = players.get(threadNumber);
-            Ship ship = player.getShip();
-
-            System.out.println("Thread Meteors stared for ship " + ship.color + " using thread " + threadNumber);
+            System.out.println("Thread Meteors started for ship " + ship.color);
 
             // TODO logic
 
@@ -88,7 +83,7 @@ public class MeteorsCard extends Card {
                 // }
             // }
 
-            System.out.println("Thread Meteors ended for ship " + ship.color + " using thread " + threadNumber);
+            System.out.println("Thread Meteors ended for ship " + ship.color);
         }
     }
 }

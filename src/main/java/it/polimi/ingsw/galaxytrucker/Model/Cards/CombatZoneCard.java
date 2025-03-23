@@ -6,6 +6,8 @@ import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class CombatZoneCard extends Card {
@@ -40,6 +42,18 @@ public class CombatZoneCard extends Card {
     public void process() {
         List <Player> players = getListOfPlayers();
 
+        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+
+        for (Player player : players) {
+            Ship ship = player.getShip();
+            executor.execute(new CombatZoneCard.CombatZoneTask(ship));
+        }
+
+        // Shut down when all tasks are done
+        executor.shutdown();
+
+        //////////////////////////////////////
+
         // Get list of ships using Streams
         List <Ship> ships = players.stream()
                 .map(Player::getShip).collect(Collectors.toList());
@@ -60,7 +74,25 @@ public class CombatZoneCard extends Card {
 
         lessEngineShip.removeCrewMembers(crewLostLessEngine);
 
-        // TODO understand how to
+        // TODO
         lessFirepowerShip.getHit(cannonballList);
+
+        ////////////////////////////////////// TODO remove/change logic
+    }
+
+    static class CombatZoneTask implements Runnable {
+        private final Ship ship;
+
+        public CombatZoneTask(Ship ship) {
+            this.ship = ship;
+        }
+
+        public void run() {
+            System.out.println("Thread CombatZone started for ship " + ship.color);
+
+            // TODO logic
+
+            System.out.println("Thread CombatZone ended for ship " + ship.color);
+        }
     }
 }

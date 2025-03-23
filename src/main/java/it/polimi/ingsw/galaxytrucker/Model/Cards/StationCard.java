@@ -5,6 +5,8 @@ import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StationCard extends Card {
     private final int crewNumberNeeded;
@@ -36,15 +38,43 @@ public class StationCard extends Card {
 
     @Override
     public void process() {
+        boolean landed = false;
         List <Player> players = getListOfPlayers();
 
+        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+
         for (Player player : players) {
-            if ((player.getNumberOfCrewMembers >= crewNumberNeeded) && player.playerEngages) {
-                Ship ship = player.getShip();
-                ship.addBlocks(blocks);
-                ship.setTravelDays(- daysToLose); // negative because deducting
+            if (landed) { // TODO find a way to update landed
                 break;
             }
+            Ship ship = player.getShip();
+            executor.execute(new StationCard.StationTask(ship, crewNumberNeeded, landed));
+        }
+
+        // Shut down when all tasks are done
+        executor.shutdown();
+    }
+
+    static class StationTask implements Runnable {
+        private final Ship ship;
+        private final int crewNumberNeeded;
+        private boolean landed = false;
+
+        public StationTask(Ship ship, int crewNumberNeeded, boolean landed) {
+            this.ship = ship;
+            this.crewNumberNeeded = crewNumberNeeded;
+        }
+
+        public void run() {
+            System.out.println("Thread Station started for ship " + ship.color);
+
+            if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && playerEngages) {
+                landed = true; // TODO transmit
+                ship.addBlocks(blocks);
+                ship.setTravelDays(- daysToLose); // negative because deducting
+            }
+
+            System.out.println("Thread Station ended for ship " + ship.color);
         }
     }
 }
