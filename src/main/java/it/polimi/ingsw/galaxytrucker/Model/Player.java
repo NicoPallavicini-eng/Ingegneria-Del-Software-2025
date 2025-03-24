@@ -3,16 +3,16 @@ package it.polimi.ingsw.galaxytrucker.Model;
 public class Player {
     private String nickname;
     private Ship ship;
-    //private int credits;
+
     private String playerIp;
     private boolean onlineStatus;
-    //private Integer travelDays;
-    //private boolean outOfSpace;
 
-    public Player(String playerIp,String nickname){
+
+    public Player(String playerIp,String nickname,Color color){
         this.playerIp = playerIp;
         setNickname(nickname);
-        setShip(new Ship());
+        //assegno
+        setShip(new Ship(color));
         //setCredits(0);
         setOnlineStatus(true);
         //setTravelDays(Integer.valueOf(0));
@@ -24,8 +24,6 @@ public class Player {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
-
 
     public Ship getShip() {
         return ship;
@@ -45,13 +43,4 @@ public class Player {
         this.onlineStatus = onlineStatus;
     }
 
-
-    /*
-    public boolean isOutOfSpace() {
-        return outOfSpace;
-    }
-    public void setOutOfSpace(boolean outOfSpace) {
-        this.outOfSpace = outOfSpace;
-    }
-     */
 }
