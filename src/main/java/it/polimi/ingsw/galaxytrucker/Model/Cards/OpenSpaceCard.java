@@ -25,43 +25,54 @@ public class OpenSpaceCard extends Card {
 
         for (Player player : players) {
             Ship ship = player.getShip();
-            executor.execute(new OpenSpaceCard.OpenSpaceTask(ship));
+            executor.execute(new OpenSpaceCard.OpenSpaceTask1(ship));
         }
 
-        // Shut down when all tasks are done
-        executor.shutdown();
-
-        ////////////////// TODO move in thread
-
-        for (Player player : players) {
-            Ship ship = player.getShip();
-            // TODO player input (sets number of engines on)
-            if (ship.getEnginePower() == 0) {
-                ship.setTravelDays(NULL);
-            }
-        }
-
+        // Travel days get updated in reverse order
         List <Player> reversed = players.reversed();
 
         for (Player player : reversed) {
             Ship ship = player.getShip();
-            ship.setTravelDays(ship.getEnginePower());
+            executor.execute(new OpenSpaceCard.OpenSpaceTask2(ship));
         }
+
+        // Shut down when all tasks are done
+        executor.shutdown();
     }
 
-    static class OpenSpaceTask implements Runnable {
+    static class OpenSpaceTask1 implements Runnable {
         private final Ship ship;
 
-        public OpenSpaceTask(Ship ship) {
+        public OpenSpaceTask1(Ship ship) {
             this.ship = ship;
         }
 
         public void run() {
-            System.out.println("Thread OpenSpace started for ship " + ship.color);
+            System.out.println("Thread OpenSpace1 started for ship " + ship.color);
 
-            // TODO move logic here
+            ship.setEnginePower(getPlayerInput()); // TODO implement
+            if (ship.getEnginePower() == 0) {
+                // If a player has zero engine power he is lost in space and out of further travelling
+                ship.setTravelDays(null);
+            }
 
-            System.out.println("Thread OpenSpace ended for ship " + ship.color);
+            System.out.println("Thread OpenSpace1 ended for ship " + ship.color);
+        }
+    }
+
+    static class OpenSpaceTask2 implements Runnable {
+        private final Ship ship;
+
+        public OpenSpaceTask2(Ship ship) {
+            this.ship = ship;
+        }
+
+        public void run() {
+            System.out.println("Thread OpenSpace2 started for ship " + ship.color);
+
+            ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());
+
+            System.out.println("Thread OpenSpace2 ended for ship " + ship.color);
         }
     }
 }

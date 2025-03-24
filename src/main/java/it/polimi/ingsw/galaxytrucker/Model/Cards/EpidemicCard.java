@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.EpidemicCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,15 +29,6 @@ public class EpidemicCard extends Card {
             executor.execute(new EpidemicTask(ship));
         }
 
-        // foreach ship {
-            // foreach cabin check adjacent tiles {
-                // if there is at least another cabin in those {
-                    // remove one occupant from each of the connected cabins
-                    // only remove one from each cabin
-                // }
-            // }
-        // }
-
         // Shut down when all tasks are done
         executor.shutdown();
     }
@@ -51,7 +43,25 @@ public class EpidemicCard extends Card {
         public void run() {
             System.out.println("Thread Epidemic started for ship " + ship.color);
 
-            // TODO logic
+            List <Tile> cabins = ship.getListOfCabin();
+
+            List <Tile> visited = null;
+
+            for (Tile tile : cabins) {
+                visited.add(tile);
+                List <Tile> adjacentTiles = ship.getAdiacentTiles(tile);
+                for (Tile adjacent : adjacentTiles) {
+                    if (cabins.contains(adjacent) && !visited.contains(adjacent)) {
+                        visited.add(adjacent);
+                        if (adjacent.getInhabitants() > 0) {
+                            adjacent.updateInhabitants(adjacent.getInhabitants() - 1);
+                        }
+                        if (tile.getInhabitants() > 0) {
+                            tile.updateInhabitants(tile.getInhabitants() - 1);
+                        }
+                    }
+                }
+            }
 
             System.out.println("Thread Epidemic ended for ship " + ship.color);
         }

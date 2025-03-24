@@ -12,6 +12,7 @@ public class ShipCard extends Card {
     private final int crewNumberLost;
     private final int credits;
     private final int daysToLose;
+    private boolean landed = false;
 
     public ShipCard(boolean levelTwo, boolean used, int crewNumberLost, int credits, int daysToLose) {
         super(levelTwo, used);
@@ -36,6 +37,14 @@ public class ShipCard extends Card {
         visitor.handleShipCard(this);
     }
 
+    public void setLanded(boolean landed) {
+        this.landed = landed;
+    }
+
+    public boolean getLanded() {
+        return landed;
+    }
+
     @Override
     public void process() {
         List <Player> players = getListOfPlayers();
@@ -44,36 +53,43 @@ public class ShipCard extends Card {
 
         for (Player player : players) {
             Ship ship = player.getShip();
-            executor.execute(new ShipCard.ShipTask(ship));
+            executor.execute(new ShipCard.ShipTask(ship, crewNumberLost, credits, daysToLose, this));
+
+            if (landed) {
+                break;
+            }
         }
 
         // Shut down when all tasks are done
         executor.shutdown();
-
-        ///////////////////// TODO move logic down
-
-        for (Player player : players) {
-            if (player.playerEngages) {
-                Ship ship = player.getShip();
-                ship.addCredits(credits);
-                ship.removeCrewMembers(crewNumberLost);
-                ship.setTravelDays(- daysToLose); // negative because deducting
-                break;
-            }
-        }
     }
 
     static class ShipTask implements Runnable {
         private final Ship ship;
+        private final int crewNumberLost;
+        private final int credits;
+        private final int daysToLose;
+        private final ShipCard card;
 
-        public ShipTask(Ship ship) {
+        public ShipTask(Ship ship, int crewNumberLost, int credits, int daysToLose, ShipCard card) {
             this.ship = ship;
+            this.crewNumberLost = crewNumberLost;
+            this.credits = credits;
+            this.daysToLose = daysToLose;
+            this.card = card;
         }
 
         public void run() {
             System.out.println("Thread Ship started for ship " + ship.color);
 
-            // TODO move logic here
+            if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && playerEngages) {
+                // sets landed to true
+                card.setLanded(true);
+
+                ship.addCredits(credits);
+                ship.removeCrewMembers(crewNumberLost);
+                ship.setTravelDays(- daysToLose); // negative because deducting
+            }
 
             System.out.println("Thread Ship ended for ship " + ship.color);
         }

@@ -12,6 +12,7 @@ public class StationCard extends Card {
     private final int crewNumberNeeded;
     private final List <Integer> blocks; // Integer
     private final int daysToLose;
+    private boolean landed = false;
 
     public StationCard(boolean levelTwo, boolean used, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
         super(levelTwo, used);
@@ -36,19 +37,27 @@ public class StationCard extends Card {
         visitor.handleStationCard(this);
     }
 
+    public void setLanded(boolean landed) {
+        this.landed = landed;
+    }
+
+    public boolean getLanded() {
+        return landed;
+    }
+
     @Override
     public void process() {
-        boolean landed = false;
         List <Player> players = getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
-            if (landed) { // TODO find a way to update landed
+            Ship ship = player.getShip();
+            executor.execute(new StationCard.StationTask(ship, crewNumberNeeded, blocks, daysToLose, this));
+
+            if (landed) {
                 break;
             }
-            Ship ship = player.getShip();
-            executor.execute(new StationCard.StationTask(ship, crewNumberNeeded, landed));
         }
 
         // Shut down when all tasks are done
@@ -58,18 +67,25 @@ public class StationCard extends Card {
     static class StationTask implements Runnable {
         private final Ship ship;
         private final int crewNumberNeeded;
-        private boolean landed = false;
+        private final List <Integer> blocks;
+        private final int daysToLose;
+        private final StationCard card;
 
-        public StationTask(Ship ship, int crewNumberNeeded, boolean landed) {
+        public StationTask(Ship ship, int crewNumberNeeded, List <Integer> blocks, int daysToLose, StationCard card) {
             this.ship = ship;
             this.crewNumberNeeded = crewNumberNeeded;
+            this.blocks = blocks;
+            this.daysToLose = daysToLose;
+            this.card = card;
         }
 
         public void run() {
             System.out.println("Thread Station started for ship " + ship.color);
 
             if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && playerEngages) {
-                landed = true; // TODO transmit
+                // sets landed to true
+                card.setLanded(true);
+
                 ship.addBlocks(blocks);
                 ship.setTravelDays(- daysToLose); // negative because deducting
             }

@@ -1,28 +1,20 @@
 TODO Cards:
 CombatZoneCard:
-    manage getHit(cannonballList);
-    logic in thread task;
-EpidemicCard:
+    getHit(cannonballList);
     logic;
+EpidemicCard: X
 MeteorsCard:
-    logic;
+    getHit(meteors);
 OpenSpaceCard:
-    player input in enginePower;
-    threads;
+    player input of enginePower;
 PiratesCard:
-    manage getHit(cannonballList);
-    threads;
+    getHit(cannonballList);
 PlanetsCard:
-    player input in choosing planet;
-    threads;
-ShipCard:
-    threads;
-SlaversCard:
-    threads;
-SmugglersCard:
-    change removeBlocks(lostBlocksNumber) with getListOfCargo();
-    threads;
-StationCard:
-    threads;
+    player input of planet;
+ShipCard: X
+SlaversCard: X
+SmugglersCard: X
+StardustCard: X
+StationCard: X
 
 all: connect visitor handler with threads
