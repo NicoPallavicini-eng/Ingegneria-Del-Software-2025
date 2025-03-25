@@ -1,9 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.EpidemicCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -53,11 +52,21 @@ public class EpidemicCard extends Card {
                 for (Tile adjacent : adjacentTiles) {
                     if (cabins.contains(adjacent) && !visited.contains(adjacent)) {
                         visited.add(adjacent);
-                        if (adjacent.getInhabitants() > 0) {
-                            adjacent.updateInhabitants(adjacent.getInhabitants() - 1);
+
+                        if (adjacent.getInhabitants() == ONE) {
+                            adjacent.updateInhabitants(NONE);
+                        } else if (adjacent.getInhabitants() == TWO) {
+                            adjacent.updateInhabitants(ONE);
+                        } else if (adjacent.getInhabitants() == ALIEN) {
+                            adjacent.updateInhabitants(NONE);
                         }
-                        if (tile.getInhabitants() > 0) {
-                            tile.updateInhabitants(tile.getInhabitants() - 1);
+
+                        if (tile.getInhabitants() == ONE) {
+                            tile.updateInhabitants(NONE);
+                        } else if (tile.getInhabitants() == TWO) {
+                            tile.updateInhabitants(ONE);
+                        } else if (tile.getInhabitants() == ALIEN) {
+                            tile.updateInhabitants(NONE);
                         }
                     }
                 }

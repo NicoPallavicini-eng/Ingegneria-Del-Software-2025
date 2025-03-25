@@ -44,36 +44,40 @@ public class Meteor {
 
         if (this.rowOrColumn == ROW) {
             if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll).isEmpty()) {
-                if (bigMeteor) {
-                    // ship.getHit(); TODO
+                if (this.bigMeteor) {
+                    if (/* first tile or adjacent ones =! cannon */) {
+                        // ship.getHit(); TODO
+                    }
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
                     boolean hasShield = true;
                     for (ShieldTile shield : shields) {
-                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && direction != WEST
-                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && direction != EAST) {
+                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction != WEST
+                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction != EAST) {
                             hasShield = false;
                         }
                     }
-                    if (/* first tile or adjacent ones =! cannon && */ !hasShield) {
+                    if (/* open connector || */ !hasShield) {
                         // ship.getHit(); TODO
                     }
                 }
             }
-        } else if (meteor.rowOrColumn == COLUMN) {
+        } else if (this.rowOrColumn == COLUMN) {
             if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll).isEmpty()) {
-                if (bigMeteor) {
-                    // ship.getHit(); TODO
+                if (this.bigMeteor) {
+                    if (/* first tile =! cannon */) {
+                        // ship.getHit(); TODO
+                    }
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
                     boolean hasShield = true;
                     for (ShieldTile shield : shields) {
-                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && direction != NORTH
-                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && direction != SOUTH) {
+                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && this.direction != NORTH
+                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && this.direction != SOUTH) {
                             hasShield = false;
                         }
                     }
-                    if (/* first tile =! cannon && */ !hasShield) {
+                    if (/* open connector || */ !hasShield) {
                         // ship.getHit(); TODO
                     }
                 }

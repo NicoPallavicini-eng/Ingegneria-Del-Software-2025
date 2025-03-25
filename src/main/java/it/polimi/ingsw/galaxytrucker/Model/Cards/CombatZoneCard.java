@@ -1,8 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CombatZoneCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -148,9 +147,9 @@ public class CombatZoneCard extends Card {
         public void run() {
             System.out.println("Thread lessCrew started for ship " + ship.getColor());
 
-            ship.getHit(cannonballList); // TODO expand
-
-            //l
+            for (Cannonball cannonball : cannonballList) {
+                cannonball.getHit(ship);
+            }
 
             System.out.println("Thread lessCrew ended for ship " + ship.getColor());
         }

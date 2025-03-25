@@ -1,10 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PiratesCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -108,33 +106,8 @@ public class PiratesCard extends Card {
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
 
-                // TODO expand
-                ship.getShot(cannonballList);
-
-                // TODO adapt
-                for (Meteor meteor : meteors) {
-                    if ((meteor.getRowOrColumn() == ROW && (diceRoll[i] >= 5 && diceRoll[i] <= 9) && !ship.getRowListTiles(diceRoll[i]).isEmpty())
-                            || (meteor.getRowOrColumn() == COLUMN && (diceRoll[i] >= 4 && diceRoll[i] <= 10) && !ship.getColumnListTiles(diceRoll[i]).isEmpty())) {
-                        if (meteor.isBigMeteor()) {
-                            ship.getHit(meteor);
-                        } else {
-                            ArrayList<ShieldTile> shields = ship.getListOfShield();
-                            boolean hasShield = true;
-                            for (Tile shield : shields) {
-                                if (shield.getShieldOrientation() == NORTHWEST && meteor.getDirection() != NORTH && meteor.getDirection() != WEST
-                                        || shield.getShieldOrientation() == SOUTHWEST && meteor.getDirection() != SOUTH && meteor.getDirection() != WEST
-                                        || shield.getShieldOrientation() == SOUTHEAST && meteor.getDirection() != SOUTH && meteor.getDirection() != EAST
-                                        || shield.getShieldOrientation() == NORTHEAST && meteor.getDirection() != NORTH && meteor.getDirection() != EAST) {
-                                    hasShield = false;
-                                }
-                            }
-                            if (meteor.getRowOrColumn() == COLUMN && /* first tile =! cannon && */ !hasShield
-                                    || meteor.getRowOrColumn() == ROW && /* first tile or adjacent ones =! cannon && */ !hasShield) {
-                                ship.getHit(meteor);
-                            }
-                        }
-                    }
-                    i++;
+                for (Cannonball cannonball : cannonballList) {
+                    cannonball.getHit(ship);
                 }
 
             } else if (ship.getFirepower() > firepower) {
@@ -142,7 +115,7 @@ public class PiratesCard extends Card {
                 card.setGoNext(true);
 
                 if (player.playerEngages) {
-                    ship.addCredits(credits);
+                    ship.setCredits(ship.getCredits() + credits);
                     ship.setTravelDays(- daysToLose); // negative because deducting
                 }
             }
