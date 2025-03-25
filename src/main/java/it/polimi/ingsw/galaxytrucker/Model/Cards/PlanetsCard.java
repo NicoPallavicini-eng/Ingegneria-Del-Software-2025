@@ -12,6 +12,7 @@ public class PlanetsCard extends Card {
     private final List <Planet> planets;
     private final int daysToLose;
     private boolean[] landed;
+    private boolean goNext;
 
     public PlanetsCard(boolean levelTwo, boolean used, List <Planet> planets, int daysToLose) {
         super(levelTwo, used);
@@ -19,6 +20,10 @@ public class PlanetsCard extends Card {
         this.planets = planets;
         this.daysToLose = daysToLose;
         landed = new boolean[dim];
+
+        for (int i = 0; i < dim; i++) {
+            landed[i] = false;
+        }
     }
 
     public List <Planet> getPlanetsList() {
@@ -41,6 +46,14 @@ public class PlanetsCard extends Card {
         return landed[i];
     }
 
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
     @Override
     public void process() {
         int planetsNumber = planets.size();
@@ -51,8 +64,12 @@ public class PlanetsCard extends Card {
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
+           goNext = false;
+
             Ship ship = player.getShip();
             executor.execute(new PlanetsCard.PlanetsTask(ship, planets, daysToLose, this));
+
+            while (!goNext);
 
             // check for remaining planets
             int i = 0;
@@ -87,7 +104,7 @@ public class PlanetsCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Planets started for ship " + ship.color);
+            System.out.println("Thread Planets started for ship " + ship.getColor());
 
             if (playerEngages) {
                 // TODO choice logic
@@ -96,19 +113,21 @@ public class PlanetsCard extends Card {
                 int i = 0;
                 for (Planet planet : planets) {
                     if (chosenPlanet == planet) {
-                        break;
+                        card.setLanded(true, i);
+                        card.setGoNext(true);
                     }
                     i++;
                 }
-                card.setLanded(true, i);
 
                 chosenPlanet.setShipLanded(player.getShip());
 
                 ship.addBlocks(chosenPlanet.getBlocksList());
                 ship.setTravelDays(- daysToLose); // negative because deducting
+            } else {
+                card.setGoNext(true);
             }
 
-            System.out.println("Thread Planets ended for ship " + ship.color);
+            System.out.println("Thread Planets ended for ship " + ship.getColor());
         }
     }
 }

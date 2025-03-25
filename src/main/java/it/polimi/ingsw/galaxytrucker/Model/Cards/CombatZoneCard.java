@@ -42,18 +42,6 @@ public class CombatZoneCard extends Card {
     public void process() {
         List <Player> players = getListOfPlayers();
 
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
-
-        for (Player player : players) {
-            Ship ship = player.getShip();
-            executor.execute(new CombatZoneCard.CombatZoneTask(ship));
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-
-        //////////////////////////////////////
-
         // Get list of ships using Streams
         List <Ship> ships = players.stream()
                 .map(Player::getShip).collect(Collectors.toList());
@@ -70,29 +58,67 @@ public class CombatZoneCard extends Card {
         Ship lessFirepowerShip = ships.stream()
                 .min(Comparator.comparingInt(Ship::getFirepower));
 
-        lessCrewShip.setTravelDays(- daysLostLessCrew); // negative because deducting
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        lessEngineShip.removeCrewMembers(crewLostLessEngine);
+        executor.execute(new CombatZoneCard.lessCrewTask(lessCrewShip, daysLostLessCrew));
+        executor.execute(new CombatZoneCard.lessEngineTask(lessEngineShip, crewLostLessEngine));
+        executor.execute(new CombatZoneCard.lessFirepowerTask(lessFirepowerShip, cannonballList));
 
-        // TODO
-        lessFirepowerShip.getHit(cannonballList);
-
-        ////////////////////////////////////// TODO remove/change logic
+        // Shut down when all tasks are done
+        executor.shutdown();
     }
 
-    static class CombatZoneTask implements Runnable {
+    static class lessCrewTask implements Runnable {
         private final Ship ship;
+        private final int daysLostLessCrew;
 
-        public CombatZoneTask(Ship ship) {
+        public lessCrewTask(Ship ship, int daysLostLessCrew) {
             this.ship = ship;
+            this.daysLostLessCrew = daysLostLessCrew;
         }
 
         public void run() {
-            System.out.println("Thread CombatZone started for ship " + ship.color);
+            System.out.println("Thread lessCrew started for ship " + ship.getColor());
 
-            // TODO logic
+            ship.setTravelDays(- daysLostLessCrew); // negative because deducting
 
-            System.out.println("Thread CombatZone ended for ship " + ship.color);
+            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
+        }
+    }
+
+    static class lessEngineTask implements Runnable {
+        private final Ship ship;
+        private final int crewLostLessEngine;
+
+        public lessEngineTask(Ship ship, int crewLostLessEngine) {
+            this.ship = ship;
+            this.crewLostLessEngine = crewLostLessEngine;
+        }
+
+        public void run() {
+            System.out.println("Thread lessCrew started for ship " + ship.getColor());
+
+            ship.removeCrewMembers(crewLostLessEngine);
+
+            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
+        }
+    }
+
+    static class lessFirepowerTask implements Runnable {
+        private final Ship ship;
+        private final List <Cannonball> cannonballList;
+
+        public lessFirepowerTask(Ship ship, List <Cannonball> cannonballList) {
+            this.ship = ship;
+            this.cannonballList = cannonballList;
+        }
+
+        public void run() {
+            System.out.println("Thread lessCrew started for ship " + ship.getColor());
+
+            ship.getHit(cannonballList); // TODO
+
+            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
         }
     }
 }

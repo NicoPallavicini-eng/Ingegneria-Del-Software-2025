@@ -41,7 +41,7 @@ public class EpidemicCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Epidemic started for ship " + ship.color);
+            System.out.println("Thread Epidemic started for ship " + ship.getColor());
 
             List <Tile> cabins = ship.getListOfCabin();
 
@@ -63,7 +63,7 @@ public class EpidemicCard extends Card {
                 }
             }
 
-            System.out.println("Thread Epidemic ended for ship " + ship.color);
+            System.out.println("Thread Epidemic ended for ship " + ship.getColor());
         }
     }
 }

@@ -13,6 +13,7 @@ public class ShipCard extends Card {
     private final int credits;
     private final int daysToLose;
     private boolean landed = false;
+    private boolean goNext;
 
     public ShipCard(boolean levelTwo, boolean used, int crewNumberLost, int credits, int daysToLose) {
         super(levelTwo, used);
@@ -45,6 +46,14 @@ public class ShipCard extends Card {
         return landed;
     }
 
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
     @Override
     public void process() {
         List <Player> players = getListOfPlayers();
@@ -52,8 +61,12 @@ public class ShipCard extends Card {
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
+            goNext = false;
+
             Ship ship = player.getShip();
             executor.execute(new ShipCard.ShipTask(ship, crewNumberLost, credits, daysToLose, this));
+
+            while (!goNext);
 
             if (landed) {
                 break;
@@ -80,18 +93,21 @@ public class ShipCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Ship started for ship " + ship.color);
+            System.out.println("Thread Ship started for ship " + ship.getColor());
 
             if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && playerEngages) {
                 // sets landed to true
                 card.setLanded(true);
+                card.setGoNext(true);
 
                 ship.addCredits(credits);
                 ship.removeCrewMembers(crewNumberLost);
                 ship.setTravelDays(- daysToLose); // negative because deducting
+            } else {
+                card.setGoNext(true);
             }
 
-            System.out.println("Thread Ship ended for ship " + ship.color);
+            System.out.println("Thread Ship ended for ship " + ship.getColor());
         }
     }
 }

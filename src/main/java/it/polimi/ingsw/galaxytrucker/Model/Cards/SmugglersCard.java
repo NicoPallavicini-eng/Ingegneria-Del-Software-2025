@@ -14,6 +14,7 @@ public class SmugglersCard extends Card {
     private final int lostBlocksNumber;
     private final int daysToLose;
     private boolean defeated = false;
+    private boolean goNext;
 
     public SmugglersCard(boolean levelTwo, boolean used, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
         super(levelTwo, used);
@@ -51,6 +52,14 @@ public class SmugglersCard extends Card {
         return defeated;
     }
 
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
     @Override
     public void process() {
         List <Player> players = getListOfPlayers();
@@ -58,8 +67,12 @@ public class SmugglersCard extends Card {
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
+            goNext = false;
+
             Ship ship = player.getShip();
             executor.execute(new SmugglersCard.SmugglersTask(ship, firepower, blocks, lostBlocksNumber, daysToLose, this));
+
+            while (!goNext);
 
             if (defeated) {
                 break;
@@ -88,9 +101,10 @@ public class SmugglersCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Smugglers started for ship " + ship.color);
+            System.out.println("Thread Smugglers started for ship " + ship.getColor());
 
             if (ship.getFirepower() < firepower) {
+                card.setGoNext(true);
                 List <Integer> cargo = ship.getListOfCargo();
 
                 // considering that list is ordered:
@@ -99,6 +113,7 @@ public class SmugglersCard extends Card {
                 }
             } else if (ship.getFirepower() > firepower) {
                 card.setDefeated(true);
+                card.setGoNext(true);
 
                 if (player.playerEngages) {
                     ship.addBlocks(blocks);
@@ -106,7 +121,7 @@ public class SmugglersCard extends Card {
                 }
             }
 
-            System.out.println("Thread Smugglers ended for ship " + ship.color);
+            System.out.println("Thread Smugglers ended for ship " + ship.getColor());
         }
     }
 }

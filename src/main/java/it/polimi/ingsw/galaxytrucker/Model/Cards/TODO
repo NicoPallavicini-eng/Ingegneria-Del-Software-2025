@@ -1,7 +1,6 @@
 TODO Cards:
 CombatZoneCard:
     getHit(cannonballList);
-    logic;
 EpidemicCard: X
 MeteorsCard:
     getHit(meteors);
@@ -16,5 +15,3 @@ SlaversCard: X
 SmugglersCard: X
 StardustCard: X
 StationCard: X
-
-all: connect visitor handler with threads

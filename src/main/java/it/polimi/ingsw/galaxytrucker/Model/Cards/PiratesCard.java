@@ -14,6 +14,7 @@ public class PiratesCard extends Card {
     private final int daysToLose;
     private final List <Cannonball> cannonballList;
     private boolean defeated = false;
+    private boolean goNext;
 
     public PiratesCard(boolean levelTwo, boolean used, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
         super(levelTwo, used);
@@ -51,6 +52,14 @@ public class PiratesCard extends Card {
         return defeated;
     }
 
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
     @Override
     public void process() {
         List <Player> players = getListOfPlayers();
@@ -58,8 +67,12 @@ public class PiratesCard extends Card {
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
+            goNext = false;
+
             Ship ship = player.getShip();
             executor.execute(new PiratesCard.PiratesTask(ship, firepower, credits, daysToLose, cannonballList, this));
+
+            while (!goNext);
 
             if (defeated) {
                 break;
@@ -88,12 +101,14 @@ public class PiratesCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Pirates started for ship " + ship.color);
+            System.out.println("Thread Pirates started for ship " + ship.getColor());
 
             if (ship.getFirepower() < firepower) {
+                card.setGoNext(true);
                 // getShot(); TODO
             } else if (ship.getFirepower() > firepower) {
                 card.setDefeated(true);
+                card.setGoNext(true);
 
                 if (player.playerEngages) {
                     ship.addCredits(credits);
@@ -101,7 +116,7 @@ public class PiratesCard extends Card {
                 }
             }
 
-            System.out.println("Thread Pirates ended for ship " + ship.color);
+            System.out.println("Thread Pirates ended for ship " + ship.getColor());
         }
     }
 }

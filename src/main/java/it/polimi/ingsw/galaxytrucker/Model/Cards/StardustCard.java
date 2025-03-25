@@ -40,11 +40,11 @@ public class StardustCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Stardust started for ship " + ship.color);
+            System.out.println("Thread Stardust started for ship " + ship.getColor());
 
             ship.setTravelDays(- ship.getExposedConnectors());
 
-            System.out.println("Thread Stardust ended for ship " + ship.color);
+            System.out.println("Thread Stardust ended for ship " + ship.getColor());
         }
     }
 }

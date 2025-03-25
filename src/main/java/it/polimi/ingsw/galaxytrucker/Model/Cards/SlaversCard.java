@@ -14,6 +14,7 @@ public class SlaversCard extends Card {
     private final int crewLost;
     private final int daysToLose;
     private boolean defeated = false;
+    private boolean goNext;
 
     public SlaversCard(boolean levelTwo, boolean used, int firepower, int credits, int crewLost, int daysToLose) {
         super(levelTwo, used);
@@ -51,6 +52,14 @@ public class SlaversCard extends Card {
         return defeated;
     }
 
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
     @Override
     public void process() {
         List <Player> players = getListOfPlayers();
@@ -58,8 +67,12 @@ public class SlaversCard extends Card {
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
         for (Player player : players) {
+            goNext = false;
+
             Ship ship = player.getShip();
             executor.execute(new SlaversCard.SlaversTask(ship, firepower, credits, daysToLose, crewLost, this));
+
+            while (!goNext);
 
             if (defeated) {
                 break;
@@ -88,12 +101,14 @@ public class SlaversCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Slavers started for ship " + ship.color);
+            System.out.println("Thread Slavers started for ship " + ship.getColor());
 
             if (ship.getFirepower() < firepower) {
+                card.setGoNext(true);
                 ship.removeCrewMembers(crewLost);
             } else if (ship.getFirepower() > firepower) {
                 card.setDefeated(true);
+                card.setGoNext(true);
 
                 if (player.playerEngages) {
                     ship.addCredits(credits);
@@ -101,7 +116,7 @@ public class SlaversCard extends Card {
                 }
             }
 
-            System.out.println("Thread Slavers ended for ship " + ship.color);
+            System.out.println("Thread Slavers ended for ship " + ship.getColor());
         }
     }
 }

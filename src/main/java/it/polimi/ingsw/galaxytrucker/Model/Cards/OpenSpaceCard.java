@@ -9,12 +9,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class OpenSpaceCard extends Card {
+    private boolean goNext;
+
     public OpenSpaceCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
     }
 
     public void acceptCardVisitor(OpenSpaceCardVisitor visitor) {
         visitor.handleOpenSpaceCard(this);
+    }
+
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
     }
 
     @Override
@@ -32,8 +42,12 @@ public class OpenSpaceCard extends Card {
         List <Player> reversed = players.reversed();
 
         for (Player player : reversed) {
+            goNext = false;
+
             Ship ship = player.getShip();
-            executor.execute(new OpenSpaceCard.OpenSpaceTask2(ship));
+            executor.execute(new OpenSpaceCard.OpenSpaceTask2(ship, this));
+
+            while (!goNext);
         }
 
         // Shut down when all tasks are done
@@ -48,7 +62,7 @@ public class OpenSpaceCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread OpenSpace1 started for ship " + ship.color);
+            System.out.println("Thread OpenSpace1 started for ship " + ship.getColor());
 
             ship.setEnginePower(getPlayerInput()); // TODO implement
             if (ship.getEnginePower() == 0) {
@@ -56,23 +70,26 @@ public class OpenSpaceCard extends Card {
                 ship.setTravelDays(null);
             }
 
-            System.out.println("Thread OpenSpace1 ended for ship " + ship.color);
+            System.out.println("Thread OpenSpace1 ended for ship " + ship.getColor());
         }
     }
 
     static class OpenSpaceTask2 implements Runnable {
         private final Ship ship;
+        private final OpenSpaceCard card;
 
-        public OpenSpaceTask2(Ship ship) {
+        public OpenSpaceTask2(Ship ship, OpenSpaceCard card) {
             this.ship = ship;
+            this.card = card;
         }
 
         public void run() {
-            System.out.println("Thread OpenSpace2 started for ship " + ship.color);
+            System.out.println("Thread OpenSpace2 started for ship " + ship.getColor());
 
             ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());
+            card.setGoNext(true);
 
-            System.out.println("Thread OpenSpace2 ended for ship " + ship.color);
+            System.out.println("Thread OpenSpace2 ended for ship " + ship.getColor());
         }
     }
 }

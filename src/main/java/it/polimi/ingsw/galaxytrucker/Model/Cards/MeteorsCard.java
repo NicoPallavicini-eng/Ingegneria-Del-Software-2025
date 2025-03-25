@@ -77,7 +77,7 @@ public class MeteorsCard extends Card {
         }
 
         public void run() {
-            System.out.println("Thread Meteors started for ship " + ship.color);
+            System.out.println("Thread Meteors started for ship " + ship.getColor());
 
             int i = 0;
 
@@ -106,7 +106,7 @@ public class MeteorsCard extends Card {
                 i++;
             }
 
-            System.out.println("Thread Meteors ended for ship " + ship.color);
+            System.out.println("Thread Meteors ended for ship " + ship.getColor());
         }
     }
 }
