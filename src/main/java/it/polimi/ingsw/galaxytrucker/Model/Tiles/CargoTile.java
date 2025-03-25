@@ -37,6 +37,6 @@ public class CargoTile extends Tile {
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitCargo(this);
+        visitor.visit(this);
     }
 }

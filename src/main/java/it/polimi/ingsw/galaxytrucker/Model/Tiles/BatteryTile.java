@@ -18,7 +18,6 @@ public class BatteryTile extends Tile{
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitBattery(this);
-
+        visitor.visit(this);
     }
 }

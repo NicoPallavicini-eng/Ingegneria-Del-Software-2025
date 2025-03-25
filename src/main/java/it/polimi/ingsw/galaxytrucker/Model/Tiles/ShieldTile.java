@@ -25,6 +25,6 @@ public class ShieldTile extends Tile {
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitShield(this);
+        visitor.visit(this);
     }
 }

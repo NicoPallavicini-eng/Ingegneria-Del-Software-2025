@@ -32,6 +32,6 @@ public class EngineTile extends Tile{
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitEnginge(this);
+        visitor.visit(this);
     }
 }

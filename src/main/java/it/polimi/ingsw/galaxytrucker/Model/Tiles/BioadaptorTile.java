@@ -14,6 +14,6 @@ public class BioadaptorTile extends Tile {
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitBioadptor(this);
+        visitor.visit(this);
     }
 }

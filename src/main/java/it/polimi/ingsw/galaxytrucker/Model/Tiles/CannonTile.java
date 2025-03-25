@@ -32,6 +32,6 @@ public class CannonTile extends Tile {
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitCannon(this);
+        visitor.visit(this);
     }
 }
