@@ -10,7 +10,7 @@ import java.util.List;
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers;
-    private GameState gameState = new WaitingState();
+    private GameState gameState = new WaitingState(this);
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;
     private Deck deck;
