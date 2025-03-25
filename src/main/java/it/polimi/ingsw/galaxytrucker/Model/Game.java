@@ -9,9 +9,8 @@ import java.util.List;
 
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
-    private Card currentCard;
     private int numberOfPlayers;
-    private GamePhase gamePhase = GamePhase.WAITING_ROOM;
+    private GameState gameState = new WaitingState();
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;
     private Deck deck;
@@ -48,12 +47,12 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public GamePhase getGamePhase() {
-        return gamePhase;
+    public GamePhase getGameState() {
+        return gameState;
     }
 
-    public void setGamePhase() {
-        this.gamePhase = gamePhase;
+    public void setGameState() {
+        this.gameState = gameState;
     }
 
     public Hourglass getHourglass() {
@@ -76,6 +75,3 @@ public class Game {
         this.deck = deck;
     }
 }
-
-
-
