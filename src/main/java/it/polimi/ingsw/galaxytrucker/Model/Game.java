@@ -31,14 +31,6 @@ public class Game {
         listOfPlayers.remove(disconnectedPlayer);
     }
 
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -47,7 +39,7 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public GamePhase getGameState() {
+    public GameState getGameState() {
         return gameState;
     }
 

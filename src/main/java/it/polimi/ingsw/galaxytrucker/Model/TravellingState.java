@@ -1,4 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model;
 
-public class TravellingState extends GameState{
+public class TravellingState implements GameState {
 }
