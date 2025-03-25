@@ -1,24 +1,18 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import java.util.List;
+import java.util.Collections;
 
 public class Deck {
-    private final CardNumber cardsNumberLev1;
-    private final CardNumber cardsNumberLev2;
+    private final int cardsNumberLev1 = 4; // TODO implement CardNumber logic for also tut
+    private final int cardsNumberLev2 = 8;
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
     private List <Card> gameDeck;
 
-    public Deck(CardNumber cardsNumberLev1, CardNumber cardsNumberLev2, List <Card> allCardsLev1, List <Card> allCardsLev2, List <Card> gameDeck) {
-        this.cardsNumberLev1 = cardsNumberLev1;
-        this.cardsNumberLev2 = cardsNumberLev2;
+    public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2) {
         this.allCardsLev1 = allCardsLev1;
         this.allCardsLev2 = allCardsLev2;
-        this.gameDeck = gameDeck;
-    }
-
-    public List <Card> getAllCards() {
-        return allCardsLev1; // TODO concatenate allCardsLev2
+        this.assembleGameDeck();
     }
 
     public List <Card> getGameDeck() {
@@ -29,11 +23,20 @@ public class Deck {
         return gameDeck.getFirst();
     }
 
-    public void shuffleDeck() {
-        // TODO add randomizer
+    public void shuffle(List <Card> cards) {
+        // Shuffle the deck using Collections.shuffle() with a randomizer
+        Collections.shuffle(cards);
     }
 
-    public void shuffleCardsInUse() {
-        // TODO add randomizer
+    public void assembleGameDeck() {
+        gameDeck = allCardsLev1.subList(0, cardsNumberLev1);
+
+        List <Card> secondPart = allCardsLev2.subList(0, cardsNumberLev2);
+
+        // Concatenate the two parts
+        gameDeck.addAll(secondPart);
+
+        // Shuffle created gameDeck
+        this.shuffle(gameDeck);
     }
 }

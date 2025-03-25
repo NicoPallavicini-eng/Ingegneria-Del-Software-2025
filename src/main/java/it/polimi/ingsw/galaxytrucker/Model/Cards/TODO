@@ -1,0 +1,17 @@
+TODO Cards:
+CombatZoneCard:
+    getHit(cannonballList);
+EpidemicCard: X
+MeteorsCard:
+    getHit(meteors);
+OpenSpaceCard:
+    player input of enginePower;
+PiratesCard:
+    getHit(cannonballList);
+PlanetsCard:
+    player input of planet;
+ShipCard: X
+SlaversCard: X
+SmugglersCard: X
+StardustCard: X
+StationCard: X

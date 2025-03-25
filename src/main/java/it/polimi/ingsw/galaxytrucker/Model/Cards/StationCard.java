@@ -1,15 +1,22 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.StationCardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StationCard extends Card {
     private final int crewNumberNeeded;
     private final List <Integer> blocks; // Integer
     private final int daysToLose;
+    private boolean landed = false;
+    private boolean goNext;
 
     public StationCard(boolean levelTwo, boolean used, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
         super(levelTwo, used);
-        this.category = CardCategory.STATION;
         this.crewNumberNeeded = crewNumberNeeded;
         this.blocks = blocks;
         this.daysToLose = daysToLose;
@@ -25,5 +32,81 @@ public class StationCard extends Card {
 
     public int getCrewNumberNeeded() {
         return crewNumberNeeded;
+    }
+
+    public void acceptCardVisitor(StationCardVisitor visitor) {
+        visitor.handleStationCard(this);
+    }
+
+    public void setLanded(boolean landed) {
+        this.landed = landed;
+    }
+
+    public boolean getLanded() {
+        return landed;
+    }
+
+    public void setGoNext(boolean goNext) {
+        this.goNext = goNext;
+    }
+
+    public boolean getGoNext() {
+        return goNext;
+    }
+
+    @Override
+    public void process() {
+        List <Player> players = getListOfPlayers();
+
+        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+
+        for (Player player : players) {
+            goNext = false;
+
+            Ship ship = player.getShip();
+            executor.execute(new StationCard.StationTask(ship, crewNumberNeeded, blocks, daysToLose, this));
+
+            while (!goNext);
+
+            if (landed) {
+                break;
+            }
+        }
+
+        // Shut down when all tasks are done
+        executor.shutdown();
+    }
+
+    static class StationTask implements Runnable {
+        private final Ship ship;
+        private final int crewNumberNeeded;
+        private final List <Integer> blocks;
+        private final int daysToLose;
+        private final StationCard card;
+
+        public StationTask(Ship ship, int crewNumberNeeded, List <Integer> blocks, int daysToLose, StationCard card) {
+            this.ship = ship;
+            this.crewNumberNeeded = crewNumberNeeded;
+            this.blocks = blocks;
+            this.daysToLose = daysToLose;
+            this.card = card;
+        }
+
+        public void run() {
+            System.out.println("Thread Station started for ship " + ship.getColor());
+
+            if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && playerEngages) {
+                // sets landed to true
+                card.setLanded(true);
+                card.setGoNext(true);
+
+                ship.addBlocks(blocks);
+                ship.setTravelDays(- daysToLose); // negative because deducting
+            } else {
+                card.setGoNext(true);
+            }
+
+            System.out.println("Thread Station ended for ship " + ship.getColor());
+        }
     }
 }

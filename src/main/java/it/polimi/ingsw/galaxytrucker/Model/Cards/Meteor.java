@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
 public class Meteor {

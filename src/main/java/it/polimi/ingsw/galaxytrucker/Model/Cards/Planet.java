@@ -1,11 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
-
 import java.util.List;
 
 public class Planet {
-    // TODO add Ship link
     private final List <Integer> blocks;
     private Ship shipLanded;
 
@@ -19,5 +16,9 @@ public class Planet {
 
     public Ship getShipLanded() {
         return shipLanded;
+    }
+
+    public void setShipLanded(Ship shipLanded) {
+        this.shipLanded = shipLanded;
     }
 }
