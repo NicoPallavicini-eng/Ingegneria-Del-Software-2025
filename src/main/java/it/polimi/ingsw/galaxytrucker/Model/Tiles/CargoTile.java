@@ -7,10 +7,11 @@ public class CargoTile extends Tile {
     private final boolean fitsRed;
     private List<Integer> tileContent;
 
-    public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed) {
+    public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
         super(north, west, south, east, STORAGE);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;
+        this.tileContent = tileContent;
     }
 
     public List<Integer> getTileContent() {
@@ -26,4 +27,16 @@ public class CargoTile extends Tile {
         tileContent.remove(block);
     }
 
+    public boolean FitsRed() {
+        return fitsRed;
+    }
+
+    public int getSlotsNumber() {
+        return slotsNumber;
+    }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitCargo(this);
+    }
 }

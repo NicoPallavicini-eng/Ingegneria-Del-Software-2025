@@ -8,4 +8,12 @@ public class BioadaptorTile extends Tile {
         super(north, west, south, east, BIOADAPTOR);
         this.color = color;
     }
+    public AlienColor getColor() {
+        return this.color;
+    }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitBioadptor(this);
+    }
 }

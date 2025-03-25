@@ -30,4 +30,13 @@ public class CabinTile extends Tile {
     public void removeOrangeAdaptors() {
         orangeAdaptors -= 1;
     }
+
+    public boolean isMainCapsule() {
+        return this.mainCapsule;
+    }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitCabin(this);
+    }
 }
