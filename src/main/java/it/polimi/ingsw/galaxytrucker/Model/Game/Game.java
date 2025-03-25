@@ -1,7 +1,7 @@
-package it.polimi.ingsw.galaxytrucker.Model;
+package it.polimi.ingsw.galaxytrucker.Model.Game;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class Game {
         return gameState;
     }
 
-    public void setGameState() {
-        this.gameState = gameState;
+    public void nextGameState() {
+        this.gameState = gameState.next();
     }
 
     public Hourglass getHourglass() {
