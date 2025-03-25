@@ -29,4 +29,9 @@ public class CannonTile extends Tile {
     public Direction getDirection() {
         return direction;
     }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitCannon(this);
+    }
 }

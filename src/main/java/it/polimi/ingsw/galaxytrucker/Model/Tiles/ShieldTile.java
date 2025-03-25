@@ -23,4 +23,8 @@ public class ShieldTile extends Tile {
         return orientation;
     }
 
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitShield(this);
+    }
 }

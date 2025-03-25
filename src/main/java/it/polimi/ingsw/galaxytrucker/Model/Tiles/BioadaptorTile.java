@@ -11,4 +11,9 @@ public class BioadaptorTile extends Tile {
     public AlienColor getColor() {
         return this.color;
     }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitBioadptor(this);
+    }
 }

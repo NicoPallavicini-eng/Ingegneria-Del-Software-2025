@@ -34,4 +34,9 @@ public class CabinTile extends Tile {
     public boolean isMainCapsule() {
         return this.mainCapsule;
     }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitCabin(this);
+    }
 }

@@ -29,4 +29,9 @@ public class EngineTile extends Tile{
     public Direction GetDirection(){
         return direction;
     }
+
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitEnginge(this);
+    }
 }

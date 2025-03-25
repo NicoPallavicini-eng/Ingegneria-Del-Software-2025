@@ -16,4 +16,9 @@ public class BatteryTile extends Tile{
         return slotsFilled;
     }
 
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitBattery(this);
+
+    }
 }

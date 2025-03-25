@@ -35,5 +35,8 @@ public class CargoTile extends Tile {
         return slotsNumber;
     }
 
-
+    @Override
+    public void accept(TileVisitor visitor) {
+        visitor.visitCargo(this);
+    }
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tile {
+public class Tile{
     private ConnectorType northConnector;
     private ConnectorType westConnector;
     private ConnectorType southConnector;
@@ -31,9 +31,7 @@ public class Tile {
     }
 
     public List<Tile> getAdjacentTiles(){
-        //TODO add logic for the adjacent tiles
         //Move to ship class
-
         return null;
     }
 
@@ -89,4 +87,6 @@ public class Tile {
     public boolean isChoosable(){
         return choosable;
     }
+
+    public void accept(TileVisitor visitor){}
 }
