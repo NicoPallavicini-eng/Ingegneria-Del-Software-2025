@@ -581,8 +581,8 @@ public class Ship {
         return shieldOrientationList;
     }
 
-    public ArrayList<Tile> getListOfCabin(){
-        ArrayList<Tile> cabinList = new ArrayList<>();
+    public ArrayList<CabinTile> getListOfCabin(){
+        ArrayList<CabinTile> cabinList = new ArrayList<>();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
 
         for(ArrayList<Tile> list : floorplanArrayList){
@@ -597,8 +597,8 @@ public class Ship {
     }
 
      */
-    public ArrayList<Tile> getListOfBattery(){
-        ArrayList<Tile> batteriesList = new ArrayList<>();
+    public ArrayList<BatteryTile> getListOfBattery(){
+        ArrayList<BatteryTile> batteriesList = new ArrayList<>();
         BatteryTileVisitor batteryTileVisitor = new BatteryTileVisitor();
 
         for(ArrayList<Tile> list : floorplanArrayList){
@@ -614,9 +614,9 @@ public class Ship {
 
 
     /*example of Tile Visitor*/
-    public ArrayList<Tile> getListOfCargo(){
-        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
-        ArrayList<Tile> cargoList = new ArrayList<>();
+    public ArrayList<CargoTile> getListOfCargo(){
+        CargoTileVisitor cabinTileVisitor = new CargoTileVisitor();
+        ArrayList<CargoTile> cargoList = new ArrayList<>();
 
 
         for(ArrayList<Tile> tilelist : floorplanArrayList){
@@ -630,6 +630,43 @@ public class Ship {
         return cargoList;
     }
 
+    public ArrayList<BioadaptorTile> getListOfPurpleAdaptors(){
+        ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
+        ArrayList<BioadaptorTile> purpleList = new ArrayList<>();
+        for( BioadaptorTile bioadaptorTile : bioadaptorList ){
+            if(bioadaptorTile.getColor()==AlienColor.PURPLE){
+                purpleList.add(bioadaptorTile);
+            }
+        }
+        return purpleList;
+    }
+
+    public ArrayList<BioadaptorTile> getListOfOrangeAdaptors(){
+        ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
+        ArrayList<BioadaptorTile> orangeList = new ArrayList<>();
+        for( BioadaptorTile bioadaptorTile : bioadaptorList ){
+            if(bioadaptorTile.getColor()==AlienColor.ORANGE){
+                orangeList.add(bioadaptorTile);
+            }
+        }
+        return orangeList;
+    }
+
+    public ArrayList<BioadaptorTile> getListOfAdaptors(){
+        BioadaptorTile bioadaptorTileVisitor = new BioadaptorTile();
+        ArrayList<BioadaptorTile> bioadaptorList = new ArrayList<>();
+
+
+        for(ArrayList<Tile> tilelist : floorplanArrayList){
+            for(Tile tile : tilelist){
+                if(tile!=null){
+                    bioadaptorTileVisitor.visit(tile);
+                }
+            }
+        }
+        bioadaptorListList = bioadaptorTileVisitor.getList();
+        return bioadaptorList;
+    }
 
     //chiedere se restituire la lista intera?
     public ArrayList<Tile> getRowListTiles(int row){
