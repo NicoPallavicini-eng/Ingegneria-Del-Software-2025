@@ -8,6 +8,11 @@ public class WaitingState implements GameState {
     }
     @Override
     public GameState next() {
-        return new BuildingState();
+        return new BuildingState(game);
+    }
+
+    public void process() {
+        //input valore max player
+        // attendi connessioni
     }
 }
