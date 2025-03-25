@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PiratesCardVisitor
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -69,8 +70,7 @@ public class PiratesCard extends Card {
         for (Player player : players) {
             goNext = false;
 
-            Ship ship = player.getShip();
-            executor.execute(new PiratesCard.PiratesTask(ship, firepower, credits, daysToLose, cannonballList, this));
+            executor.execute(new PiratesCard.PiratesTask(player, firepower, credits, daysToLose, cannonballList, this));
 
             while (!goNext);
 
@@ -84,6 +84,7 @@ public class PiratesCard extends Card {
     }
 
     static class PiratesTask implements Runnable {
+        private final Player player;
         private final Ship ship;
         private final int firepower;
         private final int credits;
@@ -91,8 +92,9 @@ public class PiratesCard extends Card {
         private final List <Cannonball> cannonballList;
         private final PiratesCard card;
 
-        public PiratesTask(Ship ship, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList, PiratesCard card) {
-            this.ship = ship;
+        public PiratesTask(Player player, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList, PiratesCard card) {
+            this.player = player;
+            this.ship = player.getShip();
             this.firepower = firepower;
             this.credits = credits;
             this.daysToLose = daysToLose;
@@ -105,7 +107,36 @@ public class PiratesCard extends Card {
 
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
-                // getShot(); TODO
+
+                // TODO expand
+                ship.getShot(cannonballList);
+
+                // TODO adapt
+                for (Meteor meteor : meteors) {
+                    if ((meteor.getRowOrColumn() == ROW && (diceRoll[i] >= 5 && diceRoll[i] <= 9) && !ship.getRowListTiles(diceRoll[i]).isEmpty())
+                            || (meteor.getRowOrColumn() == COLUMN && (diceRoll[i] >= 4 && diceRoll[i] <= 10) && !ship.getColumnListTiles(diceRoll[i]).isEmpty())) {
+                        if (meteor.isBigMeteor()) {
+                            ship.getHit(meteor);
+                        } else {
+                            ArrayList<ShieldTile> shields = ship.getListOfShield();
+                            boolean hasShield = true;
+                            for (Tile shield : shields) {
+                                if (shield.getShieldOrientation() == NORTHWEST && meteor.getDirection() != NORTH && meteor.getDirection() != WEST
+                                        || shield.getShieldOrientation() == SOUTHWEST && meteor.getDirection() != SOUTH && meteor.getDirection() != WEST
+                                        || shield.getShieldOrientation() == SOUTHEAST && meteor.getDirection() != SOUTH && meteor.getDirection() != EAST
+                                        || shield.getShieldOrientation() == NORTHEAST && meteor.getDirection() != NORTH && meteor.getDirection() != EAST) {
+                                    hasShield = false;
+                                }
+                            }
+                            if (meteor.getRowOrColumn() == COLUMN && /* first tile =! cannon && */ !hasShield
+                                    || meteor.getRowOrColumn() == ROW && /* first tile or adjacent ones =! cannon && */ !hasShield) {
+                                ship.getHit(meteor);
+                            }
+                        }
+                    }
+                    i++;
+                }
+
             } else if (ship.getFirepower() > firepower) {
                 card.setDefeated(true);
                 card.setGoNext(true);

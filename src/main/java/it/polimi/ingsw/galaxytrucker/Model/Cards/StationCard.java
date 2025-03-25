@@ -63,8 +63,7 @@ public class StationCard extends Card {
         for (Player player : players) {
             goNext = false;
 
-            Ship ship = player.getShip();
-            executor.execute(new StationCard.StationTask(ship, crewNumberNeeded, blocks, daysToLose, this));
+            executor.execute(new StationCard.StationTask(player, crewNumberNeeded, blocks, daysToLose, this));
 
             while (!goNext);
 
@@ -78,14 +77,16 @@ public class StationCard extends Card {
     }
 
     static class StationTask implements Runnable {
+        private final Player player;
         private final Ship ship;
         private final int crewNumberNeeded;
         private final List <Integer> blocks;
         private final int daysToLose;
         private final StationCard card;
 
-        public StationTask(Ship ship, int crewNumberNeeded, List <Integer> blocks, int daysToLose, StationCard card) {
-            this.ship = ship;
+        public StationTask(Player player, int crewNumberNeeded, List <Integer> blocks, int daysToLose, StationCard card) {
+            this.player = player;
+            this.ship = player.getShip();
             this.crewNumberNeeded = crewNumberNeeded;
             this.blocks = blocks;
             this.daysToLose = daysToLose;
@@ -95,7 +96,7 @@ public class StationCard extends Card {
         public void run() {
             System.out.println("Thread Station started for ship " + ship.getColor());
 
-            if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && playerEngages) {
+            if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && player.playerEngages) {
                 // sets landed to true
                 card.setLanded(true);
                 card.setGoNext(true);

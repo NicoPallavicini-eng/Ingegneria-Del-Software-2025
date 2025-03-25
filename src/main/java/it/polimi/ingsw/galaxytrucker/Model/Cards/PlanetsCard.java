@@ -66,8 +66,7 @@ public class PlanetsCard extends Card {
         for (Player player : players) {
            goNext = false;
 
-            Ship ship = player.getShip();
-            executor.execute(new PlanetsCard.PlanetsTask(ship, planets, daysToLose, this));
+            executor.execute(new PlanetsCard.PlanetsTask(player, planets, daysToLose, this));
 
             while (!goNext);
 
@@ -91,13 +90,15 @@ public class PlanetsCard extends Card {
     }
 
     static class PlanetsTask implements Runnable {
+        private final Player player;
         private final Ship ship;
         private final List <Planet> planets;
         private final int daysToLose;
         private final PlanetsCard card;
 
-        public PlanetsTask(Ship ship, List <Planet> planets, int daysToLose, PlanetsCard card) {
-            this.ship = ship;
+        public PlanetsTask(Player player, List <Planet> planets, int daysToLose, PlanetsCard card) {
+            this.player = player;
+            this.ship = player.getShip();
             this.planets = planets;
             this.daysToLose = daysToLose;
             this.card = card;
@@ -106,9 +107,8 @@ public class PlanetsCard extends Card {
         public void run() {
             System.out.println("Thread Planets started for ship " + ship.getColor());
 
-            if (playerEngages) {
-                // TODO choice logic
-                Planet chosenPlanet = getChosenPlanet();
+            if (player.playerEngages) {
+                Planet chosenPlanet = player.getChosenPlanet();
 
                 int i = 0;
                 for (Planet planet : planets) {
@@ -119,7 +119,7 @@ public class PlanetsCard extends Card {
                     i++;
                 }
 
-                chosenPlanet.setShipLanded(player.getShip());
+                chosenPlanet.setShipLanded(ship);
 
                 ship.addBlocks(chosenPlanet.getBlocksList());
                 ship.setTravelDays(- daysToLose); // negative because deducting

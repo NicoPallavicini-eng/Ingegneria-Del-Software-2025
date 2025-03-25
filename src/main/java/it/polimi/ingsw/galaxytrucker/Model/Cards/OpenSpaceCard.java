@@ -35,7 +35,7 @@ public class OpenSpaceCard extends Card {
 
         for (Player player : players) {
             Ship ship = player.getShip();
-            executor.execute(new OpenSpaceCard.OpenSpaceTask1(ship));
+            executor.execute(new OpenSpaceCard.OpenSpaceTask1(player));
         }
 
         // Travel days get updated in reverse order
@@ -55,16 +55,18 @@ public class OpenSpaceCard extends Card {
     }
 
     static class OpenSpaceTask1 implements Runnable {
+        private final Player player;
         private final Ship ship;
 
-        public OpenSpaceTask1(Ship ship) {
-            this.ship = ship;
+        public OpenSpaceTask1(Player player) {
+            this.player = player;
+            this.ship = player.getShip();
         }
 
         public void run() {
             System.out.println("Thread OpenSpace1 started for ship " + ship.getColor());
 
-            ship.setEnginePower(getPlayerInput()); // TODO implement
+            ship.setEnginePower(player.getPlayerInput()); // TODO implement
             if (ship.getEnginePower() == 0) {
                 // If a player has zero engine power he is lost in space and out of further travelling
                 ship.setTravelDays(null);

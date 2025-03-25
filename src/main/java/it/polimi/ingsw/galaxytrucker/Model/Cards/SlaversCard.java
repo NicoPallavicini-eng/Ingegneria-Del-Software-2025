@@ -69,8 +69,7 @@ public class SlaversCard extends Card {
         for (Player player : players) {
             goNext = false;
 
-            Ship ship = player.getShip();
-            executor.execute(new SlaversCard.SlaversTask(ship, firepower, credits, daysToLose, crewLost, this));
+            executor.execute(new SlaversCard.SlaversTask(player, firepower, credits, daysToLose, crewLost, this));
 
             while (!goNext);
 
@@ -84,6 +83,7 @@ public class SlaversCard extends Card {
     }
 
     static class SlaversTask implements Runnable {
+        private final Player player;
         private final Ship ship;
         private final int firepower;
         private final int credits;
@@ -91,8 +91,9 @@ public class SlaversCard extends Card {
         private final int crewLost;
         private final SlaversCard card;
 
-        public SlaversTask(Ship ship, int firepower, int credits, int daysToLose, int crewLost, SlaversCard card) {
-            this.ship = ship;
+        public SlaversTask(Player player, int firepower, int credits, int daysToLose, int crewLost, SlaversCard card) {
+            this.player = player;
+            this.ship = player.getShip();
             this.firepower = firepower;
             this.credits = credits;
             this.daysToLose = daysToLose;

@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -69,8 +70,7 @@ public class SmugglersCard extends Card {
         for (Player player : players) {
             goNext = false;
 
-            Ship ship = player.getShip();
-            executor.execute(new SmugglersCard.SmugglersTask(ship, firepower, blocks, lostBlocksNumber, daysToLose, this));
+            executor.execute(new SmugglersCard.SmugglersTask(player, firepower, blocks, lostBlocksNumber, daysToLose, this));
 
             while (!goNext);
 
@@ -84,6 +84,7 @@ public class SmugglersCard extends Card {
     }
 
     static class SmugglersTask implements Runnable {
+        private final Player player;
         private final Ship ship;
         private final int firepower;
         private final List <Integer> blocks;
@@ -91,8 +92,9 @@ public class SmugglersCard extends Card {
         private final int daysToLose;
         private final SmugglersCard card;
 
-        public SmugglersTask(Ship ship, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose, SmugglersCard card) {
-            this.ship = ship;
+        public SmugglersTask(Player player, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose, SmugglersCard card) {
+            this.player = player;
+            this.ship = player.getShip();
             this.firepower = firepower;
             this.blocks = blocks;
             this.lostBlocksNumber = lostBlocksNumber;
@@ -105,7 +107,13 @@ public class SmugglersCard extends Card {
 
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
-                List <Integer> cargo = ship.getListOfCargo();
+
+                List <Tile> cargoTiles = ship.getListOfCargo();
+
+                List <Integer> cargo = null;
+                for (Tile tile : cargoTiles) {
+                    cargo.add(tile.getTileContent());
+                }
 
                 // considering that list is ordered:
                 for (int i = 0; i < lostBlocksNumber; i++) {

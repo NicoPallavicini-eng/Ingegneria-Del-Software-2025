@@ -4,11 +4,9 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CombatZoneCardVisi
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public class CombatZoneCard extends Card {
     private final int daysLostLessCrew;
@@ -42,29 +40,63 @@ public class CombatZoneCard extends Card {
     public void process() {
         List <Player> players = getListOfPlayers();
 
-        // Get list of ships using Streams
-        List <Ship> ships = players.stream()
-                .map(Player::getShip).collect(Collectors.toList());
+        // Get list of ships
+        List <Ship> ships = null;
+        for (Player player : players) {
+            ships.add(player.getShip());
+        }
 
-        // Finding the ship with the least crew using Streams
-        Ship lessCrewShip = ships.stream()
-                .min(Comparator.comparingInt(Ship::getNumberOfCrewMembers));
+        // Find ship with the least crew
+        List <Ship> lessCrewShips = null;
+        lessCrewShips.add(ships.getFirst());
+        for (Ship ship : ships) {
+            if (ship.getNumberOfCrewMembers() == lessCrewShips.getFirst().getNumberOfCrewMembers()) {
+                lessCrewShips.add(ship);
+            } else if (ship.getNumberOfCrewMembers() < lessCrewShips.getFirst().getNumberOfCrewMembers()) {
+                lessCrewShips.removeAll(lessCrewShips);
+                lessCrewShips.add(ship);
+            }
+        }
 
-        // Finding the ship with the least engine using Streams
-        Ship lessEngineShip = ships.stream()
-                .min(Comparator.comparingInt(Ship::getEnginePower));
+        // Find ship with the least engine power
+        List <Ship> lessEngineShips = null;
+        lessEngineShips.add(ships.getFirst());
+        for (Ship ship : ships) {
+            if (ship.getEnginePower() == lessEngineShips.getFirst().getEnginePower()) {
+                lessEngineShips.add(ship);
+            } else if (ship.getEnginePower() < lessEngineShips.getFirst().getEnginePower()) {
+                lessEngineShips.removeAll(lessEngineShips);
+                lessEngineShips.add(ship);
+            }
+        }
 
-        // Finding the ship with the least firepower using Streams
-        Ship lessFirepowerShip = ships.stream()
-                .min(Comparator.comparingInt(Ship::getFirepower));
+        // Find ship with the least firepower
+        List <Ship> lessFirepowerShips = null;
+        lessFirepowerShips.add(ships.getFirst());
+        for (Ship ship : ships) {
+            if (ship.getFirepower() == lessFirepowerShips.getFirst().getFirepower()) {
+                lessFirepowerShips.add(ship);
+            } else if (ship.getFirepower() < lessFirepowerShips.getFirst().getFirepower()) {
+                lessFirepowerShips.removeAll(lessFirepowerShips);
+                lessFirepowerShips.add(ship);
+            }
+        }
 
-        ExecutorService executor = Executors.newFixedThreadPool(3);
+        ExecutorService executor = Executors.newFixedThreadPool(lessCrewShips.size() + lessEngineShips.size() + lessFirepowerShips.size());
 
-        executor.execute(new CombatZoneCard.lessCrewTask(lessCrewShip, daysLostLessCrew));
-        executor.execute(new CombatZoneCard.lessEngineTask(lessEngineShip, crewLostLessEngine));
-        executor.execute(new CombatZoneCard.lessFirepowerTask(lessFirepowerShip, cannonballList));
+        for (Ship ship : lessCrewShips) {
+            executor.execute(new CombatZoneCard.lessCrewTask(ship, daysLostLessCrew));
+        }
 
-        // Shut down when all tasks are done
+        for (Ship ship : lessCrewShips) {
+            executor.execute(new CombatZoneCard.lessEngineTask(ship, crewLostLessEngine));
+        }
+
+        for (Ship ship : lessCrewShips) {
+            executor.execute(new CombatZoneCard.lessFirepowerTask(ship, cannonballList));
+        }
+
+        // Shut down when tasks done
         executor.shutdown();
     }
 
@@ -116,7 +148,9 @@ public class CombatZoneCard extends Card {
         public void run() {
             System.out.println("Thread lessCrew started for ship " + ship.getColor());
 
-            ship.getHit(cannonballList); // TODO
+            ship.getHit(cannonballList); // TODO expand
+
+            //l
 
             System.out.println("Thread lessCrew ended for ship " + ship.getColor());
         }
