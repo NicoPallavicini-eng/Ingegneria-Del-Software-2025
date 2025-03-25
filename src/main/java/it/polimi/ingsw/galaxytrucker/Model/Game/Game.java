@@ -1,7 +1,7 @@
-package it.polimi.ingsw.galaxytrucker.Model;
+package it.polimi.ingsw.galaxytrucker.Model.Game;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.util.ArrayList;
@@ -9,9 +9,8 @@ import java.util.List;
 
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
-    private Card currentCard;
     private int numberOfPlayers;
-    private GamePhase gamePhase = GamePhase.WAITING_ROOM;
+    private GameState gameState = new WaitingState(this);
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;
     private Deck deck;
@@ -32,14 +31,6 @@ public class Game {
         listOfPlayers.remove(disconnectedPlayer);
     }
 
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -48,12 +39,12 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public GamePhase getGamePhase() {
-        return gamePhase;
+    public GameState getGameState() {
+        return gameState;
     }
 
-    public void setGamePhase() {
-        this.gamePhase = gamePhase;
+    public void nextGameState() {
+        this.gameState = gameState.next();
     }
 
     public Hourglass getHourglass() {
@@ -76,6 +67,3 @@ public class Game {
         this.deck = deck;
     }
 }
-
-
-

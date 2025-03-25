@@ -1,7 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model;
-
-import java.util.Timer;
-import java.util.TimerTask;
+package it.polimi.ingsw.galaxytrucker.Model.Game;
 
 //the Timer class implementation is kept (in comments) for possible future use
 public class Hourglass {
