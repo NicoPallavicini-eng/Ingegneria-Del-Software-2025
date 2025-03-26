@@ -1,5 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.StardustCard;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 
 public class StardustCardVisitor extends CardVisitor {
 

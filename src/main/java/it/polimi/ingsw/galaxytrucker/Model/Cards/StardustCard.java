@@ -1,8 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.StardustCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +18,7 @@ public class StardustCard extends Card {
 
     @Override
     public void process() {
-        List<Player> players = getListOfPlayers();
+        List <Player> players = getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 

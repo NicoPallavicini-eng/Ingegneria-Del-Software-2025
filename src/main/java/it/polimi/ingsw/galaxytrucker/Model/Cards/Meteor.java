@@ -51,7 +51,7 @@ public class Meteor {
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
                     boolean hasShield = true;
-                    for (ShieldTile shield : shields) {
+                    for (ShieldTile shield : shields) { // TODO fix
                         if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction != WEST
                                 || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction != EAST) {
                             hasShield = false;

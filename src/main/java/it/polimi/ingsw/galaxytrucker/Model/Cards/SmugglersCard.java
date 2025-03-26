@@ -1,10 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -108,11 +108,12 @@ public class SmugglersCard extends Card {
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
 
-                List <Tile> cargoTiles = ship.getListOfCargo();
+                ArrayList <Tile> cargoArrayList = ship.getListOfCargo();
+                List cargoTiles = cargoArrayList.stream().toList();
 
                 List <Integer> cargo = null;
-                for (Tile tile : cargoTiles) {
-                    cargo.add(tile.getTileContent());
+                for (CargoTile tile : cargoTiles) {
+                    cargo.add(tile.getTileContent()); // TODO fix
                 }
 
                 // considering that list is ordered:

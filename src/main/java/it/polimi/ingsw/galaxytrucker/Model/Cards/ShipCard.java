@@ -1,8 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.ShipCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -101,7 +100,7 @@ public class ShipCard extends Card {
                 card.setLanded(true);
                 card.setGoNext(true);
 
-                ship.addCredits(credits);
+                ship.setCredits(ship.getCredits() + credits);
                 ship.removeCrewMembers(crewNumberLost);
                 ship.setTravelDays(- daysToLose); // negative because deducting
             } else {

@@ -1,5 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 import java.util.List;
 
 public class Planet {

@@ -1,5 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.PiratesCard;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 
 public class PiratesCardVisitor extends CardVisitor {
 

@@ -53,7 +53,7 @@ public class EpidemicCard extends Card {
                     if (cabins.contains(adjacent) && !visited.contains(adjacent)) {
                         visited.add(adjacent);
 
-                        if (adjacent.getInhabitants() == ONE) {
+                        if (adjacent.getInhabitants() == ONE) { // TODO fix
                             adjacent.updateInhabitants(NONE);
                         } else if (adjacent.getInhabitants() == TWO) {
                             adjacent.updateInhabitants(ONE);

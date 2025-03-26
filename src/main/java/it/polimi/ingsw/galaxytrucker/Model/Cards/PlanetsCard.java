@@ -1,8 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PlanetsCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -121,7 +120,7 @@ public class PlanetsCard extends Card {
 
                 chosenPlanet.setShipLanded(ship);
 
-                ship.addBlocks(chosenPlanet.getBlocksList());
+                ship.addBlocks(chosenPlanet.getBlocks());
                 ship.setTravelDays(- daysToLose); // negative because deducting
             } else {
                 card.setGoNext(true);

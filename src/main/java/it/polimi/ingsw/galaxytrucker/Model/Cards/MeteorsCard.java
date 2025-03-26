@@ -1,16 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.MeteorsCardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.COLUMN;
-import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
-import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
 public class MeteorsCard extends Card {
     private final List <Meteor> meteors;

@@ -49,7 +49,7 @@ public class Cannonball {
                 } else {
                     ArrayList<ShieldTile> shields = ship.getListOfShield();
                     boolean hasShield = true;
-                    for (ShieldTile shield : shields) {
+                    for (ShieldTile shield : shields) { // TODO fix4
                         if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction != WEST
                                 || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction != EAST) {
                             hasShield = false;
@@ -67,7 +67,7 @@ public class Cannonball {
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
                     boolean hasShield = true;
-                    for (ShieldTile shield : shields) {
+                    for (ShieldTile shield : shields) { // TODO fix
                         if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && this.direction != NORTH
                                 || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && this.direction != SOUTH) {
                             hasShield = false;
