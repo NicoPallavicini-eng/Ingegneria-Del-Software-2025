@@ -510,7 +510,7 @@ public class Ship {
         int multiplicator = 1;
         for(EngineTile engineTile : listEngine){
             if(engineTile.getActiveState()){
-                if(engineTile.GetDoublePower()){
+                if(engineTile.getDoublePower()){
                     multiplicator = 2;
                 }
                 enginePower+=multiplicator*1;
@@ -522,7 +522,7 @@ public class Ship {
 
     public void setEnginePower(EngineTile tile,boolean active){
         if(tile!=null){
-            if(tile.GetDoublePower()){
+            if(tile.getDoublePower()){
                 tile.setActiveState(active);
             }
         }
