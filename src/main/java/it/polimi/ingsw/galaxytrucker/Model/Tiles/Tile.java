@@ -30,11 +30,6 @@ public class Tile{
         return type;
     }
 
-    public List<Tile> getAdjacentTiles(){
-        //Move to ship class
-        return null;
-    }
-
     public void rotate(Side side){
 
         ConnectorType tempRotate;

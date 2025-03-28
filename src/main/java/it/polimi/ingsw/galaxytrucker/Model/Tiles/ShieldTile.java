@@ -19,7 +19,7 @@ public class ShieldTile extends Tile {
         return activeState;
     }
 
-    public ShieldOrientation GetOrientation(){
+    public ShieldOrientation getOrientation(){
         return orientation;
     }
 
