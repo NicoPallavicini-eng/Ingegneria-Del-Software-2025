@@ -3,11 +3,18 @@ package it.polimi.ingsw.galaxytrucker.Model.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 
 public class TravellingState implements GameState {
-    private Game game;
-    private Card currentCard;
+    private final Game game;
+    private final Card currentCard;
 
+    public Game getGame() {
+        return game;
+    }
 
-    public TravellingState( Game game ) {
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public TravellingState(Game game ) {
         this.game = game;
         currentCard = getGame().getDeck().drawCard();
     }

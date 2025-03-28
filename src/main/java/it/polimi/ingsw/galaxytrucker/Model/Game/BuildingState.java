@@ -9,6 +9,10 @@ public class BuildingState implements GameState {
         this.game = game;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public GameState next() {
         return new TravellingState(game);
     }
