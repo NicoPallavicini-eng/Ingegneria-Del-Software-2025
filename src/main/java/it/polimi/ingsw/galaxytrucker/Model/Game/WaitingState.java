@@ -1,7 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Game;
 
 public class WaitingState implements GameState {
-    private Game game;
+    private final Game game;
 
     public WaitingState( Game game ) {
         this.game = game;
@@ -17,7 +17,7 @@ public class WaitingState implements GameState {
     }
 
     public void process() {
-        //input valore max player
-        // attendi connessioni
+        //input max player
+        // wait for connections
     }
 }
