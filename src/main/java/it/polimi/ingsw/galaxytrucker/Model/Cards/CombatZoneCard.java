@@ -111,7 +111,7 @@ public class CombatZoneCard extends Card {
         public void run() {
             System.out.println("Thread lessCrew started for ship " + ship.getColor());
 
-            ship.setTravelDays(- daysLostLessCrew); // negative because deducting
+            ship.setTravelDays(ship.getTravelDays() - daysLostLessCrew);
 
             System.out.println("Thread lessCrew ended for ship " + ship.getColor());
         }

@@ -101,7 +101,8 @@ public class StationCard extends Card {
                 card.setGoNext(true);
 
                 ship.addBlocks(blocks);
-                ship.setTravelDays(- daysToLose); // negative because deducting
+                ship.setTravelDays(ship.getTravelDays() - daysToLose);
+
             } else {
                 card.setGoNext(true);
             }

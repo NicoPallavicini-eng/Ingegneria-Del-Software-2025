@@ -121,7 +121,7 @@ public class PlanetsCard extends Card {
                 chosenPlanet.setShipLanded(ship);
 
                 ship.addBlocks(chosenPlanet.getBlocks());
-                ship.setTravelDays(- daysToLose); // negative because deducting
+                ship.setTravelDays(ship.getTravelDays() - daysToLose);
             } else {
                 card.setGoNext(true);
             }

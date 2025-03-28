@@ -87,6 +87,7 @@ public class OpenSpaceCard extends Card {
         public void run() {
             System.out.println("Thread OpenSpace2 started for ship " + ship.getColor());
 
+            // TODO player set engine power (?)
             ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());
             card.setGoNext(true);
 

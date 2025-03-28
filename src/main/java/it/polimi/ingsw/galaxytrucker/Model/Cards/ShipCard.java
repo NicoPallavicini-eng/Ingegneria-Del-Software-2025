@@ -101,8 +101,8 @@ public class ShipCard extends Card {
                 card.setGoNext(true);
 
                 ship.setCredits(ship.getCredits() + credits);
-                ship.removeCrewMembers(crewNumberLost);
-                ship.setTravelDays(- daysToLose); // negative because deducting
+                ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewNumberLost);
+                ship.setTravelDays(ship.getTravelDays() - daysToLose);
             } else {
                 card.setGoNext(true);
             }

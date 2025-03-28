@@ -126,7 +126,7 @@ public class SmugglersCard extends Card {
 
                 if (player.playerEngages) {
                     ship.addBlocks(blocks);
-                    ship.setTravelDays(- daysToLose); // negative because deducting
+                    ship.setTravelDays(ship.getTravelDays() - daysToLose);
                 }
             }
 

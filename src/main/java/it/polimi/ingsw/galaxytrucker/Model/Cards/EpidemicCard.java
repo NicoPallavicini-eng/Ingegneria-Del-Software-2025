@@ -45,17 +45,11 @@ public class EpidemicCard extends Card {
         public void run() {
             System.out.println("Thread Epidemic started for ship " + ship.getColor());
 
-            List <Tile> cabins = ship.getListOfCabin();
-            List <CabinTile> cabinsC = new ArrayList<>();
-            List <Tile> visited = new ArrayList<>();
-
-            // Convert all cabins from Tile to CabinTile
-            for (Tile cabin : cabins) {
-                cabinsC.add((CabinTile)cabin);
-            }
+            List <CabinTile> cabins = ship.getListOfCabin();
+            List <CabinTile> visited = new ArrayList<>();
 
             // Process each cabin
-            for (CabinTile tile : cabinsC) {
+            for (CabinTile tile : cabins) {
                 if (visited.contains(tile)) continue; // Skip already visited cabins
 
                 visited.add(tile);

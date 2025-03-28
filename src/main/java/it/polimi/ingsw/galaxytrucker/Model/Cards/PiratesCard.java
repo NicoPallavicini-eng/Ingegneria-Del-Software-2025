@@ -116,7 +116,7 @@ public class PiratesCard extends Card {
 
                 if (player.playerEngages) {
                     ship.setCredits(ship.getCredits() + credits);
-                    ship.setTravelDays(- daysToLose); // negative because deducting
+                    ship.setTravelDays(ship.getTravelDays() - daysToLose);
                 }
             }
 
