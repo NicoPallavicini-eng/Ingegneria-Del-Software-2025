@@ -9,7 +9,7 @@ public class Ship {
 
     private ArrayList<ArrayList<Tile>> floorplanArrayList;
 
-    private Color color;
+    private final Color color;
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
 
