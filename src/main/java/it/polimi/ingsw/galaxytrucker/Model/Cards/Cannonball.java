@@ -5,6 +5,10 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.*;
+import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
+import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
+
 public class Cannonball {
     private final boolean bigCannonball;
     private final Direction direction;

@@ -4,9 +4,12 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 public class EpidemicCard extends Card {
     public EpidemicCard(boolean levelTwo, boolean used) {
@@ -43,36 +46,51 @@ public class EpidemicCard extends Card {
             System.out.println("Thread Epidemic started for ship " + ship.getColor());
 
             List <Tile> cabins = ship.getListOfCabin();
+            List <CabinTile> cabinsC = new ArrayList<>();
+            List <Tile> visited = new ArrayList<>();
 
-            List <Tile> visited = null;
+            // Convert all cabins from Tile to CabinTile
+            for (Tile cabin : cabins) {
+                cabinsC.add((CabinTile)cabin);
+            }
 
-            for (Tile tile : cabins) {
+            // Process each cabin
+            for (CabinTile tile : cabinsC) {
+                if (visited.contains(tile)) continue; // Skip already visited cabins
+
                 visited.add(tile);
                 List <Tile> adjacentTiles = ship.getAdiacentTiles(tile);
+                List <CabinTile> adjacentCabins = new ArrayList<>();
+
+                // Find adjacent cabins
                 for (Tile adjacent : adjacentTiles) {
-                    if (cabins.contains(adjacent) && !visited.contains(adjacent)) {
-                        visited.add(adjacent);
-
-                        if (adjacent.getInhabitants() == ONE) { // TODO fix
-                            adjacent.updateInhabitants(NONE);
-                        } else if (adjacent.getInhabitants() == TWO) {
-                            adjacent.updateInhabitants(ONE);
-                        } else if (adjacent.getInhabitants() == ALIEN) {
-                            adjacent.updateInhabitants(NONE);
-                        }
-
-                        if (tile.getInhabitants() == ONE) {
-                            tile.updateInhabitants(NONE);
-                        } else if (tile.getInhabitants() == TWO) {
-                            tile.updateInhabitants(ONE);
-                        } else if (tile.getInhabitants() == ALIEN) {
-                            tile.updateInhabitants(NONE);
-                        }
+                    if (cabins.contains(adjacent)) {
+                        adjacentCabins.add((CabinTile) adjacent);
                     }
+                }
+
+                // Process adjacent cabins
+                for (CabinTile adjacentCabin : adjacentCabins) {
+                    if (visited.contains(adjacentCabin)) continue; // Skip already visited cabins
+
+                    visited.add(adjacentCabin);
+                    updateInhabitants(adjacentCabin);
+                    updateInhabitants(tile);
                 }
             }
 
             System.out.println("Thread Epidemic ended for ship " + ship.getColor());
+        }
+
+        // Helper method to update inhabitants
+        private void updateInhabitants(CabinTile cabin) {
+            if (cabin.getInhabitants() == ONE) {
+                cabin.updateInhabitants(NONE);
+            } else if (cabin.getInhabitants() == TWO) {
+                cabin.updateInhabitants(ONE);
+            } else if (cabin.getInhabitants() == ALIEN) {
+                cabin.updateInhabitants(NONE);
+            }
         }
     }
 }
