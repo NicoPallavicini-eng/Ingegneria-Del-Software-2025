@@ -37,6 +37,6 @@ public class CabinTile extends Tile {
 
     @Override
     public void accept(TileVisitor visitor) {
-        visitor.visitCabin(this);
+        visitor.visit(this);
     }
 }
