@@ -9,7 +9,7 @@ public class Ship {
 
     private ArrayList<ArrayList<Tile>> floorplanArrayList;
 
-    private Color color;
+    private final Color color;
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
 
@@ -18,6 +18,10 @@ public class Ship {
     private int crewMembers;
     private int credits;
     private Integer travelDays;
+
+    int row_max;
+    int col_max;
+
 
     //serve per vedere se il giocatore decide di atterare;
     private boolean playerEngaged;
@@ -57,14 +61,284 @@ public class Ship {
     }
 
 
+    public Color getColor() {
+        return color;
+    }
 
     public ArrayList<ArrayList<Tile>> getFloorplanArrayList() {
         return floorplanArrayList;
     }
 
-    public boolean checkFloorplan(){
-       return true;
+    public int findTileOnFloorplanRow(Tile tile){
+        int index=0;
+        for(ArrayList<Tile> row:floorplanArrayList){
+            for(int j=0;j<col_max;j++){
+                if(row.get(j)!=null && row.get(j).equals(tile)){
+                    return index;
+                }
+            }
+            index++;
+        }
+        return -1;
+
     }
+    public int findTileOnFloorPlanColumn(Tile tile){
+        for(ArrayList<Tile> row:floorplanArrayList){
+            for(int j=0;j<col_max;j++){
+                if(row.get(j)!=null && row.get(j).equals(tile)){
+                    return j;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public ArrayList<Tile> getAdiacentTiles(Tile centralTile){
+        int row= findTileOnFloorplanRow(centralTile);
+        int column= findTileOnFloorPlanColumn(centralTile);
+        Tile tile = floorplanArrayList.get(row).get(column);
+        ArrayList<Tile> adiacentTiles = new ArrayList<>();
+        if(row-1>=0){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        if(column+1<col_max){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        if(row+1<row_max){
+            adiacentTiles.add(tile);
+        }else {
+            adiacentTiles.add(null);
+        }
+        if(column-1>=0){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        return adiacentTiles;
+    }
+
+    public ArrayList<Tile> getAdiacentTiles(int row,int column){
+        Tile tile = floorplanArrayList.get(row).get(column);
+        ArrayList<Tile> adiacentTiles = new ArrayList<>();
+        if(row-1>=0){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        if(column+1<col_max){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        if(row+1<row_max){
+            adiacentTiles.add(tile);
+        }else {
+            adiacentTiles.add(null);
+        }
+        if(column-1>=0){
+            adiacentTiles.add(tile);
+        }else{
+            adiacentTiles.add(null);
+        }
+        return adiacentTiles;
+    }
+
+
+    public boolean checkFloorPlanConnection() {
+        for (ArrayList<Tile> list : floorplanArrayList) {
+            for (Tile tile : list) {
+                if(tile!=null){
+                    ArrayList<Tile> adiacentTile = getAdiacentTiles(tile);
+                    List<ConnectorType> connectors = tile.getConnectors();
+                    if(adiacentTile.get(0)!=null){
+                        //north
+                        ConnectorType connector = connectors.get(0);
+                        ConnectorType connectorAdiacent = adiacentTile.get(0).getConnectors().get(2);
+                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+                                return false;
+                            }
+                        }else{
+                            return false;
+                        }
+                    }
+                    if(adiacentTile.get(1)!=null){
+                        //west
+                        ConnectorType connector = connectors.get(1);
+                        ConnectorType connectorAdiacent = adiacentTile.get(1).getConnectors().get(3);
+                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+                                return false;
+                            }
+                        }else{
+                            return false;
+                        }
+                    }
+                    if(adiacentTile.get(2)!=null){
+                        //south
+                        ConnectorType connector = connectors.get(2);
+                        ConnectorType connectorAdiacent = adiacentTile.get(2).getConnectors().get(0);
+                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+                                return false;
+                            }
+                        }else{
+                            return false;
+                        }
+                    }
+                    if(adiacentTile.get(3)!=null){
+                        //east
+                        ConnectorType connector = connectors.get(3);
+                        ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
+                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+                                return false;
+                            }
+                        }else{
+                            return false;
+                        }
+                    }
+
+                }
+            }
+        }
+        for(ArrayList<Tile> list : floorplanArrayList) {
+            for (Tile tile : list) {
+                if(tile.getType()==TileType.ENGINE){
+                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+//    public ArrayList<Tile> checkFloorPlanConnection() {
+//        ArrayList<Tile> eliminatedTilesList = new ArrayList<>();
+//        boolean centralTileAdded = false;
+//
+//        for (ArrayList<Tile> list : floorplanArrayList) {
+//            for (Tile tile : list) {
+//                if(tile!=null){
+//                    ArrayList<Tile> adiacentTile = getAdiacentTiles(tile);
+//                    List<ConnectorType> connectors = tile.getConnectors();
+//                    if(adiacentTile.get(0)!=null){
+//                        //north
+//                        ConnectorType connector = connectors.get(0);
+//                        ConnectorType connectorAdiacent = adiacentTile.get(0).getConnectors().get(2);
+//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+//                                eliminatedTilesList.add(adiacentTile.get(0));
+//                            }
+//                        }else{
+//                            eliminatedTilesList.add(tile);
+//                        }
+//                    }
+//                    if(adiacentTile.get(1)!=null){
+//                        //west
+//                        ConnectorType connector = connectors.get(1);
+//                        ConnectorType connectorAdiacent = adiacentTile.get(1).getConnectors().get(3);
+//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+//                                return false;
+//                            }
+//                        }else{
+//                            return false;
+//                        }
+//                    }
+//                    if(adiacentTile.get(2)!=null){
+//                        //south
+//                        ConnectorType connector = connectors.get(2);
+//                        ConnectorType connectorAdiacent = adiacentTile.get(2).getConnectors().get(0);
+//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+//                                return false;
+//                            }
+//                        }else{
+//                            return false;
+//                        }
+//                    }
+//                    if(adiacentTile.get(3)!=null){
+//                        //east
+//                        ConnectorType connector = connectors.get(3);
+//                        ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
+//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
+//                                return false;
+//                            }
+//                        }else{
+//                            return false;
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//        for(ArrayList<Tile> list : floorplanArrayList) {
+//            for (Tile tile : list) {
+//                if(tile.getType()==TileType.ENGINE){
+//                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
+    public ArrayList<Tile> checkFloorplanConnection(){
+        Tile centralTile = floorplanArrayList.get(2).get(3);
+
+        ArrayList<Tile> tileToVisitList = getAdiacentTiles(centralTile);
+        ArrayList<Tile> tileVisitedList = new ArrayList<>();
+
+        for(Tile tileToVisit: tileToVisitList) {
+            for (Tile tileVisited : tileVisitedList) {
+                if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
+                    tileVisitedList.add(tileToVisit);
+                    ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
+                    for(Tile adiacentTile : nearTile){
+                        tileToVisitList.add(adiacentTile);
+                    }
+
+                }
+            }
+            //tileVisitedList.add(tileToVisit);
+
+
+        }
+
+       return tileVisitedList;
+    }
+
+    public ArrayList<Tile> checkFloorplanConnection(Tile tile){
+        Tile centralTile = tile;
+
+        ArrayList<Tile> tileToVisitList = getAdiacentTiles(centralTile);
+        ArrayList<Tile> tileVisitedList = new ArrayList<>();
+
+        for(Tile tileToVisit: tileToVisitList) {
+            for (Tile tileVisited : tileVisitedList) {
+                if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
+                    tileVisitedList.add(tileToVisit);
+                    ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
+                    for(Tile adiacentTile : nearTile){
+                        tileToVisitList.add(adiacentTile);
+                    }
+
+                }
+            }
+            //tileVisitedList.add(tileToVisit);
+        }
+
+        return tileVisitedList;
+    }
+
 
     public int getPlayerPosition() {
         return playerPosition;
@@ -120,15 +394,15 @@ public class Ship {
     public int getNumberOfBatteries(){
         return batteries;
     }
-    public void removeBatteries(int batteries){
-        this.batteries -= batteries;
+    public void setBatteries(int batteries){
+        this.batteries = batteries;
     }
 
     public int getNumberOfCrewMembers(){
         return crewMembers;
     }
-    public void removeCrewMembers(int crewMembers){
-        this.crewMembers -= crewMembers;
+    public void setCrewMembers(int crewMembers){
+        this.crewMembers = crewMembers;
     }
 
     public void addLostTiles(int lostTiles){
@@ -307,8 +581,8 @@ public class Ship {
         return shieldOrientationList;
     }
 
-    public ArrayList<Tile> getListOfCabin(){
-        ArrayList<Tile> cabinList = new ArrayList<>();
+    public ArrayList<CabinTile> getListOfCabin(){
+        ArrayList<CabinTile> cabinList = new ArrayList<>();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
 
         for(ArrayList<Tile> list : floorplanArrayList){
@@ -323,8 +597,8 @@ public class Ship {
     }
 
      */
-    public ArrayList<Tile> getListOfBattery(){
-        ArrayList<Tile> batteriesList = new ArrayList<>();
+    public ArrayList<BatteryTile> getListOfBattery(){
+        ArrayList<BatteryTile> batteriesList = new ArrayList<>();
         BatteryTileVisitor batteryTileVisitor = new BatteryTileVisitor();
 
         for(ArrayList<Tile> list : floorplanArrayList){
@@ -340,9 +614,9 @@ public class Ship {
 
 
     /*example of Tile Visitor*/
-    public ArrayList<Tile> getListOfCargo(){
-        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
-        ArrayList<Tile> cargoList = new ArrayList<>();
+    public ArrayList<CargoTile> getListOfCargo(){
+        CargoTileVisitor cabinTileVisitor = new CargoTileVisitor();
+        ArrayList<CargoTile> cargoList = new ArrayList<>();
 
 
         for(ArrayList<Tile> tilelist : floorplanArrayList){
@@ -356,6 +630,43 @@ public class Ship {
         return cargoList;
     }
 
+    public ArrayList<BioadaptorTile> getListOfPurpleAdaptors(){
+        ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
+        ArrayList<BioadaptorTile> purpleList = new ArrayList<>();
+        for( BioadaptorTile bioadaptorTile : bioadaptorList ){
+            if(bioadaptorTile.getColor()==AlienColor.PURPLE){
+                purpleList.add(bioadaptorTile);
+            }
+        }
+        return purpleList;
+    }
+
+    public ArrayList<BioadaptorTile> getListOfOrangeAdaptors(){
+        ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
+        ArrayList<BioadaptorTile> orangeList = new ArrayList<>();
+        for( BioadaptorTile bioadaptorTile : bioadaptorList ){
+            if(bioadaptorTile.getColor()==AlienColor.ORANGE){
+                orangeList.add(bioadaptorTile);
+            }
+        }
+        return orangeList;
+    }
+
+    public ArrayList<BioadaptorTile> getListOfAdaptors(){
+        BioadaptorTile bioadaptorTileVisitor = new BioadaptorTile();
+        ArrayList<BioadaptorTile> bioadaptorList = new ArrayList<>();
+
+
+        for(ArrayList<Tile> tilelist : floorplanArrayList){
+            for(Tile tile : tilelist){
+                if(tile!=null){
+                    bioadaptorTileVisitor.visit(tile);
+                }
+            }
+        }
+        bioadaptorListList = bioadaptorTileVisitor.getList();
+        return bioadaptorList;
+    }
 
     //chiedere se restituire la lista intera?
     public ArrayList<Tile> getRowListTiles(int row){
