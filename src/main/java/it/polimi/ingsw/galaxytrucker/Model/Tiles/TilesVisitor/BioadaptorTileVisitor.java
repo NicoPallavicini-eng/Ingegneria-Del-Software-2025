@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class BioadaptorTileVisitor implements TileVisitor {
     private ArrayList<BioadaptorTile> list;
 
-    public BioadaptorTileVisitor(ArrayList<BioadaptorTile> list) {
-        this.list = list;
+    public BioadaptorTileVisitor(){
+        list = new ArrayList<BioadaptorTile>();
     }
 
     public ArrayList<BioadaptorTile> getList() {

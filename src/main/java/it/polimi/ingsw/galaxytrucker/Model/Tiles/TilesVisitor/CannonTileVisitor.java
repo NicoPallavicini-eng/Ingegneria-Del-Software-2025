@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class CannonTileVisitor implements TileVisitor {
     private ArrayList<CannonTile> list;
 
-    public CannonTileVisitor(ArrayList<CannonTile> list) {
-        this.list = list;
+    public CannonTileVisitor() {
+        list = new ArrayList<CannonTile>();
     }
 
     public ArrayList<CannonTile> getList() {
