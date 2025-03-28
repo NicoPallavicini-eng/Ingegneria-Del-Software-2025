@@ -6,6 +6,11 @@ public class WaitingState implements GameState {
     public WaitingState( Game game ) {
         this.game = game;
     }
+
+    public Game getGame() {
+        return game;
+    }
+
     @Override
     public GameState next() {
         return new BuildingState(game);

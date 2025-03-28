@@ -16,4 +16,8 @@ public class FinalState implements GameState {
     public void process() {
         // output points
     }
+
+    public Game getGame() {
+        return game;
+    }
 }
