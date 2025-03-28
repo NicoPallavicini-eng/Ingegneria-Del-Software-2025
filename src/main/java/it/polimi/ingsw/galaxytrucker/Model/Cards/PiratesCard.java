@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -16,8 +17,8 @@ public class PiratesCard extends Card {
     private boolean defeated = false;
     private boolean goNext;
 
-    public PiratesCard(boolean levelTwo, boolean used, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
-        super(levelTwo, used);
+    public PiratesCard(boolean levelTwo, boolean used, PiratesCardVisitor visitor, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
+        super(levelTwo, used, visitor);
         this.firepower = firepower;
         this.credits = credits;
         this.daysToLose = daysToLose;
@@ -40,8 +41,8 @@ public class PiratesCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitor(PiratesCardVisitor visitor) {
-        visitor.handlePiratesCard(this);
+    public void acceptCardVisitor(TravellingState state, PiratesCardVisitor visitor) {
+        visitor.handlePiratesCard(state,this);
     }
 
     public void setDefeated(boolean defeated) {
@@ -60,8 +61,7 @@ public class PiratesCard extends Card {
         return goNext;
     }
 
-    @Override
-    public void process() {
+    public void process(boolean accomplished) {
         List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

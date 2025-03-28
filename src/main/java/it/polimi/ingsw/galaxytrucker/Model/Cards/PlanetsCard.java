@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -14,8 +15,8 @@ public class PlanetsCard extends Card {
     private boolean[] landed;
     private boolean goNext;
 
-    public PlanetsCard(boolean levelTwo, boolean used, List <Planet> planets, int daysToLose) {
-        super(levelTwo, used);
+    public PlanetsCard(boolean levelTwo, boolean used, PlanetsCardVisitor visitor, List <Planet> planets, int daysToLose) {
+        super(levelTwo, used, visitor);
         int dim = planets.size();
         this.planets = planets;
         this.daysToLose = daysToLose;
@@ -34,8 +35,8 @@ public class PlanetsCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitor(PlanetsCardVisitor visitor) {
-        visitor.handlePlanetsCard(this);
+    public void acceptCardVisitor(TravellingState state, PlanetsCardVisitor visitor) {
+        visitor.handlePlanetsCard(state, this);
     }
 
     public void setLanded(boolean landed, int i) {
@@ -54,8 +55,7 @@ public class PlanetsCard extends Card {
         return goNext;
     }
 
-    @Override
-    public void process() {
+    public void process(List <Boolean> landed) {
         int planetsNumber = planets.size();
         boolean availablePlanets = true;
 

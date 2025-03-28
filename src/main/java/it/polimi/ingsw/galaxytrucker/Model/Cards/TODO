@@ -4,17 +4,28 @@ CombatZoneCard:
 EpidemicCard: X
 MeteorsCard:
     getHit(meteors);
-OpenSpaceCard:
+! OpenSpaceCard:
     player input of enginePower;
-PiratesCard:
+! PiratesCard:
     getHit(cannonballList);
-PlanetsCard:
+! PlanetsCard:
     player input of planet;
-ShipCard: X
-SlaversCard: X
-SmugglersCard: X
+! ShipCard: X
+! SlaversCard: X
+! SmugglersCard: X
 StardustCard: X
-StationCard: X
+! StationCard: X
 
 UML
-Move stuff to Controller
+
+
+TODO Adds/Shifts to TravellingState:
+
+OpenSpaceCard: ok
+ - enginePowerChosen: bool => 1 when all done,
+    then engines turn on in reverse order
+PiratesCard, SlaversCard, SmugglersCard,
+ShipCard, StationCard: ok
+ - accomplished: bool
+PlanetsCard: ok
+ - landed: List bool[planets.size()]

@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ public class SmugglersCard extends Card {
     private boolean defeated = false;
     private boolean goNext;
 
-    public SmugglersCard(boolean levelTwo, boolean used, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
-        super(levelTwo, used);
+    public SmugglersCard(boolean levelTwo, boolean used, SmugglersCardVisitor visitor, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
+        super(levelTwo, used, visitor);
         this.firepower = firepower;
         this.blocks = blocks;
         this.lostBlocksNumber = lostBlocksNumber;
@@ -42,8 +43,8 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitor(SmugglersCardVisitor visitor) {
-        visitor.handleSmugglersCard(this);
+    public void acceptCardVisitor(TravellingState state, SmugglersCardVisitor visitor) {
+        visitor.handleSmugglersCard(state, this);
     }
 
     public void setDefeated(boolean defeated) {
@@ -62,8 +63,7 @@ public class SmugglersCard extends Card {
         return goNext;
     }
 
-    @Override
-    public void process() {
+    public void process(boolean accomplished) {
         List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

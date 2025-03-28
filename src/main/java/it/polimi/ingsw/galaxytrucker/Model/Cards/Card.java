@@ -1,14 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 
 public abstract class Card {
     private final boolean levelTwo;
+    private final CardVisitor visitor;
     private boolean used;
 
-    public Card(boolean levelTwo, boolean used) {
+    public Card(boolean levelTwo, boolean used, CardVisitor visitor) {
         this.levelTwo = levelTwo;
         this.used = false;
+        this.visitor = visitor;
     }
 
     public boolean isUsed() {
@@ -25,5 +28,9 @@ public abstract class Card {
 
     public void process () {}
 
-    public void acceptCardVisitor(CardVisitor visitor) {}
+    public void acceptCardVisitor(TravellingState state, CardVisitor visitor) {}
+
+    public CardVisitor getCardVisitor() {
+        return visitor;
+    }
 }

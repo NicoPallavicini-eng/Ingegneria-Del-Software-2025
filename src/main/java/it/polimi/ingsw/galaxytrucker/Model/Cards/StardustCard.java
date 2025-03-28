@@ -3,14 +3,15 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class StardustCard extends Card {
-    public StardustCard(boolean levelTwo, boolean used) {
-        super(levelTwo, used);
+    public StardustCard(boolean levelTwo, boolean used, StardustCardVisitor visitor) {
+        super(levelTwo, used, visitor);
     }
 
     public void acceptCardVisitor(StardustCardVisitor visitor) {

@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -11,12 +12,12 @@ import java.util.concurrent.Executors;
 public class OpenSpaceCard extends Card {
     private boolean goNext;
 
-    public OpenSpaceCard(boolean levelTwo, boolean used) {
-        super(levelTwo, used);
+    public OpenSpaceCard(boolean levelTwo, boolean used, OpenSpaceCardVisitor visitor) {
+        super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(OpenSpaceCardVisitor visitor) {
-        visitor.handleOpenSpaceCard(this);
+    public void acceptCardVisitor(TravellingState state, OpenSpaceCardVisitor visitor) {
+        visitor.handleOpenSpaceCard(state, this);
     }
 
     public void setGoNext(boolean goNext) {
@@ -27,8 +28,7 @@ public class OpenSpaceCard extends Card {
         return goNext;
     }
 
-    @Override
-    public void process() {
+    public void process(boolean enginePowerChosen) {
         List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -13,8 +14,8 @@ public class CombatZoneCard extends Card {
     private final int crewLostLessEngine;
     private final List <Cannonball> cannonballList;
 
-    public CombatZoneCard(boolean levelTwo, boolean used, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
-        super(levelTwo, used);
+    public CombatZoneCard(boolean levelTwo, boolean used, CombatZoneCardVisitor visitor, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
+        super(levelTwo, used, visitor);
         this.daysLostLessCrew = daysLostLessCrew;
         this.crewLostLessEngine = crewLostLessEngine;
         this.cannonballList = cannonballList;

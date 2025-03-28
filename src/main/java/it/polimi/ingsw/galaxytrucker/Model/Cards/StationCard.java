@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -15,8 +16,8 @@ public class StationCard extends Card {
     private boolean landed = false;
     private boolean goNext;
 
-    public StationCard(boolean levelTwo, boolean used, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
-        super(levelTwo, used);
+    public StationCard(boolean levelTwo, boolean used, StationCardVisitor visitor, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
+        super(levelTwo, used, visitor);
         this.crewNumberNeeded = crewNumberNeeded;
         this.blocks = blocks;
         this.daysToLose = daysToLose;
@@ -34,8 +35,8 @@ public class StationCard extends Card {
         return crewNumberNeeded;
     }
 
-    public void acceptCardVisitor(StationCardVisitor visitor) {
-        visitor.handleStationCard(this);
+    public void acceptCardVisitor(TravellingState state, StationCardVisitor visitor) {
+        visitor.handleStationCard(state, this);
     }
 
     public void setLanded(boolean landed) {
@@ -54,8 +55,7 @@ public class StationCard extends Card {
         return goNext;
     }
 
-    @Override
-    public void process() {
+    public void process(boolean accomplished) {
         List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());

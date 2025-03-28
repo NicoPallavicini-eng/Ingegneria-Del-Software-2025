@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -11,8 +12,8 @@ import java.util.concurrent.Executors;
 public class MeteorsCard extends Card {
     private final List <Meteor> meteors;
 
-    public MeteorsCard(boolean levelTwo, boolean used, List <Meteor> meteors) {
-        super(levelTwo, used);
+    public MeteorsCard(boolean levelTwo, boolean used, List <Meteor> meteors, MeteorsCardVisitor visitor) {
+        super(levelTwo, used, visitor);
         this.meteors = meteors;
     }
 

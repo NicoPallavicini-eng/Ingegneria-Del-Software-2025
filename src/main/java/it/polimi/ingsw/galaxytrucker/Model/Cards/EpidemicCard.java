@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ import java.util.concurrent.Executors;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 public class EpidemicCard extends Card {
-    public EpidemicCard(boolean levelTwo, boolean used) {
-        super(levelTwo, used);
+    public EpidemicCard(boolean levelTwo, boolean used, EpidemicCardVisitor visitor) {
+        super(levelTwo, used, visitor);
     }
 
     public void acceptCardVisitor(EpidemicCardVisitor visitor) {
