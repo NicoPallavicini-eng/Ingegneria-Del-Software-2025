@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class CargoTileVisitor implements TileVisitor {
     private ArrayList<CargoTile> list;
 
-    public CargoTileVisitor(ArrayList<CargoTile> list) {
-        this.list = list;
+    public CargoTileVisitor() {
+        list = new ArrayList<CargoTile>();
     }
 
     public ArrayList<CargoTile> getList() {

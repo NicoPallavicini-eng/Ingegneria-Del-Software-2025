@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class CabinTileVisitor implements TileVisitor {
     private ArrayList<CabinTile> list;
 
-    public CabinTileVisitor(ArrayList<CabinTile> list) {
-        this.list = list;
+    public CabinTileVisitor() {
+        list = new ArrayList<CabinTile>();
     }
 
     public ArrayList<CabinTile> getList() {

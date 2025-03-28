@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class ShieldTileVisitor implements TileVisitor {
     private ArrayList<ShieldTile> list;
 
-    public ShieldTileVisitor(ArrayList<ShieldTile> list) {
-        this.list = list;
+    public ShieldTileVisitor() {
+        list = new ArrayList<ShieldTile>();
     }
 
     public ArrayList<ShieldTile> getList() {

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class EngineTileVisitor implements TileVisitor {
     private ArrayList<EngineTile> list;
 
-    public EngineTileVisitor(ArrayList<EngineTile> list) {
-        this.list = list;
+    public EngineTileVisitor() {
+        list = new ArrayList<EngineTile>();
     }
 
     public ArrayList<EngineTile> getList() {

@@ -14,7 +14,7 @@ public class EngineTile extends Tile{
         this.activeState = activeState;
     }
 
-    public boolean GetDoublePower(){
+    public boolean getDoublePower(){
         return doublePower;
     }
 
@@ -26,7 +26,7 @@ public class EngineTile extends Tile{
         this.activeState = activeState;
     }
 
-    public Direction GetDirection(){
+    public Direction getDirection(){
         return direction;
     }
 
