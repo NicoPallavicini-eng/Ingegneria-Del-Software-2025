@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -481,7 +482,7 @@ public class Ship {
         for(ArrayList<Tile> list : floorplanArrayList){
             for(Tile tile : list){
                 if(tile!=null){
-                    cannonTileVisitor.visit(tile);
+                    tile.accept(cannonTileVisitor);
                 }
             }
         }
@@ -535,7 +536,7 @@ public class Ship {
         for(ArrayList<Tile> list : floorplanArrayList){
             for(Tile tile : list){
                 if(tile!=null){
-                    engineTileVisitor.visit(tile);
+                    tile.accept(engineTileVisitor);
                 }
             }
         }
@@ -562,7 +563,7 @@ public class Ship {
         for (ArrayList<Tile> list : floorplanArrayList) {
             for (Tile tile : list) {
                 if (tile != null) {
-                    shieldTileVisitor.visit(tile);
+                    tile.accept(shieldTileVisitor);
                 }
             }
         }
@@ -574,9 +575,9 @@ public class Ship {
         ArrayList<ShieldOrientation> shieldOrientationList = new ArrayList<>();
         ArrayList<ShieldTile> shieldList = new ArrayList<>();
         shieldList = getListOfShield();
-        for(Tile tile : shieldList){
+        for(ShieldTile shieldTile : shieldList){
             //ShieldTile shieldTile = (ShieldTile) tile;
-            shieldOrientationList.add(shieldTile.getShieldOrientation());
+            shieldOrientationList.add(shieldTile.getOrientation());
         }
         return shieldOrientationList;
     }
@@ -588,7 +589,7 @@ public class Ship {
         for(ArrayList<Tile> list : floorplanArrayList){
             for(Tile tile : list){
                 if(tile!=null){
-                    cabinTileVisitor.visit(tile);
+                    tile.accept(cabinTileVisitor);
                 }
             }
         }
@@ -596,7 +597,6 @@ public class Ship {
         return cabinList;
     }
 
-     */
     public ArrayList<BatteryTile> getListOfBattery(){
         ArrayList<BatteryTile> batteriesList = new ArrayList<>();
         BatteryTileVisitor batteryTileVisitor = new BatteryTileVisitor();
@@ -604,7 +604,7 @@ public class Ship {
         for(ArrayList<Tile> list : floorplanArrayList){
             for(Tile tile : list){
                 if(tile!=null){
-                    batteryTileVisitor.visit(tile);
+                    tile.accept(batteryTileVisitor);
                 }
             }
         }
@@ -622,7 +622,7 @@ public class Ship {
         for(ArrayList<Tile> tilelist : floorplanArrayList){
             for(Tile tile : tilelist){
                 if(tile!=null){
-                    cabinTileVisitor.visit(tile);
+                    tile.accept(cabinTileVisitor);
                 }
             }
         }
@@ -653,18 +653,19 @@ public class Ship {
     }
 
     public ArrayList<BioadaptorTile> getListOfAdaptors(){
-        BioadaptorTile bioadaptorTileVisitor = new BioadaptorTile();
+        BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
         ArrayList<BioadaptorTile> bioadaptorList = new ArrayList<>();
 
 
         for(ArrayList<Tile> tilelist : floorplanArrayList){
             for(Tile tile : tilelist){
                 if(tile!=null){
-                    bioadaptorTileVisitor.visit(tile);
+                    //bioadaptorList = bioadaptorTileVisitor.accept(tile);
+                    tile.accept(bioadaptorTileVisitor);
                 }
             }
         }
-        bioadaptorListList = bioadaptorTileVisitor.getList();
+        bioadaptorList = bioadaptorTileVisitor.getList();
         return bioadaptorList;
     }
 
