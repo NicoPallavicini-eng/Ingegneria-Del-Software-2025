@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -61,7 +62,7 @@ public class SlaversCard extends Card {
 
     @Override
     public void process() {
-        List <Player> players = getListOfPlayers();
+        List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
@@ -105,7 +106,7 @@ public class SlaversCard extends Card {
 
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
-                ship.removeCrewMembers(crewLost);
+                ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLost);
             } else if (ship.getFirepower() > firepower) {
                 card.setDefeated(true);
                 card.setGoNext(true);

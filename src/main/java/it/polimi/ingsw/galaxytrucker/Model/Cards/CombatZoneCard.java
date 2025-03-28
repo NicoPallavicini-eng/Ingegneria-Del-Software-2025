@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -37,7 +38,7 @@ public class CombatZoneCard extends Card {
 
     @Override
     public void process() {
-        List <Player> players = getListOfPlayers();
+        List <Player> players = Game.getListOfPlayers();
 
         // Get list of ships
         List <Ship> ships = null;
@@ -129,7 +130,7 @@ public class CombatZoneCard extends Card {
         public void run() {
             System.out.println("Thread lessCrew started for ship " + ship.getColor());
 
-            ship.removeCrewMembers(crewLostLessEngine);
+            ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLostLessEngine);
 
             System.out.println("Thread lessCrew ended for ship " + ship.getColor());
         }

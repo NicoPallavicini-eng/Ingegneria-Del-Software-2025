@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -55,7 +56,7 @@ public class ShipCard extends Card {
 
     @Override
     public void process() {
-        List <Player> players = getListOfPlayers();
+        List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 

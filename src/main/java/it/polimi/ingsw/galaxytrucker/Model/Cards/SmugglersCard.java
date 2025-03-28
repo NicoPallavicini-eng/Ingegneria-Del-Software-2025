@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class SmugglersCard extends Card {
 
     @Override
     public void process() {
-        List <Player> players = getListOfPlayers();
+        List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
@@ -108,12 +109,11 @@ public class SmugglersCard extends Card {
             if (ship.getFirepower() < firepower) {
                 card.setGoNext(true);
 
-                ArrayList <Tile> cargoArrayList = ship.getListOfCargo();
-                List cargoTiles = cargoArrayList.stream().toList();
+                ArrayList <CargoTile> cargoTiles = ship.getListOfCargo();
+                List <Integer> cargo = new ArrayList<>();
 
-                List <Integer> cargo = null;
                 for (CargoTile tile : cargoTiles) {
-                    cargo.add(tile.getTileContent()); // TODO fix
+                    cargo.addAll(tile.getTileContent());
                 }
 
                 // considering that list is ordered:

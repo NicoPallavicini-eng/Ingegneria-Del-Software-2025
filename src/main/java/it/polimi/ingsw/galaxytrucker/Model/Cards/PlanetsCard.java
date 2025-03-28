@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -58,7 +59,7 @@ public class PlanetsCard extends Card {
         int planetsNumber = planets.size();
         boolean availablePlanets = true;
 
-        List <Player> players = getListOfPlayers();
+        List <Player> players = Game.getListOfPlayers();
 
         ExecutorService executor = Executors.newFixedThreadPool(players.size());
 
