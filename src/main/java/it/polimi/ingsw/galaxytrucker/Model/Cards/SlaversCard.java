@@ -41,8 +41,8 @@ public class SlaversCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitor(TravellingState state, SlaversCardVisitor visitor) {
-        visitor.handleSlaversCard(state, this);
+    public void acceptCardVisitor(TravellingState state, SlaversCardVisitor visitor, Player player) {
+        visitor.handleSlaversCard(state, this, player);
     }
 
     public void setDefeated(boolean defeated) {

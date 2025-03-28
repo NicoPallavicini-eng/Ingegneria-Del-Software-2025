@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Game;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class TravellingState implements GameState {
     private final Card currentCard;
     private boolean enginePowerChosen = false;
     private boolean accomplished = false;
-    private List <Boolean> landed = new ArrayList <Boolean>();
+    private int landed = 0;
 
     public Game getGame() {
         return game;
@@ -41,11 +42,11 @@ public class TravellingState implements GameState {
         this.accomplished = accomplished;
     }
 
-    public List <Boolean> getLanded() {
+    public int getLanded() {
         return landed;
     }
 
-    public void setLanded(List <Boolean> landed) {
+    public void setLanded(int landed) {
         this.landed = landed;
     }
 
@@ -55,7 +56,9 @@ public class TravellingState implements GameState {
     }
 
     public void process() {
-        currentCard.acceptCardVisitor(this, currentCard.getCardVisitor());
+        for (Player player : game.getListOfPlayers()) {
+            currentCard.acceptCardVisitor(this, currentCard.getCardVisitor(), player);
+        }
     }
 
 }

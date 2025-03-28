@@ -35,8 +35,8 @@ public class PlanetsCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitor(TravellingState state, PlanetsCardVisitor visitor) {
-        visitor.handlePlanetsCard(state, this);
+    public void acceptCardVisitor(TravellingState state, PlanetsCardVisitor visitor, Player player) {
+        visitor.handlePlanetsCard(state, this, player);
     }
 
     public void setLanded(boolean landed, int i) {
@@ -55,7 +55,7 @@ public class PlanetsCard extends Card {
         return goNext;
     }
 
-    public void process(List <Boolean> landed) {
+    public void process(int landed) {
         int planetsNumber = planets.size();
         boolean availablePlanets = true;
 

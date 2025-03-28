@@ -43,8 +43,8 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitor(TravellingState state, SmugglersCardVisitor visitor) {
-        visitor.handleSmugglersCard(state, this);
+    public void acceptCardVisitor(TravellingState state, SmugglersCardVisitor visitor, Player player) {
+        visitor.handleSmugglersCard(state, this, player);
     }
 
     public void setDefeated(boolean defeated) {

@@ -33,8 +33,8 @@ public class CombatZoneCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitor(CombatZoneCardVisitor visitor) {
-        visitor.handleCombatZoneCard(this);
+    public void acceptCardVisitor(CombatZoneCardVisitor visitor, Player player) {
+        visitor.handleCombatZoneCard(this, player);
     }
 
     @Override

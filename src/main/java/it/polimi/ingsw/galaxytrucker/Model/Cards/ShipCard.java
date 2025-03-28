@@ -35,8 +35,8 @@ public class ShipCard extends Card {
         return crewNumberLost;
     }
 
-    public void acceptCardVisitor(TravellingState state, ShipCardVisitor visitor) {
-        visitor.handleShipCard(state,this);
+    public void acceptCardVisitor(TravellingState state, ShipCardVisitor visitor, Player player) {
+        visitor.handleShipCard(state,this, player);
     }
 
     public void setLanded(boolean landed) {

@@ -41,8 +41,8 @@ public class PiratesCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitor(TravellingState state, PiratesCardVisitor visitor) {
-        visitor.handlePiratesCard(state,this);
+    public void acceptCardVisitor(TravellingState state, PiratesCardVisitor visitor, Player player) {
+        visitor.handlePiratesCard(state,this, player);
     }
 
     public void setDefeated(boolean defeated) {

@@ -18,8 +18,8 @@ public class EpidemicCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(EpidemicCardVisitor visitor) {
-        visitor.handleEpidemicCard(this);
+    public void acceptCardVisitor(EpidemicCardVisitor visitor, Player player) {
+        visitor.handleEpidemicCard(this, player);
     }
 
     @Override

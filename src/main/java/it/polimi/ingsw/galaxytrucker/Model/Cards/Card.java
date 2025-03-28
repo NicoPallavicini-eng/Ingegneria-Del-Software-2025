@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.*;
+import it.polimi.ingsw.galaxytrucker.Model.*;
 
 public abstract class Card {
     private final boolean levelTwo;
@@ -28,7 +29,7 @@ public abstract class Card {
 
     public void process () {}
 
-    public void acceptCardVisitor(TravellingState state, CardVisitor visitor) {}
+    public void acceptCardVisitor(TravellingState state, CardVisitor visitor, Player player) {}
 
     public CardVisitor getCardVisitor() {
         return visitor;

@@ -16,8 +16,8 @@ public class OpenSpaceCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(TravellingState state, OpenSpaceCardVisitor visitor) {
-        visitor.handleOpenSpaceCard(state, this);
+    public void acceptCardVisitor(TravellingState state, OpenSpaceCardVisitor visitor, Player player) {
+        visitor.handleOpenSpaceCard(state, this, player);
     }
 
     public void setGoNext(boolean goNext) {

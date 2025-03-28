@@ -21,8 +21,8 @@ public class MeteorsCard extends Card {
         return meteors;
     }
 
-    public void acceptCardVisitor(MeteorsCardVisitor visitor) {
-        visitor.handleMeteorsCard(this);
+    public void acceptCardVisitor(MeteorsCardVisitor visitor, Player player) {
+        visitor.handleMeteorsCard(this, player);
     }
 
     @Override

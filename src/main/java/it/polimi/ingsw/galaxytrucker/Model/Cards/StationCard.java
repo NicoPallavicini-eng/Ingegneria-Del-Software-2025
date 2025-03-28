@@ -35,8 +35,8 @@ public class StationCard extends Card {
         return crewNumberNeeded;
     }
 
-    public void acceptCardVisitor(TravellingState state, StationCardVisitor visitor) {
-        visitor.handleStationCard(state, this);
+    public void acceptCardVisitor(TravellingState state, StationCardVisitor visitor, Player player) {
+        visitor.handleStationCard(state, this, player);
     }
 
     public void setLanded(boolean landed) {

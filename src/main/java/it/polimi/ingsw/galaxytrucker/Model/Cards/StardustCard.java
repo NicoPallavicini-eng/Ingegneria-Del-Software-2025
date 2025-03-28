@@ -14,8 +14,8 @@ public class StardustCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(StardustCardVisitor visitor) {
-        visitor.handleStardustCard(this);
+    public void acceptCardVisitor(StardustCardVisitor visitor, Player player) {
+        visitor.handleStardustCard(this, player);
     }
 
     @Override
