@@ -32,7 +32,7 @@ PlanetsCard: ok
 
  TODO add states for structs:
 
- 1. CombatZone, Epidemic, Meteors, Stardust;
- 2. OpenSpace;
- 3. Pirates, Ship, Slavers, Smugglers, Station;
- 4. Planets.
+ 1. PARALLEL: CombatZone, Epidemic, Meteors, Stardust;
+ 2. INTERACTIVE: OpenSpace;
+ 3. SEQUENTIAL: Pirates, Ship, Slavers, Smugglers, Station;
+ 4. MULTIPLE: Planets.

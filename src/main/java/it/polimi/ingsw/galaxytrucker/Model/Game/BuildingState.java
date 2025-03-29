@@ -1,6 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Game;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 
 public class BuildingState implements GameState {
     private final Game game;
@@ -14,7 +14,10 @@ public class BuildingState implements GameState {
     }
 
     public GameState next() {
-        return new TravellingState(game);
+        Deck deck = game.getDeck();
+        Card card = deck.drawCard();
+        // TODO usa visitor to differentiate category
+        return new ParallelTravellingState(game);
     }
 
     public void process() {

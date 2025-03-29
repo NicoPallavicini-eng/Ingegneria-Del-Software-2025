@@ -2,8 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.*;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +40,7 @@ public class PiratesCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitor(TravellingState state, PiratesCardVisitor visitor, Player player) {
+    public void acceptCardVisitor(ParallelTravellingState state, PiratesCardVisitor visitor, Player player) {
         visitor.handlePiratesCard(state,this, player);
     }
 

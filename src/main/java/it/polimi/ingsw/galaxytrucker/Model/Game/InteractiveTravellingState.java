@@ -3,10 +3,8 @@ package it.polimi.ingsw.galaxytrucker.Model.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TravellingState implements GameState {
+// Handles OpenSpace Card
+public class InteractiveTravellingState implements GameState {
     private final Game game;
     private final Card currentCard;
     private boolean enginePowerChosen = false;
@@ -21,7 +19,7 @@ public class TravellingState implements GameState {
         return currentCard;
     }
 
-    public TravellingState(Game game) {
+    public InteractiveTravellingState(Game game) {
         this.game = game;
         currentCard = getGame().getDeck().drawCard();
     }
@@ -57,6 +55,7 @@ public class TravellingState implements GameState {
 
     public void process() {
         for (Player player : game.getListOfPlayers()) {
+            // TODO add specific visitor
             currentCard.acceptCardVisitor(this, currentCard.getCardVisitor(), player);
         }
     }

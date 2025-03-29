@@ -2,8 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +15,7 @@ public class OpenSpaceCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(TravellingState state, OpenSpaceCardVisitor visitor, Player player) {
+    public void acceptCardVisitor(ParallelTravellingState state, OpenSpaceCardVisitor visitor, Player player) {
         visitor.handleOpenSpaceCard(state, this, player);
     }
 

@@ -2,8 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
 import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +34,7 @@ public class ShipCard extends Card {
         return crewNumberLost;
     }
 
-    public void acceptCardVisitor(TravellingState state, ShipCardVisitor visitor, Player player) {
+    public void acceptCardVisitor(ParallelTravellingState state, ShipCardVisitor visitor, Player player) {
         visitor.handleShipCard(state,this, player);
     }
 

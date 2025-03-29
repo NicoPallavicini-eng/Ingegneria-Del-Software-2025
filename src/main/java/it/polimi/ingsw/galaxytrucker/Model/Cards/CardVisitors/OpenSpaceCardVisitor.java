@@ -7,7 +7,7 @@ public class OpenSpaceCardVisitor extends CardVisitor {
 
     public void visitOpenSpaceCard() {}
 
-    public void handleOpenSpaceCard(TravellingState state, OpenSpaceCard openSpaceCard, Player player) {
+    public void handleOpenSpaceCard(ParallelTravellingState state, OpenSpaceCard openSpaceCard, Player player) {
         openSpaceCard.process(state.getAccomplished());
     }
 }

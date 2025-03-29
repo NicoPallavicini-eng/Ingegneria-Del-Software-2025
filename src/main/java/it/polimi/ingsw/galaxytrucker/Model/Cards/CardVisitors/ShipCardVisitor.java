@@ -7,7 +7,7 @@ public class ShipCardVisitor extends CardVisitor {
 
     public void visitShipCard() {}
 
-    public void handleShipCard(TravellingState state, ShipCard shipCard, Player player) {
+    public void handleShipCard(ParallelTravellingState state, ShipCard shipCard, Player player) {
         shipCard.process(state.getAccomplished());
     }
 }

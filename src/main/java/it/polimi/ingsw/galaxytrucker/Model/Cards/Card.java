@@ -29,7 +29,7 @@ public abstract class Card {
 
     public void process () {}
 
-    public void acceptCardVisitor(TravellingState state, CardVisitor visitor, Player player) {}
+    public void acceptCardVisitor(ParallelTravellingState state, CardVisitor visitor, Player player) {}
 
     public CardVisitor getCardVisitor() {
         return visitor;

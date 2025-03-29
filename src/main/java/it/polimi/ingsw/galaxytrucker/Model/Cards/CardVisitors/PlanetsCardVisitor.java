@@ -7,7 +7,7 @@ public class PlanetsCardVisitor extends CardVisitor {
 
     public void visitPlanetsCard() {}
 
-    public void handlePlanetsCard(TravellingState state, PlanetsCard planetsCard, Player player) {
+    public void handlePlanetsCard(ParallelTravellingState state, PlanetsCard planetsCard, Player player) {
         planetsCard.process(state.getLanded());
     }
 }

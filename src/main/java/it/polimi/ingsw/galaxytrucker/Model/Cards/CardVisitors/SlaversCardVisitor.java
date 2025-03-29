@@ -7,7 +7,7 @@ public class SlaversCardVisitor extends CardVisitor {
 
     public void visitSlaversCard() {}
 
-    public void handleSlaversCard(TravellingState state, SlaversCard slaversCard, Player player) {
+    public void handleSlaversCard(ParallelTravellingState state, SlaversCard slaversCard, Player player) {
         slaversCard.process(state.getAccomplished());
     }
 }

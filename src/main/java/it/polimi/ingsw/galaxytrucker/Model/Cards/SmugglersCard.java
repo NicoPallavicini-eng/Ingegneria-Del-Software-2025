@@ -2,8 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitor(TravellingState state, SmugglersCardVisitor visitor, Player player) {
+    public void acceptCardVisitor(ParallelTravellingState state, SmugglersCardVisitor visitor, Player player) {
         visitor.handleSmugglersCard(state, this, player);
     }
 

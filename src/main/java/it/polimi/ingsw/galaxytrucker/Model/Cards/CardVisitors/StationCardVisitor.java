@@ -7,7 +7,7 @@ public class StationCardVisitor extends CardVisitor {
 
     public void visitStationCard() {}
 
-    public void handleStationCard(TravellingState state, StationCard stationCard, Player player) {
+    public void handleStationCard(ParallelTravellingState state, StationCard stationCard, Player player) {
         stationCard.process(state.getAccomplished());
     }
 }

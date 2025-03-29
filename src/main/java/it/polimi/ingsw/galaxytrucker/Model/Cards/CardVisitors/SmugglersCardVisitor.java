@@ -7,7 +7,7 @@ public class SmugglersCardVisitor extends CardVisitor {
 
     public void visitSmugglersCard() {}
 
-    public void handleSmugglersCard(TravellingState state, SmugglersCard smugglersCard, Player player) {
+    public void handleSmugglersCard(ParallelTravellingState state, SmugglersCard smugglersCard, Player player) {
         smugglersCard.process(state.getAccomplished());
     }
 }
