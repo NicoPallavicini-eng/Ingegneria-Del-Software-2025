@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-import java.util.List;
+
 import java.util.Collections;
+import java.util.List;
 
 public class Deck {
     private final int cardsNumberLev1 = 4; // TODO implement CardNumber logic for also tut
@@ -38,5 +39,9 @@ public class Deck {
 
         // Shuffle created gameDeck
         this.shuffle(gameDeck);
+
+        for (Card card : gameDeck) {
+            card.updateUsed(true);
+        }
     }
 }

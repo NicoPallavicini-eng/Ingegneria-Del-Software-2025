@@ -1,6 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor;
 
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.TileVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;

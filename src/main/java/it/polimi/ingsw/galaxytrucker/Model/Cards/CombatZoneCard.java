@@ -1,8 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
-import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.*;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CombatZoneCardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -32,8 +34,12 @@ public class CombatZoneCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitor(CombatZoneCardVisitor visitor, Player player) {
+    public void acceptCardVisitorParallel(CombatZoneCardVisitor visitor, Player player) {
         visitor.handleCombatZoneCard(this, player);
+    }
+
+    public void acceptNextVisitor(GameState state, CombatZoneCardVisitor visitor, Game game, Card card) {
+        visitor.setNextStateCombatZoneCard(state, game, this);
     }
 
     @Override

@@ -1,11 +1,14 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
-import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+
+import it.polimi.ingsw.galaxytrucker.Model.Direction;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.*;
+import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.COLUMN;
+import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 

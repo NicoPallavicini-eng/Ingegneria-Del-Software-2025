@@ -17,6 +17,7 @@ public class Game {
 
     public Game (Player firstPlayer){
         listOfPlayers.add(firstPlayer);
+        // TODO assemble gameDeck (?)
     }
 
     public List<Player> getListOfPlayers() {

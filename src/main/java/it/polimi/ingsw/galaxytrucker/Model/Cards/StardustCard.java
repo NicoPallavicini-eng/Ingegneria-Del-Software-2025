@@ -1,8 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
-import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.*;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.StardustCardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -13,8 +15,12 @@ public class StardustCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitor(StardustCardVisitor visitor, Player player) {
+    public void acceptCardVisitorParallel(StardustCardVisitor visitor, Player player) {
         visitor.handleStardustCard(this, player);
+    }
+
+    public void acceptNextVisitor(GameState state, StardustCardVisitor visitor, Game game, Card card) {
+        visitor.setNextStateStardustCard(state, game, this);
     }
 
     @Override

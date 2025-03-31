@@ -1,8 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.*;
-import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.*;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PlanetsCardVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.MultipleTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,8 +37,12 @@ public class PlanetsCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitor(ParallelTravellingState state, PlanetsCardVisitor visitor, Player player) {
+    public void acceptCardVisitorMultiple(MultipleTravellingState state, PlanetsCardVisitor visitor, Player player) {
         visitor.handlePlanetsCard(state, this, player);
+    }
+
+    public void acceptNextVisitor(GameState state, PlanetsCardVisitor visitor, Game game, Card card) {
+        visitor.setNextStatePlanetsCard(state, game, this);
     }
 
     public void setLanded(boolean landed, int i) {

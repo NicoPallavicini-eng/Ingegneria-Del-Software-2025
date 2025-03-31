@@ -2,7 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.*;
-import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 
 public abstract class Card {
     private final boolean levelTwo;
@@ -29,7 +29,15 @@ public abstract class Card {
 
     public void process () {}
 
-    public void acceptCardVisitor(ParallelTravellingState state, CardVisitor visitor, Player player) {}
+    public void acceptCardVisitorParallel(ParallelTravellingState state, CardVisitor visitor, Player player) {}
+
+    public void acceptCardVisitorInteractive(InteractiveTravellingState state, CardVisitor visitor, Player player) {}
+
+    public void acceptCardVisitorMultiple(MultipleTravellingState state, CardVisitor visitor, Player player) {}
+
+    public void acceptCardVisitorSequential(SequentialTravellingState state, CardVisitor visitor, Player player) {}
+
+    public void acceptNextVisitor(GameState state, CardVisitor visitor, Game game, Card nextCard) {}
 
     public CardVisitor getCardVisitor() {
         return visitor;

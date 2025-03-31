@@ -3,25 +3,51 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
 public abstract class CardVisitor {
     public CardVisitor() {}
 
-    public void visitStationCard() {}
+    // handle cards
 
-    public void visitShipCard() {}
+    public void handleStationCard() {}
 
-    public void visitOpenSpaceCard() {}
+    public void handleShipCard() {}
 
-    public void visitStardustCard() {}
+    public void handleOpenSpaceCard() {}
 
-    public void visitEpidemicCard() {}
+    public void handleStardustCard() {}
 
-    public void visitCombatZoneCard() {}
+    public void handleEpidemicCard() {}
 
-    public void visitPlanetsCard() {}
+    public void handleCombatZoneCard() {}
 
-    public void visitSmugglersCard() {}
+    public void handlePlanetsCard() {}
 
-    public void visitMeteorsCard() {}
+    public void handleSmugglersCard() {}
 
-    public void visitSlaversCard() {}
+    public void handleMeteorsCard() {}
 
-    public void visitPiratesCard() {}
+    public void handleSlaversCard() {}
+
+    public void handlePiratesCard() {}
+
+    // set next states
+
+    public void setNextStateCombatZoneCard() {}
+
+    public void setNextStateEpidemicCard() {}
+
+    public void setNextStateMeteorsCard() {}
+
+    public void setNextStateOpenSpaceCard() {}
+
+    public void setNextStatePiratesCard() {}
+
+    public void setNextStatePlanetsCard() {}
+
+    public void setNextStateShipCard() {}
+
+    public void setNextStateSlaversCard() {}
+
+    public void setNextStateSmugglersCard() {}
+
+    public void setNextStateStardustCard() {}
+
+    public void setNextStateStationCard() {}
 }

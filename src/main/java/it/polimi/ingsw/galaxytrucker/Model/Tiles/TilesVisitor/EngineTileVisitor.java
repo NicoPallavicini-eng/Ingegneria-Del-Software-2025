@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor;
+
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+
 import java.util.ArrayList;
 
 public class EngineTileVisitor implements TileVisitor {

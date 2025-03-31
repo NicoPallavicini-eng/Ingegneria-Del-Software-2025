@@ -1,9 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.*;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.CargoTile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +45,12 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitor(ParallelTravellingState state, SmugglersCardVisitor visitor, Player player) {
+    public void acceptCardVisitorSequential(ParallelTravellingState state, SmugglersCardVisitor visitor, Player player) {
         visitor.handleSmugglersCard(state, this, player);
+    }
+
+    public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game, Card card) {
+        visitor.setNextStateSmugglersCard(state, game, this);
     }
 
     public void setDefeated(boolean defeated) {

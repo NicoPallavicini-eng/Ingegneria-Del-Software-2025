@@ -17,7 +17,7 @@ public class WaitingState implements GameState {
     }
 
     public void process() {
-        //input max player
+        // input max player
         // wait for connections
     }
 }

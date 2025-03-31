@@ -1,15 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.Model.Game;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
-import it.polimi.ingsw.galaxytrucker.Model.*;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.Player;
 
 // Handles Pirates, Ship, Slavers, Smugglers, Station Cards
 public class SequentialTravellingState implements GameState {
     private final Game game;
     private final Card currentCard;
+    private Card nextCard;
     private boolean enginePowerChosen = false;
     private boolean accomplished = false;
     private int landed = 0;
+    private GameState nextState;
 
     public Game getGame() {
         return game;
@@ -19,9 +21,17 @@ public class SequentialTravellingState implements GameState {
         return currentCard;
     }
 
-    public SequentialTravellingState(Game game) {
+    public SequentialTravellingState(Game game, Card currentCard) {
         this.game = game;
-        currentCard = getGame().getDeck().drawCard();
+        this.currentCard = currentCard;
+    }
+
+    public GameState getNextState() {
+        return nextState;
+    }
+
+    public void setNextState(GameState nextState) {
+        this.nextState = nextState;
     }
 
     public boolean getEnginePowerChosen() {
@@ -50,13 +60,18 @@ public class SequentialTravellingState implements GameState {
 
     @Override
     public GameState next() {
-        return new FinalState(game);
+        nextCard = getGame().getDeck().drawCard();
+        if (nextCard == null) {
+            return new FinalState(game);
+        } else {
+            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game, nextCard);
+            return nextState;
+        }
     }
 
     public void process() {
         for (Player player : game.getListOfPlayers()) {
-            // TODO add specific visitor
-            currentCard.acceptCardVisitor(this, currentCard.getCardVisitor(), player);
+            currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), player);
         }
     }
 
