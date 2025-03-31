@@ -3,6 +3,9 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.*;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Ship;
+
+import java.util.List;
 
 public abstract class Card {
     private final boolean levelTwo;
@@ -29,13 +32,15 @@ public abstract class Card {
 
     public void process () {}
 
-    public void acceptCardVisitorParallel(ParallelTravellingState state, CardVisitor visitor, Player player) {}
+    public void acceptCardVisitorParallel(ParallelTravellingState state, CardVisitor visitor, List <Ship> ships) {}
 
-    public void acceptCardVisitorInteractive(InteractiveTravellingState state, CardVisitor visitor, Player player) {}
+    public void acceptCardVisitorInteractive(InteractiveTravellingState state, CardVisitor visitor, List <Player> players) {}
 
     public void acceptCardVisitorMultiple(MultipleTravellingState state, CardVisitor visitor, Player player) {}
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, CardVisitor visitor, Player player) {}
+    public void acceptCardVisitorSequential(SequentialTravellingState state, CardVisitor visitor, List <Player> players) {}
+
+    public void acceptCardVisitorAlternative(AlternativeTravellingState state, CardVisitor visitor, List <Ship> lessCrewShips, List <Ship> lessEngineShips, List <Ship> lessFirepowerShips) {}
 
     public void acceptNextVisitor(GameState state, CardVisitor visitor, Game game, Card nextCard) {}
 

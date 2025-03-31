@@ -3,12 +3,9 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CombatZoneCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CombatZoneCard extends Card {
     private final int daysLostLessCrew;
@@ -34,131 +31,36 @@ public class CombatZoneCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitorParallel(CombatZoneCardVisitor visitor, Player player) {
-        visitor.handleCombatZoneCard(this, player);
+    public void acceptCardVisitorAlternative(CombatZoneCardVisitor visitor, List <Ship> lessCrewShips, List <Ship> lessEngineShips, List <Ship> lessFirepowerShips) {
+
+        for (Ship ship : lessCrewShips) {
+            visitor.handleCombatZoneCardLessCrew(this, ship);
+        }
+
+        for (Ship ship : lessEngineShips) {
+            visitor.handleCombatZoneCardLessEngine(this, ship);
+        }
+
+        for (Ship ship : lessFirepowerShips) {
+            visitor.handleCombatZoneCardLessFirepower(this, ship);
+        }
     }
 
     public void acceptNextVisitor(GameState state, CombatZoneCardVisitor visitor, Game game, Card card) {
         visitor.setNextStateCombatZoneCard(state, game, this);
     }
 
-    @Override
-    public void process() {
-        List <Player> players = Game.getListOfPlayers();
-
-        // Get list of ships
-        List <Ship> ships = null;
-        for (Player player : players) {
-            ships.add(player.getShip());
-        }
-
-        // Find ship with the least crew
-        List <Ship> lessCrewShips = null;
-        lessCrewShips.add(ships.getFirst());
-        for (Ship ship : ships) {
-            if (ship.getNumberOfCrewMembers() == lessCrewShips.getFirst().getNumberOfCrewMembers()) {
-                lessCrewShips.add(ship);
-            } else if (ship.getNumberOfCrewMembers() < lessCrewShips.getFirst().getNumberOfCrewMembers()) {
-                lessCrewShips.removeAll(lessCrewShips);
-                lessCrewShips.add(ship);
-            }
-        }
-
-        // Find ship with the least engine power
-        List <Ship> lessEngineShips = null;
-        lessEngineShips.add(ships.getFirst());
-        for (Ship ship : ships) {
-            if (ship.getEnginePower() == lessEngineShips.getFirst().getEnginePower()) {
-                lessEngineShips.add(ship);
-            } else if (ship.getEnginePower() < lessEngineShips.getFirst().getEnginePower()) {
-                lessEngineShips.removeAll(lessEngineShips);
-                lessEngineShips.add(ship);
-            }
-        }
-
-        // Find ship with the least firepower
-        List <Ship> lessFirepowerShips = null;
-        lessFirepowerShips.add(ships.getFirst());
-        for (Ship ship : ships) {
-            if (ship.getFirepower() == lessFirepowerShips.getFirst().getFirepower()) {
-                lessFirepowerShips.add(ship);
-            } else if (ship.getFirepower() < lessFirepowerShips.getFirst().getFirepower()) {
-                lessFirepowerShips.removeAll(lessFirepowerShips);
-                lessFirepowerShips.add(ship);
-            }
-        }
-
-        ExecutorService executor = Executors.newFixedThreadPool(lessCrewShips.size() + lessEngineShips.size() + lessFirepowerShips.size());
-
-        for (Ship ship : lessCrewShips) {
-            executor.execute(new CombatZoneCard.lessCrewTask(ship, daysLostLessCrew));
-        }
-
-        for (Ship ship : lessCrewShips) {
-            executor.execute(new CombatZoneCard.lessEngineTask(ship, crewLostLessEngine));
-        }
-
-        for (Ship ship : lessCrewShips) {
-            executor.execute(new CombatZoneCard.lessFirepowerTask(ship, cannonballList));
-        }
-
-        // Shut down when tasks done
-        executor.shutdown();
+    public void lessCrewProcess(Ship ship) {
+        ship.setTravelDays(ship.getTravelDays() - daysLostLessCrew);
     }
 
-    static class lessCrewTask implements Runnable {
-        private final Ship ship;
-        private final int daysLostLessCrew;
-
-        public lessCrewTask(Ship ship, int daysLostLessCrew) {
-            this.ship = ship;
-            this.daysLostLessCrew = daysLostLessCrew;
-        }
-
-        public void run() {
-            System.out.println("Thread lessCrew started for ship " + ship.getColor());
-
-            ship.setTravelDays(ship.getTravelDays() - daysLostLessCrew);
-
-            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
-        }
+    public void lessEngineProcess(Ship ship) {
+        ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLostLessEngine);
     }
 
-    static class lessEngineTask implements Runnable {
-        private final Ship ship;
-        private final int crewLostLessEngine;
-
-        public lessEngineTask(Ship ship, int crewLostLessEngine) {
-            this.ship = ship;
-            this.crewLostLessEngine = crewLostLessEngine;
-        }
-
-        public void run() {
-            System.out.println("Thread lessCrew started for ship " + ship.getColor());
-
-            ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLostLessEngine);
-
-            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
-        }
-    }
-
-    static class lessFirepowerTask implements Runnable {
-        private final Ship ship;
-        private final List <Cannonball> cannonballList;
-
-        public lessFirepowerTask(Ship ship, List <Cannonball> cannonballList) {
-            this.ship = ship;
-            this.cannonballList = cannonballList;
-        }
-
-        public void run() {
-            System.out.println("Thread lessCrew started for ship " + ship.getColor());
-
-            for (Cannonball cannonball : cannonballList) {
-                cannonball.getHit(ship);
-            }
-
-            System.out.println("Thread lessCrew ended for ship " + ship.getColor());
+    public void lessFirepowerProcess(Ship ship) {
+        for (Cannonball cannonball : cannonballList) {
+            cannonball.getHit(ship);
         }
     }
 }

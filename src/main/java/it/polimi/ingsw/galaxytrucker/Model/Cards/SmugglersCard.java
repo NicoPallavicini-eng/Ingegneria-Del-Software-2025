@@ -3,15 +3,13 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SmugglersCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CargoTile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class SmugglersCard extends Card {
     private final int firepower;
@@ -45,8 +43,13 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitorSequential(ParallelTravellingState state, SmugglersCardVisitor visitor, Player player) {
-        visitor.handleSmugglersCard(state, this, player);
+    public void acceptCardVisitorSequential(SequentialTravellingState state, SmugglersCardVisitor visitor, List <Player> players) {
+        for (Player player : players) {
+            visitor.handleSmugglersCard(state, this, player);
+            if (state.getAccomplished()) {
+                break;
+            }
+        }
     }
 
     public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game, Card card) {
@@ -69,74 +72,28 @@ public class SmugglersCard extends Card {
         return goNext;
     }
 
-    public void process(boolean accomplished) {
-        List <Player> players = Game.getListOfPlayers();
+    public void process(Player player, SequentialTravellingState state) {
+        Ship ship = player.getShip();
 
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+        if (ship.getFirepower() < firepower) {
+            ArrayList <CargoTile> cargoTiles = ship.getListOfCargo();
+            List <Integer> cargo = new ArrayList<>();
 
-        for (Player player : players) {
-            goNext = false;
-
-            executor.execute(new SmugglersCard.SmugglersTask(player, firepower, blocks, lostBlocksNumber, daysToLose, this));
-
-            while (!goNext);
-
-            if (defeated) {
-                break;
-            }
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class SmugglersTask implements Runnable {
-        private final Player player;
-        private final Ship ship;
-        private final int firepower;
-        private final List <Integer> blocks;
-        private final int lostBlocksNumber;
-        private final int daysToLose;
-        private final SmugglersCard card;
-
-        public SmugglersTask(Player player, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose, SmugglersCard card) {
-            this.player = player;
-            this.ship = player.getShip();
-            this.firepower = firepower;
-            this.blocks = blocks;
-            this.lostBlocksNumber = lostBlocksNumber;
-            this.daysToLose = daysToLose;
-            this.card = card;
-        }
-
-        public void run() {
-            System.out.println("Thread Smugglers started for ship " + ship.getColor());
-
-            if (ship.getFirepower() < firepower) {
-                card.setGoNext(true);
-
-                ArrayList <CargoTile> cargoTiles = ship.getListOfCargo();
-                List <Integer> cargo = new ArrayList<>();
-
-                for (CargoTile tile : cargoTiles) {
-                    cargo.addAll(tile.getTileContent());
-                }
-
-                // considering that list is ordered:
-                for (int i = 0; i < lostBlocksNumber; i++) {
-                    cargo.removeFirst();
-                }
-            } else if (ship.getFirepower() > firepower) {
-                card.setDefeated(true);
-                card.setGoNext(true);
-
-                if (player.playerEngages) {
-                    ship.addBlocks(blocks);
-                    ship.setTravelDays(ship.getTravelDays() - daysToLose);
-                }
+            for (CargoTile tile : cargoTiles) {
+                cargo.addAll(tile.getTileContent());
             }
 
-            System.out.println("Thread Smugglers ended for ship " + ship.getColor());
+            // considering that list is ordered:
+            for (int i = 0; i < lostBlocksNumber; i++) {
+                cargo.removeFirst();
+            }
+        } else if (ship.getFirepower() > firepower) {
+            state.setAccomplished(true);
+
+            if (player.playerEngages) {
+                ship.addBlocks(blocks);
+                ship.setTravelDays(ship.getTravelDays() - daysToLose);
+            }
         }
     }
 }

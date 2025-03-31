@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Game;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
 
 // Handles Pirates, Ship, Slavers, Smugglers, Station Cards
 public class SequentialTravellingState implements GameState {
@@ -10,7 +9,6 @@ public class SequentialTravellingState implements GameState {
     private Card nextCard;
     private boolean enginePowerChosen = false;
     private boolean accomplished = false;
-    private int landed = 0;
     private GameState nextState;
 
     public Game getGame() {
@@ -50,14 +48,6 @@ public class SequentialTravellingState implements GameState {
         this.accomplished = accomplished;
     }
 
-    public int getLanded() {
-        return landed;
-    }
-
-    public void setLanded(int landed) {
-        this.landed = landed;
-    }
-
     @Override
     public GameState next() {
         nextCard = getGame().getDeck().drawCard();
@@ -70,9 +60,7 @@ public class SequentialTravellingState implements GameState {
     }
 
     public void process() {
-        for (Player player : game.getListOfPlayers()) {
-            currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), player);
-        }
+        currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), game.getListOfPlayers());
     }
 
 }

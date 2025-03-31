@@ -3,13 +3,11 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.OpenSpaceCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.InteractiveTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class OpenSpaceCard extends Card {
     private boolean goNext;
@@ -18,8 +16,8 @@ public class OpenSpaceCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitorInteractive(ParallelTravellingState state, OpenSpaceCardVisitor visitor, Player player) {
-        visitor.handleOpenSpaceCard(state, this, player);
+    public void acceptCardVisitorInteractive(InteractiveTravellingState state, OpenSpaceCardVisitor visitor, List <Player> players) {
+        visitor.handleOpenSpaceCard(state, this, players);
     }
 
     public void acceptNextVisitor(GameState state, OpenSpaceCardVisitor visitor, Game game, Card card) {
@@ -34,71 +32,19 @@ public class OpenSpaceCard extends Card {
         return goNext;
     }
 
-    public void process(boolean enginePowerChosen) {
-        List <Player> players = Game.getListOfPlayers();
+    public void process1(Player player, List <Integer> engineChosenList) {
+        Ship ship = player.getShip();
+        int enginePower = player.getPlayerInput(); // TODO this
 
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
-
-        for (Player player : players) {
-            Ship ship = player.getShip();
-            executor.execute(new OpenSpaceCard.OpenSpaceTask1(player));
-        }
-
-        // Travel days get updated in reverse order
-        List <Player> reversed = players.reversed();
-
-        for (Player player : reversed) {
-            goNext = false;
-
-            Ship ship = player.getShip();
-            executor.execute(new OpenSpaceCard.OpenSpaceTask2(ship, this));
-
-            while (!goNext);
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class OpenSpaceTask1 implements Runnable {
-        private final Player player;
-        private final Ship ship;
-
-        public OpenSpaceTask1(Player player) {
-            this.player = player;
-            this.ship = player.getShip();
-        }
-
-        public void run() {
-            System.out.println("Thread OpenSpace1 started for ship " + ship.getColor());
-
-            ship.setEnginePower(player.getPlayerInput()); // TODO implement
-            if (ship.getEnginePower() == 0) {
-                // If a player has zero engine power he is lost in space and out of further travelling
-                ship.setTravelDays(null);
-            }
-
-            System.out.println("Thread OpenSpace1 ended for ship " + ship.getColor());
+        if (enginePower == 0) {
+            // If a player has zero engine power he is lost in space and out of further travelling
+            ship.setTravelDays(null);
         }
     }
 
-    static class OpenSpaceTask2 implements Runnable {
-        private final Ship ship;
-        private final OpenSpaceCard card;
+    public void process2(Player player, List <Integer> engineChosenList) {
+        Ship ship = player.getShip();
 
-        public OpenSpaceTask2(Ship ship, OpenSpaceCard card) {
-            this.ship = ship;
-            this.card = card;
-        }
-
-        public void run() {
-            System.out.println("Thread OpenSpace2 started for ship " + ship.getColor());
-
-            // TODO player set engine power (?)
-            ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());
-            card.setGoNext(true);
-
-            System.out.println("Thread OpenSpace2 ended for ship " + ship.getColor());
-        }
+        ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());
     }
 }

@@ -7,50 +7,23 @@ import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class StardustCard extends Card {
     public StardustCard(boolean levelTwo, boolean used, StardustCardVisitor visitor) {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitorParallel(StardustCardVisitor visitor, Player player) {
-        visitor.handleStardustCard(this, player);
+    public void acceptCardVisitorParallel(StardustCardVisitor visitor, Player player, List <Ship> ships) {
+        for (Ship ship : ships) {
+            visitor.handleStardustCard(this, ship);
+        }
     }
 
     public void acceptNextVisitor(GameState state, StardustCardVisitor visitor, Game game, Card card) {
         visitor.setNextStateStardustCard(state, game, this);
     }
 
-    @Override
-    public void process() {
-        List <Player> players = Game.getListOfPlayers();
-
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
-
-        for (Player player : players) {
-            Ship ship = player.getShip();
-            executor.execute(new StardustCard.StardustTask(ship));
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class StardustTask implements Runnable {
-        private final Ship ship;
-
-        public StardustTask(Ship ship) {
-            this.ship = ship;
-        }
-
-        public void run() {
-            System.out.println("Thread Stardust started for ship " + ship.getColor());
-
-            ship.setTravelDays(ship.getTravelDays() - ship.getExposedConnectors());
-
-            System.out.println("Thread Stardust ended for ship " + ship.getColor());
-        }
+    public void process(Ship ship) {
+        ship.setTravelDays(ship.getTravelDays() - ship.getExposedConnectors());
     }
 }

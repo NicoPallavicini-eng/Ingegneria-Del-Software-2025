@@ -7,8 +7,6 @@ import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MeteorsCard extends Card {
     private final List <Meteor> meteors;
@@ -22,46 +20,19 @@ public class MeteorsCard extends Card {
         return meteors;
     }
 
-    public void acceptCardVisitorParallel(MeteorsCardVisitor visitor, Player player) {
-        visitor.handleMeteorsCard(this, player);
+    public void acceptCardVisitorParallel(MeteorsCardVisitor visitor, Player player, List <Ship> ships) {
+        for (Ship ship : ships) {
+            visitor.handleMeteorsCard(this, ship);
+        }
     }
 
     public void acceptNextVisitor(GameState state, MeteorsCardVisitor visitor, Game game, Card card) {
         visitor.setNextStateMeteorsCard(state, game, this);
     }
 
-    @Override
-    public void process() {
-        List <Player> players = Game.getListOfPlayers();
-
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
-
-        for (Player player : players) {
-            Ship ship = player.getShip();
-            executor.execute(new MeteorsTask(ship, meteors));
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class MeteorsTask implements Runnable {
-        private final Ship ship;
-        private final List <Meteor> meteors;
-
-        public MeteorsTask(Ship ship, List <Meteor> meteors) {
-            this.ship = ship;
-            this.meteors = meteors;
-        }
-
-        public void run() {
-            System.out.println("Thread Meteors started for ship " + ship.getColor());
-
-            for (Meteor meteor : meteors) {
-                meteor.getHit(ship);
-            }
-
-            System.out.println("Thread Meteors ended for ship " + ship.getColor());
+    public void process(Ship ship) {
+        for (Meteor meteor : meteors) {
+            meteor.getHit(ship);
         }
     }
 }

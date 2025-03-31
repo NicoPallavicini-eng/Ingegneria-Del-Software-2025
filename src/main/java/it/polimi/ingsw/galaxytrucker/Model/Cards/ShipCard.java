@@ -3,13 +3,11 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.ShipCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ShipCard extends Card {
     private final int crewNumberLost;
@@ -37,8 +35,13 @@ public class ShipCard extends Card {
         return crewNumberLost;
     }
 
-    public void acceptCardVisitorSequential(ParallelTravellingState state, ShipCardVisitor visitor, Player player) {
-        visitor.handleShipCard(state,this, player);
+    public void acceptCardVisitorSequential(SequentialTravellingState state, ShipCardVisitor visitor, List <Player> players) {
+        for (Player player : players) {
+            visitor.handleShipCard(state,this, player);
+            if (state.getAccomplished()) {
+                break;
+            }
+        }
     }
 
     public void acceptNextVisitor(GameState state, ShipCardVisitor visitor, Game game, Card card) {
@@ -61,60 +64,15 @@ public class ShipCard extends Card {
         return goNext;
     }
 
-    public void process(boolean accomplished) {
-        List <Player> players = Game.getListOfPlayers();
+    public void process(Player player, SequentialTravellingState state) {
+        Ship ship = player.getShip();
 
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+        if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.playerEngages) {
+            state.setAccomplished(true);
 
-        for (Player player : players) {
-            goNext = false;
-
-            executor.execute(new ShipCard.ShipTask(player, crewNumberLost, credits, daysToLose, this));
-
-            while (!goNext);
-
-            if (landed) {
-                break;
-            }
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class ShipTask implements Runnable {
-        private final Ship ship;
-        private final Player player;
-        private final int crewNumberLost;
-        private final int credits;
-        private final int daysToLose;
-        private final ShipCard card;
-
-        public ShipTask(Player player, int crewNumberLost, int credits, int daysToLose, ShipCard card) {
-            this.player = player;
-            this.ship = player.getShip();
-            this.crewNumberLost = crewNumberLost;
-            this.credits = credits;
-            this.daysToLose = daysToLose;
-            this.card = card;
-        }
-
-        public void run() {
-            System.out.println("Thread Ship started for ship " + ship.getColor());
-
-            if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.playerEngages) {
-                // sets landed to true
-                card.setLanded(true);
-                card.setGoNext(true);
-
-                ship.setCredits(ship.getCredits() + credits);
-                ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewNumberLost);
-                ship.setTravelDays(ship.getTravelDays() - daysToLose);
-            } else {
-                card.setGoNext(true);
-            }
-
-            System.out.println("Thread Ship ended for ship " + ship.getColor());
+            ship.setCredits(ship.getCredits() + credits);
+            ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewNumberLost);
+            ship.setTravelDays(ship.getTravelDays() - daysToLose);
         }
     }
 }

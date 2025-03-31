@@ -3,13 +3,11 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SlaversCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class SlaversCard extends Card {
     private final int firepower;
@@ -43,8 +41,13 @@ public class SlaversCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitorSequential(ParallelTravellingState state, SlaversCardVisitor visitor, Player player) {
-        visitor.handleSlaversCard(state, this, player);
+    public void acceptCardVisitorSequential(SequentialTravellingState state, SlaversCardVisitor visitor, List <Player> players) {
+        for (Player player : players) {
+            visitor.handleSlaversCard(state, this, player);
+            if (state.getAccomplished()) {
+                break;
+            }
+        }
     }
 
     public void acceptNextVisitor(GameState state, SlaversCardVisitor visitor, Game game, Card card) {
@@ -67,63 +70,18 @@ public class SlaversCard extends Card {
         return goNext;
     }
 
-    public void process(boolean accomplished) {
-        List <Player> players = Game.getListOfPlayers();
+    public void process(Player player, SequentialTravellingState state) {
+        Ship ship = player.getShip();
 
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
+        if (ship.getFirepower() < firepower) {
+            ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLost);
+        } else if (ship.getFirepower() > firepower) {
+            state.setAccomplished(true);
 
-        for (Player player : players) {
-            goNext = false;
-
-            executor.execute(new SlaversCard.SlaversTask(player, firepower, credits, daysToLose, crewLost, this));
-
-            while (!goNext);
-
-            if (defeated) {
-                break;
+            if (player.playerEngages) {
+                ship.setCredits(ship.getCredits() + credits);
+                ship.setTravelDays(ship.getTravelDays() - daysToLose);
             }
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class SlaversTask implements Runnable {
-        private final Player player;
-        private final Ship ship;
-        private final int firepower;
-        private final int credits;
-        private final int daysToLose;
-        private final int crewLost;
-        private final SlaversCard card;
-
-        public SlaversTask(Player player, int firepower, int credits, int daysToLose, int crewLost, SlaversCard card) {
-            this.player = player;
-            this.ship = player.getShip();
-            this.firepower = firepower;
-            this.credits = credits;
-            this.daysToLose = daysToLose;
-            this.crewLost = crewLost;
-            this.card = card;
-        }
-
-        public void run() {
-            System.out.println("Thread Slavers started for ship " + ship.getColor());
-
-            if (ship.getFirepower() < firepower) {
-                card.setGoNext(true);
-                ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLost);
-            } else if (ship.getFirepower() > firepower) {
-                card.setDefeated(true);
-                card.setGoNext(true);
-
-                if (player.playerEngages) {
-                    ship.setCredits(ship.getCredits() + credits);
-                    ship.setTravelDays(ship.getTravelDays() - daysToLose);
-                }
-            }
-
-            System.out.println("Thread Slavers ended for ship " + ship.getColor());
         }
     }
 }
