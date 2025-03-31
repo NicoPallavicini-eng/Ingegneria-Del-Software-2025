@@ -34,10 +34,6 @@ public abstract class Card {
 
     public void acceptCardVisitorParallel(ParallelTravellingState state, CardVisitor visitor, List <Ship> ships) {}
 
-    public void acceptCardVisitorInteractive(InteractiveTravellingState state, CardVisitor visitor, List <Player> players) {}
-
-    public void acceptCardVisitorMultiple(MultipleTravellingState state, CardVisitor visitor, Player player) {}
-
     public void acceptCardVisitorSequential(SequentialTravellingState state, CardVisitor visitor, List <Player> players) {}
 
     public void acceptCardVisitorAlternative(AlternativeTravellingState state, CardVisitor visitor, List <Ship> lessCrewShips, List <Ship> lessEngineShips, List <Ship> lessFirepowerShips) {}

@@ -62,5 +62,4 @@ public class SequentialTravellingState implements GameState {
     public void process() {
         currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), game.getListOfPlayers());
     }
-
 }

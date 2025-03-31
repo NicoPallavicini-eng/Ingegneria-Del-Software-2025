@@ -3,18 +3,15 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PlanetsCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.MultipleTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PlanetsCard extends Card {
     private final List <Planet> planets;
     private final int daysToLose;
-    private boolean[] landed;
     private boolean goNext;
 
     public PlanetsCard(boolean levelTwo, boolean used, PlanetsCardVisitor visitor, List <Planet> planets, int daysToLose) {
@@ -22,11 +19,6 @@ public class PlanetsCard extends Card {
         int dim = planets.size();
         this.planets = planets;
         this.daysToLose = daysToLose;
-        landed = new boolean[dim];
-
-        for (int i = 0; i < dim; i++) {
-            landed[i] = false;
-        }
     }
 
     public List <Planet> getPlanetsList() {
@@ -37,103 +29,23 @@ public class PlanetsCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitorMultiple(MultipleTravellingState state, PlanetsCardVisitor visitor, Player player) {
-        visitor.handlePlanetsCard(state, this, player);
+    public void acceptCardVisitorSequential(SequentialTravellingState state, PlanetsCardVisitor visitor, List <Player> players) {
+        visitor.handlePlanetsCard(this, players);
     }
 
     public void acceptNextVisitor(GameState state, PlanetsCardVisitor visitor, Game game, Card card) {
         visitor.setNextStatePlanetsCard(state, game, this);
     }
 
-    public void setLanded(boolean landed, int i) {
-        this.landed[i] = landed;
-    }
+    public void process(Player player) {
+        if (player.playerEngages) {
+            Ship ship = player.getShip();
 
-    public boolean getLanded(int i) {
-        return landed[i];
-    }
+            Planet chosenPlanet = player.getChosenPlanet();
+            chosenPlanet.setShipLanded(ship);
 
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
-    }
-
-    public void process(int landed) {
-        int planetsNumber = planets.size();
-        boolean availablePlanets = true;
-
-        List <Player> players = Game.getListOfPlayers();
-
-        ExecutorService executor = Executors.newFixedThreadPool(players.size());
-
-        for (Player player : players) {
-           goNext = false;
-
-            executor.execute(new PlanetsCard.PlanetsTask(player, planets, daysToLose, this));
-
-            while (!goNext);
-
-            // check for remaining planets
-            int i = 0;
-            boolean someLeft = false;
-            for (Planet planet : planets) {
-                if (!landed[i]) {
-                    someLeft = true;
-                }
-                i++;
-            }
-
-            if (!someLeft) {
-                break;
-            }
-        }
-
-        // Shut down when all tasks are done
-        executor.shutdown();
-    }
-
-    static class PlanetsTask implements Runnable {
-        private final Player player;
-        private final Ship ship;
-        private final List <Planet> planets;
-        private final int daysToLose;
-        private final PlanetsCard card;
-
-        public PlanetsTask(Player player, List <Planet> planets, int daysToLose, PlanetsCard card) {
-            this.player = player;
-            this.ship = player.getShip();
-            this.planets = planets;
-            this.daysToLose = daysToLose;
-            this.card = card;
-        }
-
-        public void run() {
-            System.out.println("Thread Planets started for ship " + ship.getColor());
-
-            if (player.playerEngages) {
-                Planet chosenPlanet = player.getChosenPlanet();
-
-                int i = 0;
-                for (Planet planet : planets) {
-                    if (chosenPlanet == planet) {
-                        card.setLanded(true, i);
-                        card.setGoNext(true);
-                    }
-                    i++;
-                }
-
-                chosenPlanet.setShipLanded(ship);
-
-                ship.addBlocks(chosenPlanet.getBlocks());
-                ship.setTravelDays(ship.getTravelDays() - daysToLose);
-            } else {
-                card.setGoNext(true);
-            }
-
-            System.out.println("Thread Planets ended for ship " + ship.getColor());
+            ship.addBlocks(chosenPlanet.getBlocks());
+            ship.setTravelDays(ship.getTravelDays() - daysToLose);
         }
     }
 }

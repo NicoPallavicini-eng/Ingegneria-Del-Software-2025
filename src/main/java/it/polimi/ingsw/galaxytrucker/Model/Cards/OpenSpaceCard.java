@@ -3,7 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.OpenSpaceCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.InteractiveTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Ship;
 
@@ -16,8 +16,8 @@ public class OpenSpaceCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitorInteractive(InteractiveTravellingState state, OpenSpaceCardVisitor visitor, List <Player> players) {
-        visitor.handleOpenSpaceCard(state, this, players);
+    public void acceptCardVisitorSequential(SequentialTravellingState state, OpenSpaceCardVisitor visitor, List <Player> players) {
+        visitor.handleOpenSpaceCard(this, players);
     }
 
     public void acceptNextVisitor(GameState state, OpenSpaceCardVisitor visitor, Game game, Card card) {
