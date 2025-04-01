@@ -5,7 +5,6 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 public class BuildingState implements GameState {
     private final Game game;
     private GameState nextState;
-    private Card nextCard;
 
     public BuildingState( Game game ) {
         this.game = game;
@@ -24,7 +23,7 @@ public class BuildingState implements GameState {
     }
 
     public GameState next() {
-        nextCard = getGame().getDeck().drawCard();
+        Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
             return new FinalState(game);
         } else {

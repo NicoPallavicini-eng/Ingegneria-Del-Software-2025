@@ -1,20 +1,16 @@
 TODO Cards:
 CombatZoneCard:
-    getHit(cannonballList);
-EpidemicCard: X
+EpidemicCard:
 MeteorsCard:
-    getHit(meteors);
 ! OpenSpaceCard:
     fix in process1 inputEngine logic
-! PiratesCard:
-    getHit(cannonballList);
-! PlanetsCard:
-    player input of planet;
-! ShipCard: X
-! SlaversCard: X
-! SmugglersCard: X
-StardustCard: X
-! StationCard: X
+PiratesCard:
+PlanetsCard:
+ShipCard:
+SlaversCard:
+SmugglersCard:
+StardustCard:
+StationCard:
 
 UML
 
