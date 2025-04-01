@@ -4,7 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.ShipCard;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 public class ShipCardVisitor extends CardVisitor {
     public void handleShipCard(SequentialTravellingState state, ShipCard shipCard, Player player) {

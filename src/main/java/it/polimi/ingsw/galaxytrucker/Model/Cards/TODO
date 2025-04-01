@@ -18,22 +18,8 @@ StardustCard: X
 
 UML
 
-
-TODO Adds/Shifts to TravellingState:
-
-OpenSpaceCard: ok
- - enginePowerChosen: bool => 1 when all done,
-    then engines turn on in reverse order
-PiratesCard, SlaversCard, SmugglersCard,
-ShipCard, StationCard: ok
- - accomplished: bool
-PlanetsCard: ok
- - landed: List bool[planets.size()]
-
  TODO add states for structs:
 
  1. PARALLEL: Epidemic, Meteors, Stardust;
  2. SEQUENTIAL: OpenSpace, Pirates, Ship, Slavers, Smugglers, Station, Planets;
  3. ALTERNATIVE: CombatZone.
-
- might join two of them

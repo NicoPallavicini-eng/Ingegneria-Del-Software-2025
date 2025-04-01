@@ -4,7 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
 import it.polimi.ingsw.galaxytrucker.Model.Game.AlternativeTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 public class CombatZoneCardVisitor extends CardVisitor {
     public void handleCombatZoneCardLessCrew(CombatZoneCard combatZoneCard, Ship ship) {

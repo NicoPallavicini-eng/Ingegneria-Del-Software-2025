@@ -1,4 +1,5 @@
-package it.polimi.ingsw.galaxytrucker.Model;
+package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 

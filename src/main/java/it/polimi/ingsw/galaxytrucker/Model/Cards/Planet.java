@@ -1,6 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.util.List;
 

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.galaxytrucker.Model;
+package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
+
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 
 public class Player {
     private String nickname;
@@ -8,7 +10,7 @@ public class Player {
     private boolean onlineStatus;
 
 
-    public Player(String playerIp,String nickname,Color color){
+    public Player(String playerIp, String nickname, Color color){
         this.playerIp = playerIp;
         setNickname(nickname);
         //assegno

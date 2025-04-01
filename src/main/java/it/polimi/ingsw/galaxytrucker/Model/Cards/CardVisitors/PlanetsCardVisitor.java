@@ -5,7 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.util.List;
 

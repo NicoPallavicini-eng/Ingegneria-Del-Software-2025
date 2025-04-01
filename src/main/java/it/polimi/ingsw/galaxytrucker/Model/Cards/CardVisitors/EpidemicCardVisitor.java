@@ -4,7 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.EpidemicCard;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 public class EpidemicCardVisitor extends CardVisitor {
     public void handleEpidemicCard(EpidemicCard epidemicCard, Ship ship) {

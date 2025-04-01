@@ -1,7 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
 
 import java.util.ArrayList;
@@ -53,19 +53,20 @@ public class Meteor {
             if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll).isEmpty()) {
                 if (this.bigMeteor) {
                     if (/* first tile or adjacent ones =! cannon */) {
-                        // ship.getHit(); TODO
+                        removeHitTile(ship, diceRoll);
                     }
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
-                    boolean hasShield = true;
-                    for (ShieldTile shield : shields) { // TODO fix
-                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction != WEST
-                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction != EAST) {
-                            hasShield = false;
+                    boolean hasShield = false;
+                    for (ShieldTile shield : shields) {
+                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction == WEST
+                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction == EAST) {
+                            hasShield = true;
+                            break;
                         }
                     }
                     if (/* open connector || */ !hasShield) {
-                        // ship.getHit(); TODO
+                        removeHitTile(ship, diceRoll);
                     }
                 }
             }
@@ -73,20 +74,130 @@ public class Meteor {
             if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll).isEmpty()) {
                 if (this.bigMeteor) {
                     if (/* first tile =! cannon */) {
-                        // ship.getHit(); TODO
+                        removeHitTile(ship, diceRoll);
                     }
                 } else {
                     ArrayList <ShieldTile> shields = ship.getListOfShield();
-                    boolean hasShield = true;
+                    boolean hasShield = false;
                     for (ShieldTile shield : shields) {
-                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && this.direction != NORTH
-                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && this.direction != SOUTH) {
-                            hasShield = false;
+                        if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && this.direction == NORTH
+                                || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && this.direction == SOUTH) {
+                            hasShield = true;
+                            break;
                         }
                     }
                     if (/* open connector || */ !hasShield) {
-                        // ship.getHit(); TODO
+                        removeHitTile(ship, diceRoll);
                     }
+                }
+            }
+        }
+    }
+
+    private void removeHitTile(Ship ship, int diceRoll) {
+        int rowSize = ship.getRowListTiles(diceRoll).size();
+        if (this.direction == WEST) {
+            if (rowSize == 5) {
+                ship.removeTileOnFloorPlan(diceRoll, 9);
+            } else if (rowSize == 4) {
+                if (ship.getColumnListTiles(9).isEmpty()) {
+                    ship.removeTileOnFloorPlan(diceRoll, 8);
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 9);
+                }
+            } else if (rowSize == 3) {
+                if (ship.getColumnListTiles(9).isEmpty()) {
+                    if (ship.getRowListTiles(8).isEmpty()) {
+                        ship.removeTileOnFloorPlan(diceRoll, 7);
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 8);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 9);
+                }
+            } else if (rowSize == 2) {
+                if (ship.getColumnListTiles(9).isEmpty()) {
+                    if (ship.getRowListTiles(8).isEmpty()) {
+                        if (ship.getColumnListTiles(7).isEmpty()) {
+                            ship.removeTileOnFloorPlan(diceRoll, 6);
+                        } else {
+                            ship.removeTileOnFloorPlan(diceRoll, 7);
+                        }
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 8);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 9);
+                }
+            } else if (rowSize == 1) {
+                if (ship.getColumnListTiles(9).isEmpty()) {
+                    if (ship.getRowListTiles(8).isEmpty()) {
+                        if (ship.getColumnListTiles(7).isEmpty()) {
+                            if (ship.getRowListTiles(6).isEmpty()) {
+                                ship.removeTileOnFloorPlan(diceRoll, 5);
+                            } else {
+                                ship.removeTileOnFloorPlan(diceRoll, 6);
+                            }
+                        } else {
+                            ship.removeTileOnFloorPlan(diceRoll, 7);
+                        }
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 8);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 9);
+                }
+            }
+        } else if (this.direction == EAST) {
+            if (rowSize == 5) {
+                ship.removeTileOnFloorPlan(diceRoll, 5);
+            } else if (rowSize == 4) {
+                if (ship.getColumnListTiles(5).isEmpty()) {
+                    ship.removeTileOnFloorPlan(diceRoll, 4);
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 5);
+                }
+            } else if (rowSize == 3) {
+                if (ship.getColumnListTiles(5).isEmpty()) {
+                    if (ship.getRowListTiles(6).isEmpty()) {
+                        ship.removeTileOnFloorPlan(diceRoll, 7);
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 6);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 5);
+                }
+            } else if (rowSize == 2) {
+                if (ship.getColumnListTiles(5).isEmpty()) {
+                    if (ship.getRowListTiles(6).isEmpty()) {
+                        if (ship.getColumnListTiles(7).isEmpty()) {
+                            ship.removeTileOnFloorPlan(diceRoll, 8);
+                        } else {
+                            ship.removeTileOnFloorPlan(diceRoll, 7);
+                        }
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 6);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 5);
+                }
+            } else if (rowSize == 1) {
+                if (ship.getColumnListTiles(5).isEmpty()) {
+                    if (ship.getRowListTiles(6).isEmpty()) {
+                        if (ship.getColumnListTiles(7).isEmpty()) {
+                            if (ship.getRowListTiles(8).isEmpty()) {
+                                ship.removeTileOnFloorPlan(diceRoll, 9);
+                            } else {
+                                ship.removeTileOnFloorPlan(diceRoll, 8);
+                            }
+                        } else {
+                            ship.removeTileOnFloorPlan(diceRoll, 7);
+                        }
+                    } else {
+                        ship.removeTileOnFloorPlan(diceRoll, 6);
+                    }
+                } else {
+                    ship.removeTileOnFloorPlan(diceRoll, 5);
                 }
             }
         }
