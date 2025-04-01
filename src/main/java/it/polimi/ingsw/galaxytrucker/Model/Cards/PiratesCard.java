@@ -50,7 +50,7 @@ public class PiratesCard extends Card {
         }
     }
 
-    public void acceptNextVisitor(GameState state, PiratesCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, PiratesCardVisitor visitor, Game game) {
         visitor.setNextStatePiratesCard(state, game, this);
     }
 
@@ -80,7 +80,7 @@ public class PiratesCard extends Card {
         } else if (ship.getFirepower() > firepower) {
             state.setAccomplished(true);
 
-            if (player.playerEngages) {
+            if (player.getEngages()) {
                 ship.setCredits(ship.getCredits() + credits);
                 ship.setTravelDays(ship.getTravelDays() - daysToLose);
             }

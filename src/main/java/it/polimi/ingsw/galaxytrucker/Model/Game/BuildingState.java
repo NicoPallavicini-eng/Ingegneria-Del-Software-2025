@@ -28,7 +28,8 @@ public class BuildingState implements GameState {
         if (nextCard == null) {
             return new FinalState(game);
         } else {
-            return GameState(game, nextCard);
+            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
+            return nextState;
         }
     }
 

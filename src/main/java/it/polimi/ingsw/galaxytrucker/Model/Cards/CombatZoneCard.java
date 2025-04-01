@@ -46,7 +46,7 @@ public class CombatZoneCard extends Card {
         }
     }
 
-    public void acceptNextVisitor(GameState state, CombatZoneCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, CombatZoneCardVisitor visitor, Game game) {
         visitor.setNextStateCombatZoneCard(state, game, this);
     }
 

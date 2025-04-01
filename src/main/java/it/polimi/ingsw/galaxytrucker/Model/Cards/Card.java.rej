@@ -1,5 +1,0 @@
-diff a/src/main/java/it/polimi/ingsw/galaxytrucker/Model/Cards/Card.java b/src/main/java/it/polimi/ingsw/galaxytrucker/Model/Cards/Card.java	(rejected hunks)
-@@ -3,2 +3,3 @@
- import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
-+import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
- 

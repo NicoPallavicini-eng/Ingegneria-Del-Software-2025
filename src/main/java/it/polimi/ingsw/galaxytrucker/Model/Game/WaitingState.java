@@ -20,4 +20,12 @@ public class WaitingState implements GameState {
         // input max player
         // wait for connections
     }
+
+    @Override
+    public GameState getNextState() {
+        return new BuildingState(game);
+    }
+
+    @Override
+    public void setNextState(GameState nextState) {}
 }

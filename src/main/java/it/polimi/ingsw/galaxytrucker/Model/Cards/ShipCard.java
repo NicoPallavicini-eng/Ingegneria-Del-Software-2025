@@ -44,7 +44,7 @@ public class ShipCard extends Card {
         }
     }
 
-    public void acceptNextVisitor(GameState state, ShipCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, ShipCardVisitor visitor, Game game) {
         visitor.setNextStateShipCard(state, game, this);
     }
 
@@ -67,7 +67,7 @@ public class ShipCard extends Card {
     public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 
-        if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.playerEngages) {
+        if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.getEngages()) {
             state.setAccomplished(true);
 
             ship.setCredits(ship.getCredits() + credits);

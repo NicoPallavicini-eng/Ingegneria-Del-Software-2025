@@ -5,7 +5,7 @@ EpidemicCard: X
 MeteorsCard:
     getHit(meteors);
 ! OpenSpaceCard:
-    player input of enginePower;
+    fix in process1 inputEngine logic
 ! PiratesCard:
     getHit(cannonballList);
 ! PlanetsCard:

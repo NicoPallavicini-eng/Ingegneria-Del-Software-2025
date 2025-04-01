@@ -3,7 +3,6 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.EpidemicCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -18,13 +17,13 @@ public class EpidemicCard extends Card {
         super(levelTwo, used, visitor);
     }
 
-    public void acceptCardVisitorParallel(EpidemicCardVisitor visitor, Player player, List <Ship> ships) {
+    public void acceptCardVisitorParallel(EpidemicCardVisitor visitor, List <Ship> ships) {
         for (Ship ship : ships) {
             visitor.handleEpidemicCard(this, ship);
         }
     }
 
-    public void acceptNextVisitor(GameState state, EpidemicCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, EpidemicCardVisitor visitor, Game game) {
         visitor.setNextStateEpidemicCard(state, game, this);
     }
 

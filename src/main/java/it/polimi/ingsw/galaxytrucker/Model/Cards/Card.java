@@ -38,7 +38,7 @@ public abstract class Card {
 
     public void acceptCardVisitorAlternative(AlternativeTravellingState state, CardVisitor visitor, List <Ship> lessCrewShips, List <Ship> lessEngineShips, List <Ship> lessFirepowerShips) {}
 
-    public void acceptNextVisitor(GameState state, CardVisitor visitor, Game game, Card nextCard) {}
+    public void acceptNextVisitor(GameState state, CardVisitor visitor, Game game) {}
 
     public CardVisitor getCardVisitor() {
         return visitor;

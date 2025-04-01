@@ -3,7 +3,6 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.MeteorsCardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.util.List;
@@ -20,13 +19,13 @@ public class MeteorsCard extends Card {
         return meteors;
     }
 
-    public void acceptCardVisitorParallel(MeteorsCardVisitor visitor, Player player, List <Ship> ships) {
+    public void acceptCardVisitorParallel(MeteorsCardVisitor visitor, List <Ship> ships) {
         for (Ship ship : ships) {
             visitor.handleMeteorsCard(this, ship);
         }
     }
 
-    public void acceptNextVisitor(GameState state, MeteorsCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, MeteorsCardVisitor visitor, Game game) {
         visitor.setNextStateMeteorsCard(state, game, this);
     }
 

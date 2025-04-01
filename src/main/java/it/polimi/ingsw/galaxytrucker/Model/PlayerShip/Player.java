@@ -5,6 +5,8 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 public class Player {
     private String nickname;
     private Ship ship;
+    private int input;
+    private boolean engages;
 
     private String playerIp;
     private boolean onlineStatus;
@@ -18,6 +20,22 @@ public class Player {
         //setCredits(0);
         setOnlineStatus(true);
         //setTravelDays(Integer.valueOf(0));
+    }
+
+    public boolean getEngages() {
+        return engages;
+    }
+
+    public void setEngages(boolean engages) {
+        this.engages = engages;
+    }
+
+    public int getInput() {
+        return input;
+    }
+
+    public void setInputEngine(int input) {
+        this.input = input;
     }
 
     public String getNickname() {

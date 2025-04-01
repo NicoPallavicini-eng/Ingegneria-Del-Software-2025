@@ -50,7 +50,7 @@ public class SlaversCard extends Card {
         }
     }
 
-    public void acceptNextVisitor(GameState state, SlaversCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, SlaversCardVisitor visitor, Game game) {
         visitor.setNextStateSlaversCard(state, game, this);
     }
 
@@ -78,7 +78,7 @@ public class SlaversCard extends Card {
         } else if (ship.getFirepower() > firepower) {
             state.setAccomplished(true);
 
-            if (player.playerEngages) {
+            if (player.getEngages()) {
                 ship.setCredits(ship.getCredits() + credits);
                 ship.setTravelDays(ship.getTravelDays() - daysToLose);
             }

@@ -54,7 +54,7 @@ public class SequentialTravellingState implements GameState {
         if (nextCard == null) {
             return new FinalState(game);
         } else {
-            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game, nextCard);
+            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
             return nextState;
         }
     }

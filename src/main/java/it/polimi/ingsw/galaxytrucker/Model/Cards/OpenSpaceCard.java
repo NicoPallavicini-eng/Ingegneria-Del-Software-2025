@@ -10,8 +10,6 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import java.util.List;
 
 public class OpenSpaceCard extends Card {
-    private boolean goNext;
-
     public OpenSpaceCard(boolean levelTwo, boolean used, OpenSpaceCardVisitor visitor) {
         super(levelTwo, used, visitor);
     }
@@ -20,21 +18,13 @@ public class OpenSpaceCard extends Card {
         visitor.handleOpenSpaceCard(this, players);
     }
 
-    public void acceptNextVisitor(GameState state, OpenSpaceCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, OpenSpaceCardVisitor visitor, Game game) {
         visitor.setNextStateOpenSpaceCard(state, game, this);
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process1(Player player, List <Integer> engineChosenList) {
         Ship ship = player.getShip();
-        int enginePower = player.getPlayerInput(); // TODO this
+        int enginePower = player.getInput();
 
         if (enginePower == 0) {
             // If a player has zero engine power he is lost in space and out of further travelling

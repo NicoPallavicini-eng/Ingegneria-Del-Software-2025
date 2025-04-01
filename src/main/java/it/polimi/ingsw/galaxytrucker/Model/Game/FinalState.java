@@ -17,6 +17,14 @@ public class FinalState implements GameState {
         // output points
     }
 
+    @Override
+    public GameState getNextState() {
+        return null;
+    }
+
+    @Override
+    public void setNextState(GameState nextState) {}
+
     public Game getGame() {
         return game;
     }

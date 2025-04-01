@@ -33,15 +33,15 @@ public class PlanetsCard extends Card {
         visitor.handlePlanetsCard(this, players);
     }
 
-    public void acceptNextVisitor(GameState state, PlanetsCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, PlanetsCardVisitor visitor, Game game) {
         visitor.setNextStatePlanetsCard(state, game, this);
     }
 
     public void process(Player player) {
-        if (player.playerEngages) {
+        if (player.getEngages()) {
             Ship ship = player.getShip();
 
-            Planet chosenPlanet = player.getChosenPlanet();
+            Planet chosenPlanet = planets.get(player.getInput());
             chosenPlanet.setShipLanded(ship);
 
             ship.addBlocks(chosenPlanet.getBlocks());

@@ -52,7 +52,7 @@ public class SmugglersCard extends Card {
         }
     }
 
-    public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game, Card card) {
+    public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game) {
         visitor.setNextStateSmugglersCard(state, game, this);
     }
 
@@ -90,7 +90,7 @@ public class SmugglersCard extends Card {
         } else if (ship.getFirepower() > firepower) {
             state.setAccomplished(true);
 
-            if (player.playerEngages) {
+            if (player.getEngages()) {
                 ship.addBlocks(blocks);
                 ship.setTravelDays(ship.getTravelDays() - daysToLose);
             }
