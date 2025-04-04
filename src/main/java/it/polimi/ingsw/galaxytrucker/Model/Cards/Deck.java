@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final int cardsNumberLev1 = 4; // TODO implement CardNumber logic for also tut
-    private final int cardsNumberLev2 = 8;
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
     private List <Card> gameDeck;
@@ -30,8 +28,11 @@ public class Deck {
     }
 
     public void assembleGameDeck() {
+        // TODO implement CardNumber logic for also tut
+        int cardsNumberLev1 = 4;
         gameDeck = allCardsLev1.subList(0, cardsNumberLev1);
 
+        int cardsNumberLev2 = 8;
         List <Card> secondPart = allCardsLev2.subList(0, cardsNumberLev2);
 
         // Concatenate the two parts

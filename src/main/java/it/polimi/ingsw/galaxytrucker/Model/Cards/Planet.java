@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Planet {
     private final List <Integer> blocks;
-    private Ship shipLanded;
+    private Ship shipLanded = null;
 
     public Planet(List <Integer> blocks) {
         this.blocks = blocks;

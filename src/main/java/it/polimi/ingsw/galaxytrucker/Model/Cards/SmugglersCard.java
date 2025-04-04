@@ -16,8 +16,6 @@ public class SmugglersCard extends Card {
     private final List <Integer> blocks;
     private final int lostBlocksNumber;
     private final int daysToLose;
-    private boolean defeated = false;
-    private boolean goNext;
 
     public SmugglersCard(boolean levelTwo, boolean used, SmugglersCardVisitor visitor, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
         super(levelTwo, used, visitor);
@@ -54,22 +52,6 @@ public class SmugglersCard extends Card {
 
     public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game) {
         visitor.setNextStateSmugglersCard(state, game, this);
-    }
-
-    public void setDefeated(boolean defeated) {
-        this.defeated = defeated;
-    }
-
-    public boolean getDefeated() {
-        return defeated;
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process(Player player, SequentialTravellingState state) {

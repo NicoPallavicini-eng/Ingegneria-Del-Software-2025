@@ -7,7 +7,6 @@ public class SequentialTravellingState implements GameState {
     private final Game game;
     private final Card currentCard;
     private Card nextCard;
-    private boolean enginePowerChosen = false;
     private boolean accomplished = false;
     private GameState nextState;
 
@@ -30,14 +29,6 @@ public class SequentialTravellingState implements GameState {
 
     public void setNextState(GameState nextState) {
         this.nextState = nextState;
-    }
-
-    public boolean getEnginePowerChosen() {
-        return enginePowerChosen;
-    }
-
-    public void setEnginePowerChosen(boolean enginePowerChosen) {
-        this.enginePowerChosen = enginePowerChosen;
     }
 
     public boolean getAccomplished() {

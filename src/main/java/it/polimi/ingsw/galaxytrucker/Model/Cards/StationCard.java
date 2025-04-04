@@ -13,8 +13,6 @@ public class StationCard extends Card {
     private final int crewNumberNeeded;
     private final List <Integer> blocks; // Integer
     private final int daysToLose;
-    private boolean landed = false;
-    private boolean goNext;
 
     public StationCard(boolean levelTwo, boolean used, StationCardVisitor visitor, int crewNumberNeeded, List <Integer> blocks, int daysToLose) {
         super(levelTwo, used, visitor);
@@ -23,7 +21,7 @@ public class StationCard extends Card {
         this.daysToLose = daysToLose;
     }
 
-    public List<Integer> getBlockList() {
+    public List <Integer> getBlockList() {
         return blocks;
     }
 
@@ -46,22 +44,6 @@ public class StationCard extends Card {
 
     public void acceptNextVisitor(GameState state, StationCardVisitor visitor, Game game) {
         visitor.setNextStateStationCard(state, game, this);
-    }
-
-    public void setLanded(boolean landed) {
-        this.landed = landed;
-    }
-
-    public boolean getLanded() {
-        return landed;
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process(Player player, SequentialTravellingState state) {

@@ -12,11 +12,9 @@ import java.util.List;
 public class PlanetsCard extends Card {
     private final List <Planet> planets;
     private final int daysToLose;
-    private boolean goNext;
 
     public PlanetsCard(boolean levelTwo, boolean used, PlanetsCardVisitor visitor, List <Planet> planets, int daysToLose) {
         super(levelTwo, used, visitor);
-        int dim = planets.size();
         this.planets = planets;
         this.daysToLose = daysToLose;
     }

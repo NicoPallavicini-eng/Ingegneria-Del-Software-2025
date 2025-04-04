@@ -11,16 +11,14 @@ import java.util.List;
 
 public class OpenSpaceCardVisitor extends CardVisitor {
     public void handleOpenSpaceCard(OpenSpaceCard openSpaceCard, List <Player> players) {
-        List <Integer> engineChosenList = new ArrayList<>();
-
         for (Player player : players) {
-            openSpaceCard.process1(player, engineChosenList);
+            openSpaceCard.process1(player);
         }
 
         List <Player> reversed = players.reversed();
 
         for (Player player : reversed) {
-            openSpaceCard.process2(player, engineChosenList);
+            openSpaceCard.process2(player);
         }
     }
 

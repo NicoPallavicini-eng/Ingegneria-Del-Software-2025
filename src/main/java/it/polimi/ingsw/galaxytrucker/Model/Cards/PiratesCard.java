@@ -14,8 +14,6 @@ public class PiratesCard extends Card {
     private final int credits;
     private final int daysToLose;
     private final List <Cannonball> cannonballList;
-    private boolean defeated = false;
-    private boolean goNext;
 
     public PiratesCard(boolean levelTwo, boolean used, PiratesCardVisitor visitor, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
         super(levelTwo, used, visitor);
@@ -52,22 +50,6 @@ public class PiratesCard extends Card {
 
     public void acceptNextVisitor(GameState state, PiratesCardVisitor visitor, Game game) {
         visitor.setNextStatePiratesCard(state, game, this);
-    }
-
-    public void setDefeated(boolean defeated) {
-        this.defeated = defeated;
-    }
-
-    public boolean getDefeated() {
-        return defeated;
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process(Player player, SequentialTravellingState state) {

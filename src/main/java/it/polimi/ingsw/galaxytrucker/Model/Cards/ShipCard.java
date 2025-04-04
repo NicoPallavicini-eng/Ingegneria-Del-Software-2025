@@ -13,8 +13,6 @@ public class ShipCard extends Card {
     private final int crewNumberLost;
     private final int credits;
     private final int daysToLose;
-    private boolean landed = false;
-    private boolean goNext;
 
     public ShipCard(boolean levelTwo, boolean used, ShipCardVisitor visitor, int crewNumberLost, int credits, int daysToLose) {
         super(levelTwo, used, visitor);
@@ -46,22 +44,6 @@ public class ShipCard extends Card {
 
     public void acceptNextVisitor(GameState state, ShipCardVisitor visitor, Game game) {
         visitor.setNextStateShipCard(state, game, this);
-    }
-
-    public void setLanded(boolean landed) {
-        this.landed = landed;
-    }
-
-    public boolean getLanded() {
-        return landed;
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process(Player player, SequentialTravellingState state) {

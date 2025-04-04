@@ -22,7 +22,7 @@ public class OpenSpaceCard extends Card {
         visitor.setNextStateOpenSpaceCard(state, game, this);
     }
 
-    public void process1(Player player, List <Integer> engineChosenList) {
+    public void process1(Player player) {
         Ship ship = player.getShip();
         int enginePower = player.getInput();
 
@@ -32,7 +32,7 @@ public class OpenSpaceCard extends Card {
         }
     }
 
-    public void process2(Player player, List <Integer> engineChosenList) {
+    public void process2(Player player) {
         Ship ship = player.getShip();
 
         ship.setTravelDays(ship.getTravelDays() + ship.getEnginePower());

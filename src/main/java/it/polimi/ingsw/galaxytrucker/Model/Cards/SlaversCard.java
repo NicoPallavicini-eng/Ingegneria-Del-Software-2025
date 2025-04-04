@@ -14,8 +14,6 @@ public class SlaversCard extends Card {
     private final int credits;
     private final int crewLost;
     private final int daysToLose;
-    private boolean defeated = false;
-    private boolean goNext;
 
     public SlaversCard(boolean levelTwo, boolean used, SlaversCardVisitor visitor, int firepower, int credits, int crewLost, int daysToLose) {
         super(levelTwo, used, visitor);
@@ -52,22 +50,6 @@ public class SlaversCard extends Card {
 
     public void acceptNextVisitor(GameState state, SlaversCardVisitor visitor, Game game) {
         visitor.setNextStateSlaversCard(state, game, this);
-    }
-
-    public void setDefeated(boolean defeated) {
-        this.defeated = defeated;
-    }
-
-    public boolean getDefeated() {
-        return defeated;
-    }
-
-    public void setGoNext(boolean goNext) {
-        this.goNext = goNext;
-    }
-
-    public boolean getGoNext() {
-        return goNext;
     }
 
     public void process(Player player, SequentialTravellingState state) {
