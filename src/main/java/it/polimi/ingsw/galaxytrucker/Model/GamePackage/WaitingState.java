@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model.Game;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 public class WaitingState implements GameState {
     private final Game game;

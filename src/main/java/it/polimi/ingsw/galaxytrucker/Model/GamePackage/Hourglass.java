@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model.Game;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 //the Timer class implementation is kept (in comments) for possible future use
 public class Hourglass {

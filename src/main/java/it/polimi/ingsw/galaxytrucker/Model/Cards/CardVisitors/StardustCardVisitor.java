@@ -1,10 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
@@ -45,7 +45,7 @@ public class StardustCardVisitor implements CardVisitor {
     public void setNextStateShipCard(GameState state, Game game, ShipCard card){}
     public void setNextStateSlaversCard(GameState state, Game game, SlaversCard card){}
     public void setNextStateSmugglersCard(GameState state, Game game, SmugglersCard card){}
-    // public void setNextStateStardustCard(GameState state, Game game, StardustCard card){}
+    // public void setNextStateStardustCard(GameState state, GamePackage game, StardustCard card){}
     public void setNextStateStationCard(GameState state, Game game, StationCard card){}
 
 }

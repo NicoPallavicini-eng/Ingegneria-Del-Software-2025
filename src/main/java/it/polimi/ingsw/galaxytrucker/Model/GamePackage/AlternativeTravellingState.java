@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model.Game;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
@@ -62,7 +62,9 @@ public class AlternativeTravellingState implements GameState {
             if (ship.getNumberOfCrewMembers() == lessCrewShips.getFirst().getNumberOfCrewMembers()) {
                 lessCrewShips.add(ship);
             } else if (ship.getNumberOfCrewMembers() < lessCrewShips.getFirst().getNumberOfCrewMembers()) {
-                lessCrewShips.removeAll(lessCrewShips);
+                List <Ship> tbd = new ArrayList<>();
+                tbd = lessCrewShips;
+                lessCrewShips.removeAll(tbd);
                 lessCrewShips.add(ship);
             }
         }
@@ -74,7 +76,9 @@ public class AlternativeTravellingState implements GameState {
             if (ship.getEnginePower() == lessEngineShips.getFirst().getEnginePower()) {
                 lessEngineShips.add(ship);
             } else if (ship.getEnginePower() < lessEngineShips.getFirst().getEnginePower()) {
-                lessEngineShips.removeAll(lessEngineShips);
+                List <Ship> tbd = new ArrayList<>();
+                tbd = lessEngineShips;
+                lessEngineShips.removeAll(tbd);
                 lessEngineShips.add(ship);
             }
         }
@@ -86,7 +90,9 @@ public class AlternativeTravellingState implements GameState {
             if (ship.getFirepower() == lessFirepowerShips.getFirst().getFirepower()) {
                 lessFirepowerShips.add(ship);
             } else if (ship.getFirepower() < lessFirepowerShips.getFirst().getFirepower()) {
-                lessFirepowerShips.removeAll(lessFirepowerShips);
+                List <Ship> tbd = new ArrayList<>();
+                tbd = lessFirepowerShips;
+                lessFirepowerShips.removeAll(tbd);
                 lessFirepowerShips.add(ship);
             }
         }

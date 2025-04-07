@@ -1,13 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OpenSpaceCardVisitor implements CardVisitor {
@@ -47,7 +46,7 @@ public class OpenSpaceCardVisitor implements CardVisitor {
     public void setNextStateCombatZoneCard(GameState state, Game game, CombatZoneCard card){}
     public void setNextStateEpidemicCard(GameState state, Game game, EpidemicCard card){}
     public void setNextStateMeteorsCard(GameState state, Game game, MeteorsCard card){}
-    // public void setNextStateOpenSpaceCard(GameState state, Game game, OpenSpaceCard card){}
+    // public void setNextStateOpenSpaceCard(GameState state, GamePackage game, OpenSpaceCard card){}
     public void setNextStatePiratesCard(GameState state, Game game, PiratesCard card){}
     public void setNextStatePlanetsCard(GameState state, Game game, PlanetsCard card){}
     public void setNextStateShipCard(GameState state, Game game, ShipCard card){}

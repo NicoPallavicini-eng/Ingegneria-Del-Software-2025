@@ -304,9 +304,7 @@ public class Ship {
                 if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
                     tileVisitedList.add(tileToVisit);
                     ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
-                    for(Tile adiacentTile : nearTile){
-                        tileToVisitList.add(adiacentTile);
-                    }
+                    tileToVisitList.addAll(nearTile);
 
                 }
             }
@@ -319,9 +317,8 @@ public class Ship {
     }
 
     public ArrayList<Tile> checkFloorplanConnection(Tile tile){
-        Tile centralTile = tile;
 
-        ArrayList<Tile> tileToVisitList = getAdiacentTiles(centralTile);
+        ArrayList<Tile> tileToVisitList = getAdiacentTiles(tile);
         ArrayList<Tile> tileVisitedList = new ArrayList<>();
 
         for(Tile tileToVisit: tileToVisitList) {
@@ -329,9 +326,7 @@ public class Ship {
                 if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
                     tileVisitedList.add(tileToVisit);
                     ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
-                    for(Tile adiacentTile : nearTile){
-                        tileToVisitList.add(adiacentTile);
-                    }
+                    tileToVisitList.addAll(nearTile);
 
                 }
             }
@@ -353,7 +348,7 @@ public class Ship {
         return cargoFromCards;
     }
     public void addBlocks(List<Integer> cargoFromCards) {
-        cargoFromCards.forEach(c -> this.cargoFromCards.add(c));
+        this.cargoFromCards.addAll(cargoFromCards);
     }
     public boolean isPlayerEngaged(){
         return playerEngaged;
@@ -385,11 +380,10 @@ public class Ship {
         floorplanArrayList.get(row).set(column,tile);
     }
 
-    public Tile removeTileOnFloorPlan(int row,int column){
+    public void removeTileOnFloorPlan(int row, int column){
 
          Tile tile = floorplanArrayList.get(row).get(column);
          floorplanArrayList.get(row).set(column,null);
-         return tile;
     }
 
 

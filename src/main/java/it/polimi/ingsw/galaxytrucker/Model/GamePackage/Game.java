@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model.Game;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;

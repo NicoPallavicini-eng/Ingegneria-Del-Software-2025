@@ -1,10 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
-import it.polimi.ingsw.galaxytrucker.Model.Game.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Game.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.ParallelTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.Game.SequentialTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.ParallelTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.SequentialTravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
@@ -37,7 +37,7 @@ public class EpidemicCardVisitor implements CardVisitor {
 
     // set next states
     public void setNextStateCombatZoneCard(GameState state, Game game, CombatZoneCard card){}
-    // public void setNextStateEpidemicCard(GameState state, Game game, EpidemicCard card){}
+    // public void setNextStateEpidemicCard(GameState state, GamePackage game, EpidemicCard card){}
     public void setNextStateMeteorsCard(GameState state, Game game, MeteorsCard card){}
     public void setNextStateOpenSpaceCard(GameState state, Game game, OpenSpaceCard card){}
     public void setNextStatePiratesCard(GameState state, Game game, PiratesCard card){}
