@@ -48,8 +48,10 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
             for (ShieldTile shield : shields) {
                 if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == SOUTHWEST) && this.direction == WEST
                         || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == NORTHEAST) && this.direction == EAST) {
-                    hasShield = true;
-                    break;
+                    if (shield.getActiveState()) {
+                        hasShield = true;
+                        break;
+                    }
                 }
             }
             if (!hasShield) {
@@ -67,8 +69,10 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
             for (ShieldTile shield : shields) {
                 if ((shield.getOrientation() == NORTHWEST || shield.getOrientation() == NORTHEAST) && this.direction == NORTH
                         || (shield.getOrientation() == SOUTHEAST || shield.getOrientation() == SOUTHWEST) && this.direction == SOUTH) {
-                    hasShield = true;
-                    break;
+                    if (shield.getActiveState()) {
+                        hasShield = true;
+                        break;
+                    }
                 }
             }
             if (!hasShield) {
