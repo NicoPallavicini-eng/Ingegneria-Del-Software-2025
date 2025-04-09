@@ -13,13 +13,11 @@ public class TilePile {
     }
 
     public Tile pickUpTile(Tile tile){
-        //TODO logic
         tile.setChoosable(false);
         return tile;
     }
 
     public void putDownTile(Tile tile){
-        //TODO logic
         tile.setChoosable(true);
         tile.flip();
     }
