@@ -8,26 +8,20 @@ public class Tile{
     private ConnectorType southConnector;
     private ConnectorType eastConnector;
 
-    private final TileType type;
     private boolean attached;
     private boolean upsideDown;
 
     private boolean choosable;
 
-    public Tile(ConnectorType northConnector, ConnectorType westConnector, ConnectorType southConnector, ConnectorType eastConnector, TileType type) {
+    public Tile(ConnectorType northConnector, ConnectorType westConnector, ConnectorType southConnector, ConnectorType eastConnector) {
         this.northConnector = northConnector;
         this.westConnector = westConnector;
         this.southConnector = southConnector;
         this.eastConnector = eastConnector;
-        this.type = type;
     }
 
     public boolean isUpsideDown() {
         return upsideDown;
-    }
-
-    public TileType getType() {
-        return type;
     }
 
     public void rotate(Side side){

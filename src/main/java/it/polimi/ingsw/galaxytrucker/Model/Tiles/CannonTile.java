@@ -7,13 +7,12 @@ import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.CANNON;
 public class CannonTile extends Tile {
     private final boolean doublePower;
     private boolean activeState;
-    private final Direction direction;
 
-    public CannonTile(ConnectorType north, ConnectorType west, ConnectorType south, ConnectorType east, Direction direction, boolean doublePower, boolean activeState) {
-        super(north, west, south, east, CANNON);
+
+    public CannonTile(ConnectorType north, ConnectorType west, ConnectorType south, ConnectorType east, boolean doublePower, boolean activeState) {
+        super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;
-        this.direction = direction;
     }
 
     public boolean getDoublePower() {
@@ -26,10 +25,6 @@ public class CannonTile extends Tile {
 
     public boolean getActiveState() {
         return activeState;
-    }
-
-    public Direction getDirection() {
-        return direction;
     }
 
     @Override
