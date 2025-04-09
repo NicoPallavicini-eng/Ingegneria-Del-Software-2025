@@ -31,6 +31,6 @@ class PiratesCardTest {
 
         // piratesCard.process(p, state);
 
-        // assertTrue(state.getAccomplished()); nothing works and i wanna die
+        // assertTrue(state.getAccomplished());
     }
 }
