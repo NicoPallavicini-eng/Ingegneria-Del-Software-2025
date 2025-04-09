@@ -6,7 +6,7 @@ public class ShieldTile extends Tile {
     private boolean activeState;
 
     public ShieldTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, ShieldOrientation orientation, boolean activeState) {
-        super(north, west, south, east, SHIELD);
+        super(north, west, south, east);
         this.orientation = orientation;
         this.activeState = activeState;
     }

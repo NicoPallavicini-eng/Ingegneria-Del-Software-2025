@@ -6,7 +6,7 @@ public class BatteryTile extends Tile{
     private int slotsFilled;
 
     public BatteryTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, int slotsFilled) {
-        super(north, west, south, east, BATTERY);
+        super(north, west, south, east);
         this.slotsNumber = slotsNumber;
         this.slotsFilled = slotsFilled;
     }

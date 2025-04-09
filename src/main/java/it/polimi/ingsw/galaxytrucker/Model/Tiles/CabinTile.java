@@ -8,7 +8,7 @@ public class CabinTile extends Tile {
     private int orangeAdaptors;
 
     public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, int pinkAdaptors, int orangeAdaptors) {
-        super(north, west, south, east, CAPSULE);
+        super(north, west, south, east);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;
         this.pinkAdaptors = pinkAdaptors;

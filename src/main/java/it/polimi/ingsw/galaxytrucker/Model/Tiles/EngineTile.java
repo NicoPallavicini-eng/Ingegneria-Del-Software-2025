@@ -11,7 +11,7 @@ public class EngineTile extends Tile{
     private Direction direction;
 
     public EngineTile(boolean doublePower, boolean activeState, ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
-        super(north, west, south, east, ENGINE);
+        super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;
     }

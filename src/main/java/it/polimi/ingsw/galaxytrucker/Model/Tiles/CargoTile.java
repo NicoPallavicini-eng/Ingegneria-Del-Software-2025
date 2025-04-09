@@ -10,7 +10,7 @@ public class CargoTile extends Tile {
     private List<Integer> tileContent;
 
     public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
-        super(north, west, south, east, STORAGE);
+        super(north, west, south, east);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;
         this.tileContent = tileContent;
