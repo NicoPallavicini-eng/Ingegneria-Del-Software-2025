@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlanetsCardTest { //example
+class PlanetsCardTest {
     List <Planet> planets = new ArrayList<>();
 
     List <Integer> earthBlocks = new ArrayList<>();
@@ -37,10 +37,12 @@ class PlanetsCardTest { //example
 
     PlanetsCardVisitor planetsCardVisitor = new PlanetsCardVisitor();
     PlanetsCard planetCard = new PlanetsCard(true, true, planetsCardVisitor, planets, 4);
+
     @Test
     void PlanetsProcessTest() {
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
+        s.setTravelDays(20);
 
         earthBlocks.add(b1earth);
         earthBlocks.add(b2earth);
@@ -70,12 +72,12 @@ class PlanetsCardTest { //example
 
         p.setEngages(true);
         // input is Mars
-        p.setInputEngine(2); // will have to rename "setInput" (chooses planet here)
+        p.setInputEngine(1); // will have to rename "setInput" (chooses planet here)
 
         planetCard.process(p);
 
         assertEquals(mars.getShipLanded(), s);
         assertEquals(s.getCargoFromCards(), marsBlocks);
-        assertEquals(s.getTravelDays(), planetCard.getDaysToLose());
+        assertEquals(s.getTravelDays(), 20 - planetCard.getDaysToLose());
     }
 }

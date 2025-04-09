@@ -24,11 +24,13 @@ public class OpenSpaceCard extends Card {
 
     public void process1(Player player) {
         Ship ship = player.getShip();
-        int enginePower = player.getInput();
+        int enginePower = ship.getEnginePower() + player.getInput();
 
         if (enginePower == 0) {
             // If a player has zero engine power he is lost in space and out of further travelling
             ship.setTravelDays(null);
+        } else {
+            // ship.setEnginePower(enginePower); TODO when engine setter works
         }
     }
 
