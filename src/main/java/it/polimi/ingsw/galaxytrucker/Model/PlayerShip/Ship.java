@@ -106,25 +106,25 @@ public class Ship {
     public ArrayList<Tile> getAdiacentTiles(Tile centralTile){
         int row= findTileOnFloorplanRow(centralTile);
         int column= findTileOnFloorPlanColumn(centralTile);
-        Tile tile = floorplanArrayList.get(row).get(column);
+
         ArrayList<Tile> adiacentTiles = new ArrayList<>();
         if(row-1>=0){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row-1).get(column));
         }else{
             adiacentTiles.add(null);
         }
         if(column+1<col_max){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
         }else{
             adiacentTiles.add(null);
         }
         if(row+1<row_max){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row+1).get(column));
         }else {
             adiacentTiles.add(null);
         }
         if(column-1>=0){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
         }else{
             adiacentTiles.add(null);
         }
@@ -132,25 +132,25 @@ public class Ship {
     }
 
     public ArrayList<Tile> getAdiacentTiles(int row,int column){
-        Tile tile = floorplanArrayList.get(row).get(column);
+
         ArrayList<Tile> adiacentTiles = new ArrayList<>();
         if(row-1>=0){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row-1).get(column));
         }else{
             adiacentTiles.add(null);
         }
         if(column+1<col_max){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
         }else{
             adiacentTiles.add(null);
         }
         if(row+1<row_max){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row+1).get(column));
         }else {
             adiacentTiles.add(null);
         }
         if(column-1>=0){
-            adiacentTiles.add(tile);
+            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
         }else{
             adiacentTiles.add(null);
         }
@@ -344,7 +344,6 @@ public class Ship {
         return tileVisitedList;
     }
 
-
     public int getPlayerPosition() {
         return playerPosition;
     }
@@ -438,8 +437,14 @@ public class Ship {
 
     public void moveReservedToDiscard(){
         for(Tile tile : this.reservedTiles){
-            this.reservedTiles.remove(tile);
-            lostTiles++;
+            this.lostTiles++;
+        }
+        this.reservedTiles.clear();
+
+    }
+    public void moveReservedToBoard(Tile tile){
+        if(tile!=null){
+            reservedTiles.remove(tile);
         }
     }
 
@@ -457,16 +462,19 @@ public class Ship {
         double firepower = 0;
         int multiplicator = 1;
        for(CannonTile cannonTile : cannonTiles){
-           if(cannonTile.getDoublePower()){
-               multiplicator = 2;
+           if(cannonTile.getActiveState()){
+               if(cannonTile.getDoublePower()){
+                   multiplicator = 2;
+               }
+               if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
+                   firepower+=multiplicator*1;
+               }else{
+                   firepower+=multiplicator*0.5;
+               }
+               multiplicator = 1;
            }
-           if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
-               firepower+=multiplicator*1;
-           }else{
-               firepower+=multiplicator*0.5;
-           }
-           multiplicator = 1;
-        }
+       }
+
         return firepower;
     }
 
@@ -547,16 +555,23 @@ public class Ship {
         return listOfEngine;
     }
     public ArrayList<EngineTile> getListOfDoubleEnginePower(){
-        ArrayList<EngineTile> doubleEngineList = getListOfEngine();
-        ArrayList<EngineTile> engineList = new ArrayList<>();
+        ArrayList<EngineTile> doubleEnginePower = new ArrayList<>();
+        ArrayList<EngineTile> listEngine = getListOfEngine();
 
-        for(EngineTile engineTile : engineList){
+        for(EngineTile engineTile : listEngine){
             if(engineTile.getDoublePower()){
-                doubleEngineList.add(engineTile);
+                doubleEnginePower.add(engineTile);
             }
         }
 
-        return doubleEngineList;
+        return doubleEnginePower;
+
+    }
+
+    public void setShield(ShieldTile tile,boolean active){
+        if(tile!=null){
+                tile.setActiveState(active);
+        }
     }
 
     public ArrayList<ShieldTile> getListOfShield() {
@@ -581,6 +596,19 @@ public class Ship {
         for(ShieldTile shieldTile : shieldList){
             //ShieldTile shieldTile = (ShieldTile) tile;
             shieldOrientationList.add(shieldTile.getOrientation());
+        }
+        return shieldOrientationList;
+    }
+
+    public ArrayList<ShieldOrientation> getListOfActiveShieldOrientation(){
+        ArrayList<ShieldOrientation> shieldOrientationList = new ArrayList<>();
+        ArrayList<ShieldTile> shieldList = new ArrayList<>();
+        shieldList = getListOfShield();
+        for(ShieldTile shieldTile : shieldList){
+            //ShieldTile shieldTile = (ShieldTile) tile;
+            if(shieldTile.getActiveState()){
+                shieldOrientationList.add(shieldTile.getOrientation());
+            }
         }
         return shieldOrientationList;
     }
