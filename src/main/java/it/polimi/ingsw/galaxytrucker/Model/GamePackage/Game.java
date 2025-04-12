@@ -12,7 +12,7 @@ public class Game {
     private int numberOfPlayers;
     private GameState gameState = new WaitingState(this);
     private final Hourglass hourglass = new Hourglass();
-    private TilePile tilePile;
+    private TilePile tilePile;  
     private Deck deck;
 
     public Game (Player firstPlayer){
