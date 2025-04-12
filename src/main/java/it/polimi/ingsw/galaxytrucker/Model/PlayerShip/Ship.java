@@ -308,7 +308,7 @@ public class Ship {
 //        }
 //        return true;
 //    }
-
+//
     public ArrayList<Tile> checkFloorplanConnection(){
         Tile centralTile = floorplanArrayList.get(2).get(3);
 
