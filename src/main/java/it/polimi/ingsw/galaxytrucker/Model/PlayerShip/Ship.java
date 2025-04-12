@@ -216,15 +216,23 @@ public class Ship {
                 }
             }
         }
-        for(ArrayList<Tile> list : floorplanArrayList) {
-            for (Tile tile : list) {
-                if(tile.getType()==TileType.ENGINE){
-                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
-                        return false;
-                    }
-                }
+
+        ArrayList<EngineTile> listOfEngine = getListOfEngine();
+        for(EngineTile tile : listOfEngine){
+            if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
+                return false;
             }
         }
+
+//        for(ArrayList<Tile> list : floorplanArrayList) {
+//            for (Tile tile : list) {
+//                if(tile.getType()==TileType.ENGINE){
+//                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
         return true;
     }
 
