@@ -52,16 +52,24 @@ public class Ship {
         purpleAllien=false;
         orangeAllien=false;
         playerPosition=0;
+        row_max=5;
+        col_max=7;
 
-        ArrayList<ArrayList<Tile>> floorplanArrayList = new ArrayList<>();
-        for(int i=0;i<8;i++){
+        floorplanArrayList = new ArrayList<>();
+        for(int i=0;i<row_max;i++){
             floorplanArrayList.add(new ArrayList<>());
-            for(int j=0;j<8;j++){
-                floorplanArrayList.get(j).add(null);
+            for(int j=0;j<col_max;j++){
+                floorplanArrayList.get(i).add(null);
             }
         }
     }
 
+    public int getRowMax(){
+        return row_max;
+    }
+    public int getColMax(){
+        return col_max;
+    }
 
     public Color getColor() {
         return color;
