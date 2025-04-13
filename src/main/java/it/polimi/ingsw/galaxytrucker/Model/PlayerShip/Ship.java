@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 public class Ship {
 
@@ -79,6 +80,10 @@ public class Ship {
         return floorplanArrayList;
     }
 
+    /**function finds a Row of Tile if present
+     * @param tile
+     * @return row(if not present -1)
+     */
     public int findTileOnFloorplanRow(Tile tile){
         int index=0;
         for(ArrayList<Tile> row:floorplanArrayList){
@@ -92,6 +97,11 @@ public class Ship {
         return -1;
 
     }
+
+    /**function finds a column of Tile if present
+     * @param tile
+     * @return column(if not present -1)
+     */
     public int findTileOnFloorPlanColumn(Tile tile){
         for(ArrayList<Tile> row:floorplanArrayList){
             for(int j=0;j<col_max;j++){
@@ -102,7 +112,10 @@ public class Ship {
         }
         return -1;
     }
-
+    /**getAdiacentTiles returns an ArrayList of tiles around a specific tile(specified by centralTile,the order of tiles is N W S E)
+     * @param centralTile
+     * @return arrayList
+     */
     public ArrayList<Tile> getAdiacentTiles(Tile centralTile){
         int row= findTileOnFloorplanRow(centralTile);
         int column= findTileOnFloorPlanColumn(centralTile);
@@ -113,8 +126,8 @@ public class Ship {
         }else{
             adiacentTiles.add(null);
         }
-        if(column+1<col_max){
-            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
+        if(column-1>=0){
+            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
         }else{
             adiacentTiles.add(null);
         }
@@ -123,14 +136,20 @@ public class Ship {
         }else {
             adiacentTiles.add(null);
         }
-        if(column-1>=0){
-            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
+        if(column+1<col_max){
+            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
         }else{
             adiacentTiles.add(null);
         }
+
         return adiacentTiles;
     }
 
+    /**getAdiacentTiles returns an ArrayList of tiles around a specific tile(specified by Row and Column,the order of tiles is N W S E
+     * @param row
+     * @param column
+     * @return arrayList
+     */
     public ArrayList<Tile> getAdiacentTiles(int row,int column){
 
         ArrayList<Tile> adiacentTiles = new ArrayList<>();
@@ -139,8 +158,8 @@ public class Ship {
         }else{
             adiacentTiles.add(null);
         }
-        if(column+1<col_max){
-            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
+        if(column-1>=0){
+            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
         }else{
             adiacentTiles.add(null);
         }
@@ -149,15 +168,19 @@ public class Ship {
         }else {
             adiacentTiles.add(null);
         }
-        if(column-1>=0){
-            adiacentTiles.add(floorplanArrayList.get(row).get(column-1));
+        if(column+1<col_max){
+            adiacentTiles.add(floorplanArrayList.get(row).get(column+1));
         }else{
             adiacentTiles.add(null);
         }
+
         return adiacentTiles;
     }
 
 
+    /**this function checks if ship was build correctly or not
+     * @return boolean
+     */
     public boolean checkFloorPlanConnection() {
         for (ArrayList<Tile> list : floorplanArrayList) {
             for (Tile tile : list) {
@@ -165,6 +188,7 @@ public class Ship {
                     ArrayList<Tile> adiacentTile = getAdiacentTiles(tile);
                     List<ConnectorType> connectors = tile.getConnectors();
                     if(adiacentTile.get(0)!=null){
+
                         //north
                         ConnectorType connector = connectors.get(0);
                         ConnectorType connectorAdiacent = adiacentTile.get(0).getConnectors().get(2);
@@ -224,132 +248,148 @@ public class Ship {
             }
         }
 
-//        for(ArrayList<Tile> list : floorplanArrayList) {
-//            for (Tile tile : list) {
-//                if(tile.getType()==TileType.ENGINE){
-//                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
         return true;
     }
-
-//    public ArrayList<Tile> checkFloorPlanConnection() {
-//        ArrayList<Tile> eliminatedTilesList = new ArrayList<>();
-//        boolean centralTileAdded = false;
-//
-//        for (ArrayList<Tile> list : floorplanArrayList) {
-//            for (Tile tile : list) {
-//                if(tile!=null){
-//                    ArrayList<Tile> adiacentTile = getAdiacentTiles(tile);
-//                    List<ConnectorType> connectors = tile.getConnectors();
-//                    if(adiacentTile.get(0)!=null){
-//                        //north
-//                        ConnectorType connector = connectors.get(0);
-//                        ConnectorType connectorAdiacent = adiacentTile.get(0).getConnectors().get(2);
-//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-//                                eliminatedTilesList.add(adiacentTile.get(0));
-//                            }
-//                        }else{
-//                            eliminatedTilesList.add(tile);
-//                        }
-//                    }
-//                    if(adiacentTile.get(1)!=null){
-//                        //west
-//                        ConnectorType connector = connectors.get(1);
-//                        ConnectorType connectorAdiacent = adiacentTile.get(1).getConnectors().get(3);
-//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-//                                return false;
-//                            }
-//                        }else{
-//                            return false;
-//                        }
-//                    }
-//                    if(adiacentTile.get(2)!=null){
-//                        //south
-//                        ConnectorType connector = connectors.get(2);
-//                        ConnectorType connectorAdiacent = adiacentTile.get(2).getConnectors().get(0);
-//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-//                                return false;
-//                            }
-//                        }else{
-//                            return false;
-//                        }
-//                    }
-//                    if(adiacentTile.get(3)!=null){
-//                        //east
-//                        ConnectorType connector = connectors.get(3);
-//                        ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
-//                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-//                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-//                                return false;
-//                            }
-//                        }else{
-//                            return false;
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//        for(ArrayList<Tile> list : floorplanArrayList) {
-//            for (Tile tile : list) {
-//                if(tile.getType()==TileType.ENGINE){
-//                    if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        return true;
-//    }
-//
+    /**
+     * checkFloorplanConnection is used to obtain a list that represent a set of united components that start from centralCabin
+     * @return
+     */
     public ArrayList<Tile> checkFloorplanConnection(){
         Tile centralTile = floorplanArrayList.get(2).get(3);
 
-        ArrayList<Tile> tileToVisitList = getAdiacentTiles(centralTile);
-        ArrayList<Tile> tileVisitedList = new ArrayList<>();
+        Stack<Tile> toVisitStack = new Stack<>();
+        toVisitStack.push(centralTile);
 
-        for(Tile tileToVisit: tileToVisitList) {
-            for (Tile tileVisited : tileVisitedList) {
-                if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
-                    tileVisitedList.add(tileToVisit);
-                    ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
-                    tileToVisitList.addAll(nearTile);
+        ArrayList<Tile> visitedList = new ArrayList<>();
 
+
+        while(!toVisitStack.isEmpty()){
+
+            Tile visitTile = toVisitStack.pop();
+
+            if(!visitedList.contains(visitTile)){
+                visitedList.add(visitTile);
+
+                ArrayList<Tile> adiacentTileList = getAdiacentTiles(visitTile);
+                List<ConnectorType> connectorsList = visitTile.getConnectors();
+
+                for(int i=0;i<4;i++){
+                    if(adiacentTileList.get(i)!=null){
+                        ConnectorType connector = connectorsList.get(i);
+                        ConnectorType connectorAdiacent = adiacentTileList.get(i).getConnectors().get((i+2)%4);
+
+                        if(connector!=ConnectorType.ENGINE&&connector!=ConnectorType.CANNON&&connector!=ConnectorType.NONE&&connectorAdiacent!=ConnectorType.ENGINE&&connectorAdiacent!=ConnectorType.CANNON&&connectorAdiacent!=ConnectorType.NONE){
+                            toVisitStack.push(adiacentTileList.get(i));
+                        }
+                    }
                 }
             }
-            //tileVisitedList.add(tileToVisit);
-
 
         }
 
-       return tileVisitedList;
+        return visitedList;
     }
 
-    public ArrayList<Tile> checkFloorplanConnection(Tile tile){
+    /**
+     * @return a list of components that are not connected to central piece
+     */
+    public ArrayList<Tile> getNonValidTileList(){
+        ArrayList<Tile> nonValidList = new ArrayList<>();
+        ArrayList<Tile> validList = checkFloorplanConnection();
 
-        ArrayList<Tile> tileToVisitList = getAdiacentTiles(tile);
-        ArrayList<Tile> tileVisitedList = new ArrayList<>();
-
-        for(Tile tileToVisit: tileToVisitList) {
-            for (Tile tileVisited : tileVisitedList) {
-                if (tileToVisit!=null&&!tileToVisit.equals(tileVisited)) {
-                    tileVisitedList.add(tileToVisit);
-                    ArrayList<Tile> nearTile = getAdiacentTiles(tileToVisit);
-                    tileToVisitList.addAll(nearTile);
-
+        for(ArrayList<Tile> list : floorplanArrayList){
+            for(Tile tile: list){
+                if(tile!=null&&!validList.contains(tile)){
+                    nonValidList.add(tile);
                 }
             }
-            //tileVisitedList.add(tileToVisit);
         }
 
-        return tileVisitedList;
+        return nonValidList;
+    }
+
+    /**
+     * checks whether ship is broken or not
+     * @return boolean
+     */
+    public boolean isShipBroken(){
+        ArrayList<Tile> nonValidList = getNonValidTileList();
+        if(nonValidList.size()==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    /**
+     * getShipPiecesList is used to obtain all sets of ship that are connected
+     * @return arraylist
+     */
+    public ArrayList<ArrayList<Tile>> getShipPiecesList(){
+        ArrayList<ArrayList<Tile>> piecesList = new ArrayList<>();
+
+        ArrayList<Tile> validList = checkFloorplanConnection();
+        ArrayList<Tile> nonValidList = getNonValidTileList();
+
+        piecesList.add(validList);
+
+        while(!nonValidList.isEmpty()){
+            validList = checkFloorplanConnection(nonValidList.getFirst());
+
+            for(Tile tile: validList){
+                if(nonValidList.contains(tile)){
+                    nonValidList.remove(tile);
+                }
+            }
+
+            piecesList.add(validList);
+
+        }
+
+
+
+        return piecesList;
+    }
+
+    /**
+     * checkFloorplanConnection is used to obtain a list that represent a set of united components that start from tileStart
+     * @param tileStart
+     * @return
+     */
+    public ArrayList<Tile> checkFloorplanConnection(Tile tileStart){
+
+        Stack<Tile> toVisitStack = new Stack<>();
+        toVisitStack.push(tileStart);
+
+        ArrayList<Tile> visitedList = new ArrayList<>();
+
+
+        while(!toVisitStack.isEmpty()){
+
+            Tile visitTile = toVisitStack.pop();
+
+            if(!visitedList.contains(visitTile)){
+                visitedList.add(visitTile);
+
+                ArrayList<Tile> adiacentTileList = getAdiacentTiles(visitTile);
+                List<ConnectorType> connectorsList = visitTile.getConnectors();
+
+                for(int i=0;i<4;i++){
+                    if(adiacentTileList.get(i)!=null){
+                        ConnectorType connector = connectorsList.get(i);
+                        ConnectorType connectorAdiacent = adiacentTileList.get(i).getConnectors().get((i+2)%4);
+
+                        if(connector!=ConnectorType.ENGINE&&connector!=ConnectorType.CANNON&&connector!=ConnectorType.NONE&&connectorAdiacent!=ConnectorType.ENGINE&&connectorAdiacent!=ConnectorType.CANNON&&connectorAdiacent!=ConnectorType.NONE){
+                            toVisitStack.push(adiacentTileList.get(i));
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return visitedList;
+
     }
 
     public int getPlayerPosition() {
@@ -397,8 +437,8 @@ public class Ship {
 
     public void removeTileOnFloorPlan(int row, int column){
 
-         Tile tile = floorplanArrayList.get(row).get(column);
-         floorplanArrayList.get(row).set(column,null);
+        Tile tile = floorplanArrayList.get(row).get(column);
+        floorplanArrayList.get(row).set(column,null);
     }
 
 
@@ -417,7 +457,7 @@ public class Ship {
     }
 
     public void addLostTiles(int lostTiles){
-       this.lostTiles += lostTiles;
+        this.lostTiles += lostTiles;
     }
     public int getLostTiles(){
         return lostTiles;
@@ -464,28 +504,36 @@ public class Ship {
     }
 
 
+    /**
+     * @return firepower of ship
+     */
     //direzione dei cannoni è importante!
     public double getFirepower(){
-       ArrayList<CannonTile> cannonTiles = getListOfFirepower();
+        ArrayList<CannonTile> cannonTiles = getListOfFirepower();
         double firepower = 0;
         int multiplicator = 1;
-       for(CannonTile cannonTile : cannonTiles){
-           if(cannonTile.getActiveState()){
-               if(cannonTile.getDoublePower()){
-                   multiplicator = 2;
-               }
-               if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
-                   firepower+=multiplicator*1;
-               }else{
-                   firepower+=multiplicator*0.5;
-               }
-               multiplicator = 1;
-           }
-       }
+        for(CannonTile cannonTile : cannonTiles){
+            if(cannonTile.getActiveState()){
+                if(cannonTile.getDoublePower()){
+                    multiplicator = 2;
+                }
+                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
+                    firepower+=multiplicator*1;
+                }else{
+                    firepower+=multiplicator*0.5;
+                }
+                multiplicator = 1;
+            }
+        }
 
         return firepower;
     }
 
+    /**
+     * setFirepower is used to activate or disactivate Double Cannons
+     * @param tile
+     * @param active
+     */
     public void setFirepower(CannonTile tile,boolean active){
         if(tile!=null){
             if(tile.getDoublePower()){
@@ -494,6 +542,9 @@ public class Ship {
         }
     }
 
+    /**
+     * @return array list of All Cannons
+     */
     public ArrayList<CannonTile> getListOfFirepower(){
         CannonTileVisitor cannonTileVisitor = new CannonTileVisitor();
         ArrayList<CannonTile> listOfSingleFirepower = new ArrayList<>();
@@ -510,6 +561,9 @@ public class Ship {
         return listOfSingleFirepower;
     }
 
+    /**
+     * @return array list of Double Cannons
+     */
     public ArrayList<CannonTile> getListOfDoubleFirepower(){
         ArrayList<CannonTile> doubleFirepowerList = new ArrayList<>();
         ArrayList<CannonTile> listOfFirepower = getListOfFirepower();
@@ -523,6 +577,9 @@ public class Ship {
         return doubleFirepowerList;
     }
 
+    /**
+     * @return enginePower of ship
+     */
     public int getEnginePower(){
         ArrayList<EngineTile> listEngine = getListOfEngine();
         int enginePower = 0;
@@ -539,6 +596,11 @@ public class Ship {
         return enginePower;
     }
 
+    /**
+     * setEnginePower is used to activate or disactivate a DoubleEngine
+     * @param tile
+     * @param active
+     */
     public void setEnginePower(EngineTile tile,boolean active){
         if(tile!=null){
             if(tile.getDoublePower()){
@@ -548,6 +610,9 @@ public class Ship {
 
     }
 
+    /**
+     * @return array list of Engines
+     */
     public ArrayList<EngineTile> getListOfEngine(){
         ArrayList<EngineTile> listOfEngine = new ArrayList<>();
         EngineTileVisitor engineTileVisitor = new EngineTileVisitor();
@@ -562,6 +627,10 @@ public class Ship {
         listOfEngine = engineTileVisitor.getList();
         return listOfEngine;
     }
+
+    /**
+     * @return array list of Double Engine Power
+     */
     public ArrayList<EngineTile> getListOfDoubleEnginePower(){
         ArrayList<EngineTile> doubleEnginePower = new ArrayList<>();
         ArrayList<EngineTile> listEngine = getListOfEngine();
@@ -576,12 +645,20 @@ public class Ship {
 
     }
 
+    /**
+     * setShield is used to activate or disactivate a shield
+     * @param tile
+     * @param active
+     */
     public void setShield(ShieldTile tile,boolean active){
         if(tile!=null){
-                tile.setActiveState(active);
+            tile.setActiveState(active);
         }
     }
 
+    /**
+     * @return array list of shields
+     */
     public ArrayList<ShieldTile> getListOfShield() {
         ArrayList<ShieldTile> shieldList = new ArrayList<>();
         ShieldTileVisitor shieldTileVisitor = new ShieldTileVisitor();
@@ -597,6 +674,9 @@ public class Ship {
         return shieldList;
     }
 
+    /**
+     * @return array list of all Shield Orientation
+     */
     public ArrayList<ShieldOrientation> getListOfShieldOrientation(){
         ArrayList<ShieldOrientation> shieldOrientationList = new ArrayList<>();
         ArrayList<ShieldTile> shieldList = new ArrayList<>();
@@ -608,6 +688,9 @@ public class Ship {
         return shieldOrientationList;
     }
 
+    /**
+     * @return array list of Active shieldOrientation
+     */
     public ArrayList<ShieldOrientation> getListOfActiveShieldOrientation(){
         ArrayList<ShieldOrientation> shieldOrientationList = new ArrayList<>();
         ArrayList<ShieldTile> shieldList = new ArrayList<>();
@@ -621,6 +704,9 @@ public class Ship {
         return shieldOrientationList;
     }
 
+    /**
+     * @return array list of Cabin
+     */
     public ArrayList<CabinTile> getListOfCabin(){
         ArrayList<CabinTile> cabinList = new ArrayList<>();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
@@ -636,6 +722,9 @@ public class Ship {
         return cabinList;
     }
 
+    /**
+     * @return array list of batteries
+     */
     public ArrayList<BatteryTile> getListOfBattery(){
         ArrayList<BatteryTile> batteriesList = new ArrayList<>();
         BatteryTileVisitor batteryTileVisitor = new BatteryTileVisitor();
@@ -652,6 +741,9 @@ public class Ship {
     }
 
 
+    /**
+     * @return array list of Cargo
+     */
     /*example of Tile Visitor*/
     public ArrayList<CargoTile> getListOfCargo(){
         CargoTileVisitor cabinTileVisitor = new CargoTileVisitor();
@@ -668,7 +760,10 @@ public class Ship {
         cargoList = cabinTileVisitor.getList();
         return cargoList;
     }
-
+    /**
+     * function returns an arraylist of PurpleAdaptors
+     * @return list Of Purple Adaptors
+     */
     public ArrayList<BioadaptorTile> getListOfPurpleAdaptors(){
         ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
         ArrayList<BioadaptorTile> purpleList = new ArrayList<>();
@@ -680,6 +775,10 @@ public class Ship {
         return purpleList;
     }
 
+    /**
+     * function returns an arraylist of OrangeAdaptors
+     * @return list Of Orange Adaptors
+     */
     public ArrayList<BioadaptorTile> getListOfOrangeAdaptors(){
         ArrayList<BioadaptorTile> bioadaptorList = getListOfAdaptors();
         ArrayList<BioadaptorTile> orangeList = new ArrayList<>();
@@ -691,6 +790,10 @@ public class Ship {
         return orangeList;
     }
 
+    /**
+     * function returns a arraylist of BioadaptorsTile
+     * @return list of BioadaptorTile
+     */
     public ArrayList<BioadaptorTile> getListOfAdaptors(){
         BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
         ArrayList<BioadaptorTile> bioadaptorList = new ArrayList<>();
@@ -708,6 +811,11 @@ public class Ship {
         return bioadaptorList;
     }
 
+    /**
+     * <div>getRowListTiles takes as the input a column number,and returns an entire row without empty cells</div>
+     * @param row
+     * @return list of tile
+     */
     //chiedere se restituire la lista intera?
     public ArrayList<Tile> getRowListTiles(int row){
         ArrayList<Tile> rowList = new ArrayList<>();
@@ -718,6 +826,12 @@ public class Ship {
         }
         return rowList;
     }
+
+    /**
+     * <div>getColumnListTiles takes as the input a column number,and returns an entire column without empty cells</div>
+     * @param column
+     * @return list of tile
+     */
     public ArrayList<Tile> getColumnListTiles(int column){
         ArrayList<Tile> columnListTiles = new ArrayList<>();
         for(ArrayList<Tile> rowList : floorplanArrayList){
