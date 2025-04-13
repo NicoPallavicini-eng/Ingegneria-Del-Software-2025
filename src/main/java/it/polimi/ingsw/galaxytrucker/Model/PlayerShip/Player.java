@@ -20,8 +20,11 @@ public class Player {
         //setCredits(0);
         setOnlineStatus(true);
         //setTravelDays(Integer.valueOf(0));
+        engages = false;
+        input = 0;
     }
 
+    //per cosa serve Engages?
     public boolean getEngages() {
         return engages;
     }
