@@ -5,7 +5,7 @@ public class BioadaptorTile extends Tile {
     private final AlienColor color;
 
     public BioadaptorTile(ConnectorType north, ConnectorType west, ConnectorType south, ConnectorType east, AlienColor color){
-        super(north, west, south, east, BIOADAPTOR);
+        super(north, west, south, east);
         this.color = color;
     }
     public AlienColor getColor() {
