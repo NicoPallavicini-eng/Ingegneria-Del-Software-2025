@@ -16,40 +16,60 @@ class GameTest {
     Player p2 = new Player("b","b", Color.BLUE);
     Player p3 = new Player( "c", "c", Color.GREEN);
     Game game = new Game(p1);
+    ArrayList<Player> expected = new ArrayList<>();
+    GameState gameState;
 
 
-    @Test
-    void getListOfPlayers() {
+    @BeforeEach void init(){
+        game.addPlayer(p2);
+        game.addPlayer(p3);
 
-    }
+    expected.add(p1);
+    expected.add(p2);
+    expected.add(p3);
+}
+
 
     @Test
     void test1() {
 
-        ArrayList<Player> expected = new ArrayList<>();
-        expected.add(p1);
 
         assertEquals(expected, game.getListOfPlayers());
     }
 
     @Test
     void removePlayer() {
+        expected.remove(p1);
+        expected.remove(p2);
+        expected.remove(p3);
+        game.removePlayer(p1);
+        game.removePlayer(p2);
+        game.removePlayer(p3);
+        assertEquals(expected, game.getListOfPlayers());
     }
 
-    @Test
-    void getNumberOfPlayers() {
-    }
 
     @Test
     void setNumberOfPlayers() {
+        game.setNumberOfPlayers(3);
+        assertEquals(3, game.getNumberOfPlayers());
     }
 
     @Test
     void getGameState() {
+        gameState = game.getGameState();
+        assertNotNull(gameState);
+        assert gameState instanceof WaitingState;
     }
 
     @Test
     void nextGameState() {
+        game.nextGameState();
+        assert gameState instanceof BuildingState;
+        game.nextGameState();
+        assert gameState instanceof;
+
+
     }
 
     @Test
