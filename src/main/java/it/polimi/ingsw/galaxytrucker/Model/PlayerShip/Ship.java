@@ -739,7 +739,27 @@ public class Ship {
         batteriesList = batteryTileVisitor.getList();
         return batteriesList;
     }
-
+    //chiedere i metodi get di Batteries
+    public int getBatteries(){
+        ArrayList<BatteryTile> batteryList = getListOfBattery();
+        int batteries = 0;
+        for(BatteryTile batteryTile : batteryList){
+            batteries+=batteryTile.getSlotsFilled();
+        }
+        return batteries;
+    }
+    public int getNumberOfInhabitants(){
+        ArrayList<CabinTile> cabinList = getListOfCabin();
+        int inhabitants = 0;
+        for(CabinTile cabinTile : cabinList){
+            if(cabinTile.getInhabitants()==CabinInhabitants.ALIEN|cabinTile.getInhabitants()==CabinInhabitants.ONE){
+                inhabitants++;
+            } else if (cabinTile.getInhabitants()==CabinInhabitants.TWO) {
+                inhabitants+=2;
+            }
+        }
+        return inhabitants;
+    }
 
     /**
      * @return array list of Cargo
@@ -840,5 +860,40 @@ public class Ship {
             }
         }
         return columnListTiles;
+    }
+    //chiedere i metodi get() per Bioadaptors
+    public void updateCabinTiles(){
+        ArrayList<CabinTile> cabinTilesList = getListOfCabin();
+        BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
+        ArrayList<BioadaptorTile> bioadaptorList = null;
+
+        for(CabinTile cabinTile : cabinTilesList){
+            ArrayList<Tile> adiacentTileList = getAdiacentTiles(cabinTile);
+
+            for(Tile adiacentTile : adiacentTileList){
+                if(adiacentTile!=null){
+                    adiacentTile.accept(bioadaptorTileVisitor);
+                }
+            }
+            bioadaptorList = bioadaptorTileVisitor.getList();
+            int purple=0;
+            if(bioadaptorList.size()>0){
+                for(BioadaptorTile bioadaptorTile : bioadaptorList){
+                    if(bioadaptorTile.getColor()==AlienColor.PURPLE){
+                        purple++;
+                    }
+                }
+                cabinTile.setPurple(purple);
+                cabinTile.setOrange(bioadaptorList.size()-purple);
+
+            }else{
+                cabinTile.setPurple(0);
+                cabinTile.setOrange(0);
+                if(cabinTile.getInhabitants()==CabinInhabitants.ALIEN){
+                    cabinTile.updateInhabitants(CabinInhabitants.NONE);
+                }
+            }
+            purple=0;
+        }
     }
 }
