@@ -24,10 +24,10 @@ class GameTest {
         game.addPlayer(p2);
         game.addPlayer(p3);
 
-    expected.add(p1);
-    expected.add(p2);
-    expected.add(p3);
-}
+        expected.add(p1);
+        expected.add(p2);
+        expected.add(p3);
+    }
 
 
     @Test

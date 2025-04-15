@@ -44,8 +44,8 @@ public class Game {
         return gameState;
     }
 
-    public void nextGameState() {
-        this.gameState = gameState.next();
+    public void setGameState( GameState gameState) {
+        this.gameState = gameState;
     }
 
     public Hourglass getHourglass() {

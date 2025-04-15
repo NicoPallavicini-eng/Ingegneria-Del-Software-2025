@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Handles CombatZone, Epidemic, Meteors, Stardust Cards
-public class AlternativeTravellingState implements GameState {
+public class  AlternativeTravellingState implements GameState {
     private final Game game;
     private final Card currentCard;
     private Card nextCard;

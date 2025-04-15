@@ -10,25 +10,16 @@ public class BuildingState implements GameState {
         this.game = game;
     }
 
-    public GameState getNextState() {
-        return nextState;
-    }
-
-    public void setNextState(GameState nextState) {
-        this.nextState = nextState;
-    }
-
     public Game getGame() {
         return game;
     }
 
-    public GameState next() {
+    public void next() {
         Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
-            return new FinalState(game);
+            getGame().setGameState(new FinalState(game));
         } else {
-            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
-            return nextState;
+            getGame().setGameState(new TravellingState(game, nextCard));
         }
     }
 
