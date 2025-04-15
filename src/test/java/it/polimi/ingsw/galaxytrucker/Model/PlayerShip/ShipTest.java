@@ -37,7 +37,7 @@ class ShipTest {
     @Test
     void getNonValidtileList(){
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -52,7 +52,7 @@ class ShipTest {
     @Test
     void isShipBroken(){
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -65,7 +65,7 @@ class ShipTest {
     @Test
     void getShipPiecesList(){
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -136,7 +136,7 @@ class ShipTest {
     @Test
     void checkFloorPlanConnection(){
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -150,7 +150,7 @@ class ShipTest {
     @Test
     void checkFloorplanConnection() {
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -169,7 +169,7 @@ class ShipTest {
     @Test
     void testCheckFloorplanConnection() {
         CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE,ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
@@ -375,8 +375,8 @@ class ShipTest {
     @Test
     void addReservedTile() {
         ArrayList<Tile> reservedTiles= new ArrayList<>();
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, Direction.NORTH,true,true);
-        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, true,true);
+        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,false,true);
         reservedTiles.add(cannon);
         reservedTiles.add(cannon1);
         ship.addReservedTile(cannon);
@@ -387,10 +387,10 @@ class ShipTest {
     @Test
     void moveReservedToDiscard() {
         ArrayList<Tile> reservedTiles= new ArrayList<>();
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, Direction.NORTH,true,true);
-        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
-        CannonTile cannon2 = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, Direction.NORTH,true,true);
-        CannonTile cannon3 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, true,true);
+        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
+        CannonTile cannon2 = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, true,true);
+        CannonTile cannon3 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
 
         ship.addReservedTile(cannon);
         ship.addReservedTile(cannon1);
@@ -419,9 +419,9 @@ class ShipTest {
 
     @Test
     void getFirepower() {
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, Direction.NORTH,true,true);
-        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
-        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.CANNON,ConnectorType.UNIVERSAL, Direction.NORTH,true,true);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON, true,true);
+        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
+        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.CANNON,ConnectorType.UNIVERSAL, true,true);
 
         CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
         CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
@@ -458,7 +458,7 @@ class ShipTest {
 
     @Test
     void setFirepower() {
-        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,true,false);
+        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,false);
         ship.setFirepower(cannon,true);
         assertEquals(true,cannon.getActiveState());
 
@@ -466,9 +466,9 @@ class ShipTest {
 
     @Test
     void getListOfFirepower() {
-        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,true,false);
-        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
-        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,true,true);
+        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,false);
+        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
+        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,true);
 
         CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
         CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
@@ -504,9 +504,9 @@ class ShipTest {
 
     @Test
     void getListOfDoubleFirepower() {
-        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,true,false);
-        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,false,true);
-        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, Direction.NORTH,true,true);
+        CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,false);
+        CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
+        CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,true);
 
         CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
         CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
