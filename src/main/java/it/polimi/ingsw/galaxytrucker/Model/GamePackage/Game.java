@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 

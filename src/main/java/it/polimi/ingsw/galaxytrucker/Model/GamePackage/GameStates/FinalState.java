@@ -1,4 +1,6 @@
-package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
+
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 
 public class FinalState implements GameState {
     private final Game game;

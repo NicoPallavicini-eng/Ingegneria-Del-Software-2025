@@ -2,6 +2,8 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.CardVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.AlternativeTravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 

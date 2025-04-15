@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 public interface GameState {
 

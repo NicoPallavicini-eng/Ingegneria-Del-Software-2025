@@ -1,10 +1,11 @@
-package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 
-public class TravellingState implements GameState {
-    private final Game game;
-    private final Card currentCard;
+public abstract class TravellingState implements GameState {
+    protected final Game game;
+    protected final Card currentCard;
 
     public Game getGame() {
         return game;
@@ -23,13 +24,12 @@ public class TravellingState implements GameState {
     public void next() {
          Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
-            getGame().setGameState( new FinalState(game));
+            getGame().setGameState(new FinalState(game));
         } else {
-            getGame().setGameState( new TravellingState(game, nextCard));
+            getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
         }
     }
 
     public void process() {
-        currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), game.getListOfPlayers());
     }
 }

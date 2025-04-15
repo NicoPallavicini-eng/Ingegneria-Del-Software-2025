@@ -1,6 +1,7 @@
-package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 
 public class BuildingState implements GameState {
     private final Game game;

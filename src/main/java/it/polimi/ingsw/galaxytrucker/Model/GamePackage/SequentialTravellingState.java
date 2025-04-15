@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.FinalState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 
 // Handles Pirates, Ship, Slavers, Smugglers, Station Cards
 public class SequentialTravellingState implements GameState {
