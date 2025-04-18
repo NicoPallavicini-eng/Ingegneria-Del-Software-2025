@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.PlanetsCardVisitor
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CombatZoneCardTest {
+class CombatZoneCardTest { // passed
     List <Cannonball> cannonballList = new ArrayList<>();
 
     CombatZoneCardVisitor combatZoneCardVisitor = new CombatZoneCardVisitor();
     CombatZoneCard combatZoneCard = new CombatZoneCard(true, true, combatZoneCardVisitor, 4, 2, cannonballList);
 
     @Test
-    void lessCrewProcessTest() {
+    void lessCrewProcessTest() { // passed
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
         s.setTravelDays(20);
@@ -30,14 +31,16 @@ class CombatZoneCardTest {
     }
 
     @Test
-    void lessEngineProcessTest() {
+    void lessEngineProcessTest() { // passed
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
         s.setCrewMembers(4);
+        Tile tile = new CabinTile(ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE, CabinInhabitants.TWO, false, 0, 0);
+        s.setTileOnFloorPlan(2,3,tile);
 
         combatZoneCard.lessEngineProcess(s);
 
-        assertEquals(s.getNumberOfCrewMembers(), 4 - combatZoneCard.getCrewLostLessEngine());
+        assertEquals(s.getNumberOfInhabitants(), 4 - combatZoneCard.getCrewLostLessEngine());
     }
 
     @Test
@@ -47,6 +50,6 @@ class CombatZoneCardTest {
 
         combatZoneCard.lessFirepowerProcess(s);
 
-        // assertEquals(); TODO move in ship
+        // view getHit() tests
     }
 }

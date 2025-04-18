@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MeteorsCardTest {
+class MeteorsCardTest { // passed
     List<Meteor> meteorList = new ArrayList<>();
 
     MeteorsCardVisitor meteorsCardVisitor = new MeteorsCardVisitor();
@@ -25,6 +25,6 @@ class MeteorsCardTest {
 
         meteorsCard.process(s);
 
-        // assertEquals(); TODO move in ship
+        // view getHit() tests
     }
 }
