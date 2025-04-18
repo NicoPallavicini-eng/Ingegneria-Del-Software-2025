@@ -35,6 +35,22 @@ public class CabinTile extends Tile {
         return this.mainCapsule;
     }
 
+    public void setPurple(int purple){
+        pinkAdaptors = purple;
+    }
+
+    public void setOrange(int orange){
+        orangeAdaptors = orange;
+    }
+
+    public int getPurple() {
+        return pinkAdaptors;
+    }
+
+    public int getOrange() {
+        return orangeAdaptors;
+    }
+
     @Override
     public void accept(TileVisitor visitor) {
         visitor.visit(this);

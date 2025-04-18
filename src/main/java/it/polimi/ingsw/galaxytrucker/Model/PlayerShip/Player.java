@@ -37,7 +37,7 @@ public class Player {
         return input;
     }
 
-    public void setInputEngine(int input) {
+    public void setInput(int input) {
         this.input = input;
     }
 

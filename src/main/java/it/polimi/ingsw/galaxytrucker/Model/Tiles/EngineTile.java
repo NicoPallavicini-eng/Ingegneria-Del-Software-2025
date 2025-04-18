@@ -33,6 +33,39 @@ public class EngineTile extends Tile{
     }
 
     @Override
+    public void rotate(Side side){
+        super.rotate(side);
+        if (side == Side.RIGHT){
+            if (direction == Direction.NORTH){
+                direction = Direction.EAST;
+            }
+            else if (direction == Direction.EAST){
+                direction = Direction.SOUTH;
+            }
+            else if (direction == Direction.SOUTH){
+                direction = Direction.WEST;
+            }
+            else if (direction == Direction.WEST){
+                direction = Direction.NORTH;
+            }
+        }
+        else if (side == Side.LEFT){
+            if (direction == Direction.NORTH){
+                direction = Direction.WEST;
+            }
+            else if (direction == Direction.EAST){
+                direction = Direction.NORTH;
+            }
+            else if (direction == Direction.SOUTH){
+                direction = Direction.EAST;
+            }
+            else if (direction == Direction.WEST){
+                direction = Direction.SOUTH;
+            }
+        }
+    }
+
+    @Override
     public void accept(TileVisitor visitor) {
         visitor.visit(this);
     }

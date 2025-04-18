@@ -2,7 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.SHIELD;
 
 public class ShieldTile extends Tile {
-    private final ShieldOrientation orientation;
+    private ShieldOrientation orientation;
     private boolean activeState;
 
     public ShieldTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, ShieldOrientation orientation, boolean activeState) {
@@ -21,6 +21,39 @@ public class ShieldTile extends Tile {
 
     public ShieldOrientation getOrientation(){
         return orientation;
+    }
+
+    @Override
+    public void rotate(Side side){
+        super.rotate(side);
+        if (side == Side.RIGHT) {
+            if (orientation == ShieldOrientation.NORTHWEST) {
+                this.orientation = ShieldOrientation.NORTHEAST;
+            }
+            else if (orientation == ShieldOrientation.SOUTHWEST) {
+                this.orientation = ShieldOrientation.NORTHWEST;
+            }
+            else if (orientation == ShieldOrientation.SOUTHEAST) {
+                this.orientation = ShieldOrientation.SOUTHWEST;
+            }
+            else if (orientation == ShieldOrientation.NORTHEAST){
+                this.orientation = ShieldOrientation.SOUTHEAST;
+            }
+        }
+        else if (side == Side.LEFT) {
+            if (orientation == ShieldOrientation.NORTHWEST) {
+                this.orientation = ShieldOrientation.SOUTHWEST;
+            }
+            else if (orientation == ShieldOrientation.SOUTHWEST) {
+                this.orientation = ShieldOrientation.SOUTHEAST;
+            }
+            else if (orientation == ShieldOrientation.SOUTHEAST) {
+                this.orientation = ShieldOrientation.NORTHEAST;
+            }
+            else if (orientation == ShieldOrientation.NORTHEAST){
+                this.orientation = ShieldOrientation.NORTHWEST;
+            }
+        }
     }
 
     @Override

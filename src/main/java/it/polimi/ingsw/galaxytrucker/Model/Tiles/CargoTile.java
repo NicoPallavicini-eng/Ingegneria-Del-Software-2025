@@ -20,9 +20,8 @@ public class CargoTile extends Tile {
         return tileContent;
     }
 
-    public Integer getSlotsContent() {
-        //TODO logic for getSlotsContent
-        return null;
+    public void setTileContent(Integer tileContent) {
+        this.tileContent.add(tileContent);
     }
 
     public void removeBlock(Integer block) {

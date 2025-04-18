@@ -16,6 +16,18 @@ public class BatteryTile extends Tile{
         return slotsFilled;
     }
 
+    public int getSlotsNumber() {
+        return slotsNumber;
+    }
+
+    public void setSlotsFilled(int slotsFilled) {
+        this.slotsFilled = slotsFilled;
+    }
+
+    public int getSlotsFilled() {
+        return slotsFilled;
+    }
+
     @Override
     public void accept(TileVisitor visitor) {
         visitor.visit(this);

@@ -18,6 +18,8 @@ public class Tile{
         this.westConnector = westConnector;
         this.southConnector = southConnector;
         this.eastConnector = eastConnector;
+        this.upsideDown = false;
+        this.choosable = true;
     }
 
     public boolean isUpsideDown() {
@@ -25,7 +27,6 @@ public class Tile{
     }
 
     public void rotate(Side side){
-
         ConnectorType tempRotate;
         if (side == Side.RIGHT) {
             tempRotate = northConnector;
@@ -62,7 +63,7 @@ public class Tile{
     }
 
     public void flip(){
-        upsideDown = true;
+        upsideDown = false;
     }
 
     public boolean getUpsideDown(){
