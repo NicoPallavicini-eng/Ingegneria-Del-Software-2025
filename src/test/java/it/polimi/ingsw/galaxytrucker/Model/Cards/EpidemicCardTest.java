@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EpidemicCardTest {
+class EpidemicCardTest { // needs ship changes
     List<Cannonball> cannonballList = new ArrayList<>();
 
     EpidemicCardVisitor epidemicCardVisitor = new EpidemicCardVisitor();
@@ -24,7 +24,7 @@ class EpidemicCardTest {
         Ship s = p.getShip();
         s.setCrewMembers(20);
 
-        // epidemicCard.process(s); TODO fix iterator in ship line 584
+        epidemicCard.process(s);
 
         assertEquals(s.getNumberOfCrewMembers(), 20);
     }
