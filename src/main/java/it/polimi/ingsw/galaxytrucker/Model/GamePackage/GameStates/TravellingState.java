@@ -18,6 +18,7 @@ public abstract class TravellingState implements GameState {
     public TravellingState(Game game, Card currentCard) {
         this.game = game;
         this.currentCard = currentCard;
+        game.sortListOfPlayers();
     }
 
     @Override

@@ -1,13 +1,16 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
@@ -16,6 +19,7 @@ public class Game {
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;  
     private Deck deck;
+    private Queue<GameEvent> controllerEvents = new LinkedList<>();
 
     public Game (Player firstPlayer){
         listOfPlayers.add(firstPlayer);
@@ -40,6 +44,10 @@ public class Game {
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public void sortListOfPlayers(){
+        listOfPlayers.sort((p1, p2) -> p1.getShip().getTravelDays() - p2.getShip().getTravelDays());
     }
 
     public GameState getGameState() {
@@ -68,5 +76,15 @@ public class Game {
 
     public void setDeck(Deck deck) {
         this.deck = deck;
+    }
+
+    //to synchronize
+    public GameEvent poolEventQueue() {
+        return controllerEvents.poll();
+    }
+
+    //to synchronize
+    public void addEventQueue(GameEvent gameEvent) {
+        controllerEvents.add(gameEvent);
     }
 }
