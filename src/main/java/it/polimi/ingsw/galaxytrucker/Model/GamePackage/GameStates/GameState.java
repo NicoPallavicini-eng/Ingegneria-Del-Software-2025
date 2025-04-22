@@ -9,9 +9,10 @@ public abstract class GameState {
 
     public void next(){};
     public void process(){};
+    public void init(){};
 
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {
-         new IllegalEventException("The player used a command not availeble in this phase of the game.");
+         throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
 
 }

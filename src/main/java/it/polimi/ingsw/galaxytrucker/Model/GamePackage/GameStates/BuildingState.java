@@ -3,9 +3,8 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 
-public class BuildingState implements GameState {
+public class BuildingState extends GameState {
     private final Game game;
-    private GameState nextState;
 
     public BuildingState( Game game ) {
         this.game = game;
@@ -20,8 +19,7 @@ public class BuildingState implements GameState {
         if (nextCard == null) {
             getGame().setGameState(new FinalState(game));
         } else {
-            getGame().setGameState(new TravellingState(game, nextCard));
-        }
+            getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));        }
     }
 
     public void process() {

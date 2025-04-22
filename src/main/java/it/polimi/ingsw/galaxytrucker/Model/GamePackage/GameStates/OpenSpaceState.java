@@ -22,16 +22,21 @@ public class OpenSpaceState extends TravellingState{
         super(game, card);
     }
 
-    // il controller dice al game di fare process() all'inizio e dopo ogni volta che ha gestito un input
+
+
     @Override
     public void process() {
-        if(handledPlayers == 0){
-            turns = new LinkedList<>(game.getListOfPlayers());
-            Collections.reverse(turns);
+        if(handledPlayers == turns.size()) {
+            next();
+            game.getGameState().init();}
+        else {
+            if (handledPlayers == 0) {
+                turns = new LinkedList<>(game.getListOfPlayers());
+                Collections.reverse(turns);
+            }
+            game.addEventQueue(new RequestEngineActivationEvent(turns.get(handledPlayers)));
+            handledPlayers++;
         }
-        game.addEventQueue(new RequestEngineActivationEvent(turns.get(handledPlayers)));
-        handledPlayers++;
-        if(handledPlayers == turns.size()) {next();}
     }
 
     //a different type of event uses the method handlevent(GameEvent) of the superclass
@@ -60,5 +65,6 @@ public class OpenSpaceState extends TravellingState{
                 }
             }
             event.player().getShip().setTravelDays(position);
+            process();
     }
 }
