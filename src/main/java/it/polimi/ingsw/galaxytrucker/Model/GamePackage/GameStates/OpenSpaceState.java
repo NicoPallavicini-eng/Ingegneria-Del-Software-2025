@@ -2,14 +2,11 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.OpenSpaceCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EngineActivationEvent;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ActivateEnginesEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.RequestEngineActivationEvent;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.RequestActivateEnginesEvent;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.EngineTile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -32,18 +29,17 @@ public class OpenSpaceState extends TravellingState{
         else {
             if (handledPlayers == 0) {
                 turns = new LinkedList<>(game.getListOfPlayers());
-                Collections.reverse(turns);
             }
-            game.addEventQueue(new RequestEngineActivationEvent(turns.get(handledPlayers)));
+            game.addEventQueue(new RequestActivateEnginesEvent(turns.get(handledPlayers)));
             handledPlayers++;
         }
     }
 
     //a different type of event uses the method handlevent(GameEvent) of the superclass
     //now activates all tiles that are engines but does not say you picked row,column where engines are not present
-    public void handleInput(EngineActivationEvent event)throws IllegalEventException {
+    public void handleInput(ActivateEnginesEvent event)throws IllegalEventException {
 
-            event.coordinates().stream()
+            event.engines().stream()
                     .map(c -> event.player().getShip().getTileOnFloorPlan(c.getKey(), c.getValue()))
                     .flatMap(Optional::stream)
                     .filter(t -> t instanceof EngineTile)
