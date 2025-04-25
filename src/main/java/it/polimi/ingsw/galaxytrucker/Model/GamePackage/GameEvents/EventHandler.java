@@ -39,27 +39,27 @@ TRAVELLING:
 
      */
 
-    public void handleEvent(ConnectEvent event) {}
-    public void handleEvent(DisconnectEvent event) {}
-    public void handleEvent(SetNumberOfPlayersEvent event) {}
-    public void handleEvent(PickUpTileEvent event) {}
-    public void handleEvent(RotateTileEvent event) {}
-    public void handleEvent(PutDownTileEvent event) {}
-    public void handleEvent(PlaceTileEvent event) {}
-    public void handleEvent(ReserveTileEvent event) {}
-    public void handleEvent(FlipHourglassEvent event) {}
-    public void handleEvent(SetPositionEvent event) {}
-    public void handleEvent(PickUpFromShipEvent event) {}
-    public void handleEvent(PickUpReservedTileEvent event) {}
+    public static void handleEvent(ConnectEvent event) {}
+    public static void handleEvent(DisconnectEvent event) {}
+    public static void handleEvent(SetNumberOfPlayersEvent event) {}
+    public static void handleEvent(PickUpTileEvent event) {}
+    public static void handleEvent(RotateTileEvent event) {}
+    public static void handleEvent(PutDownTileEvent event) {}
+    public static void handleEvent(PlaceTileEvent event) {}
+    public static void handleEvent(ReserveTileEvent event) {}
+    public static void handleEvent(FlipHourglassEvent event) {}
+    public static void handleEvent(SetPositionEvent event) {}
+    public static void handleEvent(PickUpFromShipEvent event) {}
+    public static void handleEvent(PickUpReservedTileEvent event) {}
 
-    public void handleEvent(ActivateEnginesEvent event) {}
-    public void handleEvent(ActivateCannonsEvent event) {}
-    public void handleEvent(ActivateShieldEvent event) {}
-    public void handleEvent(RemoveCargoEvent event) {}
-    public void handleEvent(AddCargoEvent event) {}
-    public void handleEvent(SwitchCargoEvent event) {}
-    public void handleEvent(EjectPeopleEvent event) {}
-    public void handleEvent(GiveUpEvent event) {}
+    public static void handleEvent(ActivateEnginesEvent event) {}
+    public static void handleEvent(ActivateCannonsEvent event) {}
+    public static void handleEvent(ActivateShieldEvent event) {}
+    public static void handleEvent(RemoveCargoEvent event) {}
+    public static void handleEvent(AddCargoEvent event) {}
+    public static void handleEvent(SwitchCargoEvent event) {}
+    public static void handleEvent(EjectPeopleEvent event) {}
+    public static void handleEvent(GiveUpEvent event) {}
 
 
 }

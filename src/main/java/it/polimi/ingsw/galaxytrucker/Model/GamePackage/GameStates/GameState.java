@@ -7,12 +7,11 @@ import java.util.Queue;
 
 public abstract class GameState {
 
-    public void next(){};
-    public void process(){};
-    public void init(){};
-
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {
          throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
+
+    public void next(){};
+    public void init(){};
 
 }
