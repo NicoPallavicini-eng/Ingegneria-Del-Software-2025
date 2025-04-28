@@ -8,21 +8,24 @@ import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView {
     final VirtualServer server;
+    private String nickname;
 
     public RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
+        nickname = null;
     }
     public void run() throws RemoteException {
         this.server.connect(this);
         this.runCl();
     }
-    private void runCl(){
+    private void runCl() throws RemoteException {
         Scanner scanner = new Scanner(System.in);
         String input = new String("0");
-        while(!input.equals("exit")){
+        while(!input.equals("/disconnect")){
             System.out.print("Enter command: ");
             input = scanner.nextLine();
             System.out.println("Server command: " + input);
+            server.handleUserInput(this,input);
             try{
                 server.showMessage(input);
             }catch(RemoteException e){
@@ -46,5 +49,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public String sayHello() throws RemoteException {
         return "Hello, world!";
     }
-    //
+    @Override
+    public void setNickname(String nickname) throws RemoteException {
+        this.nickname = nickname;
+    }
+    @Override
+    public String getNickname() throws RemoteException {
+        return this.nickname;
+    }
 }

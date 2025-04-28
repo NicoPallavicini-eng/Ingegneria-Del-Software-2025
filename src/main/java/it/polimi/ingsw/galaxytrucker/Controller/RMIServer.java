@@ -7,6 +7,7 @@ import java.util.List;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
+    private ServerController serverController = new ServerController();
 
     public RMIServer() throws RemoteException {
         super();
@@ -35,5 +36,9 @@ public class RMIServer implements VirtualServer {
     @Override
     public String sayHello() throws RemoteException {
         return "Hello, world!";
+    }
+    @Override
+    public void handleUserInput(VirtualView virtualView, String input) throws RemoteException {
+        serverController.handleUserInput(virtualView,input);
     }
 }
