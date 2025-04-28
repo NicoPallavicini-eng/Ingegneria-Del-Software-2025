@@ -192,49 +192,25 @@ public class Ship {
                         //north
                         ConnectorType connector = connectors.get(0);
                         ConnectorType connectorAdiacent = adiacentTile.get(0).getConnectors().get(2);
-                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-                                return false;
-                            }
-                        }else{
-                            return false;
-                        }
+                        if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
                     if(adiacentTile.get(1)!=null){
                         //west
                         ConnectorType connector = connectors.get(1);
                         ConnectorType connectorAdiacent = adiacentTile.get(1).getConnectors().get(3);
-                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-                                return false;
-                            }
-                        }else{
-                            return false;
-                        }
+                        if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
                     if(adiacentTile.get(2)!=null){
                         //south
                         ConnectorType connector = connectors.get(2);
                         ConnectorType connectorAdiacent = adiacentTile.get(2).getConnectors().get(0);
-                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-                                return false;
-                            }
-                        }else{
-                            return false;
-                        }
+                        if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
                     if(adiacentTile.get(3)!=null){
                         //east
                         ConnectorType connector = connectors.get(3);
                         ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
-                        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
-                            if(connectorAdiacent.equals(ConnectorType.ENGINE)||connectorAdiacent.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.CANNON)||connector.equals(ConnectorType.ENGINE)){
-                                return false;
-                            }
-                        }else{
-                            return false;
-                        }
+                        if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
 
                 }
@@ -243,13 +219,32 @@ public class Ship {
 
         ArrayList<EngineTile> listOfEngine = getListOfEngine();
         for(EngineTile tile : listOfEngine){
-            if(tile.getConnectors().get(2)!=ConnectorType.ENGINE){
+            if(tile.getConnectors().get(2)!=ConnectorType.ENGINE_SINGLE || tile.getConnectors().get(2)!=ConnectorType.ENGINE_DOUBLE){
                 return false;
             }
         }
 
         return true;
     }
+
+    private boolean checkEngineOrCannon(ConnectorType connector, ConnectorType connectorAdiacent) {
+        if(connectorAdiacent.equals(connector)||(connectorAdiacent==ConnectorType.UNIVERSAL&&connector!=ConnectorType.NONE)||(connector==ConnectorType.UNIVERSAL&&connectorAdiacent!=ConnectorType.NONE)){
+            if(connectorAdiacent.equals(ConnectorType.ENGINE_SINGLE)
+                    ||connectorAdiacent.equals(ConnectorType.ENGINE_DOUBLE)
+                    ||connectorAdiacent.equals(ConnectorType.CANNON_SINGLE)
+                    ||connectorAdiacent.equals(ConnectorType.CANNON_DOUBLE)
+                    ||connector.equals(ConnectorType.CANNON_SINGLE)
+                    ||connector.equals(ConnectorType.CANNON_DOUBLE)
+                    ||connector.equals(ConnectorType.ENGINE_SINGLE)
+                    ||connector.equals(ConnectorType.ENGINE_DOUBLE)){
+                return true;
+            }
+        }else{
+            return true;
+        }
+        return false;
+    }
+
     /**
      * checkFloorplanConnection is used to obtain a list that represent a set of united components that start from centralCabin
      * @return
@@ -278,7 +273,16 @@ public class Ship {
                         ConnectorType connector = connectorsList.get(i);
                         ConnectorType connectorAdiacent = adiacentTileList.get(i).getConnectors().get((i+2)%4);
 
-                        if(connector!=ConnectorType.ENGINE&&connector!=ConnectorType.CANNON&&connector!=ConnectorType.NONE&&connectorAdiacent!=ConnectorType.ENGINE&&connectorAdiacent!=ConnectorType.CANNON&&connectorAdiacent!=ConnectorType.NONE){
+                        if(connector!=ConnectorType.ENGINE_SINGLE
+                                &&connector!=ConnectorType.ENGINE_DOUBLE
+                                &&connector!=ConnectorType.CANNON_SINGLE
+                                &&connector!=ConnectorType.CANNON_DOUBLE
+                                &&connector!=ConnectorType.NONE
+                                &&connectorAdiacent!=ConnectorType.ENGINE_SINGLE
+                                &&connectorAdiacent!=ConnectorType.ENGINE_DOUBLE
+                                &&connectorAdiacent!=ConnectorType.CANNON_SINGLE
+                                &&connectorAdiacent!=ConnectorType.CANNON_DOUBLE
+                                &&connectorAdiacent!=ConnectorType.NONE){
                             toVisitStack.push(adiacentTileList.get(i));
                         }
                     }
@@ -379,7 +383,16 @@ public class Ship {
                         ConnectorType connector = connectorsList.get(i);
                         ConnectorType connectorAdiacent = adiacentTileList.get(i).getConnectors().get((i+2)%4);
 
-                        if(connector!=ConnectorType.ENGINE&&connector!=ConnectorType.CANNON&&connector!=ConnectorType.NONE&&connectorAdiacent!=ConnectorType.ENGINE&&connectorAdiacent!=ConnectorType.CANNON&&connectorAdiacent!=ConnectorType.NONE){
+                        if(connector!=ConnectorType.ENGINE_SINGLE
+                                &&connector!=ConnectorType.ENGINE_DOUBLE
+                                &&connector!=ConnectorType.CANNON_SINGLE
+                                &&connector!=ConnectorType.CANNON_DOUBLE
+                                &&connector!=ConnectorType.NONE
+                                &&connectorAdiacent!=ConnectorType.ENGINE_SINGLE
+                                &&connectorAdiacent!=ConnectorType.ENGINE_DOUBLE
+                                &&connectorAdiacent!=ConnectorType.CANNON_SINGLE
+                                &&connectorAdiacent!=ConnectorType.CANNON_DOUBLE
+                                &&connectorAdiacent!=ConnectorType.NONE){
                             toVisitStack.push(adiacentTileList.get(i));
                         }
                     }
@@ -517,7 +530,7 @@ public class Ship {
                 if(cannonTile.getDoublePower()){
                     multiplicator = 2;
                 }
-                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
+                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON_SINGLE || cannonTile.getConnectors().get(0)==ConnectorType.CANNON_DOUBLE){
                     firepower+=multiplicator*1;
                 }else{
                     firepower+=multiplicator*0.5;

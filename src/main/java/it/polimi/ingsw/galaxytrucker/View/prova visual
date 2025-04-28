@@ -1,0 +1,94 @@
+base struct
+// ╭────   ────╮
+// │           │
+//       -     
+// │           │
+// ╰────   ────╯
+
+this example
+// ╭────|||────╮
+// │     n     │
+// │ w  2 §  e =
+// │     s     │
+// ╰──── | ────╯
+
+{
+  "tile": {
+    "static": {
+      "ne_border": "╭",
+      "nw_border": "╮",
+      "se_border": "╰",
+      "sw_border": "╯",
+      "horizontal_border": "────",
+      "vertical_border": "│",
+      "center_symbols": "2 §"  // stay unchanged
+    },
+    "dynamic": {
+      "side_connectors": {
+        "north": "|||",   // N connector
+        "east": "=",      // E connector
+        "south": " | ",   // S connector
+        "west": "│"       // W connector
+      }
+    }
+  },
+  "rotate": {
+    "90": { // clockwise once
+      "static": {
+        "ne_border": "╭",
+        "nw_border": "╮",
+        "se_border": "╰",
+        "sw_border": "╯",
+        "horizontal_border": "────",
+        "vertical_border": "│",
+        "center_symbols": "2 §"  // stay unchanged
+      },
+      "dynamic": {
+        "side_connectors": {
+        "north": "───",   // N connector (former W in og)
+        "east": "≡",      // E connector (former N in og)
+        "south": "| |",   // S connector (former E in og)
+        "west": "-"       // W connector (former S in og)
+        }
+      }
+    },
+    "180": { // clockwise twice
+      "static": {
+        "ne_border": "╭",
+        "nw_border": "╮",
+        "se_border": "╰",
+        "sw_border": "╯",
+        "horizontal_border": "────",
+        "vertical_border": "│",
+        "center_symbols": "2 §"  // stay unchanged
+      },
+      "dynamic": {
+        "side_connectors": {
+        "north": " | ",   // N connector (former S in og)
+        "east": "│",      // E connector (former W in og)
+        "south": "|||",   // S connector (former N in og)
+        "west": "="       // W connector (former E in og)
+        }
+      }
+    },
+    "270": { // clockwise thrice (nice word Elisa gg)
+      "static": {
+        "ne_border": "╭",
+        "nw_border": "╮",
+        "se_border": "╰",
+        "sw_border": "╯",
+        "horizontal_border": "────",
+        "vertical_border": "│",
+        "center_symbols": "2 §"  // stay unchanged
+      },
+      "dynamic": {
+        "side_connectors": {
+        "north": "| |",   // N connector (former E in og)
+        "east": "-",      // E connector (former S in og)
+        "south": "───",   // S connector (former W in og)
+        "west": "≡"       // W connector (former N in og)
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,4 @@
-boxes for TUI:
-
-base:
+----------------- BASE -----------------
 
 ╭───────────╮
 │           │
@@ -8,19 +6,84 @@ base:
 │           │
 ╰───────────╯
 
-examples:
+╭────   ────╮
+│           │
+      -     
+│           │
+╰────   ────╯
 
-    ╭────|||────╮      ╭──── | ────╮
-    │           │      │           │
-    -     #     ≡      =     ⚘     ≡
-    │           │      │           │
-    ╰────|||────╯      ╰────|||────╯
+----------------- CONNECTORS -----------------
 
-    ╭────|||────╮      ╭──── | ────╮
-    │           │      │           │
-    -     ⚲     ≡      =     □     ≡
-    │           │      │           │
-    ╰────|||────╯      ╰────| |────╯
+N:
+
+NONE: "───"
+SINGLE: " | "
+DOUBLE: "| |"
+UNIVERSAL: "|||"
+CANNON SINGLE: " ↑ "
+CANNON DOUBLE: "↑ ↑"
+ENGINE SINGLE: " V "
+ENGINE DOUBLE: "V V"
+
+E:
+
+NONE: "│"
+SINGLE: "-"
+DOUBLE: "="
+UNIVERSAL: "≡"
+CANNON SINGLE: "→"
+CANNON DOUBLE: "⇉"
+ENGINE SINGLE: "<"
+ENGINE DOUBLE: "≤"
+
+S:
+
+NONE: "───"
+SINGLE: " | "
+DOUBLE: "| |"
+UNIVERSAL: "|||"
+CANNON SINGLE: " ↓ "
+CANNON DOUBLE: "↓ ↓"
+ENGINE SINGLE: " Λ "
+ENGINE DOUBLE: "Λ Λ"
+
+W:
+
+NONE: "│"
+SINGLE: "-"
+DOUBLE: "="
+UNIVERSAL: "≡"
+CANNON SINGLE: "←"
+CANNON DOUBLE: "⇇"
+ENGINE SINGLE: ">"
+ENGINE DOUBLE: "≥"
+
+----------------- CENTERS -----------------
+
+BATTERY DOUBLE: "2 §"
+BATTERY TRIPLE: "3 §"
+STORAGE REGULAR DOUBLE: "2 □"
+STORAGE REGULAR TRIPLE: "3 □"
+MAIN CAPSULE BLUE: "B ⌂"
+MAIN CAPSULE GREEN: "G ⌂"
+MAIN CAPSULE RED: "R ⌂"
+MAIN CAPSULE YELLOW: "Y ⌂"
+REGULAR CAPSULE: " ⚲ "
+STRUCTURAL: "   "
+STORAGE RED SINGLE: "1 ■"
+STORAGE RED DOUBLE: "2 ■"
+SINGLE ENGINE: "1 ¤"
+DOUBLE ENGINE: "2 ¤"
+SINGLE CANNON: "1 +"
+DOUBLE CANNON: "2 +"
+BIOADAPTOR ORANGE: "O ⚘"
+BIOADAPTOR PINK: "P ⚘"
+SHIELD:
+    R0: "NE#"
+    R90: "SE#"
+    R180: "SW#"
+    R270: "NW#"
+BACK: " x "
 
 ----------------- BATTERY DOUBLE -----------------
 
@@ -1095,59 +1158,59 @@ examples:
 ----------------- SHIELD -----------------
 
 149: SHIELD
-    ╭──#─────#──╮
-    │           #
-    -     #     -
-    │           #
+    ╭───────────╮
+    │           │
+    -    NE#    -
+    │           │
     ╰────|||────╯
 
 150: SHIELD
-    ╭──#─ | ─#──╮
-    │           #
-    -     #     │
-    │           #
+    ╭──── | ────╮
+    │           │
+    -    NE#    │
+    │           │
     ╰──── | ────╯
 
 151: SHIELD
-    ╭──#─| |─#──╮
-    │           #
-    -     #     -
-    │           #
+    ╭────| |────╮
+    │           │
+    -    NE#    -
+    │           │
     ╰────| |────╯
 
 152: SHIELD
-    ╭──#─────#──╮
-    │           #
-    =     #     │
-    │           #
+    ╭───────────╮
+    │           │
+    =    NE#    │
+    │           │
     ╰────|||────╯
 
 153: SHIELD
-    ╭──#─────#──╮
-    │           #
-    =     #     =
-    │           #
+    ╭───────────╮
+    │           │
+    =    NE#    =
+    │           │
     ╰────| |────╯
 
 154: SHIELD
-    ╭──#─ | ─#──╮
-    │           #
-    =     #     =
-    │           #
+    ╭──── | ────╮
+    │           │
+    =    NE#    =
+    │           │
     ╰──── | ────╯
 
 155: SHIELD
-    ╭──#─────#──╮
-    │           #
-    ≡     #     │
-    │           #
+    ╭───────────╮
+    │           │
+    ≡    NE#    │
+    │           │
     ╰──── | ────╯
 
 156: SHIELD
-    ╭──#─────#──╮
-    │           #
-    ≡     #     =
-    │           #
+    ╭───────────╮
+    │           │
+    ≡    NE#    =
+    │           │
     ╰────| |────╯
 
 ----------------- BACK -----------------

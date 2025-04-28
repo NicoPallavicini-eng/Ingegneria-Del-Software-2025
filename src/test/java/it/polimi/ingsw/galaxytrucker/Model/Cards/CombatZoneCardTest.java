@@ -35,7 +35,7 @@ class CombatZoneCardTest { // passed
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
         s.setCrewMembers(4);
-        Tile tile = new CabinTile(ConnectorType.CANNON,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE, CabinInhabitants.TWO, false, 0, 0);
+        Tile tile = new CabinTile(ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE, CabinInhabitants.TWO, false, 0, 0);
         s.setTileOnFloorPlan(2,3,tile);
 
         combatZoneCard.lessEngineProcess(s);

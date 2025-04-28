@@ -65,15 +65,19 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
             if (this.direction == WEST) {
                 if ((firstTile.getConnectors().get(1) != ConnectorType.NONE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE)
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
                     ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
                 }
             } else if (this.direction == EAST) {
                 if ((firstTile.getConnectors().getLast() != ConnectorType.NONE
-                        || firstTile.getConnectors().getLast() != ConnectorType.CANNON
-                        || firstTile.getConnectors().getLast() != ConnectorType.ENGINE)
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
                     ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
                 }
@@ -105,15 +109,19 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
             if (this.direction == NORTH) {
                 if ((firstTile.getConnectors().getFirst() != ConnectorType.NONE
-                        || firstTile.getConnectors().getFirst() != ConnectorType.CANNON
-                        || firstTile.getConnectors().getFirst() != ConnectorType.ENGINE)
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
                     ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
                 }
             } else if (this.direction == SOUTH) {
                 if ((firstTile.getConnectors().get(2) != ConnectorType.NONE
-                        || firstTile.getConnectors().get(2) != ConnectorType.CANNON
-                        || firstTile.getConnectors().get(2) != ConnectorType.ENGINE)
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
+                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
                     ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
                 }
