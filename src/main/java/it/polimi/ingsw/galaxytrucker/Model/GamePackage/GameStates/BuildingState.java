@@ -191,14 +191,14 @@ public class BuildingState extends GameState {
     }
 
     private void checkNext(){
-        Boolean flag = false;
+        boolean flag = false;
         for(Player player : game.getListOfPlayers()){
-            if(placedAliens.get(player) != [true, true]){
+            if(placedAliens.get(player)[0] == false || placedAliens.get(player)[1] == false){
                 flag = true;
                 break;
             }
         }
-        if (flag == false){
+        if (!flag){
             next();
         }
     }

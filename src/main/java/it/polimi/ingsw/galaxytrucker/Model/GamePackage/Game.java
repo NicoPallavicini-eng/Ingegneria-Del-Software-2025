@@ -21,7 +21,7 @@ public class Game {
     private Deck deck;
     private Queue<GameEvent> controllerEvents = new LinkedList<>();
 
-    public Game (Player firstPlayer){
+    public Game (){
         listOfPlayers.add(firstPlayer);
         // TODO assemble gameDeck (?)
     }

@@ -26,5 +26,6 @@ public class MeteorsState extends TravellingState{
     }
 
     //todo capire come vogliamo gestire i bro che attivano scudi e cannoni
-    public void handleInput()
+    public void handleInput(){
+    }
 }
