@@ -1,3 +1,5 @@
+package it.polimi.ingsw.galaxytrucker.Network.Client;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

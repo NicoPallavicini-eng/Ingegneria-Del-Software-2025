@@ -1,3 +1,7 @@
+package it.polimi.ingsw.galaxytrucker.Network.Server;
+
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
