@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.beans.binding.IntegerBinding;
 import javafx.util.Pair;
@@ -17,132 +18,7 @@ public class ServerController {
     public ServerController() {
         this.game = new Game();
     }
-        /*        commands.put("/reservetile", params -> {
-            try {
-                if (params.size() != 2) {
-                    System.out.println("Errore: /reservetile richiede due parametri");
-                    throw new IllegalEventException("Errore: /reservetile richiede due parametri");
-                }
-                String row = params.get(0);
-                String column = params.get(1);
-                int rowInt = Integer.parseInt(row);
-                int columnInt = Integer.parseInt(column);
-
-                //logic for pile
-
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-                ArrayList<Tile> reservedTiles = (ArrayList<Tile>) player.getShip().getReservedTiles(); //In ship maybe return arrayList
-                if (reservedTiles.size() == 2) {
-                    System.out.println("Errore: Non è presente più spazio per tenere da parte la tile, scartarne una prima di chiamare /reservedtile");
-                    throw new IllegalEventException("Errore: Non è presente più spazio per tenere da parte la tile, scartarne una prima di chiamare /reservedtile");
-                }
-                ReserveTileEvent event = new ReserveTileEvent(player, rowInt, columnInt);
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/fliphourglass", params -> {
-            try {
-                if (!params.isEmpty()) {
-                    System.out.println("Errore: /fliphourglass non supporta parametri!");
-                    throw new IllegalEventException("Errore: /fliphourglass non supporta parametri!");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-
-                FlipHourglassEvent event = new FlipHourglassEvent(player);
-            }
-            catch (IllegalEventException e) {
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/setposition", params -> {
-            try{
-                if (params.size() != 1){
-                    System.out.println("Errore: /setposition richiede un parametro");
-                    throw new IllegalEventException("Errore: /setposition richiede un parametro");
-                }
-                String position = params.get(0);
-                int positionInt = Integer.parseInt(position);
-
-                int maxNumberOfPlayers = game.getNumberOfPlayers();
-
-                if (positionInt < 1 || positionInt > maxNumberOfPlayers) {
-                    System.out.println("Errore: posizione non valida. Deve essere compresa tra 1 e 4");
-                    throw new IllegalEventException("Errore: posizione non valida. Deve essere compresa tra 1 e 4");
-                }
-
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-
-                SetPositionEvent event = new SetPositionEvent(player, positionInt);
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/pickupfromship", params -> {
-            try{
-                if (params.size() != 2){
-                    System.out.println("Errore: /pickupfromship richiede due parametri");
-                    throw new IllegalEventException("Errore: /pickupfromship richiede due parametri");
-                }
-                String row = params.get(0);
-                String column = params.get(1);
-
-                int rowInt = Integer.parseInt(row);
-                int columnInt = Integer.parseInt(column);
-
-                if (rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                    System.out.println("Errore: riga o colonna non valida");
-                    throw new IllegalEventException("Errore: riga o colonna non valida");
-                }
-
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-
-                PickupFromShipEvent event = new PickupFromShipEvent(player, rowInt, columnInt);
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/pickupreservedtile", params -> {}); //Really needed?
-
+        /*
         commands.put("/acrivateengine", params -> {
             try{
                 if (params.size() % 2 != 0){
@@ -385,6 +261,7 @@ public class ServerController {
 
     private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client){
         switch(command){
+            //TODO check illegal position on ship by shifting parameters
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
@@ -576,13 +453,98 @@ public class ServerController {
                                 client.invalidCommand("Index not valid. It must be either 1 or 2");
                             }
                             else{
-                                ReserveTileEvent event = new ReserveTileEvent(player, index);
+                                ReserveTileEvent event = new ReserveTileEvent(player, index-1);
                                 gameState.handleEvent(event);
                             }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
                         }
                     }
                 }
             }
+            case "fliphourglass" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        FlipHourglassEvent event = new FlipHourglassEvent(player);
+                        gameState.handleEevent(event);
+                    }
+                    else{
+                        client.ivalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/fliphourglass doesn't support parameters!");
+                }
+            }
+            case "setposition" -> {
+                if (secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() == 1) {
+                            String pos = firstParameters.get(0);
+                            int position = Integer.parseInt(pos);
+                            int maxNumberOfPlayers = game.getNumberOfPlayers();
+                            if (position < 1 || position > maxNumberOfPlayers) {
+                                client.invalidCommand("Position not valid. It must be between 1 and " + maxNumberOfPlayers);
+                            } else {
+                                // Check if position is valid?
+                                SetPositionEvent event = new SetPositionEvent(player, position);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/setposition requires only one parameter!");
+                }
+            }
+            case "pickupfromship" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        PickUpFromShipEvent event = new PickUpFromShipEvent(player);
+                        gameState.handleEvent(event);
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/pickupfromship doesn't support parameters!");
+                }
+            }
+            case "pickupreservedtile" -> {
+                if (secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() == 1) {
+                            String indexStr = firstParameters.get(0);
+                            int index = Integer.parseInt(indexStr);
+                            Ship playerShip = player.getShip();
+                            int numberOfReservedTiles = playerShip.getReservedTiles().size();
+                            if (index < 1 || index > numberOfReservedTiles) {
+                                client.invalidCommand("Index not valid. It must be either 1 or 2");
+                            } else {
+                                PickupReservedTileEvent event = new PickupReservedTileEvent(player, index - 1);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!")
+                    }
+                }
+                else{
+                    client.invalidCommand("/pickupreservedtile supports only one parameter.");
+                }
+            }
+            case ""
+
         }
     }
 
