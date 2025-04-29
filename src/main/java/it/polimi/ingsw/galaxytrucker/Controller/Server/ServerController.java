@@ -332,7 +332,7 @@ public class ServerController {
                         }
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!")
+                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
@@ -344,40 +344,68 @@ public class ServerController {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
                         if (firstParameters.size() % 2 != 0) {
-                            client.invalidCommand("/activateengines needs an even number of row and column for engines.")
+                            client.invalidCommand("/activateengines needs an even number of row and column for engines.");
                         }
                         else {
                             if(secondParameters.size() % 3 != 0){
-                                client.invalidCommand("for each batteries specify the position and the quantity to remove.")
+                                client.invalidCommand("for each batteries specify the position and the quantity to remove.");
                             }
                             else{
-                                ArrayList<Pair<Integer, Integer>> engines = new ArrayList<>();
+                                List<List<Integer>> engines = new ArrayList<>();
+                                List<List<Integer>> batteries = new ArrayList<>();
                                 for (int i = 0; i < firstParameters.size(); i += 2){
-                                    String rowStr = firstParameters.get(i);
-                                    String colStr = firstParameters.get(i+1);
+                                    String rowEngStr = firstParameters.get(i);
+                                    String colEngStr = firstParameters.get(i+1);
 
-                                    int row = Integer.parseInt(rowStr);
-                                    int col = Integer.parseInt(colStr);
-                                    boolean checkPosition = invalidTilePosition(row, col);
-                                    if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                    int rowEng = Integer.parseInt(rowEngStr);
+                                    int colEng = Integer.parseInt(colEngStr);
+                                    boolean checkPosition = invalidTilePosition(rowEng, colEng);
+                                    if ((rowEng < 5 || rowEng > 9 || colEng < 4 || colEng > 10) || !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
                                     }
-                                    engines.add(new Pair<>(row-5, col-4));
+                                    List<Integer> engineRow = new ArrayList<>();
+                                    engineRow.add(rowEng-5);
+                                    engineRow.add(colEng-4);
+                                    engines.add(engineRow);
                                 }
-                                // batteries cannot be ArrayList<Pair<Integer, Integer>>
+                                for (int j=0; j < secondParameters.size(); j += 3) {
+                                    //Getting positions and value of batteries
+                                    String rowBatStr = secondParameters.get(j);
+                                    String colBatStr = secondParameters.get(j++);
+                                    String valueBatStr = secondParameters.get(j += 2);
 
+                                    int rowBat = Integer.parseInt(rowBatStr);
+                                    int colBat = Integer.parseInt(colBatStr);
+                                    int valueBat = Integer.parseInt(valueBatStr);
+                                    boolean checkPosition = invalidTilePosition(rowBat, colBat);
+                                    if ((rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10) || !checkPosition) {
+                                        client.invalidCommand("Invalid row or column.");
+                                        break;
+                                    } else {
+                                        if (valueBat < 1 || valueBat > 3) {
+                                            client.invalidCommand("Invalid value. It must be between 1 and 3");
+                                            break;
+                                        } else {
+                                            List<Integer> batteryRow = new ArrayList<>();
+                                            batteryRow.add(rowBat - 5);
+                                            batteryRow.add(colBat - 4);
+                                            batteryRow.add(valueBat);
+                                            batteries.add(batteryRow);
+                                        }
+                                    }
+                                }
                                 ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
                                 gameState.handleEvent(event);
                             }
                         }
                     }
                     else {
-                        client.invalidCommand("You are not connected to the game!")
+                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
-                    client.invalidCommand("/activateengines needs two sets of parameters")
+                    client.invalidCommand("/activateengines needs two sets of parameters");
                 }
             }
             case "activatecannons" -> {
@@ -385,25 +413,56 @@ public class ServerController {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
                         if (firstParameters.size() % 2 != 0) {
-                            client.invalidCommand("/activatecannons needs an even number of row and column for cannons.")
+                            client.invalidCommand("/activatecannons needs an even number of row and column for cannons.");
                         }
                         else{
                             if (secondParameters.size() % 3 != 0){
-                                client.invalidCommand("for each batteries specify the position and the quantity to remove.")
+                                client.invalidCommand("for each batteries specify the position and the quantity to remove.");
                             }
                             else{
-                                ArrayList<Pair<Integer, Integer>> cannons = new ArrayList<>();
+                                List<List<Integer>> cannons = new ArrayList<>();
+                                List<List<Integer>> batteries = new ArrayList<>();
                                 for (int i = 0; i < firstParameters.size(); i += 2){
                                     String rowStr = firstParameters.get(i);
                                     String colStr = firstParameters.get(i+1);
 
-                                    int row = Integer.parseInt(rowStr);
-                                    int col = Integer.parseInt(colStr);
-                                    if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                    int rowEng = Integer.parseInt(rowStr);
+                                    int colEng = Integer.parseInt(colStr);
+                                    boolean checkPosition = invalidTilePosition(rowEng, colEng);
+                                    if ((rowEng < 5 || rowEng > 9 || colEng < 4 || colEng > 10) ||  !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
                                     }
-                                    cannons.add(new Pair<>(row-5, col-4));
+                                    List<Integer> cannonRow = new ArrayList<>();
+                                    cannonRow.add(rowEng-5);
+                                    cannonRow.add(colEng-4);
+                                    cannons.add(cannonRow);
+                                }
+                                for (int j=0; j < secondParameters.size(); j += 3) {
+                                    //Getting positions and value of batteries
+                                    String rowBatStr = secondParameters.get(j);
+                                    String colBatStr = secondParameters.get(j++);
+                                    String valueBatStr = secondParameters.get(j += 2);
+
+                                    int rowBat = Integer.parseInt(rowBatStr);
+                                    int colBat = Integer.parseInt(colBatStr);
+                                    int valueBat = Integer.parseInt(valueBatStr);
+                                    boolean checkPosition = invalidTilePosition(rowBat, colBat);
+                                    if ((rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10) || !checkPosition) {
+                                        client.invalidCommand("Invalid row or column.");
+                                        break;
+                                    } else {
+                                        if (valueBat < 1 || valueBat > 3) {
+                                            client.invalidCommand("Invalid value. It must be between 1 and 3");
+                                            break;
+                                        } else {
+                                            List<Integer> batteryRow = new ArrayList<>();
+                                            batteryRow.add(rowBat - 5);
+                                            batteryRow.add(colBat - 4);
+                                            batteryRow.add(valueBat);
+                                            batteries.add(batteryRow);
+                                        }
+                                    }
                                 }
                                 // batteries cannot be ArrayList<Pair<Integer, Integer>>
                                 ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
@@ -412,14 +471,14 @@ public class ServerController {
                         }
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!")
+                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
-                    client.invalidCommand("/activatecannons needs two sets of parameters")
+                    client.invalidCommand("/activatecannons needs two sets of parameters");
                 }
             }
-            case "activateshields" -> {
+            case "activateshield" -> {
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -427,21 +486,51 @@ public class ServerController {
                             client.invalidCommand("/activateshields needs an even number of row and column for shields.")
                         }
                         else{
-                            ArrayList<Pair<Integer, Integer>> shields = new ArrayList<>();
+                            List<List<Integer>> shields = new ArrayList<>();
+                            List<List<Integer>> batteries = new ArrayList<>();
                             for (int i = 0; i < firstParameters.size(); i += 2){
                                 String rowStr = firstParameters.get(i);
                                 String colStr = firstParameters.get(i+1);
 
-                                int row = Integer.parseInt(rowStr);
-                                int col = Integer.parseInt(colStr);
+                                int rowShield = Integer.parseInt(rowStr);
+                                int colShield = Integer.parseInt(colStr);
 
-                                if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                boolean checkPosition = invalidTilePosition(rowShield, colShield);
+                                if ((rowShield < 5 || rowShield > 9 || colShield < 4 || colShield > 10) || !checkPosition) {
                                     client.invalidCommand("Invalid row or column.");
                                     break;
                                 }
-                                shields.add(new Pair<>(row-5, col-4));
+                                List<Integer> shieldRow = new ArrayList<>();
+                                shieldRow.add(rowShield-5);
+                                shieldRow.add(colShield-4);
+                                shields.add(shieldRow);
                             }
-                            //batteries cannot be ArrayList<Pair<Intege,Integer>>
+                            for (int j=0; j < secondParameters.size(); j += 3) {
+                                //Getting positions and value of batteries
+                                String rowBatStr = secondParameters.get(0);
+                                String colBatStr = secondParameters.get(1);
+                                String valueBatStr = secondParameters.get(2);
+
+                                int rowBat = Integer.parseInt(rowBatStr);
+                                int colBat = Integer.parseInt(colBatStr);
+                                int valueBat = Integer.parseInt(valueBatStr);
+                                boolean checkPosition = invalidTilePosition(rowBat, colBat);
+                                if ((rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10) || !checkPosition) {
+                                    client.invalidCommand("Invalid row or column.");
+                                    break;
+                                } else {
+                                    if (valueBat < 1 || valueBat > 3) {
+                                        client.invalidCommand("Invalid value. It must be between 1 and 3");
+                                        break;
+                                    } else {
+                                        List<Integer> batteryRow = new ArrayList<>();
+                                        batteryRow.add(rowBat - 5);
+                                        batteryRow.add(colBat - 4);
+                                        batteryRow.add(valueBat);
+                                        batteries.add(batteryRow);
+                                    }
+                                }
+                            }
                             ActivateShieldsEvent event = new ActivateShieldsEvent(player, shields, batteries);
                             gameState.handleEvent(event);
                         }
@@ -453,13 +542,13 @@ public class ServerController {
                 else{
                     client.invalidCommand("/activateshields needs two sets of parameters")
                 }
-            }
+            } // TODO ONLY ONE SHIELD AT A TIME
             case "removecargo" -> {
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if(player != null){
                         if(firstParameters.size() != 3){
-                            client.invalidCommand("/removecargo supports only 3 parameters.")
+                            client.invalidCommand("/removecargo supports only 3 parameters.");
                         }
                         else{
                             String rowStr = firstParameters.get(0);
@@ -469,16 +558,19 @@ public class ServerController {
                             int row = Integer.parseInt(rowStr);
                             int col = Integer.parseInt(colStr);
                             int value = Integer.parseInt(valueStr);
-
-                            if (row < 5 || row > 9 || col < 4 || col > 10) {
+                            boolean checkPosition = invalidTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
                             }
-                            else if (value < 1 || value > 3){
-                                client.invalidCommand("Invalid value. It must be between 1 and 3");
-                            }
                             else{
-                                RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
-                                gameState.handleEvent(event);
+                                if (value < 1 || value > 3) {
+                                    client.invalidCommand("Invalid value. It must be between 1 and 3");
+                                }
+                                else{
+                                    RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
+                                    gameState.handleEvent(event);
+                                }
+
                             }
                         }
                     }
@@ -493,11 +585,10 @@ public class ServerController {
             case "addcargo" -> {
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
-                    if(player != null){
-                        if(firstParameters.size() != 3){
-                            client.invalidCommand("/addcargo supports only 3 parameters.")
-                        }
-                        else{
+                    if(player != null) {
+                        if (firstParameters.size() != 3) {
+                            client.invalidCommand("/addcargo supports only 3 parameters.");
+                        } else {
                             String rowStr = firstParameters.get(0);
                             String colStr = firstParameters.get(1);
                             String valueStr = firstParameters.get(2);
@@ -505,16 +596,16 @@ public class ServerController {
                             int row = Integer.parseInt(rowStr);
                             int col = Integer.parseInt(colStr);
                             int value = Integer.parseInt(valueStr);
-
-                            if (row < 5 || row > 9 || col < 4 || col > 10) {
+                            boolean checkPosition = invalidTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
-                            }
-                            else if (value < 1 || value > 3){
-                                client.invalidCommand("Invalid value. It must be between 1 and 3");
-                            }
-                            else{
-                                AddCargoEvent event = new AddCargoEvent(player, row-5, col-4, value);
-                                gameState.handleEvent(event);
+                            } else {
+                                if (value < 1 || value > 3) {
+                                    client.invalidCommand("Invalid value. It must be between 1 and 3");
+                                } else {
+                                    AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
+                                    gameState.handleEvent(event);
+                                }
                             }
                         }
                     }
@@ -545,7 +636,9 @@ public class ServerController {
                             int newRow = Integer.parseInt(newRowStr);
                             int newCol = Integer.parseInt(newColStr);
 
-                            if ((prevRow < 5 || prevRow > 9 || prevCol < 4 || prevCol > 10) || (newRow < 5 || newRow > 9 || newCol < 4 || newCol > 10)) {
+                            boolean checkPositionPrev = invalidTilePosition(prevRow, prevCol);
+                            boolean checkPositionNew = invalidTilePosition(newRow, newCol);
+                            if ((prevRow < 5 || prevRow > 9 || prevCol < 4 || prevCol > 10) || (newRow < 5 || newRow > 9 || newCol < 4 || newCol > 10) || !checkPositionPrev || !checkPositionNew) {
                                 client.invalidCommand("Invalid row or column.");
                             } else if (prevValue < 1 || prevValue > 3) {
                                 client.invalidCommand("Invalid value. It must be between 1 and 3");
@@ -566,7 +659,7 @@ public class ServerController {
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
-                        ArrayList<ArrayList<Integer>> people = new ArrayList<>();
+                        List<List<Integer>> people = new ArrayList<>();
                         if (firstParameters.size() % 3 != 0){
                             client.invalidCommand("/ejectpeople needs a numbero of parameters multiple of 3.");
                         }
@@ -584,12 +677,19 @@ public class ServerController {
                                     client.invalidCommand("Invalid row or column.");
                                     break;
                                 }
-                                else if (value < 1 || value > 2){
-                                    client.invalidCommand("Invalid value. It must be 1 or 2.");
-                                    break;
-                                }
-                                else{
-                                    people.add(new ArrayList<>(Arrays.asList(row-5, col-4, value)));
+                                else {
+                                    if (value < 1 || value > 2) {
+                                        client.invalidCommand("Invalid value. It must be 1 or 2.");
+                                        break;
+                                    } else {
+                                        List<Integer> peopleRow = new ArrayList<>();
+                                        peopleRow.add(row - 5);
+                                        peopleRow.add(col - 4);
+                                        peopleRow.add(value);
+                                        people.add(peopleRow);
+                                        EjectPeopleEvent event = new EjectPeopleEvent(player, people);
+                                        gameState.handleEvent(event);
+                                    }
                                 }
                             }
                         }
@@ -599,9 +699,9 @@ public class ServerController {
                     }
                 }
                 else{
-                    client.invalidCommand("/ejectpeople supports only one set of parameters")
+                    client.invalidCommand("/ejectpeople supports only one set of parameters");
                 }
-            } //TODO ejectpeople
+            }
             case "giveup" -> {
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname);
@@ -610,7 +710,7 @@ public class ServerController {
                         gameState.handleEvent(event);
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!")
+                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
@@ -632,6 +732,33 @@ public class ServerController {
                     client.invalidCommand("/viewinventory doesn't support parameters!");
                 }
             }
+            case "claimreward" -> {
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() == 1){
+                        Player player =  checkPlayer(client.getNickname());
+                        String engage = firstParameters.get(0);
+                        if (player != null){
+                            if (engage.equals("true") || engage.equals("false")){
+                                boolean engageBool = Boolean.parseBoolean(engage);
+                                ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
+                                gameState.handleEvent(event);
+                            }
+                            else{
+                                client.invalidCommand("The parameter must be either true or false.");
+                            }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                    else{
+                        client.invalidCommand("/claimreward supports only one parameter.");
+                    }
+                }
+                else{
+                    client.invalidCommand("/claimreward supports only one paramter.");
+                }
+            }
 
         }
     }
@@ -645,24 +772,26 @@ public class ServerController {
     }
 
     public boolean invalidTilePosition(int row, int col){
+        boolean checkPosition = false;
         if (row == 5){
             if (col == 4 || col == 5 || col == 7 || col == 9 || col == 10){
-                return false;
+                checkPosition = false;
             }
         }
         else if (row == 6){
             if(col == 4 || col == 10){
-                return false;
+                checkPosition = false;
             }
         }
         else if (row == 9){
             if (col == 7){
-                return false;
+                checkPosition = false;
             }
         }
         else{
-            return true;
+            checkPosition = true;
         }
+        return checkPosition;
     }
 
 }
