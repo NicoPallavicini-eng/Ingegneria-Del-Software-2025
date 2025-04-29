@@ -217,14 +217,14 @@ public class ServerController {
                         String column = firstParameters.get(1);
                         int rowInt = Integer.parseInt(row);
                         int columnInt = Integer.parseInt(column);
-
-                        if (rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
+                        boolean checkPosition = invalidTilePosition(rowInt, columnInt);
+                        if ((rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) || !checkPosition) {
                             client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                         }
                         else{
                             Player player = checkPlayer(client.getNickname());
                             if (player != null){
-                                PlaceTileEvent event = new PlaceTileEvent(player, rowInt, columnInt);
+                                PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
                                 gameState.handleEvent(event);
                             }
                             else{
@@ -358,7 +358,8 @@ public class ServerController {
 
                                     int row = Integer.parseInt(rowStr);
                                     int col = Integer.parseInt(colStr);
-                                    if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                    boolean checkPosition = invalidTilePosition(row, col);
+                                    if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
                                     }
@@ -616,6 +617,27 @@ public class ServerController {
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
+    }
+
+    public boolean invalidTilePosition(int row, int col){
+        if (row == 5){
+            if (col == 4 || col == 5 || col == 7 || col == 9 || col == 10){
+                return false;
+            }
+        }
+        else if (row == 6){
+            if(col == 4 || col == 10){
+                return false;
+            }
+        }
+        else if (row == 9){
+            if (col == 7){
+                return false;
+            }
+        }
+        else{
+            return true;
+        }
     }
 
 }
