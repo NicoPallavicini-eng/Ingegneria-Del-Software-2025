@@ -11,216 +11,12 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class ServerController {
-    //private final Map<String, Runnable> commands;
     private final Game game;
-    //private String nickname;
 
     public ServerController() {
         this.game = new Game();
     }
-        /*
-        commands.put("/acrivateengine", params -> {
-            try{
-                if (params.size() % 2 != 0){
-                    System.out.println("Errore: /activateengine richiede un numero pari di parametri");
-                    throw new IllegalEventException("Errore: /activateengine richiede un numero pari di parametri");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                ArrayList<Pair<Integer, Integer>> engineNumbers = new ArrayList<>();
-                for (int i = 0; i < params.size(); i+=2){
-                    String row = params.get(i);
-                    String column = params.get(i + 1);
 
-                    int rowInt = Integer.parseInt(row);
-                    int columnInt = Integer.parseInt(column);
-                    if(rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                        System.out.println("Errore: riga o colonna non valida");
-                        throw new IllegalEventException("Errore: riga o colonna non valida");
-                    }
-
-                    Player player = playerOptional.get();
-                    //engineNumbers.add(rowInt);
-                    //engineNumbers.add(columnInt);
-
-
-                }
-                ActivateEngineEvent event = new ActivateEngineEvent(player, rowInt, columnInt);
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/activatecannons", params -> {
-            try{
-                if (params.size() % 2 != 0){
-                    System.out.println("Errore: /activatecannons richiede un numero pari di parametri");
-                    throw new IllegalEventException("Errore: /activatecannons richiede un numero pari di parametri");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                for (int i = 0; i < params.size(); i+=2){
-                    String row = params.get(i);
-                    String column = params.get(i + 1);
-
-                    int rowInt = Integer.parseInt(row);
-                    int columnInt = Integer.parseInt(column);
-                    if(rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                        System.out.println("Errore: riga o colonna non valida");
-                        throw new IllegalEventException("Errore: riga o colonna non valida");
-                    }
-
-                    Player player = playerOptional.get();
-
-                    ActivateCannonsEvent event = new ActivateCannonsEvent(player, rowInt, columnInt);
-                }
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/activateshields", params -> {
-            //batterie
-            try{
-                if (params.size() % 2 != 0){
-                    System.out.println("Errore: /activateshields richiede un numero pari di parametri");
-                    throw new IllegalEventException("Errore: /activateshields richiede un numero pari di parametri");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                for (int i = 0; i < params.size(); i+=2){
-                    String row = params.get(i);
-                    String column = params.get(i + 1);
-
-                    int rowInt = Integer.parseInt(row);
-                    int columnInt = Integer.parseInt(column);
-                    if(rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                        System.out.println("Errore: riga o colonna non valida");
-                        throw new IllegalEventException("Errore: riga o colonna non valida");
-                    }
-
-                    Player player = playerOptional.get();
-
-                    ActivateShieldsEvent event = new ActivateShieldsEvent(player, rowInt, columnInt);
-                }
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/removecargo", params -> {
-            try{
-
-                if (params.size() % 3 != 0) {
-                    System.out.println("Errore: /removecargo richiede un numero di parametri divisibili per 3");
-                    throw new IllegalEventException("Errore: /removecargo richiede un numero di parametri divisibili per 3");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-                for (int i = 0; i < params.size(); i += 3){
-                    String row = params.get(i);
-                    String column = params.get(i + 1);
-                    String valueOfCargo = params.get(i + 2);
-
-                    int rowInt = Integer.parseInt(row);
-                    int columnInt = Integer.parseInt(column);
-                    if(rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                        System.out.println("Errore: riga o colonna non valida");
-                        throw new IllegalEventException("Errore: riga o colonna non valida");
-                    }
-                    int valueOfCargoInt = Integer.parseInt(valueOfCargo);
-                    if (valueOfCargoInt < 1 || valueOfCargoInt > 3) {
-                        System.out.println("Errore: valore del cargo non valido. Deve essere compreso tra 1 e 3");
-                        throw new IllegalEventException("Errore: valore del cargo non valido. Deve essere compreso tra 1 e 3");
-                    }
-                    RemoveCargoEvent event = new RemoveCargoEvent(player, rowInt, columnInt, valueOfCargoInt);
-                }
-            }
-            catch (IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/addcargo", params -> {
-            try {
-                if (params.size() % 3 != 0) {
-                    System.out.println("Errore: /addcargo richiede un numero di parametri divisibili per 3");
-                    throw new IllegalEventException("Errore: /addcargo richiede un numero di parametri divisibili per 3");
-                }
-                Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                        .filter(player1 -> player1.getNickname().equals(this.nickname))
-                        .findFirst();
-                if (playerOptional.isEmpty()) {
-                    System.out.println("Errore: giocatore non trovato");
-                    throw new IllegalEventException("Errore: giocatore non trovato");
-                }
-                Player player = playerOptional.get();
-                for (int i = 0; i < params.size(); i += 3) {
-                    String row = params.get(i);
-                    String column = params.get(i + 1);
-                    String valueOfCargo = params.get(i + 2);
-
-                    int rowInt = Integer.parseInt(row);
-                    int columnInt = Integer.parseInt(column);
-                    if (rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) {
-                        System.out.println("Errore: riga o colonna non valida");
-                        throw new IllegalEventException("Errore: riga o colonna non valida");
-                    }
-                    int valueOfCargoInt = Integer.parseInt(valueOfCargo);
-                    if (valueOfCargoInt < 1 || valueOfCargoInt > 3) {
-                        System.out.println("Errore: valore del cargo non valido. Deve essere compreso tra 1 e 3");
-                        throw new IllegalEventException("Errore: valore del cargo non valido. Deve essere compreso tra 1 e 3");
-                    }
-                    AddCargoEvent event = new AddCargoEvent(player, rowInt, columnInt, valueOfCargoInt);
-                }
-            }
-            catch(IllegalEventException e){
-                System.out.println(e.getMessage());
-                System.err.println(e.getMessage());
-            }
-        });
-
-        commands.put("/switchcargo", params -> {
-
-        });
-
-        commands.put("/ejectpeople", params -> {});
-
-        commands.put("/giveup", params -> {});
-
-        commands.put("/viewinventory", params -> {});
-
-    }
-
-         */
     public void handleUserInput(VirtualView client, String input){
         if (input == null || !input.startsWith("/")) {
             System.out.println("Invalid command");
@@ -543,7 +339,273 @@ public class ServerController {
                     client.invalidCommand("/pickupreservedtile supports only one parameter.");
                 }
             }
-            case ""
+            case "activateengines" -> {
+                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() % 2 != 0) {
+                            client.invalidCommand("/activateengines needs an even number of row and column for engines.")
+                        }
+                        else {
+                            if(secondParameters.size() % 3 != 0){
+                                client.invalidCommand("for each batteries specify the position and the quantity to remove.")
+                            }
+                            else{
+                                ArrayList<Pair<Integer, Integer>> engines = new ArrayList<>();
+                                for (int i = 0; i < firstParameters.size(); i += 2){
+                                    String rowStr = firstParameters.get(i);
+                                    String colStr = firstParameters.get(i+1);
+
+                                    int row = Integer.parseInt(rowStr);
+                                    int col = Integer.parseInt(colStr);
+                                    if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                        client.invalidCommand("Invalid row or column.");
+                                        break;
+                                    }
+                                    engines.add(new Pair<>(row-5, col-4));
+                                }
+                                // batteries cannot be ArrayList<Pair<Integer, Integer>>
+
+                                ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else {
+                        client.invalidCommand("You are not connected to the game!")
+                    }
+                }
+                else{
+                    client.invalidCommand("/activateengines needs two sets of parameters")
+                }
+            }
+            case "activatecannons" -> {
+                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() % 2 != 0) {
+                            client.invalidCommand("/activatecannons needs an even number of row and column for cannons.")
+                        }
+                        else{
+                            if (secondParameters.size() % 3 != 0){
+                                client.invalidCommand("for each batteries specify the position and the quantity to remove.")
+                            }
+                            else{
+                                ArrayList<Pair<Integer, Integer>> cannons = new ArrayList<>();
+                                for (int i = 0; i < firstParameters.size(); i += 2){
+                                    String rowStr = firstParameters.get(i);
+                                    String colStr = firstParameters.get(i+1);
+
+                                    int row = Integer.parseInt(rowStr);
+                                    int col = Integer.parseInt(colStr);
+                                    if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                        client.invalidCommand("Invalid row or column.");
+                                        break;
+                                    }
+                                    cannons.add(new Pair<>(row-5, col-4));
+                                }
+                                // batteries cannot be ArrayList<Pair<Integer, Integer>>
+                                ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!")
+                    }
+                }
+                else{
+                    client.invalidCommand("/activatecannons needs two sets of parameters")
+                }
+            }
+            case "activateshields" -> {
+                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() % 2 != 0) {
+                            client.invalidCommand("/activateshields needs an even number of row and column for shields.")
+                        }
+                        else{
+                            ArrayList<Pair<Integer, Integer>> shields = new ArrayList<>();
+                            for (int i = 0; i < firstParameters.size(); i += 2){
+                                String rowStr = firstParameters.get(i);
+                                String colStr = firstParameters.get(i+1);
+
+                                int row = Integer.parseInt(rowStr);
+                                int col = Integer.parseInt(colStr);
+
+                                if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                    client.invalidCommand("Invalid row or column.");
+                                    break;
+                                }
+                                shields.add(new Pair<>(row-5, col-4));
+                            }
+                            //batteries cannot be ArrayList<Pair<Intege,Integer>>
+                            ActivateShieldsEvent event = new ActivateShieldsEvent(player, shields, batteries);
+                            gameState.handleEvent(event);
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!")
+                    }
+                }
+                else{
+                    client.invalidCommand("/activateshields needs two sets of parameters")
+                }
+            }
+            case "removecargo" -> {
+                if (secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if(player != null){
+                        if(firstParameters.size() != 3){
+                            client.invalidCommand("/removecargo supports only 3 parameters.")
+                        }
+                        else{
+                            String rowStr = firstParameters.get(0);
+                            String colStr = firstParameters.get(1);
+                            String valueStr = firstParameters.get(2);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colStr);
+                            int value = Integer.parseInt(valueStr);
+
+                            if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                client.invalidCommand("Invalid row or column.");
+                            }
+                            else if (value < 1 || value > 3){
+                                client.invalidCommand("Invalid value. It must be between 1 and 3");
+                            }
+                            else{
+                                RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/removecargo supports only one set of parameters");
+                }
+            }
+            case "addcargo" -> {
+                if (secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if(player != null){
+                        if(firstParameters.size() != 3){
+                            client.invalidCommand("/addcargo supports only 3 parameters.")
+                        }
+                        else{
+                            String rowStr = firstParameters.get(0);
+                            String colStr = firstParameters.get(1);
+                            String valueStr = firstParameters.get(2);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colStr);
+                            int value = Integer.parseInt(valueStr);
+
+                            if (row < 5 || row > 9 || col < 4 || col > 10) {
+                                client.invalidCommand("Invalid row or column.");
+                            }
+                            else if (value < 1 || value > 3){
+                                client.invalidCommand("Invalid value. It must be between 1 and 3");
+                            }
+                            else{
+                                AddCargoEvent event = new AddCargoEvent(player, row-5, col-4, value);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/addcargo supports only one set of parameters");
+                }
+            }
+            case "switchcargo" -> {
+                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null) {
+                        if (firstParameters.size() != 3 || secondParameters.size() != 2) {
+                            client.invalidCommand("For each cargo it's needed to specify the position and the quantity to switch.");
+                        } else {
+                            String prevRowStr = firstParameters.get(0);
+                            String prevColStr = firstParameters.get(1);
+                            String prevValueStr = firstParameters.get(2);
+                            String newRowStr = secondParameters.get(0);
+                            String newColStr = secondParameters.get(1);
+
+                            int prevRow = Integer.parseInt(prevRowStr);
+                            int prevCol = Integer.parseInt(prevColStr);
+                            int prevValue = Integer.parseInt(prevValueStr);
+                            int newRow = Integer.parseInt(newRowStr);
+                            int newCol = Integer.parseInt(newColStr);
+
+                            if ((prevRow < 5 || prevRow > 9 || prevCol < 4 || prevCol > 10) || (newRow < 5 || newRow > 9 || newCol < 4 || newCol > 10)) {
+                                client.invalidCommand("Invalid row or column.");
+                            } else if (prevValue < 1 || prevValue > 3) {
+                                client.invalidCommand("Invalid value. It must be between 1 and 3");
+                            } else {
+                                SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }else{
+                    client.invalidCommand("/switchcargo needs two sets of parameters.");
+                }
+            }
+            case "ejectpeople" -> {
+                if (secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        //ArrayList<ArrayList<Integer>> don't get it
+                        if (firstParameters.size() != )
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/ejectpeople supports only one set of parameters")
+                }
+            } //TODO ejectpeople
+            case "giveup" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname);
+                    if (player != null){
+                        GiveUpEvent event = new GiveUpEvent(player);
+                        gameState.handleEvent(event);
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!")
+                    }
+                }
+                else{
+                    client.invalidCommand("/giveup doesn't support parameters!");
+                }
+            }
+            case "viewinventory" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        ViewInventoryEvent event = new ViewInventoryEvent(player);
+                        gameState.handleEvent(event);
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/viewinventory doesn't support parameters!");
+                }
+            }
 
         }
     }
