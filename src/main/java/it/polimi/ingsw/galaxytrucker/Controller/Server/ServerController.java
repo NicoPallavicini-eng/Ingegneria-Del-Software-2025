@@ -566,8 +566,33 @@ public class ServerController {
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
-                        //ArrayList<ArrayList<Integer>> don't get it
-                        if (firstParameters.size() != )
+                        ArrayList<ArrayList<Integer>> people = new ArrayList<>();
+                        if (firstParameters.size() % 3 != 0){
+                            client.invalidCommand("/ejectpeople needs a numbero of parameters multiple of 3.");
+                        }
+                        else{
+                            for (int i = 0; i < firstParameters.size(); i += 3){
+                                String rowStr = firstParameters.get(i);
+                                String colStr = firstParameters.get(i+1);
+                                String valueStr = firstParameters.get(i+2);
+
+                                int row = Integer.parseInt(rowStr);
+                                int col = Integer.parseInt(colStr);
+                                int value = Integer.parseInt(valueStr);
+                                boolean checkPosition = invalidTilePosition(row, col);
+                                if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                    client.invalidCommand("Invalid row or column.");
+                                    break;
+                                }
+                                else if (value < 1 || value > 2){
+                                    client.invalidCommand("Invalid value. It must be 1 or 2.");
+                                    break;
+                                }
+                                else{
+                                    people.add(new ArrayList<>(Arrays.asList(row-5, col-4, value)));
+                                }
+                            }
+                        }
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
