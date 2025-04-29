@@ -1,3 +1,5 @@
+package it.polimi.ingsw.galaxytrucker.Network.Server;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
