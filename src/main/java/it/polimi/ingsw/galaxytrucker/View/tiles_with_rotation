@@ -1,12 +1,12 @@
 {
-	"connector1":{
-	"northConnector":"DOUBLE",
+	  "connector1":{
+	  "northConnector":"DOUBLE",
     "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
     "eastConnector":"UNIVERSAL"
 	},
-	"connector2":{
-	"northConnector":"UNIVERSAL",
+	  "connector2":{
+	  "northConnector":"UNIVERSAL",
     "westConnector":"SINGLE",
     "southConnector":"UNIVERSAL",
     "eastConnector":"SINGLE"
