@@ -794,7 +794,36 @@ public class ServerController {
                     client.invalidCommand("/choosesubship supports only one set of parameters!");
                 }
             }
-
+            case "nochoice" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        NoChoiceEvent event = new NoChoiceEvent(player);
+                        gameState.handleEvent(event);
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/nochoice doesn't support parameters!");
+                }
+            }
+            case "done" -> {
+                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        DoneEvent event = new DoneEvent(player);
+                        gameState.handleEvent(event);
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/done doesn't support parameters!");
+                }
+            }
         }
     }
 
