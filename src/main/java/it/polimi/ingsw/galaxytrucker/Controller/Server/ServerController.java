@@ -57,7 +57,6 @@ public class ServerController {
 
     private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client){
         switch(command){
-            //TODO check illegal position on ship by shifting parameters
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
@@ -481,6 +480,51 @@ public class ServerController {
             case "activateshield" -> {
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
+                    if (player != null){
+                        if (firstParameters.size() != 2) {
+                            client.invalidCommand("First set of /activateshield must have two parameters.");
+                        }
+                        else if (secondParameters.size() != 2){
+                            client.invalidCommand("Second set of /activateshield must have two parameters.");
+                        }
+                        else{
+                            String rowShieldStr = firstParameters.get(0);
+                            String colShieldStr = firstParameters.get(1);
+
+                            String rowBatStr = secondParameters.get(0);
+                            String colBatStr = secondParameters.get(1);
+
+                            int rowShield = Integer.parseInt(rowShieldStr);
+                            int colShield = Integer.parseInt(colShieldStr);
+                            int rowBat = Integer.parseInt(rowBatStr);
+                            int colBat = Integer.parseInt(colBatStr);
+                            boolean checkPositionShield = invalidTilePosition(rowShield, colShield);
+                            boolean checkPositionBat = invalidTilePosition(rowBat, colBat);
+
+                            if (checkPositionShield && checkPositionBat){
+                                if ((rowShield < 5 || rowShield > 9 || colShield < 4 || colShield > 10) || (rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10)) {
+                                    client.invalidCommand("Invalid row or column.");
+                                }
+                                else{
+                                    ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield-5, colShield-4, rowBat-5, colBat-4);
+                                    gameState.handleEvent(event);
+                                }
+                            }
+                            else{
+                                client.invalidCommand("Invalid row or column");
+                            }
+                        }
+                    }
+                    else{
+                        client.invalidCommand("You are not connected to the game");
+                    }
+                }
+                else{
+                    client.invalidCommand("/activateshield needs two sets of parameters");
+                }
+                /*
+                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
+                    Player player = checkPlayer(client.getNickname());
                     if (player != null) {
                         if (firstParameters.size() % 2 != 0) {
                             client.invalidCommand("/activateshields needs an even number of row and column for shields.")
@@ -542,7 +586,8 @@ public class ServerController {
                 else{
                     client.invalidCommand("/activateshields needs two sets of parameters")
                 }
-            } // TODO ONLY ONE SHIELD AT A TIME
+                */
+            }
             case "removecargo" -> {
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
@@ -757,6 +802,39 @@ public class ServerController {
                 }
                 else{
                     client.invalidCommand("/claimreward supports only one paramter.");
+                }
+            }
+            case "choosesubship" -> {
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
+                        Player player = checkPlayer(client.getNickname());
+                        if (player != null){
+                            String rowStr = firstParameters.get(0);
+                            String colstr = firstParameters.get(1);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colstr);
+                            boolean checkPosition = invalidTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                client.invalidCommand("Invalid row or column.");
+                                break;
+                            }
+                            else{
+                                ChooseSubShipEvent event = new ChooseSubShipEvent(player, row-5, col-4);
+                                gameState.handleEvent(event);
+                            }
+
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                    else{
+                        client.invalidCommand("/choosesubship supports only one parameter.");
+                    }
+                }
+                else{
+                    client.invalidCommand("/choosesubship supports only one set of parameters!");
                 }
             }
 
