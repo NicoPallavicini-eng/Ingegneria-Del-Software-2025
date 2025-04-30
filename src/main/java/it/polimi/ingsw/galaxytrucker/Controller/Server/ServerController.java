@@ -10,13 +10,27 @@ import javafx.util.Pair;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * The ServerController class handles user input and manages the game state on the server side.
+ * It also create the game when instantiated.
+ */
+
 public class ServerController {
     private final Game game;
 
+    /**
+     * Constructs a new ServerController and intializes a new game.
+     */
     public ServerController() {
         this.game = new Game();
     }
 
+    /**
+     * Handles user input from the client and executes the corresponding command.
+     *
+     * @param client The VirutalView instance representing the client.
+     * @param input The input string received from the client.
+     */
     public void handleUserInput(VirtualView client, String input){
         if (input == null || !input.startsWith("/")) {
             System.out.println("Invalid command");
@@ -54,6 +68,15 @@ public class ServerController {
         // Check if the command exists
         executeCommand(command, firstParameters, secondParameters, client);
     }
+
+    /**
+     * Executes the specified command with the given parameters.
+     *
+     * @param command   The command to execute.
+     * @param firstParameters   The first set of parameters for the command.
+     * @param secondParameters  The second set of parameters for the command.
+     * @param client    The VirtualView instance representing the client.
+     */
 
     private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client){
         switch(command){
@@ -216,7 +239,7 @@ public class ServerController {
                         String column = firstParameters.get(1);
                         int rowInt = Integer.parseInt(row);
                         int columnInt = Integer.parseInt(column);
-                        boolean checkPosition = invalidTilePosition(rowInt, columnInt);
+                        boolean checkPosition = validTilePosition(rowInt, columnInt);
                         if ((rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) || !checkPosition) {
                             client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                         }
@@ -358,7 +381,7 @@ public class ServerController {
 
                                     int rowEng = Integer.parseInt(rowEngStr);
                                     int colEng = Integer.parseInt(colEngStr);
-                                    boolean checkPosition = invalidTilePosition(rowEng, colEng);
+                                    boolean checkPosition = validTilePosition(rowEng, colEng);
                                     if ((rowEng < 5 || rowEng > 9 || colEng < 4 || colEng > 10) || !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
@@ -377,7 +400,7 @@ public class ServerController {
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
                                     int valueBat = Integer.parseInt(valueBatStr);
-                                    boolean checkPosition = invalidTilePosition(rowBat, colBat);
+                                    boolean checkPosition = validTilePosition(rowBat, colBat);
                                     if ((rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10) || !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
@@ -427,7 +450,7 @@ public class ServerController {
 
                                     int rowEng = Integer.parseInt(rowStr);
                                     int colEng = Integer.parseInt(colStr);
-                                    boolean checkPosition = invalidTilePosition(rowEng, colEng);
+                                    boolean checkPosition = validTilePosition(rowEng, colEng);
                                     if ((rowEng < 5 || rowEng > 9 || colEng < 4 || colEng > 10) ||  !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
@@ -446,7 +469,7 @@ public class ServerController {
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
                                     int valueBat = Integer.parseInt(valueBatStr);
-                                    boolean checkPosition = invalidTilePosition(rowBat, colBat);
+                                    boolean checkPosition = validTilePosition(rowBat, colBat);
                                     if ((rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10) || !checkPosition) {
                                         client.invalidCommand("Invalid row or column.");
                                         break;
@@ -498,8 +521,8 @@ public class ServerController {
                             int colShield = Integer.parseInt(colShieldStr);
                             int rowBat = Integer.parseInt(rowBatStr);
                             int colBat = Integer.parseInt(colBatStr);
-                            boolean checkPositionShield = invalidTilePosition(rowShield, colShield);
-                            boolean checkPositionBat = invalidTilePosition(rowBat, colBat);
+                            boolean checkPositionShield = validTilePosition(rowShield, colShield);
+                            boolean checkPositionBat = validTilePosition(rowBat, colBat);
 
                             if (checkPositionShield && checkPositionBat){
                                 if ((rowShield < 5 || rowShield > 9 || colShield < 4 || colShield > 10) || (rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10)) {
@@ -538,7 +561,7 @@ public class ServerController {
                             int row = Integer.parseInt(rowStr);
                             int col = Integer.parseInt(colStr);
                             int value = Integer.parseInt(valueStr);
-                            boolean checkPosition = invalidTilePosition(row, col);
+                            boolean checkPosition = validTilePosition(row, col);
                             if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
                             }
@@ -576,7 +599,7 @@ public class ServerController {
                             int row = Integer.parseInt(rowStr);
                             int col = Integer.parseInt(colStr);
                             int value = Integer.parseInt(valueStr);
-                            boolean checkPosition = invalidTilePosition(row, col);
+                            boolean checkPosition = validTilePosition(row, col);
                             if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
                             } else {
@@ -616,8 +639,8 @@ public class ServerController {
                             int newRow = Integer.parseInt(newRowStr);
                             int newCol = Integer.parseInt(newColStr);
 
-                            boolean checkPositionPrev = invalidTilePosition(prevRow, prevCol);
-                            boolean checkPositionNew = invalidTilePosition(newRow, newCol);
+                            boolean checkPositionPrev = validTilePosition(prevRow, prevCol);
+                            boolean checkPositionNew = validTilePosition(newRow, newCol);
                             if ((prevRow < 5 || prevRow > 9 || prevCol < 4 || prevCol > 10) || (newRow < 5 || newRow > 9 || newCol < 4 || newCol > 10) || !checkPositionPrev || !checkPositionNew) {
                                 client.invalidCommand("Invalid row or column.");
                             } else if (prevValue < 1 || prevValue > 3) {
@@ -652,7 +675,7 @@ public class ServerController {
                                 int row = Integer.parseInt(rowStr);
                                 int col = Integer.parseInt(colStr);
                                 int value = Integer.parseInt(valueStr);
-                                boolean checkPosition = invalidTilePosition(row, col);
+                                boolean checkPosition = validTilePosition(row, col);
                                 if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                     client.invalidCommand("Invalid row or column.");
                                     break;
@@ -749,10 +772,9 @@ public class ServerController {
 
                             int row = Integer.parseInt(rowStr);
                             int col = Integer.parseInt(colstr);
-                            boolean checkPosition = invalidTilePosition(row, col);
+                            boolean checkPosition = validTilePosition(row, col);
                             if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
-                                break;
                             }
                             else{
                                 ChooseSubShipEvent event = new ChooseSubShipEvent(player, row-5, col-4);
@@ -776,6 +798,13 @@ public class ServerController {
         }
     }
 
+    /**
+     * Check if a player with the given nickname is in the game.
+     *
+     * @param nickname  The nickname of the player to check.
+     * @return  The Player instance if found, or null if not found.
+     */
+
     // Check if the player is in the game
     public Player checkPlayer(String nickname){
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
@@ -784,7 +813,15 @@ public class ServerController {
         return playerOptional.orElse(null);
     }
 
-    public boolean invalidTilePosition(int row, int col){
+    /**
+     * Validates the tile position based on the game rules.
+     *
+     * @param row   The row of the tile.
+     * @param col   The column of the tile.
+     * @return  True if the position is valid, false otherwise.
+     */
+
+    public boolean validTilePosition(int row, int col){
         boolean checkPosition = false;
         if (row == 5){
             if (col == 4 || col == 5 || col == 7 || col == 9 || col == 10){
