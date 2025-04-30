@@ -17,8 +17,8 @@ public class SmugglersCard extends Card {
     private final int lostBlocksNumber;
     private final int daysToLose;
 
-    public SmugglersCard(boolean levelTwo, boolean used, SmugglersCardVisitor visitor, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
-        super(levelTwo, used, visitor);
+    public SmugglersCard(boolean levelTwo, boolean used, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
+        super(levelTwo, used);
         this.firepower = firepower;
         this.blocks = blocks;
         this.lostBlocksNumber = lostBlocksNumber;
@@ -41,20 +41,7 @@ public class SmugglersCard extends Card {
         return lostBlocksNumber;
     }
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, SmugglersCardVisitor visitor, List <Player> players) {
-        for (Player player : players) {
-            visitor.handleSmugglersCard(state, this, player);
-            if (state.getAccomplished()) {
-                break;
-            }
-        }
-    }
-
-    public void acceptNextVisitor(GameState state, SmugglersCardVisitor visitor, Game game) {
-        visitor.setNextStateSmugglersCard(state, game, this);
-    }
-
-    public void process(Player player, SequentialTravellingState state) {
+/*    public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 
         if (ship.getFirepower() < firepower) {
@@ -78,4 +65,6 @@ public class SmugglersCard extends Card {
             }
         }
     }
+
+ */
 }

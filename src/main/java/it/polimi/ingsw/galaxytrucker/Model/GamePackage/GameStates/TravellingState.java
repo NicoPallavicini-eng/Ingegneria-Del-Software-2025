@@ -43,12 +43,15 @@ public abstract class TravellingState extends GameState {
 
     @Override
     public void next() {
-         Card nextCard = getGame().getDeck().drawCard();
+        game.getListOfPlayers().stream().forEach(player -> player.getShip().disactivateEverything());
+        game.sortListOfPlayers();
+        Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
             getGame().setGameState(new FinalState(game));
         } else {
             getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
         }
+        game.getGameState().init();
     }
 
     protected void nextPlayer(){

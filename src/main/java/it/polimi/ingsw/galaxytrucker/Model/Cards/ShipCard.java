@@ -14,8 +14,8 @@ public class ShipCard extends Card {
     private final int credits;
     private final int daysToLose;
 
-    public ShipCard(boolean levelTwo, boolean used, ShipCardVisitor visitor, int crewNumberLost, int credits, int daysToLose) {
-        super(levelTwo, used, visitor);
+    public ShipCard(boolean levelTwo, boolean used, int crewNumberLost, int credits, int daysToLose) {
+        super(levelTwo, used);
         this.crewNumberLost = crewNumberLost;
         this.credits = credits;
         this.daysToLose = daysToLose;
@@ -33,20 +33,7 @@ public class ShipCard extends Card {
         return crewNumberLost;
     }
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, ShipCardVisitor visitor, List <Player> players) {
-        for (Player player : players) {
-            visitor.handleShipCard(state,this, player);
-            if (state.getAccomplished()) {
-                break;
-            }
-        }
-    }
-
-    public void acceptNextVisitor(GameState state, ShipCardVisitor visitor, Game game) {
-        visitor.setNextStateShipCard(state, game, this);
-    }
-
-    public void process(Player player, SequentialTravellingState state) {
+ /*   public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 
         if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.getEngages()) {
@@ -57,4 +44,6 @@ public class ShipCard extends Card {
             ship.setTravelDays(ship.getTravelDays() - daysToLose);
         }
     }
+
+  */
 }

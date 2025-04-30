@@ -13,8 +13,8 @@ public class PlanetsCard extends Card {
     private final List <Planet> planets;
     private final int daysToLose;
 
-    public PlanetsCard(boolean levelTwo, boolean used, PlanetsCardVisitor visitor, List <Planet> planets, int daysToLose) {
-        super(levelTwo, used, visitor);
+    public PlanetsCard(boolean levelTwo, boolean used, List <Planet> planets, int daysToLose) {
+        super(levelTwo, used);
         this.planets = planets;
         this.daysToLose = daysToLose;
     }
@@ -27,14 +27,7 @@ public class PlanetsCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, PlanetsCardVisitor visitor, List <Player> players) {
-        visitor.handlePlanetsCard(this, players);
-    }
-
-    public void acceptNextVisitor(GameState state, PlanetsCardVisitor visitor, Game game) {
-        visitor.setNextStatePlanetsCard(state, game, this);
-    }
-
+/*
     public void process(Player player) {
         if (player.getEngages()) {
             Ship ship = player.getShip();
@@ -46,4 +39,6 @@ public class PlanetsCard extends Card {
             ship.setTravelDays(ship.getTravelDays() - daysToLose);
         }
     }
+
+ */
 }

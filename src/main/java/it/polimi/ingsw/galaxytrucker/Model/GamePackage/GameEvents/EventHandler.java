@@ -84,7 +84,8 @@ TRAVELLING:
         ship.setTravelDays(finalPosition);
     }
 
-    //todo check go in spazio aperto
+    //todo check go in spazio aperto, aggiungi al next con lo spegnimento
+    //todo fai le variabili delle tile in player/ship e copia il metodo di dima
     public static void moveBackward(Ship ship, int days, Game game){
 
         int startposition = ship.getTravelDays();
@@ -99,6 +100,7 @@ TRAVELLING:
         }
         ship.setTravelDays(finalPosition);
     }
+
 
 
 

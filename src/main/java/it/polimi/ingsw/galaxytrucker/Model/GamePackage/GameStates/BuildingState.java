@@ -28,8 +28,9 @@ public class BuildingState extends GameState {
 
     public void next() {
         //todo populate everything that is not an alien
+        game.sortListOfPlayers();
         Card nextCard = getGame().getDeck().drawCard();
-            getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
+        getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
         game.getGameState().init();
     }
 

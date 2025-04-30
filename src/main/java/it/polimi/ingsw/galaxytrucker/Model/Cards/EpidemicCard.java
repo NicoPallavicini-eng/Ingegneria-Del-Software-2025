@@ -13,21 +13,12 @@ import java.util.List;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 public class EpidemicCard extends Card {
-    public EpidemicCard(boolean levelTwo, boolean used, EpidemicCardVisitor visitor) {
-        super(levelTwo, used, visitor);
+    public EpidemicCard(boolean levelTwo, boolean used) {
+        super(levelTwo, used);
     }
 
-    public void acceptCardVisitorParallel(EpidemicCardVisitor visitor, List <Ship> ships) {
-        for (Ship ship : ships) {
-            visitor.handleEpidemicCard(this, ship);
-        }
-    }
 
-    public void acceptNextVisitor(GameState state, EpidemicCardVisitor visitor, Game game) {
-        visitor.setNextStateEpidemicCard(state, game, this);
-    }
-
-    public void process(Ship ship) {
+/*    public void process(Ship ship) {
         List <CabinTile> cabins = ship.getListOfCabin();
         List <CabinTile> visited = new ArrayList<>();
 
@@ -67,4 +58,6 @@ public class EpidemicCard extends Card {
             cabin.updateInhabitants(NONE);
         }
     }
+
+ */
 }
