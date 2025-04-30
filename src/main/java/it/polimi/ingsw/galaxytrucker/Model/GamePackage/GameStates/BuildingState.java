@@ -177,7 +177,7 @@ public class BuildingState extends GameState {
             throw new IllegalEventException("Hourglass flipping phase is over");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event, game);
         }
     }
 
@@ -186,7 +186,7 @@ public class BuildingState extends GameState {
             throw new IllegalEventException("You can no longer view deck");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event, game);
         }
     }
 

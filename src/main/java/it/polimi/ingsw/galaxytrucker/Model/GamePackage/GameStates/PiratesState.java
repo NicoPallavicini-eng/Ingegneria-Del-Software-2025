@@ -13,7 +13,6 @@ import java.util.List;
 
 public class PiratesState extends TravellingState{
     private PiratesCard currentCard;
-    private Player currentPlayer;
     private Player piratesSlayer;
     private List<Player> defeatedPlayers;
     private boolean reckoningPhase = false;
@@ -51,15 +50,10 @@ public class PiratesState extends TravellingState{
         }
     }
 
-    private void nextPlayer(){
-        int index = game.getListOfPlayers().indexOf(currentPlayer) + 1;
-        if(index == game.getListOfPlayers().size()){
-            currentPlayer = null;
-            reckoningPhase = true;
-        }
-        else{
-            currentPlayer = game.getListOfPlayers().get(index);
-        }
+    @Override
+    protected void nextPlayer(){
+        super.nextPlayer();
+
     }
 
     public void handleEvent(ClaimRewardEvent event){

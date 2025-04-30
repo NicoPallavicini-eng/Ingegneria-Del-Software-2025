@@ -2,7 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 public class WaitingState extends GameState {
     private final Game game;
@@ -23,7 +22,7 @@ public class WaitingState extends GameState {
         if(game.getNumberOfPlayers() == 0 && !game.getListOfPlayers().isEmpty()) {
             throw new NumberOfPlayersNotSetException("The first player has to set the number of players");
         }
-        EventHandler.handleEvent(event);
+        EventHandler.handleEvent(event, game);
         if(game.getListOfPlayers().size() == game.getNumberOfPlayers()) {
             next();
         }
@@ -34,7 +33,7 @@ public class WaitingState extends GameState {
             throw new IllegalEventException("The first player has already set the number of players");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event, game);
         }
    }
 }

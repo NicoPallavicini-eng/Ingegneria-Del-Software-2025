@@ -1,6 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
-import javafx.util.Pair;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
-public record ActivateShieldEvent(int shieldRow, int shieldCol, int batteryRow, int batteryCol) implements GameEvent {
+public record ActivateShieldEvent(Player player, int shieldRow, int shieldCol, int batteryRow, int batteryCol) implements GameEvent {
 }
