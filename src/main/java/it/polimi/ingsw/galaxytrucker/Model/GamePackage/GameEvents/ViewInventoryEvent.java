@@ -1,4 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
-public record ViewInventoryEvent() implements GameEvent {
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+
+public record ViewInventoryEvent(Player player) implements GameEvent {
 }

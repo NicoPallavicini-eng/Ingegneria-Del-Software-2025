@@ -7,4 +7,5 @@ public interface VirtualView extends Remote{
     String sayHello() throws RemoteException;
     void setNickname(String nickname) throws RemoteException;
     String getNickname() throws RemoteException;
+    void invalidCommand(String error) throws RemoteException;
 }

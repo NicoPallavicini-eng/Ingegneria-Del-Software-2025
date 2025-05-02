@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Client;
 
+import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -52,11 +54,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return "Hello, world!";
     }
     @Override
-    public void setNickname(String nickname) throws RemoteException {
+    public void setNickname(String nickname) throws RemoteException{
         this.nickname = nickname;
     }
     @Override
     public String getNickname() throws RemoteException {
         return this.nickname;
+    }
+    @Override
+    public void invalidCommand(String error) throws RemoteException {
+        System.out.println(error);
     }
 }

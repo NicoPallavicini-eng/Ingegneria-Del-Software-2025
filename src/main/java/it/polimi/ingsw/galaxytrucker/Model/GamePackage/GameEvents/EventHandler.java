@@ -1,8 +1,18 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Planet;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.PlanetsState;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class EventHandler {
@@ -44,19 +54,19 @@ TRAVELLING:
 
      */
     public static void handleEvent(DoneEvent event){}
-    public static void handleEvent(NoChoiseEvent){}
+    public static void handleEvent(NoChoiceEvent event){}
     /*
     public record ConnectEvent(String nickname, String IP) implements GameEvent
      */
     //aggiunger il riferimento a Game
     public static void handleEvent(ConnectEvent event) {
         Game game = event.game();
-        List<Player> listPlayer = game.getListOfPlayer();
+        List<Player> listPlayer = game.getListOfPlayers();
         boolean finished = false;
 
         //check se giocatore era presente
         for(Player player : listPlayer){
-            if(player.getNickname()==event.nickname()&&player.getIp()==event.IP()){
+            if(player.getNickname()==event.nickname()&&player.getPlayerIp()==event.IP()){
                 player.setOnlineStatus(true);
                 finished=true;
             }
@@ -69,10 +79,10 @@ TRAVELLING:
             //chiedere sul funzionamento;
             //DA FINIRE
             //check sulla quantita dei giocatori
-            if(game.getListOfPlayer().size()-game.getNumberOfPlayers()<=0){
+            if(game.getListOfPlayers().size()-game.getNumberOfPlayers()<=0){
                 throw new IllegalEventException("Number of players is maximum");
             }else{
-                Player playerNew = new Player(event.nickname(),event.IP());
+                Player playerNew = new Player(event.nickname(),event.IP(), Color.BLUE); //COLOR TO BE CHANGED!! PLACEHOLDER SO THAT CODE RUNS
                 game.addPlayer(playerNew);
             }
         }else{
@@ -112,19 +122,19 @@ TRAVELLING:
      */
     public static void handleEvent(ChoosePlanetEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
-        PlanetState planetState = (PlanetState) event.game().getGameState();
+        PlanetsState planetState = (PlanetsState) event.game().getGameState();
         int planetIndex = event.planetIndex();
         PlanetsCard planetsCard = planetState.getCurrentCard();
         List<Planet> planetList = planetsCard.getPlanetsList();
         if (planetIndex < planetList.size()&&planetIndex>=0) {
-
+            //?
         }else{
             throw new IllegalEventException("Index of Planet is not valid");
         }
 
         Planet planet = planetList.get(planetIndex);
         ArrayList<Integer> listCargo = new ArrayList<>(planet.getBlocks());
-        ship.setCargoFromCards(listCargo);
+        ship.addBlocks(listCargo);
 
     }
     /*
@@ -151,18 +161,17 @@ TRAVELLING:
 
             if(enginelist.size() > 0){
                 EngineTile engine = enginelist.getFirst();
+                if(!engine.getDoublePower()){
+                    throw new IllegalEventException("Engine Tile is not Double");
+                }
             }else{
-                throw new IllegalEventException("Engine Tile is not Selected);
-            }
-
-            if(!engine.getDoublePower){
-                throw new IllegalEventException("Engine Tile is not Double);
+                throw new IllegalEventException("Engine Tile is not Selected");
             }
         }
         //controlla la lista di Battery
         int batteriesPresent = 0;
         for(List<Integer> selectedBatteries : event.batteries()){
-            BatteryTileVisitor batteryVisitor = new BatteryVisitor();
+            BatteryTileVisitor batteryVisitor = new BatteryTileVisitor();
             int row = selectedBatteries.get(0);
             int column = selectedBatteries.get(1);
             int batteriesToUse = selectedBatteries.get(2);
@@ -176,17 +185,18 @@ TRAVELLING:
                 throw new IllegalEventException("Tile is not Present");
             }
 
-            ArrayList<BatteryTile> batterylist = butteryVisitor.getList();
+            ArrayList<BatteryTile> batterylist = batteryVisitor.getList();
 
             if(batterylist.size()!=0){
                 BatteryTile battery = batterylist.getFirst();
+                //controllo quantita di batteries
+                if(battery.getSlotsFilled()-batteriesToUse<0){
+                    throw new IllegalEventException("Batteries are not enough for selected BatteryTile");
+                }
             }else{
                 throw new IllegalEventException("Battery Tile is not Present");
             }
-            //controllo quantita di batteries
-            if(battery.getSlotsFilled-batteriesToUse<0){
-                throw new IllegalEventException("Batteries are not enough for selected BatteryTile");
-            }
+
 
         }
         //aggiorno Engine e Battery
@@ -206,8 +216,8 @@ TRAVELLING:
 
             engine.setActiveState(true);
         }
-        for(List<Integer> selectedBatteries : event.batteries(){
-            BatteryTileVisitor batteryVisitor = new BatteryVisitor();
+        for(List<Integer> selectedBatteries : event.batteries()){
+            BatteryTileVisitor batteryVisitor = new BatteryTileVisitor();
             int row = selectedBatteries.get(0);
             int column = selectedBatteries.get(1);
             int batteriesToUse = selectedBatteries.get(2);
@@ -217,9 +227,9 @@ TRAVELLING:
             Tile tile = batteryOptional.get();
             tile.accept(batteryVisitor);
 
-            ArrayList<BatteryTile> butterylist = butterylist.getList();
+            ArrayList<BatteryTile> batteryList = batteryVisitor.getList();
 
-            BatteryTile battery = butterylist.getFirst();
+            BatteryTile battery = batteryList.getFirst();
 
             battery.removeBattery(batteriesToUse);
 
@@ -235,7 +245,7 @@ TRAVELLING:
         Ship ship = event.player().getShip();
         //controllo la lista di cannoni
         for(List<Integer> selectedTile : event.cannons()){
-            CannonTileVisitor cannonVisitor = new cannonTileVisitor();
+            CannonTileVisitor cannonVisitor = new CannonTileVisitor();
             int row = selectedTile.get(0);
             int column = selectedTile.get(1);
 
@@ -252,19 +262,20 @@ TRAVELLING:
 
             if(listCannon.size()==0){
                 CannonTile cannon = listCannon.getFirst();
+                if(!cannon.getDoublePower()){
+                    throw new IllegalEventException("Can't select Single Cannon");
+                }
             }else{
                 throw new IllegalEventException("Tile selected is not Cannon");
             }
 
-            if(!cannon.getDoublePower()){
-                throw new IllegalEventException("Can't select Single Cannon");
-            }
+
 
         }
         //controllo la lista di batteries
         int batteriesPresent = 0;
         for(List<Integer> selectedBatteries : event.batteries()){
-            BatteryTileVisitor batteryVisitor = new BatteryVisitor();
+            BatteryTileVisitor batteryVisitor = new BatteryTileVisitor();
             int row = selectedBatteries.get(0);
             int column = selectedBatteries.get(1);
             int batteriesToUse = selectedBatteries.get(2);
@@ -278,23 +289,24 @@ TRAVELLING:
                 throw new IllegalEventException("Tile is not Present");
             }
 
-            ArrayList<BatteryTile> butterylist = butterylist.getList();
+            ArrayList<BatteryTile> batteryList = batteryVisitor.getList();
 
-            if(batterylist.size()!=0){
-                BatteryTile battery = butterylist.getFirst();
+            if(batteryList.size()!=0){
+                BatteryTile battery = batteryList.getFirst();
+                //controllo quantita di batteries
+                if(battery.getSlotsFilled()-batteriesToUse<0){
+                    throw new IllegalEventException("Batteries are not enough for selected BatteryTile");
+                }
+
             }else{
                 throw new IllegalEventException("Battery Tile is not Present");
-            }
-            //controllo quantita di batteries
-            if(battery.getSlotsFilled-batteriesToUse<0){
-                throw new IllegalEventException("Batteries are not enough for selected BatteryTile");
             }
 
         }
 
         //aggiorno tutti batteries e cannons
         for(List<Integer> selectedTile : event.cannons()){
-            CannonTileVisitor cannonVisitor = new cannonTileVisitor();
+            CannonTileVisitor cannonVisitor = new CannonTileVisitor();
             int row = selectedTile.get(0);
             int column = selectedTile.get(1);
 
@@ -310,8 +322,8 @@ TRAVELLING:
             cannon.setActiveState(true);
 
         }
-        for(List<Integer> selectedBatteries : event.batteries(){
-            BatteryTileVisitor batteryVisitor = new BatteryVisitor();
+        for(List<Integer> selectedBatteries : event.batteries()){
+            BatteryTileVisitor batteryVisitor = new BatteryTileVisitor();
             int row = selectedBatteries.get(0);
             int column = selectedBatteries.get(1);
             int batteriesToUse = selectedBatteries.get(2);
@@ -321,9 +333,9 @@ TRAVELLING:
             Tile tile = batteryOptional.get();
             tile.accept(batteryVisitor);
 
-            ArrayList<BatteryTile> butterylist = butterylist.getList();
+            ArrayList<BatteryTile> batteryList = batteryVisitor.getList();
 
-            BatteryTile battery = butterylist.getFirst();
+            BatteryTile battery = batteryList.getFirst();
 
             battery.removeBattery(batteriesToUse);
 
@@ -336,11 +348,11 @@ TRAVELLING:
     public static void handleEvent(ActivateShieldEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
 
-        int rowShield = event.shiled().get(0);
-        int columnShield = event.shiled().get(1);
+        int rowShield = event.shieldRow();
+        int columnShield = event.shieldCol();
 
-        int rowBattery = event.battery().get(0);
-        int columnBattery = event.battery().get(0);
+        int rowBattery = event.batteryRow();
+        int columnBattery = event.batteryCol();
 
         ShieldTileVisitor shieldVisitor = new ShieldTileVisitor();
         BatteryTileVisitor batteryVisitor = new BatteryTileVisitor();
@@ -365,23 +377,22 @@ TRAVELLING:
         ArrayList<ShieldTile> listShield = shieldVisitor.getList();
         ArrayList<BatteryTile> listBattery = batteryVisitor.getList();
 
-        if(listShield.size()!=0){
-            ShieldTile shield = listShield.getFirst();
-        }else{
+        if(listShield.size()==0){
             throw new IllegalEventException("Tile is not Shield");
-        }
 
-        if(listBattery.size()!=0){
-            BatteryTile battery = listBattery.getFirst();
-        }else{
-            throw new IllegalEventException("Tile is not Battery");
-        }
-
-        if(battery.getSlotsFilled>0){
-            battery.removeBattery(1);
-            shield.setActiveState(true);
-        }else{
-            throw new IllegalEventException("BatteryTile doesn't have enough batteries");
+        }else {
+            ShieldTile shield = listShield.getFirst();
+            if (listBattery.size() != 0) {
+                BatteryTile battery = listBattery.getFirst();
+                if (battery.getSlotsFilled() > 0) {
+                    battery.removeBattery(1);
+                    shield.setActiveState(true);
+                } else {
+                    throw new IllegalEventException("BatteryTile doesn't have enough batteries");
+                }
+            } else {
+                throw new IllegalEventException("Tile is not Battery");
+            }
         }
     }
     /*
@@ -390,7 +401,7 @@ TRAVELLING:
     public static void handleEvent(RemoveCargoEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         CargoTileVisitor cargoVisitor = new CargoTileVisitor();
-        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(),event.column());
+        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(),event.col());
         if(optionalTile.isPresent()){
             Tile tile = optionalTile.get();
             tile.accept(cargoVisitor);
@@ -402,23 +413,23 @@ TRAVELLING:
 
         if(list.size()!=0){
             CargoTile cargoTile = list.getFirst();
+
+            boolean present = false;
+            List<Integer> listGoods = cargoTile.getTileContent();
+            for(Integer good : listGoods){
+                if(good == event.resource()){
+                    present = true;
+                }
+            }
+            if(present){
+                cargoTile.removeBlock(event.resource());
+            }else{
+                throw new IllegalEventException("Selected cargoTile doesn't have selected Good");
+            }
         }else{
             throw new IllegalEventException("Selected Tile is not CargoTile");
         }
 
-        boolean present = false;
-        List<Integer> listGoods = cargoTile.getTileContent();
-        for(Integer good : listGoods){
-            if(good = event.resource()){
-
-                present = true;
-            }
-        }
-        if(present){
-            cargoTile.removeBlock(event.Integer);
-        }else{
-            throw new IllegalEventException("Selected cargoTile doesn't have selected Good");
-        }
     }
     /*
      public record AddCargoEvent(Player player, int row, int column, Integer resource) implements GameEvent {
@@ -438,29 +449,28 @@ TRAVELLING:
 
         ArrayList<CargoTile> list = cargoVisitor.getList();
 
-        if(list.size()!=0){
-            CargoTile cargoTile = list.getFirst();
-        }else{
+        if(list.size()==0){
             throw new IllegalEventException("Selected Tile is not CargoTile");
-        }
-
-        if(event.Integer == 4){
-            if(!cargoTile.fitsRed()){
-                throw new IllegalEventException("CargoTile doesn't fit red(4)");
+        }else {
+            CargoTile cargoTile = list.getFirst();
+            if (event.Integer == 4) {
+                if (!cargoTile.fitsRed()) {
+                    throw new IllegalEventException("CargoTile doesn't fit red(4)");
+                }
             }
-        }
-        //check if resource is in cargoFromCards
-        ArrayList<Integer> cargoFromShip = ship.getCargoFromCards();
-        if(!cargoFromShip.contains(event.resource())){
-            throw new IllegalEventException("Doesn't have specified resource on ship");
-        }
+            //check if resource is in cargoFromCards
+            ArrayList<Integer> cargoFromShip = ship.getCargoFromCards();
+            if (!cargoFromShip.contains(event.resource())) {
+                throw new IllegalEventException("Doesn't have specified resource on ship");
+            }
 
-        List<Integer> listGoods = cargoTile.getTileContent();
+            List<Integer> listGoods = cargoTile.getTileContent();
 
-        if((cargoTile.getSlotsNumber()-listGoods.size())>0){
-            cargoTile.setTileContent(event.resource());
-        }else{
-            throw new IllegalEventException("CargoTile is full");
+            if ((cargoTile.getSlotsNumber() - listGoods.size()) > 0) {
+                cargoTile.setTileContent(event.resource());
+            } else {
+                throw new IllegalEventException("CargoTile is full");
+            }
         }
     }
     /*
@@ -492,54 +502,58 @@ TRAVELLING:
         ArrayList<CargoTile> list = cargoVisitor.getList();
         ArrayList<CargoTile> list2 = cargoVisitor2.getList();
 
-        if(list.size()!=0){
-            CargoTile cargoTile = list.getFirst();
-        }else{
+        if(list.size()==0){
             throw new IllegalEventException("Previous Tile is not CargoTile");
-        }
 
-        if(list2.size()!=0){
-            CargoTile cargoTile2 = list2.getFirst();
-        }else{
-            throw new IllegalEventException("Next Tile is not CargoTile");
-        }
+        }else {
+            CargoTile cargoTile = list.getFirst();
 
-        boolean present = false;
-        List<Integer> listGoods = cargoTile.getTileContent();
-        List<Integer> listGoods2 = cargoTile2.getTileContent();
 
-        for(Integer good : listGoods){
-            if(good = event.resource()){
-                present = true;
+            if (list2.size() == 0) {
+                throw new IllegalEventException("Next Tile is not CargoTile");
+
+            } else {
+                CargoTile cargoTile2 = list2.getFirst();
+
+
+                boolean present = false;
+                List<Integer> listGoods = cargoTile.getTileContent();
+                List<Integer> listGoods2 = cargoTile2.getTileContent();
+
+                for (Integer good : listGoods) {
+                    if (good == event.resource()) {
+                        present = true;
+                    }
+                }
+                if (!present) {
+                    throw new IllegalEventException("Prev cargoTile doesn't have selected Good");
+                }
+
+                if (event.resource() == 4) {
+                    if (!cargoTile2.fitsRed()) {
+                        throw new IllegalEventException("Next cargoTile doesn't fit red(4)");
+                    }
+                }
+
+                if ((cargoTile2.getSlotsNumber() - listGoods2.size()) > 0) {
+                    cargoTile.removeBlock(event.resource());
+                    cargoTile2.setTileContent(event.resource());
+                } else {
+                    throw new IllegalEventException("Next CargoTile is full");
+                }
             }
-        }
-        if(!present){
-            throw new IllegalEventException("Prev cargoTile doesn't have selected Good");
-        }
-
-        if(event.Integer == 4){
-            if(!cargoTile2.fitsRed()){
-                throw new IllegalEventException("Next cargoTile doesn't fit red(4)");
-            }
-        }
-
-
-        if((cargoTile2.getSlotsNumber()-listGoods2.size())>0){
-            cargoTile.removeBlock(event.resource());
-            cargoTile2.setTileContent(event.resource());
-        }else{
-            throw new IllegalEventException("Next CargoTile is full");
         }
     }
+
     /*
     public record EjectPeopleEvent(Player player, ArrayList<ArrayList<Integer>> people) implements GameEvent
      */
-    //////aggiustare ALIEN
+    //////aggiustare ALIEN --> CONTROLLA BENE COSA TI HO AGGIUNTO IN BIOADAPTORTILE
     public static void handleEvent(EjectPeopleEvent event) throws IllegalEventException {
         int counter = 0;
         Ship ship = event.player().getShip();
-        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor;
-        for(ArrayList<Integer> listOfParameters : event.people()){
+        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        for(List<Integer> listOfParameters : event.people()){
             for(Integer parameter : listOfParameters){
                 cabinTileVisitor = new CabinTileVisitor();
                 int row=0;
@@ -548,7 +562,6 @@ TRAVELLING:
                 int peopleToLoose = 0;
                 if(counter==0){
                     row=parameter;
-
                 }
                 if(counter==1){
                     column=parameter;
@@ -596,7 +609,7 @@ TRAVELLING:
 
 
         //se andato a buon fine aggiorno tutti cabinTile
-        for(ArrayList<Integer> listOfParameters : event.people()){
+        for(List<Integer> listOfParameters : event.people()){
             for(Integer parameter : listOfParameters){
                 cabinTileVisitor = new CabinTileVisitor();
                 int row=listOfParameters.get(0);
@@ -626,7 +639,7 @@ TRAVELLING:
                         //gestire se Allieno e orange o purple;
 
                     } else if (cabin.getInhabitants()==CabinInhabitants.TWO) {
-                        if(peopleToLoose=2){
+                        if(peopleToLoose==2){
                             cabin.updateInhabitants(CabinInhabitants.NONE);
                         }else{
                             cabin.updateInhabitants(CabinInhabitants.ONE);

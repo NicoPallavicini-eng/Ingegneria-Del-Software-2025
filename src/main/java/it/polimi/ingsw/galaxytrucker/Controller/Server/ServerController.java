@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
 import javafx.beans.binding.IntegerBinding;
 import javafx.util.Pair;
 
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -33,7 +35,7 @@ public class ServerController {
      * @param client The VirutalView instance representing the client.
      * @param input The input string received from the client.
      */
-    public void handleUserInput(VirtualView client, String input){
+    public void handleUserInput(VirtualView client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
             System.out.println("Invalid command");
             return;
@@ -80,24 +82,34 @@ public class ServerController {
      * @param client    The VirtualView instance representing the client.
      */
 
-    private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client){
+    private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client) throws RemoteException {
         switch(command){
             case "help" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
                 }
+                HelpEvent event = new HelpEvent();
+                gameState.handleEvent(event);
             }
             case "viewleaderboard" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewleaderboard doesn't support parameters!");
                 }
+                ViewLeaderboardEvent event = new ViewLeaderboardEvent();
+                gameState.handleEvent(event);
             }
             case "viewships" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewships doesn't support parameters!");
                 }
+                ViewShipsEvent event = new ViewShipsEvent();
+                gameState.handleEvent(event);
             }
             case "connect" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.isEmpty()) {
                         client.invalidCommand("/connect request one parameter.");
@@ -113,7 +125,7 @@ public class ServerController {
                                     .findAny();
 
                             if (!playerOptional.isPresent()) {
-                                client.setNickame(nickname);
+                                client.setNickname(nickname);
 
                                 ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                 gameState.handleEvent(event);
@@ -129,6 +141,7 @@ public class ServerController {
                 }
             }
             case "disconnect" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     String clientNickname = client.getNickname();
                     Player player = checkPlayer(clientNickname);
@@ -145,6 +158,7 @@ public class ServerController {
                 }
             }
             case "setnumberofplayers" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1) {
                         String numberOfPlayersStr = firstParameters.get(0);
@@ -169,10 +183,11 @@ public class ServerController {
                     }
                 }
                 else{
-                    client.InvalidCommand("/setnumberofplayers supports only one parameter!");
+                    client.invalidCommand("/setnumberofplayers supports only one parameter!");
                 }
             }
             case "pickuptile" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if(firstParameters.size() == 1) {
                         String tilePosition = firstParameters.get(0);
@@ -181,7 +196,7 @@ public class ServerController {
                             String clientNickname = client.getNickname();
                             Player player = checkPlayer(clientNickname);
                             if (player != null) {
-                                PickupTileEvent event = new PickupTileEvent(player, tilePositionInt);
+                                PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 gameState.handleEvent(event);
                             } else {
                                 client.invalidCommand("You are not connected to the game!");
@@ -199,13 +214,14 @@ public class ServerController {
                 }
             }
             case "rotatetile" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1) {
                         Player player = checkPlayer(client.getNickname());
                         if (player != null){
                             String side = firstParameters.get(0);
                             RotateTileEvent event = new RotateTileEvent(player, side);
-                            gameState.hanleEvent(event);
+                            gameState.handleEvent(event);
                         }
                         else{
                             client.invalidCommand("You are not connected to the game!");
@@ -220,6 +236,7 @@ public class ServerController {
                 }
             }
             case "putdowntile" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -235,6 +252,7 @@ public class ServerController {
                 }
             }
             case "placetile" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){
                         String row = firstParameters.get(0);
@@ -262,6 +280,7 @@ public class ServerController {
                 }
         }
             case "reservetile" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1){
                         String indexStr = firstParameters.get(0);
@@ -284,14 +303,15 @@ public class ServerController {
                 }
             }
             case "fliphourglass" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
-                        FlipHourglassEvent event = new FlipHourglassEvent(player);
-                        gameState.handleEevent(event);
+                        FlipHourglassEvent event = new FlipHourglassEvent();
+                        gameState.handleEvent(event);
                     }
                     else{
-                        client.ivalidCommand("You are not connected to the game!");
+                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
@@ -299,6 +319,7 @@ public class ServerController {
                 }
             }
             case "setposition" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -324,6 +345,7 @@ public class ServerController {
                 }
             }
             case "pickupfromship" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -339,6 +361,7 @@ public class ServerController {
                 }
             }
             case "pickupreservedtile" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -350,7 +373,7 @@ public class ServerController {
                             if (index < 1 || index > numberOfReservedTiles) {
                                 client.invalidCommand("Index not valid. It must be either 1 or 2");
                             } else {
-                                PickupReservedTileEvent event = new PickupReservedTileEvent(player, index - 1);
+                                PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
                                 gameState.handleEvent(event);
                             }
                         }
@@ -364,6 +387,7 @@ public class ServerController {
                 }
             }
             case "activateengines" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -433,6 +457,7 @@ public class ServerController {
                 }
             }
             case "activatecannons" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -503,6 +528,7 @@ public class ServerController {
                 }
             }
             case "activateshield" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -549,6 +575,7 @@ public class ServerController {
                 }
             }
             case "removecargo" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if(player != null){
@@ -588,6 +615,7 @@ public class ServerController {
                 }
             }
             case "addcargo" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if(player != null) {
@@ -623,6 +651,7 @@ public class ServerController {
                 }
             }
             case "switchcargo" -> {
+                GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -661,6 +690,7 @@ public class ServerController {
                 }
             }
             case "ejectpeople" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -708,8 +738,9 @@ public class ServerController {
                 }
             }
             case "giveup" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname);
+                    Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         GiveUpEvent event = new GiveUpEvent(player);
                         gameState.handleEvent(event);
@@ -723,6 +754,7 @@ public class ServerController {
                 }
             }
             case "viewinventory" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -738,6 +770,7 @@ public class ServerController {
                 }
             }
             case "claimreward" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1){
                         Player player =  checkPlayer(client.getNickname());
@@ -765,6 +798,7 @@ public class ServerController {
                 }
             }
             case "choosesubship" -> {
+                GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
                         Player player = checkPlayer(client.getNickname());
@@ -797,6 +831,7 @@ public class ServerController {
                 }
             }
             case "nochoice" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -812,6 +847,7 @@ public class ServerController {
                 }
             }
             case "done" -> {
+                GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
