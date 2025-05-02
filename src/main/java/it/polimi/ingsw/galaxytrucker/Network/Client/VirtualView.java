@@ -8,4 +8,6 @@ public interface VirtualView extends Remote{
     void setNickname(String nickname) throws RemoteException;
     String getNickname() throws RemoteException;
     void invalidCommand(String error) throws RemoteException;
+    void getView(boolean myShip, boolean everyoneShip, boolean colorOfShip, boolean board, boolean currentCard) throws RemoteException;
+    void helpMessage() throws RemoteException;
 }

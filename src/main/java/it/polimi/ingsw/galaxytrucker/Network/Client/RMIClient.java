@@ -65,4 +65,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void invalidCommand(String error) throws RemoteException {
         System.out.println(error);
     }
+
+    @Override
+    public void getView(boolean myShip, boolean everyoneShip, boolean colorOfShip, boolean board, boolean currentCard) throws RemoteException {
+        // Implementation for getting the view
+        // Add your logic here to display the view based on the parameters
+    }
+
+    @Override
+    public void helpMessage() throws RemoteException {
+        System.out.println("Help message: \n" +
+                "Every command must be preceded by a slash (/) and could require parameters divided by a comma (,)\n" +
+                "Some commands require two set of parameters that must be divided by a semicolon (;)\n" +
+                "Example: /command set1param1, set1param2; set2param1, set2param2\n" +
+                "Available commands: \n"+
+                "\nALWAYS AVAILABLE\n" +
+                "/help - Show this help message\n" +
+                "/disconnect - If you are connected to the game, disconnect from it. No parameters needed.\n" +
+                "\nPRE BUILDING PHASE\n" +
+                "/connect - Connect to the game. Require the nickname for the game.\n" +
+                "/setnumberofplyers - Set the max number of player only if you are the host. Require the number of players.\n" +
+                "\nBUILDING PHASE\n");
+    }
+
 }
