@@ -1,0 +1,7 @@
+package it.polimi.ingsw.galaxytrucker.View.VirtualModel.Cards;
+
+public class StardustCard extends Card {
+    public StardustCard(boolean levelTwo, boolean used) {
+        super(levelTwo, used);
+    }
+}

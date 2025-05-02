@@ -1,0 +1,6 @@
+package it.polimi.ingsw.galaxytrucker.View.VirtualModel.GamePackage.GameEvents;
+
+import it.polimi.ingsw.galaxytrucker.View.VirtualModel.PlayerShip.Player;
+
+public record RotateTileEvent(Player player, String right) implements GameEvent {
+}
