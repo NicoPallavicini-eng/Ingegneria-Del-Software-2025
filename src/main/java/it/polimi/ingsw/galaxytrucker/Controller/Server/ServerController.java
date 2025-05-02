@@ -91,7 +91,7 @@ public class ServerController {
                 }
                 HelpEvent event = new HelpEvent();
                 gameState.handleEvent(event);
-            }
+            } //ok
             case "viewleaderboard" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
@@ -99,7 +99,7 @@ public class ServerController {
                 }
                 ViewLeaderboardEvent event = new ViewLeaderboardEvent();
                 gameState.handleEvent(event);
-            }
+            } //ok
             case "viewships" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
@@ -107,7 +107,7 @@ public class ServerController {
                 }
                 ViewShipsEvent event = new ViewShipsEvent();
                 gameState.handleEvent(event);
-            }
+            } //ok
             case "connect" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -139,7 +139,7 @@ public class ServerController {
                     client.invalidCommand("/connect request one parameter.");
                 }
                 }
-            }
+            } //ok
             case "disconnect" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
@@ -156,7 +156,7 @@ public class ServerController {
                 else {
                     client.invalidCommand("/disconnect doesn't support parameters!");
                 }
-            }
+            } //ok
             case "setnumberofplayers" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -185,7 +185,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/setnumberofplayers supports only one parameter!");
                 }
-            }
+            } //ok
             case "pickuptile" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -212,7 +212,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/pickuptile supports only one parameter!");
                 }
-            }
+            } // ok
             case "rotatetile" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -234,7 +234,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/rotatetile supports only one parameter.");
                 }
-            }
+            } //ok
             case "putdowntile" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
@@ -250,7 +250,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/putdowntile doesn't support parameters!");
                 }
-            }
+            } //ok
             case "placetile" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -278,7 +278,7 @@ public class ServerController {
                         client.invalidCommand("/placetile supports only two parameters!");
                     }
                 }
-        }
+        } //ok
             case "reservetile" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -301,7 +301,7 @@ public class ServerController {
                         }
                     }
                 }
-            }
+            } //ok
             case "fliphourglass" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
@@ -317,7 +317,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/fliphourglass doesn't support parameters!");
                 }
-            }
+            } //ok
             case "setposition" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -343,7 +343,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/setposition requires only one parameter!");
                 }
-            }
+            } //ok
             case "pickupfromship" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
@@ -359,7 +359,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/pickupfromship doesn't support parameters!");
                 }
-            }
+            } //ok
             case "pickupreservedtile" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -385,7 +385,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/pickupreservedtile supports only one parameter.");
                 }
-            }
+            } //ok
             case "activateengines" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
@@ -455,7 +455,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/activateengines needs two sets of parameters");
                 }
-            }
+            } //ok
             case "activatecannons" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
@@ -526,7 +526,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/activatecannons needs two sets of parameters");
                 }
-            }
+            } //ok
             case "activateshield" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
@@ -573,7 +573,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/activateshield needs two sets of parameters");
                 }
-            }
+            } //ok
             case "removecargo" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -613,7 +613,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/removecargo supports only one set of parameters");
                 }
-            }
+            } //ok
             case "addcargo" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -649,7 +649,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/addcargo supports only one set of parameters");
                 }
-            }
+            } //ok
             case "switchcargo" -> {
                 GameState gameState = new GameState();
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
@@ -688,7 +688,7 @@ public class ServerController {
                 }else{
                     client.invalidCommand("/switchcargo needs two sets of parameters.");
                 }
-            }
+            } //ok
             case "ejectpeople" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -736,7 +736,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/ejectpeople supports only one set of parameters");
                 }
-            }
+            } //ok
             case "giveup" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
@@ -752,7 +752,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/giveup doesn't support parameters!");
                 }
-            }
+            } //ok
             case "viewinventory" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
@@ -768,7 +768,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/viewinventory doesn't support parameters!");
                 }
-            }
+            } //ok
             case "claimreward" -> {
                 GameState gameState = new GameState();
                 if (secondParameters.isEmpty()){
@@ -829,7 +829,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/choosesubship supports only one set of parameters!");
                 }
-            }
+            } //ok
             case "nochoice" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
@@ -845,7 +845,7 @@ public class ServerController {
                 else{
                     client.invalidCommand("/nochoice doesn't support parameters!");
                 }
-            }
+            } //ok
             case "done" -> {
                 GameState gameState = new GameState();
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
@@ -861,7 +861,103 @@ public class ServerController {
                 else{
                     client.invalidCommand("/done doesn't support parameters!");
                 }
-            }
+            } //ok
+            case "placeorangealien" -> {
+                GameState gameState = new GameState();
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() == 2){
+                        Player player = checkPlayer(client.getNickname());
+                        if (player != null){
+                            String rowStr = firstParameters.get(0);
+                            String colStr = firstParameters.get(1);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colStr);
+                            boolean checkPosition = validTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                client.invalidCommand("Invalid row or column.");
+                            }
+                            else{
+                                PlaceOrangeAlienEvent event = new PlaceOrangeAlienEvent(player, row-5, col-4);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                    else{
+                        client.invalidCommand("/placeorangealien supports only one set of parameters!");
+                    }
+                }
+                else {
+                    client.invalidCommand("/placeorangealien supports only one set of parameters!");
+                }
+            } //ok
+            case "placepurplealien" -> {
+                GameState gameState = new GameState();
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() == 2){
+                        Player player = checkPlayer(client.getNickname());
+                        if (player != null){
+                            String rowStr = firstParameters.get(0);
+                            String colStr = firstParameters.get(1);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colStr);
+                            boolean checkPosition = validTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                client.invalidCommand("Invalid row or column.");
+                            }
+                            else{
+                                PlacePurpleAlienEvent event = new PlacePurpleAlienEvent(player, row-5, col-4);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                    else{
+                        client.invalidCommand("/placepurplealien supports only one set of parameters!");
+                    }
+                }
+                else {
+                    client.invalidCommand("/placepurplealien supports only one set of parameters!");
+                }
+            } //ok
+            case "removetile" -> {
+                GameState gameState = new GameState();
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() == 2){
+                        Player player = checkPlayer(client.getNickname());
+                        if (player != null){
+                            String rowStr = firstParameters.get(0);
+                            String colStr = firstParameters.get(1);
+
+                            int row = Integer.parseInt(rowStr);
+                            int col = Integer.parseInt(colStr);
+                            boolean checkPosition = validTilePosition(row, col);
+                            if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
+                                client.invalidCommand("Invalid row or column.");
+                            }
+                            else{
+                                RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                    else{
+                        client.invalidCommand("/removetile supports only one set of parameters!");
+                    }
+                }
+                else{
+                    client.invalidCommand("/removetile supports only one set of parameters!");
+                }
+            } //ok
         }
     }
 
