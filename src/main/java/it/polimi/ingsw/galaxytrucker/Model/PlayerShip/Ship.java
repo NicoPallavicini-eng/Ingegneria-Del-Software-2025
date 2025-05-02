@@ -11,20 +11,15 @@ import java.util.Stack;
 public class Ship {
 
     private ArrayList<ArrayList<Tile>> floorplanArrayList;
-
     private final Color color;
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
 
-    private int exposedConnectors;
-    private int batteries;
-    private int crewMembers;
     private int credits;
     private Integer travelDays;
 
     int row_max;
     int col_max;
-
 
     //serve per vedere se il giocatore decide di atterare;
     private boolean playerEngaged;
@@ -39,12 +34,8 @@ public class Ship {
     private int playerPosition;
 
     public Ship(Color color){
-
         this.color = color;
-        exposedConnectors=0;
         lostTiles=0;
-        crewMembers=0;
-        batteries=0;
         credits=0;
         travelDays=null;
         playerEngaged=false;
@@ -454,21 +445,6 @@ public class Ship {
         floorplanArrayList.get(row).set(column,null);
     }
 
-
-    public int getNumberOfBatteries(){
-        return batteries;
-    }
-    public void setBatteries(int batteries){
-        this.batteries = batteries;
-    }
-
-    public int getNumberOfCrewMembers(){
-        return crewMembers;
-    }
-    public void setCrewMembers(int crewMembers){
-        this.crewMembers = crewMembers;
-    }
-
     public void addLostTiles(int lostTiles){
         this.lostTiles += lostTiles;
     }
@@ -510,12 +486,27 @@ public class Ship {
     }
 
     public int getExposedConnectors() {
+        int exposedConnectors = 0;
+        for (ArrayList<Tile> list : floorplanArrayList) {
+            for (Tile tile : list) {
+                if (tile != null) {
+                    ArrayList<Tile> adjacentTiles = getAdiacentTiles(tile);
+                    List<ConnectorType> connectors = tile.getConnectors();
+                    int j = 0;
+                    for (Tile adjacentTile : adjacentTiles) {
+                        adjacentTile = adjacentTiles.get(j);
+                        if (adjacentTile == null) {
+                            if (connectors.get(j) != ConnectorType.NONE){
+                                exposedConnectors++;
+                            }
+                        }
+                        j += 1;
+                    }
+                }
+            }
+        }
         return exposedConnectors;
     }
-    public void setExposedConnectors(int exposedConnectors) {
-        this.exposedConnectors = exposedConnectors;
-    }
-
 
     /**
      * @return firepower of ship
@@ -530,8 +521,8 @@ public class Ship {
                 if(cannonTile.getDoublePower()){
                     multiplicator = 2;
                 }
-                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON_SINGLE || cannonTile.getConnectors().get(0)==ConnectorType.CANNON_DOUBLE){
-                    firepower+=multiplicator*1;
+                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
+                    firepower+=multiplicator;
                 }else{
                     firepower+=multiplicator*0.5;
                 }
@@ -602,7 +593,7 @@ public class Ship {
                 if(engineTile.getDoublePower()){
                     multiplicator = 2;
                 }
-                enginePower+=multiplicator*1;
+                enginePower+=multiplicator;
             }
             multiplicator=1;
         }
