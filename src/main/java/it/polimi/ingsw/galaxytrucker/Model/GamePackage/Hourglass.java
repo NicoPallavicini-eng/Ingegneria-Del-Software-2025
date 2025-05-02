@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
+//todo fix
 //the Timer class implementation is kept (in comments) for possible future use
 public class Hourglass {
     private int FlipNumber = 0;

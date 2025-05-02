@@ -15,8 +15,8 @@ public class PiratesCard extends Card {
     private final int daysToLose;
     private final List <Cannonball> cannonballList;
 
-    public PiratesCard(boolean levelTwo, boolean used, PiratesCardVisitor visitor, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
-        super(levelTwo, used, visitor);
+    public PiratesCard(boolean levelTwo, boolean used, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
+        super(levelTwo, used);
         this.firepower = firepower;
         this.credits = credits;
         this.daysToLose = daysToLose;
@@ -39,20 +39,7 @@ public class PiratesCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, PiratesCardVisitor visitor, List <Player> players) {
-        for (Player player : players) {
-            visitor.handlePiratesCard(state,this, player);
-            if (state.getAccomplished()) {
-                break;
-            }
-        }
-    }
-
-    public void acceptNextVisitor(GameState state, PiratesCardVisitor visitor, Game game) {
-        visitor.setNextStatePiratesCard(state, game, this);
-    }
-
-    public void process(Player player, SequentialTravellingState state) {
+/*    public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 
         if (ship.getFirepower() < firepower) {
@@ -68,4 +55,6 @@ public class PiratesCard extends Card {
             }
         }
     }
+
+ */
 }

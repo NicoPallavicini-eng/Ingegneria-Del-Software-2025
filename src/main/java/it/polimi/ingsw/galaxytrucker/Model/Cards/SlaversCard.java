@@ -15,8 +15,8 @@ public class SlaversCard extends Card {
     private final int crewLost;
     private final int daysToLose;
 
-    public SlaversCard(boolean levelTwo, boolean used, SlaversCardVisitor visitor, int firepower, int credits, int crewLost, int daysToLose) {
-        super(levelTwo, used, visitor);
+    public SlaversCard(boolean levelTwo, boolean used, int firepower, int credits, int crewLost, int daysToLose) {
+        super(levelTwo, used);
         this.firepower = firepower;
         this.credits = credits;
         this.crewLost = crewLost;
@@ -39,20 +39,8 @@ public class SlaversCard extends Card {
         return daysToLose;
     }
 
-    public void acceptCardVisitorSequential(SequentialTravellingState state, SlaversCardVisitor visitor, List <Player> players) {
-        for (Player player : players) {
-            visitor.handleSlaversCard(state, this, player);
-            if (state.getAccomplished()) {
-                break;
-            }
-        }
-    }
 
-    public void acceptNextVisitor(GameState state, SlaversCardVisitor visitor, Game game) {
-        visitor.setNextStateSlaversCard(state, game, this);
-    }
-
-    public void process(Player player, SequentialTravellingState state) {
+ /*   public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 
         if (ship.getFirepower() < firepower) {
@@ -66,4 +54,6 @@ public class SlaversCard extends Card {
             }
         }
     }
+
+  */
 }

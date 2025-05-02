@@ -12,8 +12,8 @@ public class CombatZoneCard extends Card {
     private final int crewLostLessEngine;
     private final List <Cannonball> cannonballList;
 
-    public CombatZoneCard(boolean levelTwo, boolean used, CombatZoneCardVisitor visitor, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
-        super(levelTwo, used, visitor);
+    public CombatZoneCard(boolean levelTwo, boolean used, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
+        super(levelTwo, used);
         this.daysLostLessCrew = daysLostLessCrew;
         this.crewLostLessEngine = crewLostLessEngine;
         this.cannonballList = cannonballList;
@@ -31,26 +31,7 @@ public class CombatZoneCard extends Card {
         return cannonballList;
     }
 
-    public void acceptCardVisitorAlternative(CombatZoneCardVisitor visitor, List <Ship> lessCrewShips, List <Ship> lessEngineShips, List <Ship> lessFirepowerShips) {
-
-        for (Ship ship : lessCrewShips) {
-            visitor.handleCombatZoneCardLessCrew(this, ship);
-        }
-
-        for (Ship ship : lessEngineShips) {
-            visitor.handleCombatZoneCardLessEngine(this, ship);
-        }
-
-        for (Ship ship : lessFirepowerShips) {
-            visitor.handleCombatZoneCardLessFirepower(this, ship);
-        }
-    }
-
-    public void acceptNextVisitor(GameState state, CombatZoneCardVisitor visitor, Game game) {
-        visitor.setNextStateCombatZoneCard(state, game, this);
-    }
-
-    public void lessCrewProcess(Ship ship) {
+/*    public void lessCrewProcess(Ship ship) {
         ship.setTravelDays(ship.getTravelDays() - daysLostLessCrew);
     }
 
@@ -63,4 +44,6 @@ public class CombatZoneCard extends Card {
             cannonball.getHit(ship);
         }
     }
+
+ */
 }

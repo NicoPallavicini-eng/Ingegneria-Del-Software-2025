@@ -20,6 +20,8 @@ public class Ship {
 
     int row_max;
     int col_max;
+    Tile pickedTile;
+    Tile lastPlacedTile;
 
     //serve per vedere se il giocatore decide di atterare;
     private boolean playerEngaged;
@@ -898,6 +900,21 @@ public class Ship {
                 }
             }
             purple=0;
+        }
+    }
+
+    public void disactivateEverything(){
+        ArrayList<CannonTile> cannonList = getListOfDoubleFirepower();
+        for(CannonTile cannonTile : cannonList){
+            cannonTile.setActiveState(false);
+        }
+        ArrayList<ShieldTile> shieldlist = getListOfShield();
+        for( ShieldTile shieldTile : shieldlist){
+            shieldTile.setActiveState(false);
+        }
+        ArrayList<EngineTile> enginelist = getListOfDoubleEnginePower();
+        for( EngineTile engineTile : enginelist){
+            engineTile.setActiveState(false);
         }
     }
 }

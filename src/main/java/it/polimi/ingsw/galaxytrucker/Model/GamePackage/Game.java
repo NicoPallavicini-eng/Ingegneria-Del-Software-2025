@@ -19,10 +19,8 @@ public class Game {
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;  
     private Deck deck;
-    private Queue<GameEvent> controllerEvents = new LinkedList<>();
 
-    public Game (Player firstPlayer){
-        listOfPlayers.add(firstPlayer);
+    public Game (){
         // TODO assemble gameDeck (?)
     }
 
@@ -78,13 +76,5 @@ public class Game {
         this.deck = deck;
     }
 
-    //to synchronize
-    public GameEvent poolEventQueue() {
-        return controllerEvents.poll();
-    }
 
-    //to synchronize
-    public void addEventQueue(GameEvent gameEvent) {
-        controllerEvents.add(gameEvent);
-    }
 }
