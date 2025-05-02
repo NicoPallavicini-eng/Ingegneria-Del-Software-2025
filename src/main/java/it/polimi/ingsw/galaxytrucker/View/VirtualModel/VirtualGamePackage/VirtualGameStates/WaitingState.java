@@ -1,0 +1,39 @@
+package it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualGamePackage.VirtualGameStates;
+
+import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualGamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualGamePackage.VirtualGameEvents.*;
+
+public class WaitingState extends GameState {
+    private final Game game;
+    public WaitingState( Game game ) {
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void next() {
+        getGame().setGameState(new BuildingState(game));
+        game.getGameState().init();
+    }
+
+   public void handleEvent(ConnectEvent event) throws NumberOfPlayersNotSetException {
+        if(game.getNumberOfPlayers() == 0 && !game.getListOfPlayers().isEmpty()) {
+            throw new NumberOfPlayersNotSetException("The first player has to set the number of players");
+        }
+        EventHandler.handleEvent(event, game);
+        if(game.getListOfPlayers().size() == game.getNumberOfPlayers()) {
+            next();
+        }
+   }
+
+   public void handleEvent(SetNumberOfPlayersEvent event){
+        if(game.getNumberOfPlayers()!=0){
+            throw new IllegalEventException("The first player has already set the number of players");
+        }
+        else{
+            EventHandler.handleEvent(event, game);
+        }
+   }
+}

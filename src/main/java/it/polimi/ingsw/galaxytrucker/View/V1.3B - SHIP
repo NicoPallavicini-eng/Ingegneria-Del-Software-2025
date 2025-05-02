@@ -22,4 +22,4 @@ V1.3B - SHIP
 │     ││     ││     ││     ││     ││     ││     ││     ││     │
 ╰─────╯╰─────╯╰─────╯╰─────╯╰─────╯╰─────╯╰─────╯╰─────╯╰─────╯
 
-[PILE]   [RED]   [YELLOW]   [GREEN]   [BLUE]   {TIME/TIME}
+[PILE]   [RED]   [YELLOW]   [GREEN]   [BLUE]   [BOARD]   {TIME/TIME}
