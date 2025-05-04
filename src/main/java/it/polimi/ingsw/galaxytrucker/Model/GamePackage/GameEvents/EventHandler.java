@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Planet;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
@@ -124,7 +125,7 @@ TRAVELLING:
         Ship ship = event.player().getShip();
         PlanetsState planetState = (PlanetsState) event.game().getGameState();
         int planetIndex = event.planetIndex();
-        PlanetsCard planetsCard = planetState.getCurrentCard();
+        PlanetsCard planetsCard = (PlanetsCard) planetState.getCurrentCard();
         List<Planet> planetList = planetsCard.getPlanetsList();
         if (planetIndex < planetList.size()&&planetIndex>=0) {
             //?
@@ -453,7 +454,7 @@ TRAVELLING:
             throw new IllegalEventException("Selected Tile is not CargoTile");
         }else {
             CargoTile cargoTile = list.getFirst();
-            if (event.Integer == 4) {
+            if (event.resource() == 4) {
                 if (!cargoTile.fitsRed()) {
                     throw new IllegalEventException("CargoTile doesn't fit red(4)");
                 }
@@ -553,6 +554,7 @@ TRAVELLING:
         int counter = 0;
         Ship ship = event.player().getShip();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        CabinTile cabin = null;
         for(List<Integer> listOfParameters : event.people()){
             for(Integer parameter : listOfParameters){
                 cabinTileVisitor = new CabinTileVisitor();
@@ -575,10 +577,10 @@ TRAVELLING:
                     throw new IllegalEventException("Selected Tile is not present");
                 }
 
-                tile.accept(cabinTileVisitor);
+                //tile.accept(cabinTileVisitor);
                 ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
                 if(listCabin.size()!=0){
-                    CabinTile cabin = listCabin.getFirst();
+                    cabin = listCabin.getFirst();
                 }else{
                     throw new IllegalEventException("Selected Tile is not cabin");
                 }
@@ -628,7 +630,7 @@ TRAVELLING:
                 Tile tile = optionalTile.get();
                 tile.accept(cabinTileVisitor);
                 ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
-                CabinTile cabin = listCabin.getFirst();
+                cabin = listCabin.getFirst();
 
                 if(counter==2){
                     peopleToLoose=parameter;
