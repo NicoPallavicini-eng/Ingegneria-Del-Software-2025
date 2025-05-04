@@ -14,7 +14,6 @@ public class Tile{
 
     private boolean attached;
     private boolean upsideDown;
-
     private boolean choosable;
 
     /**
@@ -33,16 +32,7 @@ public class Tile{
         this.eastConnector = eastConnector;
         this.upsideDown = false;
         this.choosable = true;
-    }
-
-    /**
-     * Checks if the tile is upside down
-     *
-     * @return true if the tile is upside down, false otherwise
-     */
-
-    public boolean isUpsideDown() {
-        return upsideDown;
+        this.attached = false;
     }
 
     /**

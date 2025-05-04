@@ -29,8 +29,8 @@ public class Ship {
     //serve per I blocchi di pianeta
     private ArrayList<Integer> cargoFromCards;
 
-    private boolean purpleAllien;
-    private boolean orangeAllien;
+    private boolean purpleAlien;
+    private boolean orangeAlien;
 
     //player position
     private int playerPosition;
@@ -43,8 +43,8 @@ public class Ship {
         playerEngaged=false;
         reservedTiles=new ArrayList<>();
         cargoFromCards = new ArrayList<>();
-        purpleAllien=false;
-        orangeAllien=false;
+        purpleAlien=false;
+        orangeAlien=false;
         playerPosition=0;
         row_max=5;
         col_max=7;
@@ -454,18 +454,18 @@ public class Ship {
         return lostTiles;
     }
 
-    public boolean getPurpleAllien(){
-        return purpleAllien;
+    public boolean getPurpleAlien(){
+        return purpleAlien;
     }
-    public boolean getOrangeAllien(){
-        return orangeAllien;
+    public boolean getOrangeAlien(){
+        return orangeAlien;
     }
 
-    public void setPurpleAllien(boolean allien){
-        purpleAllien = allien;
+    public void setPurpleAlien(boolean alien){
+        purpleAlien = alien;
     }
-    public void setOrangeAllien(boolean allien){
-        orangeAllien = allien;
+    public void setOrangeAlien(boolean alien){
+        orangeAlien = alien;
     }
     public List<Tile> getReservedTiles() {
         return reservedTiles;
@@ -523,7 +523,7 @@ public class Ship {
                 if(cannonTile.getDoublePower()){
                     multiplicator = 2;
                 }
-                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON){
+                if(cannonTile.getConnectors().get(0)==ConnectorType.CANNON_SINGLE || cannonTile.getConnectors().get(0)==ConnectorType.CANNON_DOUBLE){
                     firepower+=multiplicator;
                 }else{
                     firepower+=multiplicator*0.5;

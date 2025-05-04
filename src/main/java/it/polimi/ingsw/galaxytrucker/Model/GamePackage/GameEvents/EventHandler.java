@@ -660,7 +660,7 @@ TRAVELLING:
         ship.setTravelDays(null);
     }
 
-    public static void moveFoward(Ship ship, int days, Game game){
+    public static void moveForward (Ship ship, int days, Game game){
 
         int startposition = ship.getTravelDays();
         long overturned = 0;
