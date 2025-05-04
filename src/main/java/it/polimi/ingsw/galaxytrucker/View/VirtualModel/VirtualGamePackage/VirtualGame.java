@@ -17,9 +17,7 @@ public class VirtualGame {
     private VirtualTilePile tilePile;
     private VirtualDeck deck;
 
-    public VirtualGame(){
-        // TODO assemble gameDeck (?)
-    }
+    public VirtualGame() {}
 
     public List<VirtualPlayer> getListOfPlayers() {
         return listOfPlayers;
