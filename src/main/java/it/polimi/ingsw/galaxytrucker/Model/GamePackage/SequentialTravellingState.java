@@ -1,11 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.FinalState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 
 // Handles Pirates, Ship, Slavers, Smugglers, Station Cards
-public class SequentialTravellingState implements GameState {
+public class SequentialTravellingState extends GameState { // was "implements" but gave error obv
     private final Game game;
     private final Card currentCard;
     private Card nextCard;
@@ -41,18 +40,18 @@ public class SequentialTravellingState implements GameState {
         this.accomplished = accomplished;
     }
 
-    @Override
-    public GameState next() {
-        nextCard = getGame().getDeck().drawCard();
-        if (nextCard == null) {
-            return new FinalState(game);
-        } else {
-            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
-            return nextState;
-        }
-    }
+//    @Override
+//    public GameState next() {
+//        nextCard = getGame().getDeck().drawCard();
+//        if (nextCard == null) {
+//            return new FinalState(game);
+//        } else {
+//            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
+//            return nextState;
+//        }
+//    }
 
     public void process() {
-        currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), game.getListOfPlayers());
+//        currentCard.acceptCardVisitorSequential(this, currentCard.getCardVisitor(), game.getListOfPlayers());
     }
 }

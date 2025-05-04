@@ -2,8 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.ENGINE;
-
 
 public class EngineTile extends Tile{
     private final boolean doublePower;

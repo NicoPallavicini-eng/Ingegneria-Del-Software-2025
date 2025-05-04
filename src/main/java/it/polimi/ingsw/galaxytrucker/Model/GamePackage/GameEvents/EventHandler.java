@@ -124,7 +124,7 @@ TRAVELLING:
         Ship ship = event.player().getShip();
         PlanetsState planetState = (PlanetsState) event.game().getGameState();
         int planetIndex = event.planetIndex();
-        PlanetsCard planetsCard = planetState.getCurrentCard();
+        PlanetsCard planetsCard = (PlanetsCard) planetState.getCurrentCard();
         List<Planet> planetList = planetsCard.getPlanetsList();
         if (planetIndex < planetList.size()&&planetIndex>=0) {
             //?
@@ -453,7 +453,7 @@ TRAVELLING:
             throw new IllegalEventException("Selected Tile is not CargoTile");
         }else {
             CargoTile cargoTile = list.getFirst();
-            if (event.Integer == 4) {
+            if (event.resource() == 4) {
                 if (!cargoTile.fitsRed()) {
                     throw new IllegalEventException("CargoTile doesn't fit red(4)");
                 }
@@ -690,6 +690,10 @@ TRAVELLING:
             finalPosition = startposition - days - (int)overturned;
         }
         ship.setTravelDays(finalPosition);
+    }
+
+    public static void handleEvent(ClaimRewardEvent event) {
+        // TODO do
     }
 }
 

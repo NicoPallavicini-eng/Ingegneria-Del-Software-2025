@@ -2,7 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 public abstract class TravellingState extends GameState {

@@ -1,18 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.Controller.Server;
+
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
-import javafx.beans.binding.IntegerBinding;
-import javafx.util.Pair;
 
 import java.rmi.RemoteException;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * The ServerController class handles user input and manages the game state on the server side.

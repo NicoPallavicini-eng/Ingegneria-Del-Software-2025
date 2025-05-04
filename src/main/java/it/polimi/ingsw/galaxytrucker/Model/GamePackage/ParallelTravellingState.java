@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.FinalState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Handles CombatZone, Epidemic, Meteors, Stardust Cards
-public class ParallelTravellingState implements GameState {
+public class ParallelTravellingState extends GameState { // was "implements" but gave error obv
     private final Game game;
     private final Card currentCard;
     private Card nextCard;
@@ -37,16 +36,16 @@ public class ParallelTravellingState implements GameState {
         this.nextState = nextState;
     }
 
-    @Override
-    public GameState next() {
-        nextCard = getGame().getDeck().drawCard();
-        if (nextCard == null) {
-            return new FinalState(game);
-        } else {
-            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
-            return nextState;
-        }
-    }
+//    @Override
+//    public GameState next() {
+//        nextCard = getGame().getDeck().drawCard();
+//        if (nextCard == null) {
+//            return new FinalState(game);
+//        } else {
+//            nextCard.acceptNextVisitor(this, nextCard.getCardVisitor(), game);
+//            return nextState;
+//        }
+//    }
 
     public void process() {
         List <Ship> ships = new ArrayList<>();
@@ -54,7 +53,7 @@ public class ParallelTravellingState implements GameState {
             ships.add(player.getShip());
         }
 
-        currentCard.acceptCardVisitorParallel(this, currentCard.getCardVisitor(), ships);
+//        currentCard.acceptCardVisitorParallel(this, currentCard.getCardVisitor(), ships);
     }
 
 }

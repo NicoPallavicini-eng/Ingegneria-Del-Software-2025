@@ -1,17 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.EpidemicCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
-
 public class EpidemicCard extends Card {
     public EpidemicCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);

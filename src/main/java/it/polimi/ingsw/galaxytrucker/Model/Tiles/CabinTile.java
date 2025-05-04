@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.CAPSULE;
 
 public class CabinTile extends Tile {
     private CabinInhabitants inhabitants;

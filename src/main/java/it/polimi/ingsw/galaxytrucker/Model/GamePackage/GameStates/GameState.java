@@ -3,8 +3,6 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 
-import java.util.Queue;
-
 public class GameState {
 
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {

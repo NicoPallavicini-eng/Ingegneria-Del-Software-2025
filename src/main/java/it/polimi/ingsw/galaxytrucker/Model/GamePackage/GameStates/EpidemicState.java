@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.ALIEN;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.NONE;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.ONE;
 
 
 public class EpidemicState extends TravellingState{

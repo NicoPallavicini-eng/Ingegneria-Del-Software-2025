@@ -1,14 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CardVisitors.SlaversCardVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.SequentialTravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-
-import java.util.List;
-
 public class SlaversCard extends Card {
     private final int firepower;
     private final int credits;

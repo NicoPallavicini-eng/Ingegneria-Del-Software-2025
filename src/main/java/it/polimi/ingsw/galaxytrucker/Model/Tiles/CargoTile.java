@@ -2,8 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import java.util.List;
 
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.STORAGE;
-
 public class CargoTile extends Tile {
     private final int slotsNumber;
     private final boolean fitsRed;

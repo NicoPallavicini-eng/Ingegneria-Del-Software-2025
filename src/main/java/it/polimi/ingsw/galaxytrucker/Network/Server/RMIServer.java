@@ -1,8 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
-import it.polimi.ingsw.galaxytrucker.Network.Client.*;
-import it.polimi.ingsw.galaxytrucker.Network.Server.*;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.SHIELD;
 
 public class ShieldTile extends Tile {
     private ShieldOrientation orientation;

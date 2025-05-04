@@ -1,16 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();

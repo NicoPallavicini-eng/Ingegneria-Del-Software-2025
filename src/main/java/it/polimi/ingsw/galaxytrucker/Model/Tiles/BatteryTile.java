@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
-import static it.polimi.ingsw.galaxytrucker.Model.Tiles.TileType.BATTERY;
 
 public class BatteryTile extends Tile{
     private final int slotsNumber;

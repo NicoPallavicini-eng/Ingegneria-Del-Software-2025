@@ -4,7 +4,6 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -178,7 +177,7 @@ public class BuildingState extends GameState {
             throw new IllegalEventException("Hourglass flipping phase is over");
         }
         else{
-            EventHandler.handleEvent(event, game);
+            EventHandler.handleEvent(event);
         }
     }
 
@@ -187,7 +186,7 @@ public class BuildingState extends GameState {
             throw new IllegalEventException("You can no longer view deck");
         }
         else{
-            EventHandler.handleEvent(event, game);
+            EventHandler.handleEvent(event);
         }
     }
 

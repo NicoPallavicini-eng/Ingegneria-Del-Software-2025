@@ -6,7 +6,6 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FinalState extends GameState {
     private final Game game;

@@ -61,7 +61,7 @@ public class PiratesState extends TravellingState{
             throw new IllegalEventException("You have not slain the pirates");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event); // TODO write this event's logic
         }
     }
 
