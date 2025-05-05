@@ -1,5 +1,6 @@
 module it.polimi.ingsw.galaxytrucker {
     exports it.polimi.ingsw.galaxytrucker.Network.Server;
+    exports it.polimi.ingsw.galaxytrucker.Network.Client;
 
     requires javafx.controls;
     requires javafx.fxml;
