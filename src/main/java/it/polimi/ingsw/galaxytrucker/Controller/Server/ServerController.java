@@ -36,7 +36,8 @@ public class ServerController {
      */
     public void handleUserInput(VirtualView client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
-            System.out.println("Invalid command");
+            client.invalidCommand("Invalid command");
+            //System.out.println("Invalid command");
             return;
         }
         // Input to lowercase
@@ -48,28 +49,35 @@ public class ServerController {
         // Split input into command and parameters
         String[] parts = cleanInput.split(" ", 2);
         String command = parts[0];
-        String parString = parts.length > 1 ? parts[1] : "";
-
-        // Split parameters into two lists
-        String[] subParameters = parString.split(";", 2);
         List<String> firstParameters = new ArrayList<>();
         List<String> secondParameters = new ArrayList<>();
+        if(parts.length > 1){
+            String parString = parts.length > 1 ? parts[1] : "";
 
-        if (subParameters.length > 0){
-            // Split parameters with comma
-            firstParameters = Arrays.stream(subParameters[0].split(","))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .toList();
+            // Split parameters into two lists
+            String[] subParameters = parString.split(";", 2);
 
-            secondParameters = Arrays.stream(subParameters[1].split(","))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .toList();
+
+            if (subParameters.length > 0){
+                // Split parameters with comma
+                firstParameters = Arrays.stream(subParameters[0].split(","))
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .toList();
+
+                secondParameters = Arrays.stream(subParameters[1].split(","))
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .toList();
+            }
+            // Check if the command exists
+            executeCommand(command, firstParameters, secondParameters, client);
+        }else{
+            executeCommand(command,firstParameters,secondParameters,client);
         }
 
-        // Check if the command exists
-        executeCommand(command, firstParameters, secondParameters, client);
+
+
     }
 
     /**
@@ -88,8 +96,9 @@ public class ServerController {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
                 }
-                HelpEvent event = new HelpEvent();
-                gameState.handleEvent(event);
+//                HelpEvent event = new HelpEvent();
+//                gameState.handleEvent(event);
+                client.helpMessage();
             } //ok
             case "viewleaderboard" -> {
                 GameState gameState = new GameState();
