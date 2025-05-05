@@ -82,9 +82,8 @@ public class ServerController {
     private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client) throws RemoteException {
         switch(command){
             case "help" -> {
-             
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
-                    client.invalidCommand("/help doesn't support parameters!");
+                    client.invalidCommand("/help doesn't support parameters, but here is the help command anyway!");
                 }
                 client.helpMessage();
             } //ok
@@ -106,11 +105,10 @@ public class ServerController {
             } //ok
             case "connect" -> {
               //GameState gameState = game.getGameState();
-                if (secondParameters.isEmpty()){
+                if (secondParameters.isEmpty()) {
                     if (firstParameters.isEmpty()) {
                         client.invalidCommand("/connect request one parameter.");
-                    }
-                    else if (firstParameters.size() == 1) {
+                    } else if (firstParameters.size() == 1) {
                         String clientNickname = client.getNickname();
                         String nickname = firstParameters.get(0);
                         if (clientNickname != null) {
@@ -131,159 +129,147 @@ public class ServerController {
                             }
                         }
                     }
+                }
                 else{
                     client.invalidCommand("/connect request one parameter.");
                 }
-                }
             } //ok
             case "disconnect" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                    String clientNickname = client.getNickname();
-                    Player player = checkPlayer(clientNickname);
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         DisconnectEvent event = new DisconnectEvent(player);
                         game.getGameState().handleEvent(event);
                     }
                     else {
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/disconnect doesn't support parameters!");
                     }
                 }
                 else {
-                    client.invalidCommand("/disconnect doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "setnumberofplayers" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 1) {
-                        String numberOfPlayersStr = firstParameters.get(0);
-                        int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
-                        String clientNickname = client.getNickname();
-                        Player player = checkPlayer(clientNickname);
-                        if (player != null){
-                            if (numberOfPlayers < 2 || numberOfPlayers > 4) {
-                                client.invalidCommand("Number of players not valid. It must be between 2 and 4");
-                            } else {
-                                SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+             Player player = checkPlayer(client.getNickname());
+             if (player != null) {
+                 if (secondParameters.isEmpty()) {
+                     if (firstParameters.size() == 1) {
+                         String numberOfPlayersStr = firstParameters.get(0);
+                         int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
+                             if (numberOfPlayers < 2 || numberOfPlayers > 4) {
+                                 client.invalidCommand("Number of players not valid. It must be between 2 and 4");
+                             } else {
+                                 SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                 game.getGameState().handleEvent(event);
+                             }
+                     } else {
+                         client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                     }
+                 } else {
+                     client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                 }
+             }
+             else {
+                 client.invalidCommand("You are not connected to the game!");
+             }
+            } //ok
+            case "pickuptile" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if(firstParameters.size() == 1) {
+                            String tilePosition = firstParameters.get(0);
+                            int tilePositionInt = Integer.parseInt(tilePosition); //CHECK MAX NUMBER OF TILES IN TILEPILE
+                            if (tilePositionInt > 0 && tilePositionInt < 156) {
+                                PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 game.getGameState().handleEvent(event);
+
+                            } else {
+                                client.invalidCommand("Tile position not valid. It must be between 1 and 156");
                             }
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
-                        }
-
-                    }
-                    else{
-                        client.invalidCommand("/setnumberofplayers supports only one parameter!");
-                    }
-                }
-                else{
-                    client.invalidCommand("/setnumberofplayers supports only one parameter!");
-                }
-            } //ok
-            case "pickuptile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if(firstParameters.size() == 1) {
-                        String tilePosition = firstParameters.get(0);
-                        int tilePositionInt = Integer.parseInt(tilePosition); //CHECK MAX NUMBER OF TILES IN TILEPILE
-                        if (tilePositionInt > 0 && tilePositionInt < 156) {
-                            String clientNickname = client.getNickname();
-                            Player player = checkPlayer(clientNickname);
-                            if (player != null) {
-                                PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
-                                game.getGameState().handleEvent(event);
-                            } else {
-                                client.invalidCommand("You are not connected to the game!");
-                            }
-                        } else {
-                            client.invalidCommand("Tile position not valid. It must be between 1 and 156");
+                            client.invalidCommand("/pickuptile supports only one parameter!");
                         }
                     }
                     else{
                         client.invalidCommand("/pickuptile supports only one parameter!");
                     }
                 }
-                else{
-                    client.invalidCommand("/pickuptile supports only one parameter!");
+                else {
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } // ok
             case "rotatetile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 1) {
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 1) {
                             String side = firstParameters.get(0);
                             RotateTileEvent event = new RotateTileEvent(player, side);
                             game.getGameState().handleEvent(event);
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/rotatetile supports only one parameter!");
                         }
                     }
                     else{
-                        client.invalidCommand("/rotatetile supports only one parameter!");
+                        client.invalidCommand("/rotatetile supports only one parameter.");
                     }
                 }
                 else{
-                    client.invalidCommand("/rotatetile supports only one parameter.");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "putdowntile" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         PutDownTileEvent event = new PutDownTileEvent(player);
                         game.getGameState().handleEvent(event);
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/putdowntile doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/putdowntile doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "placetile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 2){
-                        String row = firstParameters.get(0);
-                        String column = firstParameters.get(1);
-                        int rowInt = Integer.parseInt(row);
-                        int columnInt = Integer.parseInt(column);
-                        boolean checkPosition = validTilePosition(rowInt, columnInt);
-                        if ((rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) || !checkPosition) {
-                            client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
-                        }
-                        else{
-                            Player player = checkPlayer(client.getNickname());
-                            if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 2){
+                            String row = firstParameters.get(0);
+                            String column = firstParameters.get(1);
+                            int rowInt = Integer.parseInt(row);
+                            int columnInt = Integer.parseInt(column);
+                            boolean checkPosition = validTilePosition(rowInt, columnInt);
+                            if ((rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) || !checkPosition) {
+                                client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
+                            }
+                            else{
                                 PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
                                 game.getGameState().handleEvent(event);
                             }
-                            else{
-                                client.invalidCommand("You are not connected to the game!");
-                            }
+                        }
+                        else{
+                            client.invalidCommand("/placetile supports only two parameters!");
                         }
                     }
-                    else{
-                        client.invalidCommand("/placetile supports only two parameters!");
-                    }
+                }
+                else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
         } //ok
             case "reservetile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 1){
-                        String indexStr = firstParameters.get(0);
-                        int index = Integer.parseInt(indexStr);
-
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 1){
+                            String indexStr = firstParameters.get(0);
+                            int index = Integer.parseInt(indexStr);
                             if (index < 1 || index > 2) {
                                 client.invalidCommand("Index not valid. It must be either 1 or 2");
                             }
@@ -292,33 +278,32 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             }
                         }
-                        else{
-                            client.invalidCommand("You are not connected to the game!");
-                        }
-                    }
-                }
-            } //ok
-            case "fliphourglass" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
-                        FlipHourglassEvent event = new FlipHourglassEvent();
-                        game.getGameState().handleEvent(event);
-                    }
-                    else{
-                        client.invalidCommand("You are not connected to the game!");
                     }
                 }
                 else{
-                    client.invalidCommand("/fliphourglass doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
+                }
+            } //ok
+            case "fliphourglass" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
+                        FlipHourglassEvent event = new FlipHourglassEvent();
+                        game.getGameState().handleEvent(event);
+
+                    }
+                    else{
+                        client.invalidCommand("/fliphourglass doesn't support parameters!");
+                    }
+                }
+                else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "setposition" -> {
-             
-                if (secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
                             String pos = firstParameters.get(0);
                             int position = Integer.parseInt(pos);
@@ -331,36 +316,36 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             }
                         }
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/setposition requires only one parameter!");
                     }
                 }
                 else{
-                    client.invalidCommand("/setposition requires only one parameter!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "pickupfromship" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         PickUpFromShipEvent event = new PickUpFromShipEvent(player);
                         game.getGameState().handleEvent(event);
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/pickupfromship doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/pickupfromship doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "pickupreservedtile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
@@ -375,18 +360,17 @@ public class ServerController {
                         }
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/pickupreservedtile supports only one parameter.");
                     }
                 }
                 else{
-                    client.invalidCommand("/pickupreservedtile supports only one parameter.");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activateengines" -> {
-             
-                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                         if (firstParameters.size() % 2 != 0) {
                             client.invalidCommand("/activateengines needs an even number of row and column for engines.");
                         }
@@ -443,20 +427,20 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             }
                         }
+
                     }
-                    else {
-                        client.invalidCommand("You are not connected to the game!");
+                    else{
+                        client.invalidCommand("/activateengines needs two sets of parameters");
                     }
                 }
-                else{
-                    client.invalidCommand("/activateengines needs two sets of parameters");
+                else {
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activatecannons" -> {
-             
-                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                         if (firstParameters.size() % 2 != 0) {
                             client.invalidCommand("/activatecannons needs an even number of row and column for cannons.");
                         }
@@ -514,20 +498,20 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             }
                         }
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/activatecannons needs two sets of parameters");
                     }
                 }
                 else{
-                    client.invalidCommand("/activatecannons needs two sets of parameters");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activateshield" -> {
-             
-                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                         if (firstParameters.size() != 2) {
                             client.invalidCommand("First set of /activateshield must have two parameters.");
                         }
@@ -563,18 +547,17 @@ public class ServerController {
                         }
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game");
+                        client.invalidCommand("/activateshield needs two sets of parameters");
                     }
                 }
                 else{
-                    client.invalidCommand("/activateshield needs two sets of parameters");
+                    client.invalidCommand("You are not connected to the game");
                 }
             } //ok
             case "removecargo" -> {
-             
-                if (secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if(player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
                         if(firstParameters.size() != 3){
                             client.invalidCommand("/removecargo supports only 3 parameters.");
                         }
@@ -601,20 +584,20 @@ public class ServerController {
 
                             }
                         }
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/removecargo supports only one set of parameters");
                     }
                 }
                 else{
-                    client.invalidCommand("/removecargo supports only one set of parameters");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "addcargo" -> {
-             
-                if (secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if(player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
                         if (firstParameters.size() != 3) {
                             client.invalidCommand("/addcargo supports only 3 parameters.");
                         } else {
@@ -639,18 +622,17 @@ public class ServerController {
                         }
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/addcargo supports only one set of parameters");
                     }
                 }
                 else{
-                    client.invalidCommand("/addcargo supports only one set of parameters");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "switchcargo" -> {
-             
-                if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null) {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                         if (firstParameters.size() != 3 || secondParameters.size() != 2) {
                             client.invalidCommand("For each cargo it's needed to specify the position and the quantity to switch.");
                         } else {
@@ -677,19 +659,19 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             }
                         }
+
+                    }else{
+                        client.invalidCommand("/switchcargo needs two sets of parameters.");
                     }
-                    else{
-                        client.invalidCommand("You are not connected to the game!");
-                    }
-                }else{
-                    client.invalidCommand("/switchcargo needs two sets of parameters.");
+                }
+                else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "ejectpeople" -> {
-             
-                if (secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (secondParameters.isEmpty()){
                         List<List<Integer>> people = new ArrayList<>();
                         if (firstParameters.size() % 3 != 0){
                             client.invalidCommand("/ejectpeople needs a numbero of parameters multiple of 3.");
@@ -724,54 +706,53 @@ public class ServerController {
                                 }
                             }
                         }
+
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/ejectpeople supports only one set of parameters");
                     }
                 }
                 else{
-                    client.invalidCommand("/ejectpeople supports only one set of parameters");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "giveup" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         GiveUpEvent event = new GiveUpEvent(player);
                         game.getGameState().handleEvent(event);
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/giveup doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/giveup doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "viewinventory" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
-                        ViewInventoryEvent event = new ViewInventoryEvent(player);
-                        game.getGameState().handleEvent(event);
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()){
+                        //ViewInventoryEvent event = new ViewInventoryEvent(player);
+                        //game.getGameState().handleEvent(event);
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/viewinventory doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/viewinventory doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "claimreward" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 1){
-                        Player player =  checkPlayer(client.getNickname());
-                        String engage = firstParameters.get(0);
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 1){
+                            String engage = firstParameters.get(0);
                             if (engage.equals("true") || engage.equals("false")){
                                 boolean engageBool = Boolean.parseBoolean(engage);
                                 ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
@@ -782,23 +763,22 @@ public class ServerController {
                             }
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/claimreward supports only one parameter.");
                         }
                     }
                     else{
-                        client.invalidCommand("/claimreward supports only one parameter.");
+                        client.invalidCommand("/claimreward supports only one paramter.");
                     }
                 }
                 else{
-                    client.invalidCommand("/claimreward supports only one paramter.");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             }
             case "choosesubship" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
                             String rowStr = firstParameters.get(0);
                             String colstr = firstParameters.get(1);
 
@@ -815,55 +795,54 @@ public class ServerController {
 
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/choosesubship supports only one parameter.");
                         }
                     }
-                    else{
-                        client.invalidCommand("/choosesubship supports only one parameter.");
+                    else {
+                        client.invalidCommand("/choosesubship supports only one set of parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/choosesubship supports only one set of parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "nochoice" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         NoChoiceEvent event = new NoChoiceEvent(player);
                         game.getGameState().handleEvent(event);
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/nochoice doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/nochoice doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "done" -> {
-             
-                if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                    Player player = checkPlayer(client.getNickname());
-                    if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         DoneEvent event = new DoneEvent(player);
                         game.getGameState().handleEvent(event);
+
                     }
                     else{
-                        client.invalidCommand("You are not connected to the game!");
+                        client.invalidCommand("/done doesn't support parameters!");
                     }
                 }
                 else{
-                    client.invalidCommand("/done doesn't support parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "placeorangealien" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 2){
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 2){
                             String rowStr = firstParameters.get(0);
                             String colStr = firstParameters.get(1);
 
@@ -877,25 +856,25 @@ public class ServerController {
                                 PlaceOrangeAlienEvent event = new PlaceOrangeAlienEvent(player, row-5, col-4);
                                 game.getGameState().handleEvent(event);
                             }
+
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/placeorangealien supports only one set of parameters!");
                         }
                     }
-                    else{
+                    else {
                         client.invalidCommand("/placeorangealien supports only one set of parameters!");
                     }
                 }
-                else {
-                    client.invalidCommand("/placeorangealien supports only one set of parameters!");
+                else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "placepurplealien" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 2){
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 2){
                             String rowStr = firstParameters.get(0);
                             String colStr = firstParameters.get(1);
 
@@ -909,25 +888,25 @@ public class ServerController {
                                 PlacePurpleAlienEvent event = new PlacePurpleAlienEvent(player, row-5, col-4);
                                 game.getGameState().handleEvent(event);
                             }
+
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/placepurplealien supports only one set of parameters!");
                         }
                     }
-                    else{
+                    else {
                         client.invalidCommand("/placepurplealien supports only one set of parameters!");
                     }
                 }
-                else {
-                    client.invalidCommand("/placepurplealien supports only one set of parameters!");
+                else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "removetile" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() == 2){
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() == 2){
                             String rowStr = firstParameters.get(0);
                             String colStr = firstParameters.get(1);
 
@@ -941,9 +920,10 @@ public class ServerController {
                                 RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
                                 game.getGameState().handleEvent(event);
                             }
+
                         }
                         else{
-                            client.invalidCommand("You are not connected to the game!");
+                            client.invalidCommand("/removetile supports only one set of parameters!");
                         }
                     }
                     else{
@@ -951,31 +931,35 @@ public class ServerController {
                     }
                 }
                 else{
-                    client.invalidCommand("/removetile supports only one set of parameters!");
+                    client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "chooseplanet" -> {
-             
-                if (secondParameters.isEmpty()){
-                    if (firstParameters.size() != 1){
-                        client.invalidCommand("/chooseplanet supports only one parameter.");
-                    }
-                    else{
-                        Player player = checkPlayer(client.getNickname());
-                        if (player != null){
+                Player player = checkPlayer(client.getNickname());
+                if (player != null){
+                    if (secondParameters.isEmpty()){
+                        if (firstParameters.size() != 1){
+                            client.invalidCommand("/chooseplanet supports only one parameter.");
+                        }
+                        else{
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
                             ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
                             game.getGameState().handleEvent(event);
+
+
                         }
-                        else{
-                            client.invalidCommand("You are not connected to the game!");
-                        }
+                    }
+                    else{
+                        client.invalidCommand("/chooseplanet supports only one set of parameters.");
                     }
                 }
                 else{
-                    client.invalidCommand("/chooseplanet supports only one set of parameters.");
+                    client.invalidCommand("You are not connected to the game!");
                 }
+            }
+            default -> {
+                client.invalidCommand("Invalid command. Type /help for a list of available commands.");
             }
         }
     }

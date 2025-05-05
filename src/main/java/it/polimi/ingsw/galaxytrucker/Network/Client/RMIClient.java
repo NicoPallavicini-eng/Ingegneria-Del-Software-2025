@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Network.Client;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 
 import java.rmi.NotBoundException;
@@ -26,15 +27,19 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         Scanner scanner = new Scanner(System.in);
         String input = new String("0");
         while(!input.equals("/disconnect")){
+            try{
             System.out.print("Enter command: ");
             input = scanner.nextLine();
             //System.out.println("Server command: " + input);
             server.showMessage(this + input);
             server.handleUserInput(this,input);
-            try{
-                server.showMessage(input);
+            server.showMessage(input);
+
             }catch(RemoteException e){
                 e.printStackTrace();
+            }
+            catch(IllegalEventException e){
+                System.out.println(e.getMessage());
             }
         }
         System.out.println("Exited Loop");
