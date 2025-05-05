@@ -968,10 +968,8 @@ public class ServerController {
                         if (player != null){
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
-                            else{
-                                ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
-                                gameState.handleEvent(event);
-                            }
+                            ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
+                            gameState.handleEvent(event);
                         }
                         else{
                             client.invalidCommand("You are not connected to the game!");
