@@ -29,7 +29,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             System.out.print("Enter command: ");
             input = scanner.nextLine();
             //System.out.println("Server command: " + input);
-            server.showMessage(input);
+            server.showMessage(this + input);
             server.handleUserInput(this,input);
             try{
                 server.showMessage(input);

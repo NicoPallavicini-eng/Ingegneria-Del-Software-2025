@@ -22,10 +22,6 @@ public class ServerController {
     private final Game game = new Game();
 
     /**
-     * Constructs a new ServerController and initializes a new game.
-     */
-
-    /**
      * Handles user input from the client and executes the corresponding command.
      *
      * @param client The VirutalView instance representing the client.
@@ -46,35 +42,26 @@ public class ServerController {
         // Split input into command and parameters
         String[] parts = cleanInput.split(" ", 2);
         String command = parts[0];
+        String par = parts.length > 1 ? parts[1].trim() : "";
+
+        String[] subParameters = par.split(";", 2);
+
         List<String> firstParameters = new ArrayList<>();
         List<String> secondParameters = new ArrayList<>();
-        if(parts.length > 1){
-            String parString = parts.length > 1 ? parts[1] : "";
 
-            // Split parameters into two lists
-            String[] subParameters = parString.split(";", 2);
-
-
-            if (subParameters.length > 0){
-                // Split parameters with comma
-                firstParameters = Arrays.stream(subParameters[0].split(","))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .toList();
-
-                secondParameters = Arrays.stream(subParameters[1].split(","))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .toList();
-            }
-            // Check if the command exists
-            executeCommand(command, firstParameters, secondParameters, client);
-        }else{
-            executeCommand(command,firstParameters,secondParameters,client);
+        if (subParameters.length >= 1 && !subParameters[0].isBlank()) {
+            firstParameters = Arrays.stream(subParameters[0].split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
         }
-
-
-
+        if (subParameters.length == 2 && !subParameters[1].isBlank()){
+            secondParameters = Arrays.stream(subParameters[1].split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+        }
+        executeCommand(command,firstParameters,secondParameters,client);
     }
 
     /**
