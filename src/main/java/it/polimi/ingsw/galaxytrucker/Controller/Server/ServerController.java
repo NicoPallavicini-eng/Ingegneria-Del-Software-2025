@@ -968,9 +968,6 @@ public class ServerController {
                         if (player != null){
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
-                            if (index < 1 || index > 3){
-                                client.invalidCommand("Index not valid. It must be between 1 and 3");
-                            }
                             else{
                                 ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
                                 gameState.handleEvent(event);
