@@ -22,7 +22,7 @@ public class ServerController {
     private final Game game;
 
     /**
-     * Constructs a new ServerController and intializes a new game.
+     * Constructs a new ServerController and initializes a new game.
      */
     public ServerController() {
         this.game = new Game();
@@ -126,7 +126,7 @@ public class ServerController {
                             if (!playerOptional.isPresent()) {
                                 client.setNickname(nickname);
 
-                                ConnectEvent event = new ConnectEvent(this.game, nickname, "localhost");
+                                ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                 gameState.handleEvent(event);
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
@@ -972,7 +972,7 @@ public class ServerController {
                                 client.invalidCommand("Index not valid. It must be between 1 and 3");
                             }
                             else{
-                                ChoosePlanetEvent event = new ChoosePlanetEvent(this.game, player, index);
+                                ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
                                 gameState.handleEvent(event);
                             }
                         }
