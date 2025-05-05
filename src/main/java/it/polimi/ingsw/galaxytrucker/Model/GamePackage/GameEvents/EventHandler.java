@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Planet;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
@@ -553,6 +554,7 @@ TRAVELLING:
         int counter = 0;
         Ship ship = event.player().getShip();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        CabinTile cabin = null;
         for(List<Integer> listOfParameters : event.people()){
             for(Integer parameter : listOfParameters){
                 cabinTileVisitor = new CabinTileVisitor();
@@ -575,10 +577,10 @@ TRAVELLING:
                     throw new IllegalEventException("Selected Tile is not present");
                 }
 
-                tile.accept(cabinTileVisitor);
+                //tile.accept(cabinTileVisitor);
                 ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
                 if(listCabin.size()!=0){
-                    CabinTile cabin = listCabin.getFirst();
+                    cabin = listCabin.getFirst();
                 }else{
                     throw new IllegalEventException("Selected Tile is not cabin");
                 }
@@ -628,7 +630,7 @@ TRAVELLING:
                 Tile tile = optionalTile.get();
                 tile.accept(cabinTileVisitor);
                 ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
-                CabinTile cabin = listCabin.getFirst();
+                cabin = listCabin.getFirst();
 
                 if(counter==2){
                     peopleToLoose=parameter;
