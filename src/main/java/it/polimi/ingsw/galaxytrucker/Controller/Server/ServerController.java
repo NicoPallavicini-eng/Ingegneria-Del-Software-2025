@@ -6,6 +6,8 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
+import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualCards.VirtualCard;
+import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualCards.VirtualDeck;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ import java.util.Optional;
 
 public class ServerController {
     private final Game game = new Game();
+
+    public ServerController(){
+
+    }
 
     /**
      * Handles user input from the client and executes the corresponding command.
