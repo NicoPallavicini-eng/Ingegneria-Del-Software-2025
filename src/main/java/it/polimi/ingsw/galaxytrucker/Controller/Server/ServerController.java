@@ -116,7 +116,7 @@ public class ServerController {
                     else if (firstParameters.size() == 1) {
                         String clientNickname = client.getNickname();
                         String nickname = firstParameters.get(0);
-                        if (nickname != null) {
+                        if (clientNickname != null) {
                             client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else {
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
@@ -126,7 +126,7 @@ public class ServerController {
                             if (!playerOptional.isPresent()) {
                                 client.setNickname(nickname);
 
-                                ConnectEvent event = new ConnectEvent(nickname, "localhost");
+                                ConnectEvent event = new ConnectEvent(this.game, nickname, "localhost");
                                 gameState.handleEvent(event);
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
@@ -957,6 +957,34 @@ public class ServerController {
                     client.invalidCommand("/removetile supports only one set of parameters!");
                 }
             } //ok
+            case "chooseplanet" -> {
+                GameState gameState = new GameState();
+                if (secondParameters.isEmpty()){
+                    if (firstParameters.size() != 1){
+                        client.invalidCommand("/chooseplanet supports only one parameter.");
+                    }
+                    else{
+                        Player player = checkPlayer(client.getNickname());
+                        if (player != null){
+                            String indexStr = firstParameters.get(0);
+                            int index = Integer.parseInt(indexStr);
+                            if (index < 1 || index > 3){
+                                client.invalidCommand("Index not valid. It must be between 1 and 3");
+                            }
+                            else{
+                                ChoosePlanetEvent event = new ChoosePlanetEvent(this.game, player, index);
+                                gameState.handleEvent(event);
+                            }
+                        }
+                        else{
+                            client.invalidCommand("You are not connected to the game!");
+                        }
+                    }
+                }
+                else{
+                    client.invalidCommand("/chooseplanet supports only one set of parameters.");
+                }
+            }
         }
     }
 

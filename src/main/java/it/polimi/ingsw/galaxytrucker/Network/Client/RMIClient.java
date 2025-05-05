@@ -112,6 +112,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 "/giveup - Give up the game. No parameters needed.\n" +
                 "/viewinvetory - View your inventory. No parameters needed.\n" +
                 "/choosesubship - Choose a subship in case of a destruction of part of your ship. Requires the position of a random tile in the subship that you want to keep.\n" +
+                "/chooseplanet - Choose a planet when the planet card is revealed. Requires the index of the planet you want to choose.\n" +
                 "/nochoice - Declares that you won't do any choice. No parameters needed.\n" +
                 "/done - Declare that you are done with your action. No parameters needed.\n" +
                 "\nEND GAME PHASE\n" +
