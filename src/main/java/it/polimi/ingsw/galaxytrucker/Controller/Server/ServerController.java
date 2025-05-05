@@ -19,14 +19,11 @@ import java.util.Optional;
  */
 
 public class ServerController {
-    private final Game game;
+    private final Game game = new Game();
 
     /**
      * Constructs a new ServerController and initializes a new game.
      */
-    public ServerController() {
-        this.game = new Game();
-    }
 
     /**
      * Handles user input from the client and executes the corresponding command.
@@ -92,32 +89,32 @@ public class ServerController {
     private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client) throws RemoteException {
         switch(command){
             case "help" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
                 }
 //                HelpEvent event = new HelpEvent();
-//                gameState.handleEvent(event);
+//                game.getGameState().handleEvent(event);
                 client.helpMessage();
             } //ok
             case "viewleaderboard" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewleaderboard doesn't support parameters!");
                 }
                 ViewLeaderboardEvent event = new ViewLeaderboardEvent();
-                gameState.handleEvent(event);
+                game.getGameState().handleEvent(event);
             } //ok
             case "viewships" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewships doesn't support parameters!");
                 }
                 ViewShipsEvent event = new ViewShipsEvent();
-                gameState.handleEvent(event);
+                game.getGameState().handleEvent(event);
             } //ok
             case "connect" -> {
-                GameState gameState = new GameState();
+              //GameState gameState = game.getGameState();
                 if (secondParameters.isEmpty()){
                     if (firstParameters.isEmpty()) {
                         client.invalidCommand("/connect request one parameter.");
@@ -136,7 +133,7 @@ public class ServerController {
                                 client.setNickname(nickname);
 
                                 ConnectEvent event = new ConnectEvent(nickname, "localhost");
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
 
@@ -149,13 +146,13 @@ public class ServerController {
                 }
             } //ok
             case "disconnect" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     String clientNickname = client.getNickname();
                     Player player = checkPlayer(clientNickname);
                     if (player != null){
                         DisconnectEvent event = new DisconnectEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else {
                         client.invalidCommand("You are not connected to the game!");
@@ -166,7 +163,7 @@ public class ServerController {
                 }
             } //ok
             case "setnumberofplayers" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1) {
                         String numberOfPlayersStr = firstParameters.get(0);
@@ -178,7 +175,7 @@ public class ServerController {
                                 client.invalidCommand("Number of players not valid. It must be between 2 and 4");
                             } else {
                                 SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                         else{
@@ -195,7 +192,7 @@ public class ServerController {
                 }
             } //ok
             case "pickuptile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if(firstParameters.size() == 1) {
                         String tilePosition = firstParameters.get(0);
@@ -205,7 +202,7 @@ public class ServerController {
                             Player player = checkPlayer(clientNickname);
                             if (player != null) {
                                 PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             } else {
                                 client.invalidCommand("You are not connected to the game!");
                             }
@@ -222,14 +219,14 @@ public class ServerController {
                 }
             } // ok
             case "rotatetile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1) {
                         Player player = checkPlayer(client.getNickname());
                         if (player != null){
                             String side = firstParameters.get(0);
                             RotateTileEvent event = new RotateTileEvent(player, side);
-                            gameState.handleEvent(event);
+                            game.getGameState().handleEvent(event);
                         }
                         else{
                             client.invalidCommand("You are not connected to the game!");
@@ -244,12 +241,12 @@ public class ServerController {
                 }
             } //ok
             case "putdowntile" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         PutDownTileEvent event = new PutDownTileEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -260,7 +257,7 @@ public class ServerController {
                 }
             } //ok
             case "placetile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){
                         String row = firstParameters.get(0);
@@ -275,7 +272,7 @@ public class ServerController {
                             Player player = checkPlayer(client.getNickname());
                             if (player != null){
                                 PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                             else{
                                 client.invalidCommand("You are not connected to the game!");
@@ -288,7 +285,7 @@ public class ServerController {
                 }
         } //ok
             case "reservetile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1){
                         String indexStr = firstParameters.get(0);
@@ -301,7 +298,7 @@ public class ServerController {
                             }
                             else{
                                 ReserveTileEvent event = new ReserveTileEvent(player, index-1);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                         else{
@@ -311,12 +308,12 @@ public class ServerController {
                 }
             } //ok
             case "fliphourglass" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         FlipHourglassEvent event = new FlipHourglassEvent();
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -327,7 +324,7 @@ public class ServerController {
                 }
             } //ok
             case "setposition" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -340,7 +337,7 @@ public class ServerController {
                             } else {
                                 // Check if position is valid?
                                 SetPositionEvent event = new SetPositionEvent(player, position);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                     }
@@ -353,12 +350,12 @@ public class ServerController {
                 }
             } //ok
             case "pickupfromship" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         PickUpFromShipEvent event = new PickUpFromShipEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -369,7 +366,7 @@ public class ServerController {
                 }
             } //ok
             case "pickupreservedtile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -382,7 +379,7 @@ public class ServerController {
                                 client.invalidCommand("Index not valid. It must be either 1 or 2");
                             } else {
                                 PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                     }
@@ -395,7 +392,7 @@ public class ServerController {
                 }
             } //ok
             case "activateengines" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -452,7 +449,7 @@ public class ServerController {
                                     }
                                 }
                                 ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                     }
@@ -465,7 +462,7 @@ public class ServerController {
                 }
             } //ok
             case "activatecannons" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -523,7 +520,7 @@ public class ServerController {
                                 }
                                 // batteries cannot be ArrayList<Pair<Integer, Integer>>
                                 ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                     }
@@ -536,7 +533,7 @@ public class ServerController {
                 }
             } //ok
             case "activateshield" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -566,7 +563,7 @@ public class ServerController {
                                 }
                                 else{
                                     ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield-5, colShield-4, rowBat-5, colBat-4);
-                                    gameState.handleEvent(event);
+                                    game.getGameState().handleEvent(event);
                                 }
                             }
                             else{
@@ -583,7 +580,7 @@ public class ServerController {
                 }
             } //ok
             case "removecargo" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if(player != null){
@@ -608,7 +605,7 @@ public class ServerController {
                                 }
                                 else{
                                     RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
-                                    gameState.handleEvent(event);
+                                    game.getGameState().handleEvent(event);
                                 }
 
                             }
@@ -623,7 +620,7 @@ public class ServerController {
                 }
             } //ok
             case "addcargo" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if(player != null) {
@@ -645,7 +642,7 @@ public class ServerController {
                                     client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 } else {
                                     AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
-                                    gameState.handleEvent(event);
+                                    game.getGameState().handleEvent(event);
                                 }
                             }
                         }
@@ -659,7 +656,7 @@ public class ServerController {
                 }
             } //ok
             case "switchcargo" -> {
-                GameState gameState = new GameState();
+             
                 if (!firstParameters.isEmpty() && !secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null) {
@@ -686,7 +683,7 @@ public class ServerController {
                                 client.invalidCommand("Invalid value. It must be between 1 and 3");
                             } else {
                                 SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                     }
@@ -698,7 +695,7 @@ public class ServerController {
                 }
             } //ok
             case "ejectpeople" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
@@ -731,7 +728,7 @@ public class ServerController {
                                         peopleRow.add(value);
                                         people.add(peopleRow);
                                         EjectPeopleEvent event = new EjectPeopleEvent(player, people);
-                                        gameState.handleEvent(event);
+                                        game.getGameState().handleEvent(event);
                                     }
                                 }
                             }
@@ -746,12 +743,12 @@ public class ServerController {
                 }
             } //ok
             case "giveup" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         GiveUpEvent event = new GiveUpEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -762,12 +759,12 @@ public class ServerController {
                 }
             } //ok
             case "viewinventory" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         ViewInventoryEvent event = new ViewInventoryEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -778,7 +775,7 @@ public class ServerController {
                 }
             } //ok
             case "claimreward" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 1){
                         Player player =  checkPlayer(client.getNickname());
@@ -787,7 +784,7 @@ public class ServerController {
                             if (engage.equals("true") || engage.equals("false")){
                                 boolean engageBool = Boolean.parseBoolean(engage);
                                 ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                             else{
                                 client.invalidCommand("The parameter must be either true or false.");
@@ -806,7 +803,7 @@ public class ServerController {
                 }
             }
             case "choosesubship" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
                         Player player = checkPlayer(client.getNickname());
@@ -822,7 +819,7 @@ public class ServerController {
                             }
                             else{
                                 ChooseSubShipEvent event = new ChooseSubShipEvent(player, row-5, col-4);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
 
                         }
@@ -839,12 +836,12 @@ public class ServerController {
                 }
             } //ok
             case "nochoice" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         NoChoiceEvent event = new NoChoiceEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -855,12 +852,12 @@ public class ServerController {
                 }
             } //ok
             case "done" -> {
-                GameState gameState = new GameState();
+             
                 if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                     Player player = checkPlayer(client.getNickname());
                     if (player != null){
                         DoneEvent event = new DoneEvent(player);
-                        gameState.handleEvent(event);
+                        game.getGameState().handleEvent(event);
                     }
                     else{
                         client.invalidCommand("You are not connected to the game!");
@@ -871,7 +868,7 @@ public class ServerController {
                 }
             } //ok
             case "placeorangealien" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){
                         Player player = checkPlayer(client.getNickname());
@@ -887,7 +884,7 @@ public class ServerController {
                             }
                             else{
                                 PlaceOrangeAlienEvent event = new PlaceOrangeAlienEvent(player, row-5, col-4);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                         else{
@@ -903,7 +900,7 @@ public class ServerController {
                 }
             } //ok
             case "placepurplealien" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){
                         Player player = checkPlayer(client.getNickname());
@@ -919,7 +916,7 @@ public class ServerController {
                             }
                             else{
                                 PlacePurpleAlienEvent event = new PlacePurpleAlienEvent(player, row-5, col-4);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                         else{
@@ -935,7 +932,7 @@ public class ServerController {
                 }
             } //ok
             case "removetile" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() == 2){
                         Player player = checkPlayer(client.getNickname());
@@ -951,7 +948,7 @@ public class ServerController {
                             }
                             else{
                                 RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
-                                gameState.handleEvent(event);
+                                game.getGameState().handleEvent(event);
                             }
                         }
                         else{
@@ -967,7 +964,7 @@ public class ServerController {
                 }
             } //ok
             case "chooseplanet" -> {
-                GameState gameState = new GameState();
+             
                 if (secondParameters.isEmpty()){
                     if (firstParameters.size() != 1){
                         client.invalidCommand("/chooseplanet supports only one parameter.");
@@ -978,7 +975,7 @@ public class ServerController {
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
                             ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
-                            gameState.handleEvent(event);
+                            game.getGameState().handleEvent(event);
                         }
                         else{
                             client.invalidCommand("You are not connected to the game!");
