@@ -80,8 +80,6 @@ public class ServerController {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/help doesn't support parameters!");
                 }
-//                HelpEvent event = new HelpEvent();
-//                game.getGameState().handleEvent(event);
                 client.helpMessage();
             } //ok
             case "viewleaderboard" -> {
