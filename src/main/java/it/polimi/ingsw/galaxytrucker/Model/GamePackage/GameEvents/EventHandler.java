@@ -60,8 +60,7 @@ TRAVELLING:
     public record ConnectEvent(String nickname, String IP) implements GameEvent
      */
     //aggiunger il riferimento a Game
-    public static void handleEvent(ConnectEvent event) {
-        Game game = event.game();
+    public static void handleEvent(ConnectEvent event, Game game){
         List<Player> listPlayer = game.getListOfPlayers();
         boolean finished = false;
 
@@ -121,7 +120,7 @@ TRAVELLING:
     public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent
     //il riferimento a Game
      */
-    public static void handleEvent(ChoosePlanetEvent event)throws IllegalEventException {
+/*    public static void handleEvent(ChoosePlanetEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         PlanetsState planetState = (PlanetsState) event.game().getGameState();
         int planetIndex = event.planetIndex();
@@ -138,6 +137,8 @@ TRAVELLING:
         ship.addBlocks(listCargo);
 
     }
+
+ */
     /*
     public record ActivateEnginesEvent(Player player, List<List<Integer>> engines, List<List<Integer>> batteries) implements GameEvent
      */

@@ -39,6 +39,7 @@ public class PlanetsState extends TravellingState{
     }
 
     public void handleEvent(ChoosePlanetEvent event){
+        // todo check index
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
         }

@@ -22,7 +22,7 @@ public class WaitingState extends GameState {
         if(game.getNumberOfPlayers() == 0 && !game.getListOfPlayers().isEmpty()) {
             throw new NumberOfPlayersNotSetException("The first player has to set the number of players");
         }
-        EventHandler.handleEvent(event);
+        EventHandler.handleEvent(event, game);
         if(game.getListOfPlayers().size() == game.getNumberOfPlayers()) {
             next();
         }
