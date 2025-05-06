@@ -5,7 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 
 public class WaitingState extends GameState {
     private final Game game;
-    public WaitingState( Game game ) {
+    public WaitingState(Game game ) {
         this.game = game;
     }
 
@@ -18,7 +18,7 @@ public class WaitingState extends GameState {
         game.getGameState().init();
     }
 
-   public void handleEvent(ConnectEvent event) throws IllegalEventException {
+   public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {
         if(game.getNumberOfPlayers() == -1 && !game.getListOfPlayers().isEmpty()) {
             throw new IllegalEventException("The first player has to set the number of players");
         }
@@ -29,7 +29,7 @@ public class WaitingState extends GameState {
    }
 
    public void handleEvent(SetNumberOfPlayersEvent event){
-        if(game.getNumberOfPlayers()!=0){
+        if(game.getNumberOfPlayers()!=-1){
             throw new IllegalEventException("The first player has already set the number of players");
         }
         else{

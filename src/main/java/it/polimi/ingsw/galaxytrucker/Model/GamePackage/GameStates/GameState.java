@@ -104,4 +104,7 @@ public abstract class GameState {
     public void handleEvent(ClaimRewardEvent event) throws IllegalEventException {
         throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
+    public void handleEvent(SetNumberOfPlayersEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
 }

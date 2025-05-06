@@ -77,10 +77,10 @@ TRAVELLING:
             //chiedere sul funzionamento;
             //DA FINIRE
             //check sulla quantita dei giocatori
-            if(game.getListOfPlayers().size()-game.getNumberOfPlayers()<=0){
+            if(game.getListOfPlayers().size()-game.getNumberOfPlayers()>0 && game.getNumberOfPlayers()!=-1){
                 throw new IllegalEventException("Number of players is maximum");
             }else{
-                Player playerNew = new Player(event.nickname(),event.IP(), Color.BLUE); //COLOR TO BE CHANGED!! PLACEHOLDER SO THAT CODE RUNS
+                Player playerNew = new Player(event.IP(),event.nickname(), Color.BLUE); //COLOR TO BE CHANGED!! PLACEHOLDER SO THAT CODE RUNS
                 game.addPlayer(playerNew);
             }
         }else{
