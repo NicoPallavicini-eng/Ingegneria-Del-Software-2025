@@ -18,9 +18,9 @@ public class WaitingState extends GameState {
         game.getGameState().init();
     }
 
-   public void handleEvent(ConnectEvent event) throws NumberOfPlayersNotSetException {
-        if(game.getNumberOfPlayers() == 0 && !game.getListOfPlayers().isEmpty()) {
-            throw new NumberOfPlayersNotSetException("The first player has to set the number of players");
+   public void handleEvent(ConnectEvent event) throws IllegalEventException {
+        if(game.getNumberOfPlayers() == -1 && !game.getListOfPlayers().isEmpty()) {
+            throw new IllegalEventException("The first player has to set the number of players");
         }
         EventHandler.handleEvent(event, game);
         if(game.getListOfPlayers().size() == game.getNumberOfPlayers()) {

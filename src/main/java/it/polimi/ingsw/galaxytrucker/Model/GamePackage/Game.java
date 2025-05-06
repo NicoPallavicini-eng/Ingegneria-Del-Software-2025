@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Game {
     private final List<Player> listOfPlayers = new ArrayList<>();
-    private int numberOfPlayers;
+    private int numberOfPlayers = -1;
     private GameState gameState = new WaitingState(this);
     private final Hourglass hourglass = new Hourglass();
     private TilePile tilePile;  
