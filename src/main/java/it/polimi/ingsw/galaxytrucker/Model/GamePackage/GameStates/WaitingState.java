@@ -33,7 +33,7 @@ public class WaitingState extends GameState {
             throw new IllegalEventException("The first player has already set the number of players");
         }
         else{
-            EventHandler.handleEvent(event);
+            game.setNumberOfPlayers(event.numberOfPlayers());
         }
    }
 }

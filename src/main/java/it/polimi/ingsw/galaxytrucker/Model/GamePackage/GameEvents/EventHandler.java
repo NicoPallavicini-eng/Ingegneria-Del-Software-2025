@@ -53,14 +53,11 @@ TRAVELLING:
  - /viewinventory
 
 
-     */
-    public static void handleEvent(DoneEvent event){}
-    public static void handleEvent(NoChoiceEvent event){}
+
     /*
     public record ConnectEvent(String nickname, String IP) implements GameEvent
      */
-    //aggiunger il riferimento a Game
-    public static void handleEvent(ConnectEvent event, Game game){
+    //istances a new player and adds it to the list of players in gam    public static void handleEvent(ConnectEvent event, Game game){
         List<Player> listPlayer = game.getListOfPlayers();
         boolean finished = false;
 
@@ -93,26 +90,44 @@ TRAVELLING:
     }
     /*
     public record DisconnectEvent(Player player) implements GameEvent
+        removes it from the list of players and ends game
+        to change if we implement disconnection resilience
      */
     public static void handleEvent(DisconnectEvent event) {
         Player player = event.player();
         player.setOnlineStatus(false);
     }
-    public static void handleEvent(SetNumberOfPlayersEvent event) {}
+
+    // evitabile
     public static void handleEvent(PickUpTileEvent event) {}
     /*
     public record RotateTileEvent(Player player, boolean right) implements GameEvent
      */
-    public static void handleEvent(RotateTileEvent event) {}
-    public static void handleEvent(PutDownTileEvent event) {}
-    public static void handleEvent(PlaceOrangeAlienEvent event) {}
-    public static void handleEvent(PlacePurpleAlienEvent event) {}
-    public static void handleEvent(PlaceTileEvent event) {}
-    public static void handleEvent(ReserveTileEvent event) {}
-    public static void handleEvent(RemoveTileEvent event) {}
 
-    public static void handleEvent(FlipHourglassEvent event) {}
+    //checks tile in hand not null and rotates
+    public static void handleEvent(RotateTileEvent event) {}
+
+    //checks that it is not null
+    public static void handleEvent(PutDownTileEvent event) {}
+
+    //checks correct tile and life support
+    public static void handleEvent(PlaceOrangeAlienEvent event) {}
+
+    //checks correct tile and life support
+    public static void handleEvent(PlacePurpleAlienEvent event) {}
+
+    // checks tile in hand attribute and that the selected spot is available then puts it down
+    public static void handleEvent(PlaceTileEvent event) {}
+
+    //checks for available spots and tile in hand not null
+    public static void handleEvent(ReserveTileEvent event) {}
+
+    // gira
+    public static void handleEvent(FlipHourglassEvent event, Game game) {}
+    // mi sa che tolgo
     public static void handleEvent(SetPositionEvent event) {}
+
+    // picks up the last placed
     public static void handleEvent(PickUpFromShipEvent event) {}
     public static void handleEvent(PickUpReservedTileEvent event) {}
     public static void handleEvent(ViewDeckEvent event) {}
@@ -697,6 +712,14 @@ TRAVELLING:
 
     public static void handleEvent(ClaimRewardEvent event) {
         // TODO do
+    }
+
+    public static void handleEvent(RemoveTileEvent event) {
+
+    }
+
+    public static void handleEvent(FlipHourglassEvent event) {
+
     }
 }
 
