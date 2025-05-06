@@ -1,8 +1,14 @@
 package it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualPlayerShip;
 
+import it.polimi.ingsw.galaxytrucker.Controller.ViewObserver.Listener;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Hourglass;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualColor;
 
-public class VirtualPlayer {
+public class VirtualPlayer implements Listener {
     private String nickname;
     private VirtualShip ship;
     private int input;
@@ -10,7 +16,6 @@ public class VirtualPlayer {
 
     private String playerIp;
     private boolean onlineStatus;
-
 
     public VirtualPlayer(String playerIp, String nickname, VirtualColor color){
         this.playerIp = playerIp;
@@ -44,4 +49,14 @@ public class VirtualPlayer {
     public boolean getOnlineStatus() {
         return onlineStatus;
     }
+
+    @Override
+    public void update(Player player) {
+        // set all variables
+    }
+
+    public void update(Ship ship) {}
+    public void update(Hourglass hourglass) {}
+    public void update(TilePile tilePile) {}
+    public void update(Game game) {}
 }

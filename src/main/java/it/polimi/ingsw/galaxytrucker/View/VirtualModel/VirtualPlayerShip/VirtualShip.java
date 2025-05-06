@@ -1,5 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualPlayerShip;
 
+import it.polimi.ingsw.galaxytrucker.Controller.ViewObserver.Listener;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Hourglass;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualColor;
 import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualTiles.VirtualTile;
 
@@ -7,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VirtualShip {
+public class VirtualShip implements Listener {
 
     private ArrayList<ArrayList<VirtualTile>> floorplanArrayList;
     private final VirtualColor color;
@@ -33,6 +39,16 @@ public class VirtualShip {
 
     //player position
     private int playerPosition;
+
+    @Override
+    public void update(Ship ship) {
+        // set all variables
+    }
+
+    public void update(Player player) {}
+    public void update(Hourglass hourglass) {}
+    public void update(TilePile tilePile) {}
+    public void update(Game game) {}
 
     public VirtualShip(VirtualColor color){
         this.color = color;

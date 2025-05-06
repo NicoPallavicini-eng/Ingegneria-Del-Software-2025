@@ -7,6 +7,7 @@ module it.polimi.ingsw.galaxytrucker {
 
     requires org.controlsfx.controls;
     requires java.rmi;
+    requires jdk.jfr;
 
     opens it.polimi.ingsw.galaxytrucker to javafx.fxml;
     exports it.polimi.ingsw.galaxytrucker;

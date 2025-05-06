@@ -1,0 +1,5 @@
+View:
+
+Virtual Model (getters)
+
+link VM con Model: Player, Ship, Hourglass, Game, TilePile (no card perchè salvato in Game)
