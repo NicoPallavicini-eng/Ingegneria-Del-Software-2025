@@ -119,10 +119,15 @@ public class ServerController {
                                     .findAny();
 
                             if (!playerOptional.isPresent()) {
-                                client.setNickname(nickname);
+                                try{
+                                    ConnectEvent event = new ConnectEvent(nickname, "localhost");
+                                    game.getGameState().handleEvent(event);
+                                    client.setNickname(nickname);
+                                }
+                                catch(IllegalArgumentException e){
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                }
 
-                                ConnectEvent event = new ConnectEvent(nickname, "localhost");
-                                game.getGameState().handleEvent(event);
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
 
