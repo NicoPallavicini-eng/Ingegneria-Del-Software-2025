@@ -58,6 +58,7 @@ TRAVELLING:
     public record ConnectEvent(String nickname, String IP) implements GameEvent
      */
     //istances a new player and adds it to the list of players in gam    public static void handleEvent(ConnectEvent event, Game game){
+    public static void handleEvent(ConnectEvent event, Game game){
         List<Player> listPlayer = game.getListOfPlayers();
         boolean finished = false;
 
