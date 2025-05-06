@@ -1,9 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GameEvent;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 
-public class GameState {
+public abstract class GameState {
 
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {
          throw new IllegalEventException("The player used a command not available in this phase of the game.");
@@ -12,4 +12,95 @@ public class GameState {
     public void next(){};
     public void init(){};
 
+    public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(DisconnectEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PickUpTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(RotateTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PutDownTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PlaceOrangeAlienEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PlacePurpleAlienEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PlaceTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ReserveTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(FlipHourglassEvent event, Game game) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(SetPositionEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PickUpFromShipEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(PickUpReservedTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ViewDeckEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ActivateEnginesEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ActivateCannonsEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ActivateShieldEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(RemoveCargoEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(AddCargoEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(SwitchCargoEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(EjectPeopleEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(GiveUpEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(ClaimRewardEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
 }
