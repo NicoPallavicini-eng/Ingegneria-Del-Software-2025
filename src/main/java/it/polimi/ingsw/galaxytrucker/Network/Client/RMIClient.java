@@ -39,7 +39,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 e.printStackTrace();
             }
             catch(IllegalEventException e){
-                System.out.println(e.getMessage());
+                System.out.println("Error: "+ e.getMessage());
             }
         }
         System.out.println("Exited Loop");
