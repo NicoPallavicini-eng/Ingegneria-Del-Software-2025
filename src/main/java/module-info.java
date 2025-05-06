@@ -10,4 +10,6 @@ module it.polimi.ingsw.galaxytrucker {
 
     opens it.polimi.ingsw.galaxytrucker to javafx.fxml;
     exports it.polimi.ingsw.galaxytrucker;
+
+    exports it.polimi.ingsw.galaxytrucker.Controller.Server;
 }

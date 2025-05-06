@@ -72,6 +72,4 @@ public class Game {
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
-
-
 }

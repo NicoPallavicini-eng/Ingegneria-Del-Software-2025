@@ -106,9 +106,7 @@ public class ServerController {
             case "connect" -> {
               //GameState gameState = game.getGameState();
                 if (secondParameters.isEmpty()) {
-                    if (firstParameters.isEmpty()) {
-                        client.invalidCommand("/connect request one parameter.");
-                    } else if (firstParameters.size() == 1) {
+                    if (firstParameters.size() == 1) {
                         String clientNickname = client.getNickname();
                         String nickname = firstParameters.get(0);
                         if (clientNickname != null) {
@@ -130,9 +128,10 @@ public class ServerController {
 
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
-
                             }
                         }
+                    } else {
+                        client.invalidCommand("/connect request one parameter.");
                     }
                 }
                 else{
