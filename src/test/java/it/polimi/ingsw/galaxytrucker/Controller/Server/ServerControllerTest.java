@@ -4,7 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ServerControllerTest {
 
     private ServerController serverController;
-    private TestVirtualView testClient;
+    private TestVirtualClient testClient;
     private TestGame testGame;
     private TestGameState testGameState;
 
@@ -25,7 +25,7 @@ class ServerControllerTest {
     void setUp() {
         testGameState = new TestGameState();
         testGame = new TestGame(testGameState);
-        testClient = new TestVirtualView();
+        testClient = new TestVirtualClient();
         serverController = new ServerController();
     }
 
@@ -126,7 +126,7 @@ class TestGameState extends GameState {
     }
 }
 
-class TestVirtualView implements VirtualView {
+class TestVirtualClient implements VirtualClient {
     private String nickname;
     private String lastInvalidCommand;
     private boolean helpMessageSent = false;

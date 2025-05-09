@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class StationCard extends Card {
+public class StationCard extends Card implements Serializable {
     private final int crewNumberNeeded;
     private final List <Integer> blocks; // Integer
     private final int daysToLose;

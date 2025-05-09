@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MeteorsCard extends Card {
+public class MeteorsCard extends Card implements Serializable {
     private final List <Meteor> meteors;
 
     public MeteorsCard(boolean levelTwo, boolean used, List <Meteor> meteors) {

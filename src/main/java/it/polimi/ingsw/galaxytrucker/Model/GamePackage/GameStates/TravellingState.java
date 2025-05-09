@@ -5,8 +5,10 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
+import java.io.Serializable;
 
-public abstract class TravellingState extends GameState {
+
+public abstract class TravellingState extends GameState implements Serializable {
     protected final Game game;
     protected final Card currentCard;
     protected int handledPlayers = 0;

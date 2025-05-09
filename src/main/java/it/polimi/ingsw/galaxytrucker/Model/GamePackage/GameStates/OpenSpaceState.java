@@ -7,7 +7,9 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
-public class OpenSpaceState extends TravellingState{
+import java.io.Serializable;
+
+public class OpenSpaceState extends TravellingState implements Serializable {
 
     public OpenSpaceState(Game game, OpenSpaceCard card) {
         super(game, card);

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum Side {
+import java.io.Serializable;
+
+public enum Side implements Serializable {
     RIGHT,
     LEFT
 }

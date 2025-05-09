@@ -2,9 +2,10 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Planet {
+public class Planet implements Serializable {
     private final List <Integer> blocks;
     private Ship shipLanded = null;
 

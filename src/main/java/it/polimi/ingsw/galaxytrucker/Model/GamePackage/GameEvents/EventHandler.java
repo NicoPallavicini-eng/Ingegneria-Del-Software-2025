@@ -12,11 +12,12 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EventHandler {
+public class EventHandler implements Serializable {
 
     /*
     GLOBAL:

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public class BioadaptorTile extends Tile {
+import java.io.Serializable;
+
+public class BioadaptorTile extends Tile implements Serializable {
     private final AlienColor color;
     private boolean isOrange;
     private boolean isPurple;

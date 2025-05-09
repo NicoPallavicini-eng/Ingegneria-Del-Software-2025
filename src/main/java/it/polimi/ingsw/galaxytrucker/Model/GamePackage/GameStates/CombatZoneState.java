@@ -2,8 +2,11 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
- //todo understand
-public class CombatZoneState extends TravellingState{
+
+import java.io.Serializable;
+
+//todo understand
+public class CombatZoneState extends TravellingState implements Serializable {
 
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);

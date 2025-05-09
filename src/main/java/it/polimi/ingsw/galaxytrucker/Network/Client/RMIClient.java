@@ -11,7 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView {
+public class RMIClient extends UnicastRemoteObject implements VirtualClient {
     final VirtualServer server;
     private String nickname;
 

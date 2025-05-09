@@ -3,7 +3,9 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 
-public class WaitingState extends GameState {
+import java.io.Serializable;
+
+public class WaitingState extends GameState implements Serializable {
     private final Game game;
     public WaitingState(Game game ) {
         this.game = game;

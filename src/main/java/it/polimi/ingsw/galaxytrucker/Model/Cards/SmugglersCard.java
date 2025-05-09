@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SmugglersCard extends Card {
+public class SmugglersCard extends Card implements Serializable {
     private final int firepower;
     private final List <Integer> blocks;
     private final int lostBlocksNumber;

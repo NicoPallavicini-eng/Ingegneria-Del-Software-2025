@@ -5,11 +5,12 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BuildingState extends GameState {
+public class BuildingState extends GameState implements Serializable {
     private final Game game;
     private ArrayList<Player> finishedBuildingPlayers;
     private ArrayList<Player> playersWithLegalShips;

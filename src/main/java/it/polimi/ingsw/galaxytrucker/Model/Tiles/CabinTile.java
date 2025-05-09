@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public class CabinTile extends Tile {
+import java.io.Serializable;
+
+public class CabinTile extends Tile implements Serializable {
     private CabinInhabitants inhabitants;
     private final boolean mainCapsule;
     private int pinkAdaptors;

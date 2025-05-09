@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum AlienColor {
+import java.io.Serializable;
+
+public enum AlienColor implements Serializable {
     PURPLE,
     ORANGE
 }

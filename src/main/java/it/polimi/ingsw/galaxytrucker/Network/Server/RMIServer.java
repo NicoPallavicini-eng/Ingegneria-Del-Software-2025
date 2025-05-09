@@ -1,7 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
-import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RMIServer implements VirtualServer {
-    final List<VirtualView> clients = new ArrayList<>();
+    final List<VirtualClient> clients = new ArrayList<>();
     private ServerController serverController = new ServerController();
 
     public RMIServer() throws RemoteException {
@@ -19,8 +19,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void connect(VirtualView virtualView) throws RemoteException {
-        this.clients.add(virtualView);
+    public void connect(VirtualClient virtualClient) throws RemoteException {
+        this.clients.add(virtualClient);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RMIServer implements VirtualServer {
         return "Hello, world!";
     }
     @Override
-    public void handleUserInput(VirtualView virtualView, String input) throws RemoteException {
-        serverController.handleUserInput(virtualView,input);
+    public void handleUserInput(VirtualClient virtualClient, String input) throws RemoteException {
+        serverController.handleUserInput(virtualClient,input);
     }
 }

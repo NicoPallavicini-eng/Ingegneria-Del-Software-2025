@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-public class EpidemicCard extends Card {
+import java.io.Serializable;
+
+public class EpidemicCard extends Card implements Serializable {
     public EpidemicCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
     }

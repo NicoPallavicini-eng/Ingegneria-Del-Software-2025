@@ -6,10 +6,11 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game implements Serializable {
     private final List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers = -1;
     private GameState gameState = new WaitingState(this);

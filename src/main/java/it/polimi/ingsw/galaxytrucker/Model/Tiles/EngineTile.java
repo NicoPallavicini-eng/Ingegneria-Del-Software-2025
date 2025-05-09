@@ -2,8 +2,10 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
+import java.io.Serializable;
 
-public class EngineTile extends Tile{
+
+public class EngineTile extends Tile implements Serializable {
     private final boolean doublePower;
     private boolean activeState;
     private Direction direction;

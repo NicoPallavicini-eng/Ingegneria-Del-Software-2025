@@ -1,4 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +7,7 @@ import java.util.List;
  * This class represents the basic tiel of the game with connectors, orientation and state.
  */
 
-public class Tile{
+public class Tile implements Serializable {
     private ConnectorType northConnector;
     private ConnectorType westConnector;
     private ConnectorType southConnector;

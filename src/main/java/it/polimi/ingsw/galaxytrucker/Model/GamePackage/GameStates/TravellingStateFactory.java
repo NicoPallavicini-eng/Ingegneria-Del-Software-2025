@@ -3,7 +3,9 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 
-public class TravellingStateFactory {
+import java.io.Serializable;
+
+public class TravellingStateFactory implements Serializable {
 
     public static GameState createGameState(Game game, CombatZoneCard card){
         return new CombatZoneState(game, card);

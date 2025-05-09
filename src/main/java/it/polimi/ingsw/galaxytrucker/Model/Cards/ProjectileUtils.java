@@ -3,9 +3,11 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
+import java.io.Serializable;
+
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 
-public class ProjectileUtils {
+public class ProjectileUtils implements Serializable {
     static void removeHitTileColumn(Direction direction, Ship ship, int diceRoll) {
         int columnSize = ship.getColumnListTiles(diceRoll).size();
         if (direction == NORTH) {

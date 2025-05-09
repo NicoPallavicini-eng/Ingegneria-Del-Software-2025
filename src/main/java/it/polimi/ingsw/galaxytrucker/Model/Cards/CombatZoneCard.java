@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CombatZoneCard extends Card {
+public class CombatZoneCard extends Card implements Serializable {
     private final int daysLostLessCrew;
     private final int crewLostLessEngine;
     private final List <Cannonball> cannonballList;

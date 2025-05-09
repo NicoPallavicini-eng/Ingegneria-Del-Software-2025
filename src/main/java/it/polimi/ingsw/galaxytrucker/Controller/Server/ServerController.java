@@ -2,12 +2,9 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualView;
-import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualCards.VirtualCard;
-import it.polimi.ingsw.galaxytrucker.View.VirtualModel.VirtualCards.VirtualDeck;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,13 +24,17 @@ public class ServerController {
 
     }
 
+    private void updateView() {
+        // TODO do
+    }
+
     /**
      * Handles user input from the client and executes the corresponding command.
      *
      * @param client The VirutalView instance representing the client.
      * @param input The input string received from the client.
      */
-    public void handleUserInput(VirtualView client, String input) throws RemoteException {
+    public void handleUserInput(VirtualClient client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
             client.invalidCommand("Invalid command");
             //System.out.println("Invalid command");
@@ -76,10 +77,10 @@ public class ServerController {
      * @param command   The command to execute.
      * @param firstParameters   The first set of parameters for the command.
      * @param secondParameters  The second set of parameters for the command.
-     * @param client    The VirtualView instance representing the client.
+     * @param client    The VirtualClient instance representing the client.
      */
 
-    private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualView client) throws RemoteException {
+    private void executeCommand (String command, List<String> firstParameters, List<String> secondParameters, VirtualClient client) throws RemoteException {
         switch(command){
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
@@ -122,6 +123,7 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
+                                    // TODO update view
                                 }
                                 catch(IllegalArgumentException e){
                                     client.invalidCommand("Error: " + e.getMessage());

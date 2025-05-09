@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum TileType {
+import java.io.Serializable;
+
+public enum TileType implements Serializable {
     CANNON,         // C +
     ENGINE,         // E ¤
     CAPSULE,        // C main capsule: ⌂    regular: ⚲

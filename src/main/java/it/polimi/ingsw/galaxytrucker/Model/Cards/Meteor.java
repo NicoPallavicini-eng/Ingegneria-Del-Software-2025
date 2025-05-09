@@ -7,6 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.EngineTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,7 +17,7 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
-public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn) {
+public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn) implements Serializable {
 
     public static int rollTwoDice() {
         Random rand = new Random();

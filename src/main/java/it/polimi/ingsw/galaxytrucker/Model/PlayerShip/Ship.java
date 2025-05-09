@@ -3,12 +3,13 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
-public class Ship {
+public class Ship implements Serializable {
 
     private ArrayList<ArrayList<Tile>> floorplanArrayList;
     private final Color color;

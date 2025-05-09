@@ -1,4 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
-public record ViewLeaderboardEvent() implements GameEvent {
+import java.io.Serializable;
+
+public record ViewLeaderboardEvent() implements GameEvent, Serializable {
 }

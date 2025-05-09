@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public class InhabitantsException extends RuntimeException {
+import java.io.Serializable;
+
+public class InhabitantsException extends RuntimeException implements Serializable {
     public InhabitantsException(String message) {
         super(message);
     }

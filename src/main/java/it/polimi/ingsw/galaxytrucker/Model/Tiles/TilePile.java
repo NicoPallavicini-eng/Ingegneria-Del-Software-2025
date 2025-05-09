@@ -1,7 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
+import java.io.Serializable;
 import java.util.List;
 
-public class TilePile {
+public class TilePile implements Serializable {
     private List<Tile> tilePile;
 
     public TilePile(List<Tile> tilePile) {

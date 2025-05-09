@@ -6,12 +6,13 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlanetsState extends TravellingState{
+public class PlanetsState extends TravellingState implements Serializable {
     private PlanetsCard currentCard;
     private Player currentPlayer;
     private List<Planet> planets;

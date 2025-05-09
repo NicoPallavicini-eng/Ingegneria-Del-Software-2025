@@ -1,8 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
+import java.io.Serializable;
+
 //todo fix
 //the Timer class implementation is kept (in comments) for possible future use
-public class Hourglass {
+public class Hourglass implements Serializable {
     private int FlipNumber = 0;
 //    private Boolean hasEnded;
 //    private Timer timer = new Timer();

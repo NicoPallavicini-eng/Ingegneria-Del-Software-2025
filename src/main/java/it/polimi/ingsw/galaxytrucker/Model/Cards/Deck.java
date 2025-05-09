@@ -1,9 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public class Deck implements Serializable {
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
     private List <Card> gameDeck;

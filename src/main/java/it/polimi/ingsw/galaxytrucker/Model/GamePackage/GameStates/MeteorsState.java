@@ -5,10 +5,11 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeteorsState extends TravellingState{
+public class MeteorsState extends TravellingState implements Serializable {
     private MeteorsCard currentCard;
     private ArrayList<Player> handledPlayers;
     private List<Meteor> meteors;

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-public class SlaversCard extends Card {
+import java.io.Serializable;
+
+public class SlaversCard extends Card implements Serializable {
     private final int firepower;
     private final int credits;
     private final int crewLost;

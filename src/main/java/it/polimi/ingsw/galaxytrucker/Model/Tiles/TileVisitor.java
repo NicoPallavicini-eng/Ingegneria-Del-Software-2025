@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public interface TileVisitor {
+import java.io.Serializable;
+
+public interface TileVisitor extends Serializable {
     void visit(BioadaptorTile tile);
     void visit(EngineTile tile);
     void visit(CargoTile tile);

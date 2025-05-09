@@ -4,7 +4,9 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.*;
 
-public abstract class GameState {
+import java.io.Serializable;
+
+public abstract class GameState implements Serializable {
 
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {
          throw new IllegalEventException("The player used a command not available in this phase of the game.");

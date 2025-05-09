@@ -6,13 +6,14 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 
-public class EpidemicState extends TravellingState{
+public class EpidemicState extends TravellingState implements Serializable {
 
     private ArrayList<Thread> threads;
 

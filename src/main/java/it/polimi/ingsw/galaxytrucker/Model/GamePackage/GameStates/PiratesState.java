@@ -9,9 +9,10 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PiratesState extends TravellingState{
+public class PiratesState extends TravellingState implements Serializable {
     private PiratesCard currentCard;
     private Player piratesSlayer;
     private List<Player> defeatedPlayers;

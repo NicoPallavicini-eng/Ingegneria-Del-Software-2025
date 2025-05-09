@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public class ShieldTile extends Tile {
+import java.io.Serializable;
+
+public class ShieldTile extends Tile implements Serializable {
     private ShieldOrientation orientation;
     private boolean activeState;
 

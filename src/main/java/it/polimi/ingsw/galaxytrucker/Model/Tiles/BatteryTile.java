@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public class BatteryTile extends Tile{
+import java.io.Serializable;
+
+public class BatteryTile extends Tile implements Serializable {
     private final int slotsNumber;
     private int slotsFilled;
 

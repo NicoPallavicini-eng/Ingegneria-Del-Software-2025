@@ -4,10 +4,11 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalState extends GameState {
+public class FinalState extends GameState implements Serializable {
     private final Game game;
     private List<Ship> ships = new ArrayList<>();
 

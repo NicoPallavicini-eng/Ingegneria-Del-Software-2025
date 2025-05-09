@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum ConnectorType {
+import java.io.Serializable;
+
+public enum ConnectorType implements Serializable {
     NONE,           //
     SINGLE,         //      vertical: |     horizontal: -
     DOUBLE,         //      vertical: ||    horizontal: =

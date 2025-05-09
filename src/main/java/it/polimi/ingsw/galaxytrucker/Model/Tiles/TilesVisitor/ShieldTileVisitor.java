@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor;
 
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * and is responsible for collecting ShieldTile instances.
  */
 
-public class ShieldTileVisitor implements TileVisitor {
+public class ShieldTileVisitor implements TileVisitor, Serializable {
     private ArrayList<ShieldTile> list;
 
     /**

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PlanetsCard extends Card {
+public class PlanetsCard extends Card implements Serializable {
     private final List <Planet> planets;
     private final int daysToLose;
 

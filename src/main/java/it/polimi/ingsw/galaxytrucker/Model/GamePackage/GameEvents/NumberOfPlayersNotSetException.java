@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
-public class NumberOfPlayersNotSetException extends RuntimeException {
+import java.io.Serializable;
+
+public class NumberOfPlayersNotSetException extends RuntimeException implements Serializable {
     public NumberOfPlayersNotSetException(String message) {
         super(message);
     }

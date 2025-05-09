@@ -1,8 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CargoTile extends Tile {
+public class CargoTile extends Tile implements Serializable {
     private final int slotsNumber;
     private final boolean fitsRed;
     private List<Integer> tileContent;

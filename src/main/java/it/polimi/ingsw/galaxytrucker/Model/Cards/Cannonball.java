@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
-public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn) {
+public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn) implements Serializable {
 
     public static int rollTwoDice() {
         Random rand = new Random();

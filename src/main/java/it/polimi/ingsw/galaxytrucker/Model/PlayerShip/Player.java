@@ -2,7 +2,9 @@ package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String nickname;
     private Ship ship;
     private int input;
@@ -65,5 +67,4 @@ public class Player {
     public void setOnlineStatus(boolean onlineStatus) {
         this.onlineStatus = onlineStatus;
     }
-
 }
