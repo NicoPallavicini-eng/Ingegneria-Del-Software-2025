@@ -15,7 +15,7 @@ public class BuildingState extends GameState implements Serializable {
     private ArrayList<Player> finishedBuildingPlayers;
     private ArrayList<Player> playersWithLegalShips;
     private boolean timeIsUp = false;
-    // frist for orange and second for purple
+    // first for orange and second for purple
     private Map<Player, Boolean[]> placedAliens;
 
     public BuildingState( Game game ) {

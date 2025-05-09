@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class EngineTile extends Tile implements Serializable {
     private final boolean doublePower;
     private boolean activeState;
-    private Direction direction;
+    private Direction direction = Direction.SOUTH;
+    //todo check south is ok
 
     public EngineTile(boolean doublePower, boolean activeState, ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
         super(north, west, south, east);
