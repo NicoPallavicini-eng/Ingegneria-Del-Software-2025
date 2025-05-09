@@ -5,6 +5,7 @@ public class CabinTile extends Tile {
     private final boolean mainCapsule;
     private int pinkAdaptors;
     private int orangeAdaptors;
+    private AlienColor alienColor;
 
     public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, int pinkAdaptors, int orangeAdaptors) {
         super(north, west, south, east);
@@ -13,7 +14,12 @@ public class CabinTile extends Tile {
         this.pinkAdaptors = pinkAdaptors;
         this.orangeAdaptors = orangeAdaptors;
     }
-
+    public AlienColor getAlienColor() {
+        return alienColor;
+    }
+    public void setAlienColor(AlienColor alienColor) {
+        this.alienColor = alienColor;
+    }
     public void updateInhabitants(CabinInhabitants inhabitants){
         this.inhabitants = inhabitants;
     }

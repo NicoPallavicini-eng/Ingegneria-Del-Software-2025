@@ -53,10 +53,100 @@ TRAVELLING:
  - /viewinventory
 
 
+    */
+    public static void handleEvent(ChooseSubShipEvent event){
+        Ship ship = event.player().getShip();
+        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
 
+        BatteryTileVisitor batteryTileVisitor = new BatteryTileVisitor();
+        BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
+        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        CannonTileVisitor cannonTileVisitor = new CannonTileVisitor();
+        CargoTileVisitor cargoTileVisitor = new CargoTileVisitor();
+        EngineTileVisitor engineTileVisitor = new EngineTileVisitor();
+        ShieldTileVisitor shieldTileVisitor = new ShieldTileVisitor();
+
+
+        if(!optionalTile.isPresent()){
+            throw new IllegalEventException("You chose an empty tile");
+        }
+
+        Tile tile = optionalTile.get();
+        ArrayList<Tile> pieceOfShip = ship.checkFloorplanConnection(tile);
+        //setto a null
+
+        for(ArrayList<Tile> list : ship.getFloorplanArrayList()){
+            for(Tile t : list){
+                if(!pieceOfShip.contains(t)){
+                    t.accept(batteryTileVisitor);
+                    t.accept(bioadaptorTileVisitor);
+                    t.accept(cabinTileVisitor);
+                    t.accept(cannonTileVisitor);
+                    t.accept(cargoTileVisitor);
+                    t.accept(engineTileVisitor);
+                    t.accept(shieldTileVisitor);
+                }
+            }
+        }
+        //tolgo batteries
+        ArrayList<BatteryTile> batteryList = batteryTileVisitor.getList();
+        for(BatteryTile batteryTile : batteryList){
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(batteryTile),ship.findTileOnFloorPlanColumn(batteryTile),null);
+        }
+        //tolgo Bioadaptors
+        ArrayList<BioadaptorTile> bioadaptorList = bioadaptorTileVisitor.getList();
+        for(BioadaptorTile bioadaptorTile : bioadaptorList){
+            CabinTileVisitor cabinNear = new CabinTileVisitor();
+            ArrayList<Tile> list = ship.getAdiacentTiles(bioadaptorTile);
+            for(Tile t:list){
+                tile.accept(cabinNear);
+            }
+            ArrayList<CabinTile> cabinList = cabinNear.getList();
+            for(CabinTile cabinTile : cabinList){
+                if(bioadaptorTile.getColor()==AlienColor.ORANGE){
+                    cabinTile.removeOrangeAdaptors();
+                }else{
+                    cabinTile.removePinkAdaptors();
+                }
+            }
+        }
+        //tolgo Cabins
+        ArrayList<CabinTile> cabinList = cabinTileVisitor.getList();
+        for(CabinTile cabinTile : cabinList){
+            if(cabinTile.getInhabitants()==CabinInhabitants.ALIEN){
+                if(cabinTile.getAlienColor()==AlienColor.ORANGE){
+                    ship.setOrangeAlien(false);
+                }else{
+                    ship.setPurpleAlien(false);
+                }
+            }
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(cabinTile),ship.findTileOnFloorPlanColumn(cabinTile),null);
+        }
+        //tolgo Cannons
+        ArrayList<CannonTile> cannonList = cannonTileVisitor.getList();
+        for(CannonTile cannonTile : cannonList){
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(cannonTile),ship.findTileOnFloorPlanColumn(cannonTile),null);
+        }
+        //tolgo Cargo
+        ArrayList<CargoTile> cargoList = cargoTileVisitor.getList();
+        for(CargoTile cargoTile : cargoList){
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(cargoTile),ship.findTileOnFloorPlanColumn(cargoTile),null);
+        }
+        //tolgo Engine
+        ArrayList<EngineTile> engineList = engineTileVisitor.getList();
+        for(EngineTile engineTile : engineList){
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(engineTile),ship.findTileOnFloorPlanColumn(engineTile),null);
+        }
+        //tolgo Shield
+        ArrayList<ShieldTile> shieldList = shieldTileVisitor.getList();
+        for(ShieldTile shieldTile : shieldList){
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(shieldTile),ship.findTileOnFloorPlanColumn(shieldTile),null);
+        }
+
+    }
     /*
     public record ConnectEvent(String nickname, String IP) implements GameEvent
-     */
+    */
     //istances a new player and adds it to the list of players in gam    public static void handleEvent(ConnectEvent event, Game game){
     //FATTO
     public static void handleEvent(ConnectEvent event, Game game) {
@@ -94,7 +184,16 @@ TRAVELLING:
     }
 
     // evitabile
-    public static void handleEvent(PickUpTileEvent event) {}
+    //FATTO
+    public static void handleEvent(PickUpTileEvent event,Game game) {
+        TilePile pile = game.getTilePile();
+        Tile tile = pile.getTilePile().get(event.index());
+        if(tile==null){
+            throw new IllegalEventException("Tile is not present");
+        }
+        Ship ship = event.player().getShip();
+        ship.setTileInHand(tile);
+    }
     /*
     public record RotateTileEvent(Player player, boolean right) implements GameEvent
      */
@@ -110,15 +209,78 @@ TRAVELLING:
     }
 
     //checks that it is not null
-    public static void handleEvent(PutDownTileEvent event) {
+    //FATTO
+    public static void handleEvent(PutDownTileEvent event,Game game) {
+        Ship ship = event.player().getShip();
+        if(ship.getTileInHand()==null){
+            throw new IllegalEventException("You need to place a Tile in hand before putting it");
+        }
+        TilePile pile = game.getTilePile();
+
+        int index = 0;
+        boolean finished = false;
+        for(Tile tile: pile.getTilePile()){
+            if(tile==null&&!finished){
+                pile.getTilePile().set(index,tile);
+                ship.setTileInHand(null);
+            }
+            index++;
+        }
+
 
     }
 
     //checks correct tile and life support
-    public static void handleEvent(PlaceOrangeAlienEvent event) {}
+    //FATTO
+    public static void handleEvent(PlaceOrangeAlienEvent event) {
+        Ship ship = event.player().getShip();
+        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
+        if(!optionalTile.isPresent()){
+            throw new IllegalEventException("Tile is not present");
+        }
+
+        Tile tile = optionalTile.get();
+        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        tile.accept(cabinTileVisitor);
+        if(cabinTileVisitor.getList().size()==0){
+            throw new IllegalEventException("You choosed not a CabinTile");
+        }
+        CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
+        if(cabinTile.getOrange()<=0){
+            throw new IllegalEventException("There is no Bioadaptors of OrangeType");
+        }
+        if(cabinTile.getInhabitants()!=CabinInhabitants.NONE){
+            throw new IllegalEventException("You already placed Inhabitants in this CabinTile");
+        }
+        cabinTile.updateInhabitants(CabinInhabitants.ALIEN);
+        cabinTile.setAlienColor(AlienColor.ORANGE);
+
+    }
 
     //checks correct tile and life support
+    //FATTO
     public static void handleEvent(PlacePurpleAlienEvent event) {
+        Ship ship = event.player().getShip();
+        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
+        if(!optionalTile.isPresent()){
+            throw new IllegalEventException("Tile is not present");
+        }
+
+        Tile tile = optionalTile.get();
+        CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
+        tile.accept(cabinTileVisitor);
+        if(cabinTileVisitor.getList().size()==0){
+            throw new IllegalEventException("You choosed not a CabinTile");
+        }
+        CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
+        if(cabinTile.getPurple()<=0){
+            throw new IllegalEventException("There is no Bioadaptors of PurpleType");
+        }
+        if(cabinTile.getInhabitants()!=CabinInhabitants.NONE){
+            throw new IllegalEventException("You already placed Inhabitants in this CabinTile");
+        }
+        cabinTile.updateInhabitants(CabinInhabitants.ALIEN);
+        cabinTile.setAlienColor(AlienColor.PURPLE);
 
     }
     //FATTO
@@ -149,20 +311,59 @@ TRAVELLING:
     }
 
     // gira
+    //FATTO
     public static void handleEvent(FlipHourglassEvent event, Game game) {
         game.getHourglass().flip();
     }
-    // mi sa che tolgo
-    public static void handleEvent(SetPositionEvent event) {}
+    //FATTO
+    public static void handleEvent(SetPositionEvent event,Game game) {
+        int position = event.position();
+        int place = 0;
+        if(position==1){
+            place = 4;
+        } else if (position==2) {
+            place =  2;
+        } else if (position==3) {
+            place = 1;
+        } else {
+            place = 0;
+        }
+
+        boolean present = false;
+        for(Player player: game.getListOfPlayers()){
+            if(player.getShip().getTravelDays()==place){
+                present = true;
+            }
+        }
+        if(!present){
+            event.player().getShip().setTravelDays(place);
+            game.sortListOfPlayers();
+        }else{
+            throw new IllegalEventException("You can't your position is occupied");
+        }
+    }
 
     // picks up the last placed
-    public static void handleEvent(PickUpFromShipEvent event) {}
+    //FATTO
+    public static void handleEvent(PickUpFromShipEvent event) {
+        Ship ship = event.player().getShip();
+        if(ship.getTileInHand()!=null){
+            throw new IllegalEventException("You need to place a Tile in hand first");
+        }
+        if(ship.getLastPlacedTile()!=null){
+            ship.setTileInHand(ship.getLastPlacedTile());
+            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(ship.getTileInHand()),ship.findTileOnFloorPlanColumn(ship.getTileInHand()),null);
+        }else{
+            throw new IllegalEventException("You need to have placed the tile before");
+        }
+    }
     //FATTO
     public static void handleEvent(PickUpReservedTileEvent event) {
         Ship ship = event.player().getShip();
         Tile tile = ship.getReservedTiles().get(event.index());
         ship.setTileInHand(tile);
     }
+
     public static void handleEvent(ViewDeckEvent event) {}
     /*
     public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent
@@ -426,9 +627,7 @@ TRAVELLING:
             }
         }
     }
-    /*
-         public record RemoveCargoEvent(Player player, int row, int col, Integer resource) implements GameEvent
-    */
+    //FATTO
     public static void handleEvent(RemoveCargoEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         CargoTileVisitor cargoVisitor = new CargoTileVisitor();
@@ -462,11 +661,8 @@ TRAVELLING:
         }
 
     }
-    /*
-     public record AddCargoEvent(Player player, int row, int column, Integer resource) implements GameEvent {
-    }
-    */
-    //implementare che l'utente cerca il cargo nella propria lista
+
+    //FATTO
     public static void handleEvent(AddCargoEvent event) throws IllegalEventException{
         Ship ship = event.player().getShip();
         CargoTileVisitor cargoVisitor = new CargoTileVisitor();
@@ -504,9 +700,7 @@ TRAVELLING:
             }
         }
     }
-    /*
-    public record SwitchCargoEvent(Player player, int prevRow, int prevCol, int nextRow, int nextCol, Integer resource) implements GameEvent
-     */
+   //FATTO
     public static void handleEvent(SwitchCargoEvent event) {
         Ship ship = event.player().getShip();
 
@@ -576,10 +770,7 @@ TRAVELLING:
         }
     }
 
-    /*
-    public record EjectPeopleEvent(Player player, ArrayList<ArrayList<Integer>> people) implements GameEvent
-     */
-    //////aggiustare ALIEN --> CONTROLLA BENE COSA TI HO AGGIUNTO IN BIOADAPTORTILE
+    //FATTO
     public static void handleEvent(EjectPeopleEvent event) throws IllegalEventException {
         int counter = 0;
         Ship ship = event.player().getShip();
@@ -668,7 +859,14 @@ TRAVELLING:
                         cabin.updateInhabitants(CabinInhabitants.NONE);
                     } else if (cabin.getInhabitants()==CabinInhabitants.ALIEN) {
                         cabin.updateInhabitants(CabinInhabitants.NONE);
+                        AlienColor color = cabin.getAlienColor();
                         //gestire se Allieno e orange o purple;
+                        if(color==AlienColor.ORANGE){
+                            ship.setOrangeAlien(false);
+                        }else{
+                            ship.setPurpleAlien(false);
+                        }
+
 
                     } else if (cabin.getInhabitants()==CabinInhabitants.TWO) {
                         if(peopleToLoose==2){
@@ -683,10 +881,7 @@ TRAVELLING:
             counter=0;
         }
     }
-    /*
-    public record GiveUpEvent(Player player)
-     */
-    //ipotizzo che il reference a traveDays in Ship diventa Null
+   //FATTO
     public static void handleEvent(GiveUpEvent event) {
         Ship ship = event.player().getShip();
         ship.setTravelDays(null);

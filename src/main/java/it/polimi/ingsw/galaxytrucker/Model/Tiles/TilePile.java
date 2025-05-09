@@ -8,8 +8,8 @@ public class TilePile {
         this.tilePile = tilePile;
     }
 
-    public TilePile getTilePile() {
-        return this;
+    public List<Tile> getTilePile() {
+        return tilePile;
     }
 
     public Tile pickUpTile(Tile tile){

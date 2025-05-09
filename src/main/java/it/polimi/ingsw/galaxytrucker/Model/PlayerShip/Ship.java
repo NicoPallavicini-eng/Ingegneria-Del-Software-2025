@@ -15,6 +15,7 @@ public class Ship {
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
     private Tile tileInHand;
+    private Tile lastPlacedTile;
 
     private int credits;
     private Integer travelDays;
@@ -22,7 +23,6 @@ public class Ship {
     int row_max;
     int col_max;
     Tile pickedTile;
-    Tile lastPlacedTile;
 
     //serve per vedere se il giocatore decide di atterare;
     private boolean playerEngaged;
@@ -59,7 +59,12 @@ public class Ship {
             }
         }
     }
-
+    public Tile getLastPlacedTile(){
+        return lastPlacedTile;
+    }
+    public void setLastPlacedTile(Tile lastPlacedTile){
+        this.lastPlacedTile = lastPlacedTile;
+    }
     public Tile getTileInHand() {
         return tileInHand;
     }
@@ -541,7 +546,9 @@ public class Ship {
                 multiplicator = 1;
             }
         }
-
+        if(getPurpleAlien()){
+            firepower++;
+        }
         return firepower;
     }
 
@@ -608,6 +615,9 @@ public class Ship {
                 enginePower+=multiplicator;
             }
             multiplicator=1;
+        }
+        if(getOrangeAlien()){
+            enginePower++;
         }
         return enginePower;
     }
