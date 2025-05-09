@@ -15,6 +15,8 @@ public class Ship implements Serializable {
     private final Color color;
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
+    private Tile tileInHand;
+    private Tile lastPlacedTile;
 
     private int credits;
     private Integer travelDays;
@@ -22,7 +24,6 @@ public class Ship implements Serializable {
     int row_max;
     int col_max;
     Tile pickedTile;
-    Tile lastPlacedTile;
 
     //serve per vedere se il giocatore decide di atterare;
     private boolean playerEngaged;
@@ -50,6 +51,7 @@ public class Ship implements Serializable {
         row_max=5;
         col_max=7;
 
+        tileInHand=null;
         floorplanArrayList = new ArrayList<>();
         for(int i=0;i<row_max;i++){
             floorplanArrayList.add(new ArrayList<>());
@@ -57,6 +59,19 @@ public class Ship implements Serializable {
                 floorplanArrayList.get(i).add(null);
             }
         }
+    }
+    public Tile getLastPlacedTile(){
+        return lastPlacedTile;
+    }
+    public void setLastPlacedTile(Tile lastPlacedTile){
+        this.lastPlacedTile = lastPlacedTile;
+    }
+    public Tile getTileInHand() {
+        return tileInHand;
+    }
+
+    public void setTileInHand(Tile tileInHand) {
+        this.tileInHand = tileInHand;
     }
 
     public int getRowMax(){
@@ -532,7 +547,9 @@ public class Ship implements Serializable {
                 multiplicator = 1;
             }
         }
-
+        if(getPurpleAlien()){
+            firepower++;
+        }
         return firepower;
     }
 
@@ -599,6 +616,9 @@ public class Ship implements Serializable {
                 enginePower+=multiplicator;
             }
             multiplicator=1;
+        }
+        if(getOrangeAlien()){
+            enginePower++;
         }
         return enginePower;
     }

@@ -4,5 +4,6 @@ import java.io.Serializable;
 
 public enum AlienColor implements Serializable {
     PURPLE,
-    ORANGE
+    ORANGE,
+    NONE
 }

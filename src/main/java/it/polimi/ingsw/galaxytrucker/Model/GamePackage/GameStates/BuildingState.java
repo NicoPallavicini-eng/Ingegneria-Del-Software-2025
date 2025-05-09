@@ -49,7 +49,7 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("You have already placed your rocket");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event,this.game);
             finishedBuildingPlayers.add(event.player());
             if(finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
                 timeIsUp = true;
@@ -81,7 +81,7 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("You can no longer pick up any tiles");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event,this.game);
         }
     }
 
@@ -90,7 +90,7 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("You can no longer put down any tiles");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event,this.game);
         }
     }
 
