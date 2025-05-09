@@ -14,6 +14,7 @@ public class Ship {
     private final Color color;
     private int lostTiles;
     private ArrayList<Tile> reservedTiles;
+    private Tile tileInHand;
 
     private int credits;
     private Integer travelDays;
@@ -49,6 +50,7 @@ public class Ship {
         row_max=5;
         col_max=7;
 
+        tileInHand=null;
         floorplanArrayList = new ArrayList<>();
         for(int i=0;i<row_max;i++){
             floorplanArrayList.add(new ArrayList<>());
@@ -56,6 +58,14 @@ public class Ship {
                 floorplanArrayList.get(i).add(null);
             }
         }
+    }
+
+    public Tile getTileInHand() {
+        return tileInHand;
+    }
+
+    public void setTileInHand(Tile tileInHand) {
+        this.tileInHand = tileInHand;
     }
 
     public int getRowMax(){

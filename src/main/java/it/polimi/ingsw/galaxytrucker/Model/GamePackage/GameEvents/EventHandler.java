@@ -58,42 +58,36 @@ TRAVELLING:
     public record ConnectEvent(String nickname, String IP) implements GameEvent
      */
     //istances a new player and adds it to the list of players in gam    public static void handleEvent(ConnectEvent event, Game game){
-    public static void handleEvent(ConnectEvent event, Game game){
-        List<Player> listPlayer = game.getListOfPlayers();
-        boolean finished = false;
-
-        //check se giocatore era presente
-        for(Player player : listPlayer){
-            if(player.getNickname()==event.nickname()&&player.getPlayerIp()==event.IP()){
-                player.setOnlineStatus(true);
+    //FATTO
+    public static void handleEvent(ConnectEvent event, Game game) {
+        boolean finished=false;
+        int random = (int) Math.random()*4;
+        Color color = Color.values()[random];
+        ArrayList<Color> colors = new ArrayList<>();
+        if(game.getListOfPlayers().size()==0){
+            finished=true;
+        }else{
+            for(Player player: game.getListOfPlayers()){
+                colors.add(player.getShip().getColor());
+            }
+        }
+        while(!finished){
+            color = Color.values()[random];
+            if(!colors.contains(color)){
                 finished=true;
             }
+            random = (int) Math.random()*4;
         }
 
-
-        if(!finished){
-            //check se siamo nella fase iniziale
-            GameState gamestate = game.getGameState();
-            //chiedere sul funzionamento;
-            //DA FINIRE
-            //check sulla quantita dei giocatori
-            if(game.getListOfPlayers().size()-game.getNumberOfPlayers()<=0){
-                throw new IllegalEventException("Number of players is maximum");
-            }else{
-                Player playerNew = new Player(event.nickname(),event.IP(), Color.BLUE); //COLOR TO BE CHANGED!! PLACEHOLDER SO THAT CODE RUNS
-                game.addPlayer(playerNew);
-            }
-        }else{
-
-        }
-
-
+        Player playerNew = new Player(event.nickname(), event.IP(), color);
+        game.addPlayer(playerNew);
     }
     /*
     public record DisconnectEvent(Player player) implements GameEvent
         removes it from the list of players and ends game
         to change if we implement disconnection resilience
      */
+    //FATTO
     public static void handleEvent(DisconnectEvent event) {
         Player player = event.player();
         player.setOnlineStatus(false);
@@ -106,55 +100,74 @@ TRAVELLING:
      */
 
     //checks tile in hand not null and rotates
-    public static void handleEvent(RotateTileEvent event) {}
+    //FATTO
+    public static void handleEvent(RotateTileEvent event) {
+        Ship ship = event.player().getShip();
+        if(ship.getTileInHand()==null){
+            throw new IllegalEventException("You need to place a Tile in hand");
+        }
+        ship.getTileInHand().rotate(Side.RIGHT);
+    }
 
     //checks that it is not null
-    public static void handleEvent(PutDownTileEvent event) {}
+    public static void handleEvent(PutDownTileEvent event) {
+
+    }
 
     //checks correct tile and life support
     public static void handleEvent(PlaceOrangeAlienEvent event) {}
 
     //checks correct tile and life support
-    public static void handleEvent(PlacePurpleAlienEvent event) {}
+    public static void handleEvent(PlacePurpleAlienEvent event) {
 
-    // checks tile in hand attribute and that the selected spot is available then puts it down
-    public static void handleEvent(PlaceTileEvent event) {}
+    }
+    //FATTO
+    public static void handleEvent(PlaceTileEvent event) {
+        Ship ship = event.player().getShip();
+        if(ship.getTileInHand()==null){
+            throw new IllegalEventException("You need to place a Tile in hand");
+        }
+        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
+        if(optionalTile.isPresent()){
+            throw new IllegalEventException("Can't place Tile because spot is occupied");
+        }
+        ship.setTileOnFloorPlan(event.row(), event.col(),ship.getTileInHand());
+    }
 
     //checks for available spots and tile in hand not null
-    public static void handleEvent(ReserveTileEvent event) {}
+    //FATTO
+    public static void handleEvent(ReserveTileEvent event) {
+        Ship ship = event.player().getShip();
+        if(ship.getTileInHand()==null){
+            throw new IllegalEventException("You need to place a Tile in hand");
+        }
+        if(ship.getReservedTiles().size()==2){
+            throw new IllegalEventException("You can't reserve more than two tiles");
+        }
+        ship.getReservedTiles().add(ship.getTileInHand());
+        ship.setTileInHand(null);
+    }
 
     // gira
-    public static void handleEvent(FlipHourglassEvent event, Game game) {}
+    public static void handleEvent(FlipHourglassEvent event, Game game) {
+        game.getHourglass().flip();
+    }
     // mi sa che tolgo
     public static void handleEvent(SetPositionEvent event) {}
 
     // picks up the last placed
     public static void handleEvent(PickUpFromShipEvent event) {}
-    public static void handleEvent(PickUpReservedTileEvent event) {}
+    //FATTO
+    public static void handleEvent(PickUpReservedTileEvent event) {
+        Ship ship = event.player().getShip();
+        Tile tile = ship.getReservedTiles().get(event.index());
+        ship.setTileInHand(tile);
+    }
     public static void handleEvent(ViewDeckEvent event) {}
     /*
     public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent
     //il riferimento a Game
      */
-/*    public static void handleEvent(ChoosePlanetEvent event)throws IllegalEventException {
-        Ship ship = event.player().getShip();
-        PlanetsState planetState = (PlanetsState) event.game().getGameState();
-        int planetIndex = event.planetIndex();
-        PlanetsCard planetsCard = (PlanetsCard) planetState.getCurrentCard();
-        List<Planet> planetList = planetsCard.getPlanetsList();
-        if (planetIndex < planetList.size()&&planetIndex>=0) {
-            //?
-        }else{
-            throw new IllegalEventException("Index of Planet is not valid");
-        }
-
-        Planet planet = planetList.get(planetIndex);
-        ArrayList<Integer> listCargo = new ArrayList<>(planet.getBlocks());
-        ship.addBlocks(listCargo);
-
-    }
-
- */
     /*
     public record ActivateEnginesEvent(Player player, List<List<Integer>> engines, List<List<Integer>> batteries) implements GameEvent
      */
