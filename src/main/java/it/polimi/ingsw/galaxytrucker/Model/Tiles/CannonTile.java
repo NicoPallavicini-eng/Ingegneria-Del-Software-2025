@@ -1,8 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-import java.io.Serializable;
-
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
+
+import java.io.Serializable;
 
 public class CannonTile extends Tile implements Serializable {
     private final boolean doublePower;

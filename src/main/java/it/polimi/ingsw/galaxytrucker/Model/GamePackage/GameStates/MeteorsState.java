@@ -11,11 +11,9 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventEx
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CannonTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.CannonTileVisitor;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.ShieldTileVisitor;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;

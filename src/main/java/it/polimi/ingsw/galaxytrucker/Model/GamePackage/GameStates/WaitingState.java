@@ -1,7 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ConnectEvent;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.SetNumberOfPlayersEvent;
 
 import java.io.Serializable;
 

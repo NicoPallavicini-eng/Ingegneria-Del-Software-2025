@@ -1,12 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Planet;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.PlanetsState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;

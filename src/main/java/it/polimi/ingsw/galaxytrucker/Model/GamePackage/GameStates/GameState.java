@@ -2,7 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.*;
 
 import java.io.Serializable;
 

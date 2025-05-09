@@ -1,12 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TileVisitorTest {
 

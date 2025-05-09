@@ -1,9 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-import it.polimi.ingsw.galaxytrucker.Model.Direction; // Import corretto
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EngineTileTest {
 
