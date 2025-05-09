@@ -26,6 +26,7 @@ public class MeteorsState extends TravellingState{
     private ArrayList<Player> handledPlayers;
     private List<Meteor> meteors;
     private Meteor currentMeteor;
+    private int currentMeteorDiceRoll;
 
     public MeteorsState(Game game, MeteorsCard card) {
         super(game, card);
@@ -36,6 +37,7 @@ public class MeteorsState extends TravellingState{
         meteors = currentCard.getMeteorsList();
         currentMeteor = meteors.get(0);
         meteors.remove(0);
+        currentMeteorDiceRoll = currentMeteor.rollTwoDice();
     }
 
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
@@ -89,19 +91,24 @@ public class MeteorsState extends TravellingState{
         CannonTileVisitor ctv = new CannonTileVisitor();
         tile.ifPresent(t -> t.accept(ctv));
         if(ctv.getList().isEmpty()){
-            throw new IllegalEventException("You didn't select a shield able to defent you");
+            throw new IllegalEventException("You didn't select a cannon");
         }
 
         CannonTile cannon  = ctv.getList().getFirst();
-        if(currentMeteor.direction() != cannon.getDirection()){//nb
-            switch (currentMeteor.direction(){
-                case Direction.NORTH ->
+        if(currentMeteor.direction() != cannon.getDirection()) {//nb
+            throw new IllegalEventException("The cannon is not oriented towards the incoming meteor");
+        } else if((currentMeteor.direction() == Direction.NORTH && currentMeteorDiceRoll != event.cannons().get(0).get(1)
+        || (currentMeteor.direction() == Direction.SOUTH && currentMeteorDiceRoll < event.cannons().get(0).get(1) - 1 || currentMeteorDiceRoll > event.cannons().get(0).get(1) + 1)
+        || (currentMeteor.direction() == Direction.EAST
 
-            }
+                )){
+
         }
+
+
     }
 
-    public void handleEvent(ActivateCannonsEvent)
+    private void checkCannon(int row, int col)
 
     private void nextMeteor(){
         meteors.remove(0);
