@@ -4,10 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Meteor;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ActivateCannonsEvent;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ActivateShieldEvent;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CannonTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation;
@@ -67,15 +64,13 @@ public class MeteorsState extends TravellingState implements Serializable {
         Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());
         ShieldTileVisitor stv = new ShieldTileVisitor();
         tile.ifPresent(t -> t.accept(stv));
-        if(stv.getList().isEmpty() || !defends(stv.getList().getFirst().getOrientation(), currentMeteor.direction())){
+        if(stv.getList().isEmpty() || !shieldDefends(stv.getList().getFirst().getOrientation(), currentMeteor.direction())){
             throw new IllegalEventException("You didn't select a shield able to defent you");
         }
         else{
             EventHandler.handleEvent(event);
             handledPlayers.add(event.player());
-            if(handledPlayers.containsAll(game.getListOfPlayers())){
-                nextMeteor();
-            }
+            checkNext();
         }
     }
 
@@ -96,24 +91,49 @@ public class MeteorsState extends TravellingState implements Serializable {
         CannonTile cannon  = ctv.getList().getFirst();
         if(currentMeteor.direction() != cannon.getDirection()) {//nb
             throw new IllegalEventException("The cannon is not oriented towards the incoming meteor");
-        } else if((currentMeteor.direction() == Direction.NORTH && currentMeteorDiceRoll != event.cannons().get(0).get(1)
-        || (currentMeteor.direction() == Direction.SOUTH && currentMeteorDiceRoll < event.cannons().get(0).get(1) - 1 || currentMeteorDiceRoll > event.cannons().get(0).get(1) + 1)
-        || (currentMeteor.direction() == Direction.EAST
-
-                )){
-
         }
-
-
+        Direction direction = currentMeteor.direction();
+        int cannonRow = event.cannons().get(0).get(1);
+        int cannonCol = event.cannons().get(0).get(0);
+        if(!( (direction == Direction.NORTH && currentMeteorDiceRoll == cannonCol)
+        || (direction == Direction.SOUTH && (currentMeteorDiceRoll >= cannonCol - 1 && currentMeteorDiceRoll <= cannonCol + 1))
+        || (direction == Direction.EAST && (currentMeteorDiceRoll >= cannonRow - 1 && currentMeteorDiceRoll <= cannonRow + 1))
+        || (direction == Direction.WEST && (currentMeteorDiceRoll >= cannonRow - 1 && currentMeteorDiceRoll <= cannonRow + 1)) )){
+            throw new IllegalEventException("The cannon's position makes it impossible to fire the incoming meteor");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            handledPlayers.add(event.player());
+            checkNext();
+        }
     }
 
-    private void checkCannon(int row, int col)
-
-    private void nextMeteor(){
-        meteors.remove(0);
-        if(meteors.isEmpty()){
-            next();
+    public void handleEvent(NoChoiceEvent event){
+        if(handledPlayers.contains(event.player())){
+            throw new IllegalEventException("You are already defended");
         }
-        currentMeteor = meteors.get(0);
+        else{
+            handledPlayers.add(event.player());
+            if(handledPlayers.containsAll(game.getListOfPlayers())){
+                checkNext();
+            }
+        }
+    }
+
+    private void checkNext() {
+        if (handledPlayers.containsAll(game.getListOfPlayers())) {
+            for (Player player : game.getListOfPlayers()) {
+                currentMeteor.getHit(player.getShip());
+            }
+            if (meteors.isEmpty()) {
+                next();
+            }
+            currentMeteor = meteors.get(0);
+            meteors.remove(0);
+            currentMeteorDiceRoll = currentMeteor.rollTwoDice();
+            for (Player player : game.getListOfPlayers()) {
+                player.getShip().disactivateEverything();
+            }
+        }
     }
 }

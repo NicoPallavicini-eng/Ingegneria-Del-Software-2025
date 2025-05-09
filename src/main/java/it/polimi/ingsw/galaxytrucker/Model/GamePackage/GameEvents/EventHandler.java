@@ -199,9 +199,14 @@ TRAVELLING:
     public static void handleEvent(RotateTileEvent event) {
         Ship ship = event.player().getShip();
         if(ship.getTileInHand()==null){
-            throw new IllegalEventException("You need to place a Tile in hand");
+            throw new IllegalEventException("You need to have a Tile in hand");
         }
-        ship.getTileInHand().rotate(Side.RIGHT);
+        if(event.right()) {
+            ship.getTileInHand().rotate(Side.RIGHT);
+        }
+        else{
+            ship.getTileInHand().rotate(Side.LEFT);
+        }
     }
 
     //checks that it is not null
