@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
+import it.polimi.ingsw.galaxytrucker.View.TUI;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -159,6 +160,16 @@ class TestVirtualClient implements VirtualClient {
     @Override
     public void helpMessage() {
         helpMessageSent = true;
+    }
+
+    @Override
+    public void viewLeaderboard(Game game, String nickname) throws RemoteException {
+
+    }
+
+    @Override
+    public TUI getTui() throws RemoteException {
+        return null;
     }
 
     public String getLastInvalidCommand() {

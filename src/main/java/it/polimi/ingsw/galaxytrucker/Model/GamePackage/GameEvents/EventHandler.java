@@ -201,7 +201,7 @@ TRAVELLING:
         if(ship.getTileInHand()==null){
             throw new IllegalEventException("You need to have a Tile in hand");
         }
-        if(event.right()) {
+        if(event.right().equals("right")) {
             ship.getTileInHand().rotate(Side.RIGHT);
         }
         else{

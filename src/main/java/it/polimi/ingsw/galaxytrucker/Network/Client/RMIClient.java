@@ -1,9 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.Network.Client;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
+import it.polimi.ingsw.galaxytrucker.View.TUI;
 
 import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -14,10 +17,17 @@ import java.util.Scanner;
 public class RMIClient extends UnicastRemoteObject implements VirtualClient {
     final VirtualServer server;
     private String nickname;
+    private static TUI tui; // Later maybe UI???
 
-    public RMIClient(VirtualServer server) throws RemoteException {
+    public RMIClient(VirtualServer server, int choiceUI) throws RemoteException {
         this.server = server;
         nickname = null;
+        if (choiceUI == 1) {
+            tui = new TUI();
+        }
+        else{
+            //GUI
+        }
     }
     public void run() throws RemoteException {
         this.server.connect(this);
@@ -45,15 +55,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient {
         System.out.println("Exited Loop");
         System.exit(0);
     }
-
+/*
     public static void main(String[] args) throws RemoteException, NotBoundException {
         final String serverName = "AdderServer";
 
         Registry registry = LocateRegistry.getRegistry("localhost", 1090);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
 
-        new RMIClient(server).run();
-    }
+        new RMIClient(server, ).run();
+    }*/
 
     @Override
     public String sayHello() throws RemoteException {
@@ -73,13 +83,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient {
     }
 
     @Override
-    public void getView(boolean myShip, boolean everyoneShip, boolean colorOfShip, boolean board, boolean currentCard) throws RemoteException {
-        // Implementation for getting the view
-        // Add your logic here to display the view based on the parameters
+    public void viewLeaderboard(Game game, String nickname) throws RemoteException {
+        tui.viewLeaderboard(game, nickname);
     }
 
     @Override
     public void helpMessage() throws RemoteException {
+        tui.printHelpMessage();/*
         System.out.println(
                 "Help message: \n" +
                 "Every command must be preceded by a slash (/) and could require parameters divided by a comma (,)\n" +
@@ -124,6 +134,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient {
                 "\nEND GAME PHASE\n" +
                 "/claimreward - Claim the end of the game reward. No parameters needed.\n"
         );
+        */
     }
 
 }

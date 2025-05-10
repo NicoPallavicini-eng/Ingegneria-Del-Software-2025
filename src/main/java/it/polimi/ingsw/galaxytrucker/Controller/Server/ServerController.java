@@ -89,10 +89,11 @@ public class ServerController {
                 client.helpMessage();
             } //ok
             case "viewleaderboard" -> {
-             
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewleaderboard doesn't support parameters!");
                 }
+                updateView(); // Update model into the client
+                //client.viewLeaderBoard(game, client.getNickname());
                 ViewLeaderboardEvent event = new ViewLeaderboardEvent();
                 game.getGameState().handleEvent(event);
 
