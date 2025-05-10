@@ -10,3 +10,5 @@ public class StationState extends TravellingState implements Serializable {
         super(game, card);
     }
 }
+
+public

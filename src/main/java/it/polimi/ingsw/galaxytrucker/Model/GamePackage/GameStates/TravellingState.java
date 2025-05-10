@@ -5,12 +5,14 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class TravellingState extends GameState implements Serializable {
     protected final Game game;
     protected final Card currentCard;
-    protected int handledPlayers = 0;
+    protected List<Player> handledPlayers;
     protected Player currentPlayer;
 
     public Game getGame() {
@@ -21,11 +23,11 @@ public abstract class TravellingState extends GameState implements Serializable 
         return currentCard;
     }
 
-    public int getHandledPlayers() {
+    public List<Player> getHandledPlayers() {
         return handledPlayers;
     }
 
-    public void setHandledPlayers(int handledPlayers) {
+    public void setHandledPlayers(List<Player> handledPlayers) {
         this.handledPlayers = handledPlayers;
     }
 
