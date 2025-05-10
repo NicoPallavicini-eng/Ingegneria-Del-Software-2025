@@ -72,6 +72,6 @@ public abstract class TravellingState extends GameState implements Serializable 
         currentPlayer = game.getListOfPlayers().getFirst();
     }
 
-    public void process() {
-    }
+    //todo maybe insert the drawing state after each travelling
+    // to see the effects of stardust and to give the possibility to give up
 }
