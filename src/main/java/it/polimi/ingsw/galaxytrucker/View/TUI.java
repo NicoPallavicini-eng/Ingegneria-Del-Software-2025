@@ -1,8 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.View;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TUI{
     private Game game;
@@ -16,33 +18,172 @@ public class TUI{
     public void viewLeaderboard(Game game, String nickname){
 
     }
-//PER OGNI TILE HO BISOGNO DI TRE STRINGHE!!! POSSIAMO STAMPARE SOLO UNA RIGA PER VOLTA, COME VEDI NELL'HELPMESSAGE (ERA L'UNICO CHE SO CHE FUNZIONA COME COMANDO, SE DEVI TESTARE TESTA SU QUEL COMANDO)
+
     public void viewTilePile(Game game){
         this.game = game;
         TilePile tilePile = game.getTilePile();
+        List<String> upperRow = new ArrayList<>();
+        List<String> middleRow = new ArrayList<>();
+        List<String> lowerRow = new ArrayList<>();
+        int i = 0;
         System.out.println("Tile pile: ");
-        int i = 1; // Needed to know on witch row we are
-        int j = 0; // Needed to know on witch tile we are
-        for (Tile tile : tilePile.getTilePile()) {
+        List<Tile> pile = tilePile.getTilePile();
+        for (Tile tile : pile) {
             printHeaders();
+            if (i%16 == 0){
+                upperRow.add("╭─|||─╮ ");
+                middleRow.add("│  " + i + "  │ ");
+                lowerRow.add("╰─|||─╯ ");
+
+            }
             if (tile != null){
-                //printTile(Tile, i, j);
+                if(tile.getUpsideDown()){
+                    if(tile instanceof BioadaptorTile){
+                        BioadaptorTile bioadaptorTile = (BioadaptorTile) tile;
+                        String type = "     ";
+                        if(bioadaptorTile.getAlienColor() == AlienColor.ORANGE){
+                            type = " O ⚘ ";
+                        }
+                        else if(bioadaptorTile.getAlienColor() == AlienColor.PURPLE){
+                            type = " P ⚘ ";
+                        }
+                        List<ConnectorType> connectors = bioadaptorTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+                    }
+                    else if(tile instanceof BatteryTile){
+                        BatteryTile batteryTile = (BatteryTile) tile;
+                        String type = "     ";
+                        if(batteryTile.getSlotsNumber() == 2){
+                            type = " 2 § ";
+                        }
+                        else if (batteryTile.getSlotsNumber() == 3){
+                            type = " 3 § ";
+                        }
+                        List<ConnectorType> connectors = batteryTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+
+                    }
+                    else if(tile instanceof CabinTile){
+                        CabinTile cabinTile = (CabinTile) tile;
+                        String type = "  ⚲  ";
+                        List<ConnectorType> connectors = cabinTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+                    }
+                    else if(tile instanceof CargoTile){
+                        CargoTile cargoTile = (CargoTile) tile;
+                        String type = "     ";
+                        if (cargoTile.getSlotsNumber() == 2){
+                            type = " 2 □ ";
+                        }
+                        else if (cargoTile.getSlotsNumber() == 3){
+                            type = " 3 □ ";
+                        }
+                        List<ConnectorType> connectors = cargoTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+                    }
+                    else if(tile instanceof EngineTile){
+                        EngineTile engineTile = (EngineTile) tile;
+                        String type = "     ";
+                        if (engineTile.getDoublePower() == true){
+                            type = " 2 ¤ ";
+                        }
+                        else if (engineTile.getDoublePower() == false){
+                            type = " 1 ¤ ";
+                        }
+                        List<ConnectorType> connectors = engineTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+                    }
+                    else if(tile instanceof ShieldTile){
+                        ShieldTile shieldTile = (ShieldTile) tile;
+                        String type = "     ";
+                        if (shieldTile.getOrientation() == ShieldOrientation.NORTHWEST){
+                            type = " NW# ";
+                        }
+                        else if (shieldTile.getOrientation() == ShieldOrientation.NORTHEAST){
+                            type = " NE# ";
+                        }
+                        else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHWEST){
+                            type = " SW# ";
+                        }
+                        else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHEAST){
+                            type = " SE# ";
+                        }
+                        List<ConnectorType> connectors = shieldTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
+                    }
+                    else if(tile instanceof CannonTile){
+                        CannonTile cannonTile = (CannonTile) tile;
+                        String type = "     ";
+                        if(cannonTile.getDoublePower()){
+                            type = " 2 + ";
+                        }
+                        else{
+                            type = " 1 + ";
+                        }
+                    }
+                }
+                else{
+                    upperRow.add("╭─|||─╮ ");
+                    middleRow.add("│     │ ");
+                    lowerRow.add("╰─|||─╯ ");
+                }
             }
             else{
-                printVoidTile(i, j);
+                upperRow.add("       ");
+                middleRow.add("       ");
+                lowerRow.add("       ");
             }
             i++;
         }
-
+        for (int j =0; j<upperRow.size(); j++){
+            if(j%16 == 0){
+                System.out.println();
+            }
+            System.out.print(upperRow.get(j));
+            System.out.print(middleRow.get(j));
+            System.out.print(lowerRow.get(j));
+        }
     }
 
 
 
-    public void printHelpMessage(){
-        System.out.print("╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" );
-        System.out.print("-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n");
-        System.out.print("╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯\n");
+    public static void printHelpMessage(){
+/*
+        System.out.println(
+                "╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" +
+                "-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n" +
+                "╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯"
+        );
+        System.out.println(
+                "╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" +
+                "-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n" +
+                "╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯"
+        );*/
+        for (int i = 0; i<150; i++){
+            if (i == 50){
+                System.out.println();
+            }
+            System.out.print("╭─|||─╮");
 
+        }
 /*
         System.out.println(
                 "Help message: \n" +
@@ -92,22 +233,126 @@ public class TUI{
     }
 
     private void printVoidTile(int i,int j){
-        if (j % 15 == 0){
-            System.out.print(
-                    "╭─|||─╮\n" +
-                    "-  " + j + "   -\n" +
-                    "╰─|||─╯"
-            );
-        }
         String voidTile = "       ";
         System.out.print(voidTile);
     }
 
     private void printHeaders(){
         System.out.println(
-                "╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" +
-                "-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n" +
-                "╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯\n"
+                "╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮\n" +
+                "-     - -  1  - -  2  - -  3  - -  4  - -  5  - -  6  - -  7  - -  8  - -  9  - - 1 0 - - 1 1 - - 1 2 - - 1 3 - - 1 4 - - 1 5 - - 1 6 -\n" +
+                "╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯"
         );
+    }
+
+    private List<String> checkConnectors(List<ConnectorType> connectors){
+        List<String> connectorList = new ArrayList<String>();
+        ConnectorType north = connectors.get(0);
+        ConnectorType west = connectors.get(1);
+        ConnectorType south = connectors.get(2);
+        ConnectorType east = connectors.get(3);
+
+        if (north == ConnectorType.NONE){
+            connectorList.add("╭─────╮ ");
+        }
+        else if (north == ConnectorType.SINGLE){
+            connectorList.add("╭─ | ─╮ ");
+        }
+        else if (north == ConnectorType.DOUBLE){
+            connectorList.add("╭─| |─╮ ");
+        }
+        else if (north == ConnectorType.UNIVERSAL){
+            connectorList.add("╭─|||─╮ ");
+        }
+        else if (north == ConnectorType.CANNON_SINGLE){
+            connectorList.add("╭─ ↑ ─╮ ");
+        }
+        else if (north == ConnectorType.CANNON_DOUBLE){
+            connectorList.add("╭─↑ ↑─╮ ");
+        }
+        else if (north == ConnectorType.ENGINE_SINGLE){
+            connectorList.add("╭─ V ─╮ ");
+        }
+        else if (north == ConnectorType.ENGINE_DOUBLE){
+            connectorList.add("╭─V V─╮ ");
+        }
+        else if (west == ConnectorType.NONE){
+            connectorList.add("│");
+        }
+        else if (west == ConnectorType.SINGLE){
+            connectorList.add("-");
+        }
+        else if (west == ConnectorType.DOUBLE){
+            connectorList.add("=");
+        }
+        else if (west == ConnectorType.UNIVERSAL){
+            connectorList.add("≡");
+        }
+        else if (west == ConnectorType.CANNON_SINGLE){
+            connectorList.add("←");
+        }
+        else if (west == ConnectorType.CANNON_DOUBLE){
+            connectorList.add("⇇");
+        }
+        else if (west == ConnectorType.ENGINE_SINGLE){
+            connectorList.add(">");
+        }
+        else if (west == ConnectorType.ENGINE_DOUBLE){
+            connectorList.add("≥");
+        }
+        else
+        if (south == ConnectorType.NONE){
+            connectorList.add("╭─────╮ ");
+        }
+        else if (south == ConnectorType.SINGLE){
+            connectorList.add("╭─ | ─╮ ");
+        }
+        else if (south == ConnectorType.DOUBLE){
+            connectorList.add("╭─| |─╮ ");
+        }
+        else if (south == ConnectorType.UNIVERSAL) {
+            connectorList.add("╭─|||─╮ ");
+        }
+        else if (south == ConnectorType.CANNON_SINGLE){
+            connectorList.add("╭─ ↓ ─╮ ");
+        }
+        else if (south == ConnectorType.CANNON_DOUBLE){
+            connectorList.add("╭─↓ ↓─╮ ");
+        }
+        else if (south == ConnectorType.ENGINE_SINGLE){
+            connectorList.add("╭─ V ─╮ ");
+        }
+        else if (south == ConnectorType.ENGINE_DOUBLE){
+            connectorList.add("╭─V V─╮ ");
+        }
+        else if (east == ConnectorType.NONE){
+            connectorList.add("│ ");
+        }
+        else if (east == ConnectorType.SINGLE){
+            connectorList.add("- ");
+        }
+        else if (east == ConnectorType.DOUBLE){
+            connectorList.add("= ");
+        }
+        else if (east == ConnectorType.UNIVERSAL){
+            connectorList.add("≡ ");
+        }
+        else if (east == ConnectorType.CANNON_SINGLE){
+            connectorList.add("→");
+        }
+        else if (east == ConnectorType.CANNON_DOUBLE){
+            connectorList.add("⇉");
+        }
+        else if (east == ConnectorType.ENGINE_SINGLE){
+            connectorList.add("<");
+        }
+        else if (east == ConnectorType.ENGINE_DOUBLE){
+            connectorList.add("≤");
+        }
+        return connectorList;
+    }
+
+    public static void main(String[] args){
+        printHelpMessage();
     }
 }
