@@ -57,6 +57,7 @@ public class TUI{
         List<String> upperRow = new ArrayList<>();
         List<String> middleRow = new ArrayList<>();
         List<String> lowerRow = new ArrayList<>();
+        List <List <String>> allRow = new ArrayList<>();
         if (tile != null){
             if(tile.getUpsideDown()){
                 if(tile instanceof BioadaptorTile){
@@ -182,9 +183,12 @@ public class TUI{
             middleRow.add("       ");
             lowerRow.add("       ");
         }
+        allRow.add(upperRow);
+        allRow.add(middleRow);
+        allRow.add(lowerRow);
+
+        return allRow;
     }
-
-
 
     public static void printHelpMessage(){
 /*
