@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
 import java.io.Serializable;
@@ -11,7 +13,8 @@ public class EngineTile extends Tile implements Serializable {
     private Direction direction = Direction.SOUTH;
     //todo check south is ok
 
-    public EngineTile(boolean doublePower, boolean activeState, ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
+    @JsonCreator
+    public EngineTile(@JsonProperty("doublePower") boolean doublePower,@JsonProperty("activeState") boolean activeState, @JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west) {
         super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;

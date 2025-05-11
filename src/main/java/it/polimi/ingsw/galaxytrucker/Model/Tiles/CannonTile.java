@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
 import java.io.Serializable;
@@ -9,8 +11,8 @@ public class CannonTile extends Tile implements Serializable {
     private boolean activeState;
     private Direction direction;
 
-
-    public CannonTile(ConnectorType north, ConnectorType west, ConnectorType south, ConnectorType east, boolean doublePower, boolean activeState) {
+    @JsonCreator
+    public CannonTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("doublePower") boolean doublePower,@JsonProperty("activeState") boolean activeState) {
         super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;

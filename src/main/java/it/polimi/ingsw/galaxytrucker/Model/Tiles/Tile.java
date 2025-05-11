@@ -1,4 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +23,18 @@ public class Tile implements Serializable {
     /**
      * Constructs a Tile with specified connector types for each side
      *
-     * @param northConnector The connector type on the north side
-     * @param westConnector The connector type on the west side
-     * @param southConnector The connector type on the south side
-     * @param eastConnector The connector type on the east side
+     * @param north The connector type on the north side
+     * @param west The connector type on the west side
+     * @param south The connector type on the south side
+     * @param east The connector type on the east side
      */
 
-    public Tile(ConnectorType northConnector, ConnectorType westConnector, ConnectorType southConnector, ConnectorType eastConnector) {
-        this.northConnector = northConnector;
-        this.westConnector = westConnector;
-        this.southConnector = southConnector;
-        this.eastConnector = eastConnector;
+    @JsonCreator
+    public Tile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west) {
+        this.northConnector = north;
+        this.westConnector = west;
+        this.southConnector = south;
+        this.eastConnector = east;
         this.upsideDown = false;
         this.choosable = true;
         this.attached = false;

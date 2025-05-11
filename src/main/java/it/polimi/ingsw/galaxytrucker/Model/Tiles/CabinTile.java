@@ -1,5 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class CabinTile extends Tile implements Serializable {
@@ -9,7 +12,8 @@ public class CabinTile extends Tile implements Serializable {
     private int orangeAdaptors;
     private AlienColor alienColor;
 
-    public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, int pinkAdaptors, int orangeAdaptors) {
+    @JsonCreator
+    public CabinTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("inhabitants") CabinInhabitants inhabitants,@JsonProperty("mainCapsule") boolean mainCapsule,@JsonProperty("pinkAdaptors") int pinkAdaptors,@JsonProperty("orangeAdaptors") int orangeAdaptors) {
         super(north, west, south, east);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;

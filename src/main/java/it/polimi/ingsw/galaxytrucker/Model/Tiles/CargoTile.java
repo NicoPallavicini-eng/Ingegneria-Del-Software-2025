@@ -1,5 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,7 +11,8 @@ public class CargoTile extends Tile implements Serializable {
     private final boolean fitsRed;
     private List<Integer> tileContent;
 
-    public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
+    @JsonCreator
+    public CargoTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("slotsNumber") int slotsNumber,@JsonProperty("fitsRed") boolean fitsRed,@JsonProperty("tileContent") List<Integer> tileContent) {
         super(north, west, south, east);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;

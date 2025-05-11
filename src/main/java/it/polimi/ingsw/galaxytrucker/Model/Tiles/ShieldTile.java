@@ -1,12 +1,16 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class ShieldTile extends Tile implements Serializable {
     private ShieldOrientation orientation;
     private boolean activeState;
 
-    public ShieldTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, ShieldOrientation orientation, boolean activeState) {
+    @JsonCreator
+    public ShieldTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("orientation") ShieldOrientation orientation,@JsonProperty("activeState") boolean activeState) {
         super(north, west, south, east);
         this.orientation = orientation;
         this.activeState = activeState;
