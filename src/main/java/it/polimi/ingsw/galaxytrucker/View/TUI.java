@@ -18,20 +18,12 @@ public class TUI{
 
     public void viewLeaderboard(Game game){
         System.out.println("LeaderBoard: ");
-
-        Player first = game.getListOfPlayers().get(0);
-        Player second = game.getListOfPlayers().get(1);
-        Player third = game.getListOfPlayers().get(2);
-        Player fourth = game.getListOfPlayers().get(3);
-
-        System.out.println("1: " + first.getNickname() + ", " + first.getShip().getColor() +
-                ": " + first.getShip().getTravelDays() + " Travel Days\n");
-        System.out.println("2: " + second.getNickname() + ", " + second.getShip().getColor() +
-                ": " + second.getShip().getTravelDays() + " Travel Days\n");
-        System.out.println("3: " + third.getNickname() + ", " + third.getShip().getColor() +
-                ": " + third.getShip().getTravelDays() + " Travel Days\n");
-        System.out.println("4: " + fourth.getNickname() + ", " + fourth.getShip().getColor() +
-                ": " + fourth.getShip().getTravelDays() + " Travel Days\n");
+        int i = 0;
+        for (Player player : game.getListOfPlayers()) {
+            System.out.println(i +": " + player.getNickname() + ", " + player.getShip().getColor() +
+                    ": " + player.getShip().getTravelDays() + " Travel Days\n");
+            i++;
+        }
     }
 
     public void viewTilePile(Game game){
