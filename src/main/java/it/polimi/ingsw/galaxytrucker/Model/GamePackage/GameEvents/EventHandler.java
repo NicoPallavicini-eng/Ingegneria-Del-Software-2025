@@ -165,7 +165,7 @@ TRAVELLING:
             random = (int) Math.random()*4;
         }
 
-        Player playerNew = new Player(event.nickname(), event.IP(), color);
+        Player playerNew = new Player(event.IP(), event.nickname(), color);
         game.addPlayer(playerNew);
     }
     /*
