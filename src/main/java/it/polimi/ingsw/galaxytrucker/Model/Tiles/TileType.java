@@ -10,5 +10,5 @@ public enum TileType implements Serializable {
     BIOADAPTOR,     // B ⚘
     BATTERY,        // B §
     SHIELD          // S #
-    // connector tile: " " content of tile is null
+    // connector tile: "   " content of tile is null
 }

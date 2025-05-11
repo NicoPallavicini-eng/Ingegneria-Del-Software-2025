@@ -31,9 +31,9 @@ public class TUI{
         for (Tile tile : pile) {
             printHeaders();
             if (i%16 == 0){
-                upperRow.add("╭─|||─╮ ");
+                upperRow.add("╭─────╮ ");
                 middleRow.add("│  " + i + "  │ ");
-                lowerRow.add("╰─|||─╯ ");
+                lowerRow.add("╰─────╯ ");
 
             }
             if (tile != null){
@@ -71,7 +71,12 @@ public class TUI{
                     }
                     else if(tile instanceof CabinTile){
                         CabinTile cabinTile = (CabinTile) tile;
-                        String type = "  ⚲  ";
+                        String type;
+                        if (cabinTile.isMainCapsule()) {
+                            type = "  ⌂  ";
+                        } else {
+                            type = "  ⚲  ";
+                        }
                         List<ConnectorType> connectors = cabinTile.getConnectors();
                         List<String> strConnectors = checkConnectors(connectors);
                         upperRow.add(strConnectors.get(0));
@@ -81,11 +86,18 @@ public class TUI{
                     else if(tile instanceof CargoTile){
                         CargoTile cargoTile = (CargoTile) tile;
                         String type = "     ";
-                        if (cargoTile.getSlotsNumber() == 2){
-                            type = " 2 □ ";
-                        }
-                        else if (cargoTile.getSlotsNumber() == 3){
-                            type = " 3 □ ";
+                        if (cargoTile.fitsRed()){
+                            if (cargoTile.getSlotsNumber() == 1) {
+                                type = " 1 ■ ";
+                            } else if (cargoTile.getSlotsNumber() == 2) {
+                                type = " 2 ■ ";
+                            }
+                        } else {
+                            if (cargoTile.getSlotsNumber() == 2) {
+                                type = " 2 □ ";
+                            } else if (cargoTile.getSlotsNumber() == 3) {
+                                type = " 3 □ ";
+                            }
                         }
                         List<ConnectorType> connectors = cargoTile.getConnectors();
                         List<String> strConnectors = checkConnectors(connectors);
@@ -95,11 +107,10 @@ public class TUI{
                     }
                     else if(tile instanceof EngineTile){
                         EngineTile engineTile = (EngineTile) tile;
-                        String type = "     ";
-                        if (engineTile.getDoublePower() == true){
+                        String type;
+                        if (engineTile.getDoublePower()){
                             type = " 2 ¤ ";
-                        }
-                        else if (engineTile.getDoublePower() == false){
+                        } else {
                             type = " 1 ¤ ";
                         }
                         List<ConnectorType> connectors = engineTile.getConnectors();
@@ -131,19 +142,23 @@ public class TUI{
                     }
                     else if(tile instanceof CannonTile){
                         CannonTile cannonTile = (CannonTile) tile;
-                        String type = "     ";
+                        String type;
                         if(cannonTile.getDoublePower()){
                             type = " 2 + ";
-                        }
-                        else{
+                        } else {
                             type = " 1 + ";
                         }
+                        List<ConnectorType> connectors = cannonTile.getConnectors();
+                        List<String> strConnectors = checkConnectors(connectors);
+                        upperRow.add(strConnectors.get(0));
+                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                        lowerRow.add(strConnectors.get(2));
                     }
                 }
-                else{
-                    upperRow.add("╭─|||─╮ ");
+                else {
+                    upperRow.add("╭─────╮ ");
                     middleRow.add("│     │ ");
-                    lowerRow.add("╰─|||─╯ ");
+                    lowerRow.add("╰─────╯ ");
                 }
             }
             else{
@@ -239,9 +254,9 @@ public class TUI{
 
     private void printHeaders(){
         System.out.println(
-                "╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮ ╭─|||─╮\n" +
-                "-     - -  1  - -  2  - -  3  - -  4  - -  5  - -  6  - -  7  - -  8  - -  9  - - 1 0 - - 1 1 - - 1 2 - - 1 3 - - 1 4 - - 1 5 - - 1 6 -\n" +
-                "╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯ ╰─|||─╯"
+                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
+                "│     │ │  1  │ │  2  │ │  3  │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │ 1 1 │ │ 1 2 │ │ 1 3 │ │ 1 4 │ │ 1 5 │ │ 1 6 │\n" +
+                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
         );
     }
 
@@ -253,29 +268,30 @@ public class TUI{
         ConnectorType east = connectors.get(3);
 
         if (north == ConnectorType.NONE){
-            connectorList.add("╭─────╮ ");
+            connectorList.add("───");
         }
         else if (north == ConnectorType.SINGLE){
-            connectorList.add("╭─ | ─╮ ");
+            connectorList.add(" | ");
         }
         else if (north == ConnectorType.DOUBLE){
-            connectorList.add("╭─| |─╮ ");
+            connectorList.add("| |");
         }
         else if (north == ConnectorType.UNIVERSAL){
-            connectorList.add("╭─|||─╮ ");
+            connectorList.add("|||");
         }
         else if (north == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╭─ ↑ ─╮ ");
+            connectorList.add(" ↑ ");
         }
         else if (north == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╭─↑ ↑─╮ ");
+            connectorList.add("↑ ↑");
         }
         else if (north == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╭─ V ─╮ ");
+            connectorList.add(" V ");
         }
         else if (north == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╭─V V─╮ ");
+            connectorList.add("V V");
         }
+
         else if (west == ConnectorType.NONE){
             connectorList.add("│");
         }
@@ -300,30 +316,30 @@ public class TUI{
         else if (west == ConnectorType.ENGINE_DOUBLE){
             connectorList.add("≥");
         }
-        else
-        if (south == ConnectorType.NONE){
-            connectorList.add("╭─────╮ ");
+
+        else if (south == ConnectorType.NONE){
+            connectorList.add("───");
         }
         else if (south == ConnectorType.SINGLE){
-            connectorList.add("╭─ | ─╮ ");
+            connectorList.add(" | ");
         }
         else if (south == ConnectorType.DOUBLE){
-            connectorList.add("╭─| |─╮ ");
+            connectorList.add("| |");
         }
         else if (south == ConnectorType.UNIVERSAL) {
-            connectorList.add("╭─|||─╮ ");
+            connectorList.add("|||");
         }
         else if (south == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╭─ ↓ ─╮ ");
+            connectorList.add(" ↓ ");
         }
         else if (south == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╭─↓ ↓─╮ ");
+            connectorList.add("↓ ↓");
         }
         else if (south == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╭─ V ─╮ ");
+            connectorList.add(" V ");
         }
         else if (south == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╭─V V─╮ ");
+            connectorList.add("V V");
         }
         else if (east == ConnectorType.NONE){
             connectorList.add("│ ");
@@ -338,16 +354,16 @@ public class TUI{
             connectorList.add("≡ ");
         }
         else if (east == ConnectorType.CANNON_SINGLE){
-            connectorList.add("→");
+            connectorList.add("→ ");
         }
         else if (east == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("⇉");
+            connectorList.add("⇉ ");
         }
         else if (east == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("<");
+            connectorList.add("< ");
         }
         else if (east == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("≤");
+            connectorList.add("≤ ");
         }
         return connectorList;
     }
