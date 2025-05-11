@@ -163,7 +163,7 @@ class TestVirtualClient implements VirtualClient {
     }
 
     @Override
-    public void viewLeaderboard(Game game, String nickname) throws RemoteException {
+    public void viewLeaderboard(Game game) throws RemoteException {
 
     }
 
