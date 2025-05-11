@@ -1384,7 +1384,67 @@ class BatteryTileParse{
 }
 
 public class JsonParsing{
-    public static void main(String[] args) {
+    private ArrayList<Tile> connectors;
+    private ArrayList<CabinTile> cabins;
+    private ArrayList<BatteryTile> batteries;
+    private ArrayList<EngineTile> engines;
+    private ArrayList<CargoTile> cargos;
+    private ArrayList<CannonTile> cannons;
+    private ArrayList<ShieldTile> shields;
+    private ArrayList<BioadaptorTile> bioadaptors;
+
+    public ArrayList<Tile> getConnectors(){
+        return connectors;
+    }
+    public ArrayList<CabinTile> getCabins(){
+        return cabins;
+    }
+    public ArrayList<BatteryTile> getBatteries(){
+        return batteries;
+    }
+    public ArrayList<EngineTile> getEngines(){
+        return engines;
+    }
+    public ArrayList<CargoTile> getCargos(){
+        return cargos;
+    }
+    public ArrayList<CannonTile> getCannons(){
+        return cannons;
+    }
+    public ArrayList<ShieldTile> getShields(){
+        return shields;
+    }
+    public ArrayList<BioadaptorTile> getBioadaptors(){
+        return bioadaptors;
+    }
+
+    public void setConnectors(ArrayList<Tile> connectors){
+        this.connectors = connectors;
+    }
+    public void setCabins(ArrayList<CabinTile> cabins){
+        this.cabins = cabins;
+    }
+    public void setBatteries(ArrayList<BatteryTile> batteries){
+        this.batteries = batteries;
+    }
+    public void setEngines(ArrayList<EngineTile> engines){
+        this.engines = engines;
+    }
+    public void setCargos(ArrayList<CargoTile> cargos){
+        this.cargos = cargos;
+    }
+    public void setCannons(ArrayList<CannonTile> cannons){
+        this.cannons = cannons;
+    }
+    public void setShields(ArrayList<ShieldTile> shields){
+        this.shields = shields;
+    }
+    public void setBioadaptors(ArrayList<BioadaptorTile> bioadaptors){
+        this.bioadaptors = bioadaptors;
+    }
+
+
+    public JsonParsing(){
         JsonTiles jsonTiles = new JsonTiles();
 
         Gson gson = new Gson();
@@ -1482,6 +1542,16 @@ public class JsonParsing{
             EngineTile engineTile = new EngineTile(engineParse.doublePower,engineParse.activeState,engineParse.north,engineParse.south,engineParse.east,engineParse.west);
             engineTiles.add(engineTile);
         }
+
+        setConnectors(connectorTiles);
+        setCabins(cabinTiles);
+        setBioadaptors(bioadaptorTiles);
+        setCargos(cargoTiles);
+        setBatteries(batteryTiles);
+        setEngines(engineTiles);
+        setCannons(cannonTiles);
+        setBioadaptors(bioadaptorTiles);
+
         System.out.println("North: " + connectorTiles.get(1).getConnectors().get(0));
         System.out.println("West: " + connectorTiles.get(1).getConnectors().get(1));
         System.out.println("South: " + connectorTiles.get(1).getConnectors().get(2));
