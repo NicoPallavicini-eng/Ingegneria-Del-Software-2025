@@ -23,7 +23,7 @@ class JsonTiles{
 
     public JsonTiles(){
         engine ="{\"engine1\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -31,7 +31,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine2\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -39,7 +39,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine3\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -47,7 +47,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine4\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -55,7 +55,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine5\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -63,7 +63,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine6\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -71,7 +71,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine7\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -79,7 +79,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine8\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -87,7 +87,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine9\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -95,7 +95,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine10\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -103,7 +103,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine11\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -111,7 +111,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine12\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -119,7 +119,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine13\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -127,7 +127,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine14\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
@@ -135,7 +135,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine15\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
@@ -143,7 +143,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine16\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
@@ -151,7 +151,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine17\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -159,7 +159,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine18\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
@@ -167,7 +167,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine19\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -175,7 +175,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine20\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -183,7 +183,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine21\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_SINGLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -191,7 +191,7 @@ class JsonTiles{
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"doubleEngine1\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -199,7 +199,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine2\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -207,7 +207,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine3\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -215,7 +215,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine4\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -223,7 +223,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine5\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
@@ -231,7 +231,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine6\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
@@ -239,7 +239,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine7\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -247,7 +247,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine8\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
@@ -255,7 +255,7 @@ class JsonTiles{
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine9\":{\n" +
-                "    \"north\":\"ENGINE\",\n" +
+                "    \"north\":\"ENGINE_DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
@@ -1474,7 +1474,14 @@ public class JsonParsing{
             BatteryTile battery = new BatteryTile(batteryParse.north,batteryParse.south,batteryParse.east,batteryParse.west,batteryParse.slotsNumber,batteryParse.slotsFilled);
             batteryTiles.add(battery);
         }
-
+        ArrayList<EngineTile> engineTiles = new ArrayList<>();
+        Type typeEngine = new TypeToken<Map<String,EngineTileParse>>(){}.getType();
+        Map<String,EngineTileParse> engineMap = gson.fromJson(jsonTiles.engine, typeEngine);
+        for (String connectorKey : engineMap.keySet()) {
+            EngineTileParse engineParse = engineMap.get(connectorKey);
+            EngineTile engineTile = new EngineTile(engineParse.doublePower,engineParse.activeState,engineParse.north,engineParse.south,engineParse.east,engineParse.west);
+            engineTiles.add(engineTile);
+        }
         System.out.println("North: " + connectorTiles.get(1).getConnectors().get(0));
         System.out.println("West: " + connectorTiles.get(1).getConnectors().get(1));
         System.out.println("South: " + connectorTiles.get(1).getConnectors().get(2));
@@ -1523,5 +1530,12 @@ public class JsonParsing{
         System.out.println("East: " + batteryTiles.get(1).getConnectors().get(3));
         System.out.println("SlotsNumber: " + batteryTiles.get(1).getSlotsNumber());
         System.out.println("SlotsFilled: " + batteryTiles.get(1).getSlotsFilled());
+
+        System.out.println("\nNorth: " + engineTiles.get(20).getConnectors().get(0));
+        System.out.println("West: " + engineTiles.get(20).getConnectors().get(1));
+        System.out.println("South: " + engineTiles.get(20).getConnectors().get(2));
+        System.out.println("East: " + engineTiles.get(20).getConnectors().get(3));
+        System.out.println("DoublePower: " + engineTiles.get(20).getDoublePower());
+        System.out.println("Active: " + engineTiles.get(20).getActiveState());
     }
 }
