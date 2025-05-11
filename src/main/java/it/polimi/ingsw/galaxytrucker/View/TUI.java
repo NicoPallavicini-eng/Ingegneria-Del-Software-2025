@@ -28,11 +28,12 @@ public class TUI{
         int i = 0;
         System.out.println("Tile pile: ");
         List<Tile> pile = tilePile.getTilePile();
+        printHeaders();
         for (Tile tile : pile) {
-            printHeaders();
             if (i%16 == 0){
+                int ii = i++;
                 upperRow.add("╭─────╮ ");
-                middleRow.add("│  " + i + "  │ ");
+                middleRow.add("│  " + ii + "  │ ");
                 lowerRow.add("╰─────╯ ");
 
             }
