@@ -1551,7 +1551,7 @@ public class JsonParsing{
         setEngines(engineTiles);
         setCannons(cannonTiles);
         setBioadaptors(bioadaptorTiles);
-
+        /*
         System.out.println("North: " + connectorTiles.get(1).getConnectors().get(0));
         System.out.println("West: " + connectorTiles.get(1).getConnectors().get(1));
         System.out.println("South: " + connectorTiles.get(1).getConnectors().get(2));
@@ -1607,5 +1607,7 @@ public class JsonParsing{
         System.out.println("East: " + engineTiles.get(20).getConnectors().get(3));
         System.out.println("DoublePower: " + engineTiles.get(20).getDoublePower());
         System.out.println("Active: " + engineTiles.get(20).getActiveState());
+
+         */
     }
 }
