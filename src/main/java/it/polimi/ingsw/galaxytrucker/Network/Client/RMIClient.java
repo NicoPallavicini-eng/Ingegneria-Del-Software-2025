@@ -14,7 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 
-public class RMIClient extends UnicastRemoteObject implements VirtualClient {
+public class RMIClient extends UnicastRemoteObject implements VirtualClient, Runnable {
     final VirtualServer server;
     private String nickname;
     private static TUI tui; // Later maybe UI???
@@ -29,9 +29,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient {
             //GUI
         }
     }
-    public void run() throws RemoteException {
-        this.server.connect(this);
-        this.runCl();
+    @Override
+    public void run(){
+        try {
+            this.server.connect(this);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            this.runCl();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void runCl() throws RemoteException {
         Scanner scanner = new Scanner(System.in);
@@ -85,6 +94,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient {
     @Override
     public void viewLeaderboard(Game game) throws RemoteException {
         tui.viewLeaderboard(game);
+    }
+
+    @Override
+    public void viewTilepile(Game game) throws RemoteException{
+        tui.viewTilePile(game);
     }
 
     @Override

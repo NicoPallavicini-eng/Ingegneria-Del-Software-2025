@@ -8,9 +8,15 @@ module it.polimi.ingsw.galaxytrucker {
     requires org.controlsfx.controls;
     requires java.rmi;
     requires jdk.jfr;
+    requires jackson.core;
+    requires jackson.databind;
+    requires jackson.annotations;
+
+    requires java.sql;
 
     opens it.polimi.ingsw.galaxytrucker to javafx.fxml;
-    exports it.polimi.ingsw.galaxytrucker;
+    opens it.polimi.ingsw.galaxytrucker.Model.Tiles to jackson.databind;
 
+    exports it.polimi.ingsw.galaxytrucker;
     exports it.polimi.ingsw.galaxytrucker.Controller.Server;
 }

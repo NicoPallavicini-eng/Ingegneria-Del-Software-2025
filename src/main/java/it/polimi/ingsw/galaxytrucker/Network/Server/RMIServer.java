@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
+import it.polimi.ingsw.galaxytrucker.Model.ParsingJSON;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
 import java.rmi.RemoteException;
@@ -16,6 +17,7 @@ public class RMIServer implements VirtualServer {
 
     public RMIServer() throws RemoteException {
         super();
+        new ParsingJSON();
     }
 
     @Override

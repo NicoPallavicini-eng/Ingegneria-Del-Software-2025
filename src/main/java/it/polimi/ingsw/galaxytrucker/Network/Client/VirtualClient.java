@@ -13,4 +13,5 @@ public interface VirtualClient extends Remote {
     void invalidCommand(String error) throws RemoteException;
     void helpMessage() throws RemoteException;
     void viewLeaderboard(Game game) throws RemoteException;
+    void viewTilepile(Game game) throws RemoteException;
 }

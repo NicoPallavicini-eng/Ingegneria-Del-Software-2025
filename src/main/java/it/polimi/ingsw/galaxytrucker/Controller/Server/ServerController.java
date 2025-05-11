@@ -92,10 +92,7 @@ public class ServerController {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
                     client.invalidCommand("/viewleaderboard doesn't support parameters!");
                 }
-                updateView(); // Update model into the client
-                //client.viewLeaderBoard(game, client.getNickname());
-                ViewLeaderboardEvent event = new ViewLeaderboardEvent();
-                game.getGameState().handleEvent(event);
+                client.viewLeaderboard(game);
 
             } //ok
             case "viewships" -> {
@@ -124,6 +121,7 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
+                                    client.viewTilepile(game);
                                     // TODO update view
                                 }
                                 catch(IllegalArgumentException e){
