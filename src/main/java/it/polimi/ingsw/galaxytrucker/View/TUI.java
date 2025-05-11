@@ -35,133 +35,12 @@ public class TUI{
                 upperRow.add("╭─────╮ ");
                 middleRow.add("│  " + ii + "  │ ");
                 lowerRow.add("╰─────╯ ");
-
             }
-            if (tile != null){
-                if(tile.getUpsideDown()){
-                    if(tile instanceof BioadaptorTile){
-                        BioadaptorTile bioadaptorTile = (BioadaptorTile) tile;
-                        String type = "     ";
-                        if(bioadaptorTile.getAlienColor() == AlienColor.ORANGE){
-                            type = " O ⚘ ";
-                        }
-                        else if(bioadaptorTile.getAlienColor() == AlienColor.PURPLE){
-                            type = " P ⚘ ";
-                        }
-                        List<ConnectorType> connectors = bioadaptorTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                    else if(tile instanceof BatteryTile){
-                        BatteryTile batteryTile = (BatteryTile) tile;
-                        String type = "     ";
-                        if(batteryTile.getSlotsNumber() == 2){
-                            type = " 2 § ";
-                        }
-                        else if (batteryTile.getSlotsNumber() == 3){
-                            type = " 3 § ";
-                        }
-                        List<ConnectorType> connectors = batteryTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-
-                    }
-                    else if(tile instanceof CabinTile){
-                        CabinTile cabinTile = (CabinTile) tile;
-                        String type = "  ⚲  ";
-                        List<ConnectorType> connectors = cabinTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                    else if(tile instanceof CargoTile){
-                        CargoTile cargoTile = (CargoTile) tile;
-                        String type = "     ";
-                        if (cargoTile.fitsRed()){
-                            if (cargoTile.getSlotsNumber() == 1) {
-                                type = " 1 ■ ";
-                            } else if (cargoTile.getSlotsNumber() == 2) {
-                                type = " 2 ■ ";
-                            }
-                        } else {
-                            if (cargoTile.getSlotsNumber() == 2) {
-                                type = " 2 □ ";
-                            } else if (cargoTile.getSlotsNumber() == 3) {
-                                type = " 3 □ ";
-                            }
-                        }
-                        List<ConnectorType> connectors = cargoTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                    else if(tile instanceof EngineTile){
-                        EngineTile engineTile = (EngineTile) tile;
-                        String type;
-                        if (engineTile.getDoublePower()){
-                            type = " 2 ¤ ";
-                        } else {
-                            type = " 1 ¤ ";
-                        }
-                        List<ConnectorType> connectors = engineTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                    else if(tile instanceof ShieldTile){
-                        ShieldTile shieldTile = (ShieldTile) tile;
-                        String type = "     ";
-                        if (shieldTile.getOrientation() == ShieldOrientation.NORTHWEST){
-                            type = " NW# ";
-                        }
-                        else if (shieldTile.getOrientation() == ShieldOrientation.NORTHEAST){
-                            type = " NE# ";
-                        }
-                        else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHWEST){
-                            type = " SW# ";
-                        }
-                        else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHEAST){
-                            type = " SE# ";
-                        }
-                        List<ConnectorType> connectors = shieldTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                    else if(tile instanceof CannonTile){
-                        CannonTile cannonTile = (CannonTile) tile;
-                        String type;
-                        if(cannonTile.getDoublePower()){
-                            type = " 2 + ";
-                        } else {
-                            type = " 1 + ";
-                        }
-                        List<ConnectorType> connectors = cannonTile.getConnectors();
-                        List<String> strConnectors = checkConnectors(connectors);
-                        upperRow.add(strConnectors.get(0));
-                        middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
-                        lowerRow.add(strConnectors.get(2));
-                    }
-                }
-                else {
-                    upperRow.add("╭─────╮ ");
-                    middleRow.add("│     │ ");
-                    lowerRow.add("╰─────╯ ");
-                }
-            }
-            else{
-                upperRow.add("       ");
-                middleRow.add("       ");
-                lowerRow.add("       ");
-            }
+            printTile(tile);
+            List<List<String>> allRow = printTile(tile);
+            upperRow.addAll(allRow.get(0));
+            middleRow.addAll(allRow.get(1));
+            lowerRow.addAll(allRow.get(2));
             i++;
         }
         for (int j =0; j<upperRow.size(); j++){
@@ -171,6 +50,137 @@ public class TUI{
             System.out.print(upperRow.get(j));
             System.out.print(middleRow.get(j));
             System.out.print(lowerRow.get(j));
+        }
+    }
+
+    public List <List <String> > printTile(Tile tile){
+        List<String> upperRow = new ArrayList<>();
+        List<String> middleRow = new ArrayList<>();
+        List<String> lowerRow = new ArrayList<>();
+        if (tile != null){
+            if(tile.getUpsideDown()){
+                if(tile instanceof BioadaptorTile){
+                    BioadaptorTile bioadaptorTile = (BioadaptorTile) tile;
+                    String type = "     ";
+                    if(bioadaptorTile.getAlienColor() == AlienColor.ORANGE){
+                        type = " O ⚘ ";
+                    }
+                    else if(bioadaptorTile.getAlienColor() == AlienColor.PURPLE){
+                        type = " P ⚘ ";
+                    }
+                    List<ConnectorType> connectors = bioadaptorTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+                else if(tile instanceof BatteryTile){
+                    BatteryTile batteryTile = (BatteryTile) tile;
+                    String type = "     ";
+                    if(batteryTile.getSlotsNumber() == 2){
+                        type = " 2 § ";
+                    }
+                    else if (batteryTile.getSlotsNumber() == 3){
+                        type = " 3 § ";
+                    }
+                    List<ConnectorType> connectors = batteryTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+
+                }
+                else if(tile instanceof CabinTile){
+                    CabinTile cabinTile = (CabinTile) tile;
+                    String type = "  ⚲  ";
+                    List<ConnectorType> connectors = cabinTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+                else if(tile instanceof CargoTile){
+                    CargoTile cargoTile = (CargoTile) tile;
+                    String type = "     ";
+                    if (cargoTile.fitsRed()){
+                        if (cargoTile.getSlotsNumber() == 1) {
+                            type = " 1 ■ ";
+                        } else if (cargoTile.getSlotsNumber() == 2) {
+                            type = " 2 ■ ";
+                        }
+                    } else {
+                        if (cargoTile.getSlotsNumber() == 2) {
+                            type = " 2 □ ";
+                        } else if (cargoTile.getSlotsNumber() == 3) {
+                            type = " 3 □ ";
+                        }
+                    }
+                    List<ConnectorType> connectors = cargoTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+                else if(tile instanceof EngineTile){
+                    EngineTile engineTile = (EngineTile) tile;
+                    String type;
+                    if (engineTile.getDoublePower()){
+                        type = " 2 ¤ ";
+                    } else {
+                        type = " 1 ¤ ";
+                    }
+                    List<ConnectorType> connectors = engineTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+                else if(tile instanceof ShieldTile){
+                    ShieldTile shieldTile = (ShieldTile) tile;
+                    String type = "     ";
+                    if (shieldTile.getOrientation() == ShieldOrientation.NORTHWEST){
+                        type = " NW# ";
+                    }
+                    else if (shieldTile.getOrientation() == ShieldOrientation.NORTHEAST){
+                        type = " NE# ";
+                    }
+                    else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHWEST){
+                        type = " SW# ";
+                    }
+                    else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHEAST){
+                        type = " SE# ";
+                    }
+                    List<ConnectorType> connectors = shieldTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+                else if(tile instanceof CannonTile){
+                    CannonTile cannonTile = (CannonTile) tile;
+                    String type;
+                    if(cannonTile.getDoublePower()){
+                        type = " 2 + ";
+                    } else {
+                        type = " 1 + ";
+                    }
+                    List<ConnectorType> connectors = cannonTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    lowerRow.add(strConnectors.get(2));
+                }
+            }
+            else {
+                upperRow.add("╭─────╮ ");
+                middleRow.add("│     │ ");
+                lowerRow.add("╰─────╯ ");
+            }
+        }
+        else{
+            upperRow.add("       ");
+            middleRow.add("       ");
+            lowerRow.add("       ");
         }
     }
 
