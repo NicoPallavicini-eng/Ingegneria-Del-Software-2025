@@ -39,6 +39,16 @@ public class RMIServer implements VirtualServer {
         Registry registry = LocateRegistry.createRegistry(1090);
         registry.rebind(serverName, stub);
         System.out.println("server bound.");
+
+        try {
+            // Mantiene il main thread in esecuzione
+            synchronized (RMIServer.class) {
+                RMIServer.class.wait();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
     }
     @Override
     public String sayHello() throws RemoteException {

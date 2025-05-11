@@ -1,6 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.View;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.ParsingJSON;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
@@ -43,8 +48,8 @@ public class TUI{
                 middleRow.add("│  " + ii + "  │ ");
                 lowerRow.add("╰─────╯ ");
             }
-            printTile(tile);
-            List<List<String>> allRow = printTile(tile);
+            buildTile(tile);
+            List<List<String>> allRow = buildTile(tile);
             upperRow.addAll(allRow.get(0));
             middleRow.addAll(allRow.get(1));
             lowerRow.addAll(allRow.get(2));
@@ -60,7 +65,7 @@ public class TUI{
         }
     }
 
-    public List <List <String> > printTile(Tile tile){
+    private List<List<String>> buildTile(Tile tile){
         List<String> upperRow = new ArrayList<>();
         List<String> middleRow = new ArrayList<>();
         List<String> lowerRow = new ArrayList<>();
@@ -243,6 +248,7 @@ public class TUI{
                         "/placepurplealien - Place the purple alien on your ship. Requires the row and column where you want to place the alien.\n" +
                         "/removetile - Remove a tile from your ship. Requires the row and column of the tile you want to remove.\n" +
                         "/viewships - View the ships of all players. No parameters needed.\n" +
+                        "/viewmyship - View your ship. No parameters needed.\n" +
                         "\nTRAVELLING PHASE\n" +
                         "/viewleaerboard - View the leaderboard. No parameters needed.\n" +
                         "/activateengines - Activate double engines. Requires two sets of parameters. The first one with the position (row and column) of the engines and the second one with the position of the battery tile and how many tile to take from it.\n" +
@@ -386,7 +392,105 @@ public class TUI{
         return connectorList;
     }
 
-    public static void main(String[] args){
-        printHelpMessage();
+    public void printTile(Tile tile){
+        List<List<String>> allRow = buildTile(tile);
+        List<String> upperRow = allRow.get(0);
+        List<String> middleRow = allRow.get(1);
+        List<String> lowerRow = allRow.get(2);
+        for (int j =0; j<upperRow.size(); j++){
+            System.out.print(upperRow.get(j));
+            System.out.print(middleRow.get(j));
+            System.out.print(lowerRow.get(j));
+        }
     }
+
+    public void printCurrentCard(Card card){}
+
+    public void printMyShip(Game game, String nickname){}
+
+    public void printCurrentCard(Game game){
+        System.out.println("Current card: ");
+        GameState gameState = game.getGameState();
+        if (gameState instanceof TravellingState){
+            TravellingState travellingState = (TravellingState) gameState;
+            Card currentCard = travellingState.getCurrentCard();
+            checkCard(currentCard);
+        }
+        else{
+            System.out.println("No current card");
+        }
+
+    }
+
+    private void checkCard(Card card){
+        if (card != null){
+            if (card instanceof CombatZoneCard){
+                System.out.println("Combat Zone Card:"); //TODO é il più bastardo di tutti...
+            }
+            else if (card instanceof EpidemicCard){
+                System.out.println("Epidemic Card");
+            }
+            else if (card instanceof MeteorsCard){
+                System.out.println("Meteors Card: "); //TODO un altro bastardo
+            }
+            else if (card instanceof OpenSpaceCard){
+                System.out.println("Open Space Card");
+            }
+            else if(card instanceof PiratesCard){
+                System.out.println("Pirates Card: "); //TODO un altro bastardo
+            }
+            else if (card instanceof PlanetsCard){
+                List<Planet> planets = ((PlanetsCard) card).getPlanetsList();
+                int i = 1;
+                List<String> planetBlocks = new ArrayList<>();
+                for (Planet planet : planets){
+                    planetBlocks.add("Planet " + i);
+                    List<Integer> blocks = planet.getBlocks();
+                    for (Integer block : blocks){
+                        planetBlocks.add("Block " + block);
+                    }
+                }
+                System.out.println("Planets Card: " + planets); //TODO check pls...
+            }
+            else if (card instanceof ShipCard){
+                System.out.println("Ship Card: "); //TODO non ho idea di cosa sia...
+            }
+            else if (card instanceof SlaversCard){
+                System.out.println("Slavers Card: \n"+
+                        "Firepower: " + ((SlaversCard) card).getFirepower() + "\n"+
+                        "Credits: " + ((SlaversCard) card).getNumberOfCredits() + "\n"+
+                        "Crew lost: " + ((SlaversCard) card).getNumberOfCrewLost() + "\n"+
+                        "Days to lose: " + ((SlaversCard) card).getNumberOfDaysToLose() + "\n");
+            }
+            else if (card instanceof SmugglersCard){
+                List<Integer> blocks = ((SmugglersCard)card).getBlocksList();
+                for (Integer block : blocks){
+                    blocks.add(block);
+                }
+                System.out.println("Smugglers Card: \n"+
+                        "Firepower: " + ((SmugglersCard) card).getFirepower());
+                        for(int i =0; i<blocks.size(); i++){
+                            System.out.print("Block " + blocks.get(i) + "\n");
+                        }
+                        System.out.println("Days to lose: " + ((SmugglersCard) card).getDaysToLose());
+            }
+            else if (card instanceof StardustCard){
+                System.out.println("Stardust Card");
+            }
+            else if (card instanceof StationCard){
+                List<Integer> blocks = ((StationCard)card).getBlockList();
+                for (Integer block : blocks){
+                    blocks.add(block);
+                }
+                System.out.println("Station Card: \n"+
+                        "Crew needed: " + ((StationCard) card).getCrewNumberNeeded() + "\n");
+                for(int i =0; i<blocks.size(); i++){
+                    System.out.print("Block " + blocks.get(i) + "\n");
+                }
+                System.out.println("Days to lose: " + ((StationCard) card).getDaysToLose());
+            }
+
+        }
+    }
+
 }

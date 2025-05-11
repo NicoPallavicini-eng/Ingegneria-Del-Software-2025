@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
 import java.rmi.RemoteException;
@@ -22,6 +23,10 @@ public class ServerController {
 
     public ServerController(){
 
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     private void updateView() {
@@ -89,19 +94,39 @@ public class ServerController {
                 client.helpMessage();
             } //ok
             case "viewleaderboard" -> {
-                if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
-                    client.invalidCommand("/viewleaderboard doesn't support parameters!");
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
+                        client.invalidCommand("/viewleaderboard doesn't support parameters!");
+                    }
+                    client.viewLeaderboard(game);
+                }else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
-                client.viewLeaderboard(game);
 
             } //ok
-            case "viewships" -> {
-             
-                if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
-                    client.invalidCommand("/viewships doesn't support parameters!");
+            case "viewmyship" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
+                        client.invalidCommand("/viewship doesn't support parameters!");
+                    }
+                    client.viewMyShip(game, client.getNickname());
+                }else{
+                    client.invalidCommand("You are not connected to the game!");
                 }
-                ViewShipsEvent event = new ViewShipsEvent();
-                game.getGameState().handleEvent(event);
+
+            }
+            case "viewships" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
+                        client.invalidCommand("/viewships doesn't support parameters!");
+                    }
+                    client.viewShips(game);
+                }else{
+                    client.invalidCommand("You are not connected to the game!");
+                }
             } //ok
             case "connect" -> {
               //GameState gameState = game.getGameState();
@@ -121,7 +146,7 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
-                                    client.viewTilepile(game);
+                                    client.defaultView(game, nickname);
                                     // TODO update view
                                 }
                                 catch(IllegalArgumentException e){
@@ -189,6 +214,9 @@ public class ServerController {
                             if (tilePositionInt > 0 && tilePositionInt < 156) {
                                 PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 game.getGameState().handleEvent(event);
+                                Tile currentTile = player.getShip().getTileInHand();
+                                client.viewTile(currentTile);
+                                client.viewMyShip(game, client.getNickname());
 
                             } else {
                                 client.invalidCommand("Tile position not valid. It must be between 1 and 156");
@@ -214,6 +242,7 @@ public class ServerController {
                             String side = firstParameters.get(0);
                             RotateTileEvent event = new RotateTileEvent(player, side);
                             game.getGameState().handleEvent(event);
+                            client.defaultView(game, client.getNickname());
                         }
                         else{
                             client.invalidCommand("/rotatetile supports only one parameter!");
@@ -233,6 +262,7 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         PutDownTileEvent event = new PutDownTileEvent(player);
                         game.getGameState().handleEvent(event);
+                        client.defaultView(game, client.getNickname());
                     }
                     else{
                         client.invalidCommand("/putdowntile doesn't support parameters!");
@@ -258,6 +288,7 @@ public class ServerController {
                             else{
                                 PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
                                 game.getGameState().handleEvent(event);
+                                client.defaultView(game, client.getNickname());
                             }
                         }
                         else{
@@ -282,6 +313,7 @@ public class ServerController {
                             else{
                                 ReserveTileEvent event = new ReserveTileEvent(player, index-1);
                                 game.getGameState().handleEvent(event);
+                                client.defaultView(game, client.getNickname());
                             }
                         }
                     }
@@ -296,7 +328,6 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         FlipHourglassEvent event = new FlipHourglassEvent();
                         game.getGameState().handleEvent(event);
-
                     }
                     else{
                         client.invalidCommand("/fliphourglass doesn't support parameters!");
@@ -320,6 +351,7 @@ public class ServerController {
                                 // Check if position is valid?
                                 SetPositionEvent event = new SetPositionEvent(player, position);
                                 game.getGameState().handleEvent(event);
+                                client.viewLeaderboard(game);
                             }
                         }
 
@@ -338,6 +370,8 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         PickUpFromShipEvent event = new PickUpFromShipEvent(player);
                         game.getGameState().handleEvent(event);
+                        Tile currentTile = player.getShip().getLastPlacedTile();
+                        client.viewTile(currentTile);
 
                     }
                     else{
@@ -362,6 +396,8 @@ public class ServerController {
                             } else {
                                 PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
                                 game.getGameState().handleEvent(event);
+                                Tile reservedTile = player.getShip().getReservedTiles().get(index-1);
+                                client.viewTile(reservedTile);
                             }
                         }
                     }
@@ -744,6 +780,7 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
                         //ViewInventoryEvent event = new ViewInventoryEvent(player);
                         //game.getGameState().handleEvent(event);
+
                     }
                     else{
                         client.invalidCommand("/viewinventory doesn't support parameters!");
@@ -925,6 +962,7 @@ public class ServerController {
                             else{
                                 RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
                                 game.getGameState().handleEvent(event);
+                                client.viewMyShip(game, client.getNickname());
                             }
 
                         }
