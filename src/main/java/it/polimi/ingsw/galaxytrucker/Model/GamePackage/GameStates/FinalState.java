@@ -11,6 +11,8 @@ import java.util.List;
 public class FinalState extends GameState implements Serializable {
     private final Game game;
     private List<Ship> ships = new ArrayList<>();
+    private List<Ship> gaveUpShips = new ArrayList<>();
+
 
 
     public FinalState(Game game) {
@@ -28,7 +30,7 @@ public class FinalState extends GameState implements Serializable {
 
 
     public void init(){
-        ships = game.getListOfPlayers().stream().map(Player::getShip).toList();
+        ships = game.getListOfActivePlayers().stream().map(Player::getShip).toList();
         process();
     }
 
@@ -66,6 +68,13 @@ public class FinalState extends GameState implements Serializable {
                                         mapToInt(Integer::intValue)).
                                 sum())
                         );
+        gaveUpShips.stream().
+                forEach(s -> s.setCredits(s.getCredits() +
+                        (s.getListOfCargo().stream().
+                                flatMapToInt(c -> c.getTileContent().stream().
+                                        mapToInt(Integer::intValue)).
+                                sum())/2
+                ));
     }
 
     private void computeLosses() {

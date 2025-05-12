@@ -24,11 +24,11 @@ public class WaitingState extends GameState implements Serializable {
     }
 
    public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {
-        if(game.getNumberOfPlayers() == -1 && !game.getListOfPlayers().isEmpty()) {
+        if(game.getNumberOfPlayers() == -1 && !game.getListOfActivePlayers().isEmpty()) {
             throw new IllegalEventException("The first player has to set the number of players");
         }
         EventHandler.handleEvent(event, game);
-        if(game.getListOfPlayers().size() == game.getNumberOfPlayers()) {
+        if(game.getListOfActivePlayers().size() == game.getNumberOfPlayers()) {
             next();
         }
    }

@@ -114,15 +114,15 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
         else{
             handledPlayers.add(event.player());
-            if(handledPlayers.containsAll(game.getListOfPlayers())){
+            if(handledPlayers.containsAll(game.getListOfActivePlayers())){
                 checkNext();
             }
         }
     }
 
     private void checkNext() {
-        if (handledPlayers.containsAll(game.getListOfPlayers())) {
-            for (Player player : game.getListOfPlayers()) {
+        if (handledPlayers.containsAll(game.getListOfActivePlayers())) {
+            for (Player player : game.getListOfActivePlayers()) {
                 currentMeteor.getHit(player.getShip());
             }
             if (meteors.isEmpty()) {
@@ -131,7 +131,7 @@ public class MeteorsState extends TravellingState implements Serializable {
             currentMeteor = meteors.get(0);
             meteors.remove(0);
             currentMeteorDiceRoll = currentMeteor.rollTwoDice();
-            for (Player player : game.getListOfPlayers()) {
+            for (Player player : game.getListOfActivePlayers()) {
                 player.getShip().disactivateEverything();
             }
         }

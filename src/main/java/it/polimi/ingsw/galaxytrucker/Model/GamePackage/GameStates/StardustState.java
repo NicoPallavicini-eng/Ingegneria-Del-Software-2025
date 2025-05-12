@@ -17,7 +17,7 @@ public class StardustState extends TravellingState implements Serializable {
     private List<Player> turns;
 
     public void init(){
-        turns = new ArrayList<>(game.getListOfPlayers());
+        turns = new ArrayList<>(game.getListOfActivePlayers());
         Collections.reverse(turns);
         process();
     }

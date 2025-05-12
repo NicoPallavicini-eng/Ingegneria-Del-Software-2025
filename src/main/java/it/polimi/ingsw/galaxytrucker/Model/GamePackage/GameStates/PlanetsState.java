@@ -53,7 +53,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else{
             satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfPlayers())){
+            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
                 next();
             }
             nextPlayer();
@@ -122,7 +122,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else {
             satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfPlayers())){
+            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
                 next();
             }
         }
