@@ -597,10 +597,13 @@ public class TUI {
         }
     }
 
-    public void printCurrentCard(Card card){}
+    public void printCurrentCard(Card card){
+        System.out.println("Current card: \n");
+        checkCard(card);
+    }
 
     public void printCurrentCard(Game game){
-        System.out.println("Current card: ");
+        System.out.println("Current card: \n");
         GameState gameState = game.getGameState();
         if (gameState instanceof TravellingState){
             TravellingState travellingState = (TravellingState) gameState;
