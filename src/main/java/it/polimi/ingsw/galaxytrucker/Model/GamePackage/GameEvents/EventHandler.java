@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class EventHandler implements Serializable {
 
-
+    //ez skip
     public static void handleEvent(ChooseSubShipEvent event) {
         Ship ship = event.player().getShip();
         Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
@@ -110,27 +110,11 @@ public class EventHandler implements Serializable {
     /*
     public record ConnectEvent(String nickname, String IP) implements GameEvent
     */
-    //istances a new player and adds it to the list of players in gam    public static void handleEvent(ConnectEvent event, Game game){
-    //FATTO
+    //istances a new player and adds it to the list of players in game
+    // public static void handleEvent(ConnectEvent event, Game game){
     public static void handleEvent(ConnectEvent event, Game game) {
         boolean finished = false;
-        int random = (int) Math.random() * 4;
-        Color color = Color.values()[random];
-        ArrayList<Color> colors = new ArrayList<>();
-        if (game.getListOfActivePlayers().size() == 0) {
-            finished = true;
-        } else {
-            for (Player player : game.getListOfActivePlayers()) {
-                colors.add(player.getShip().getColor());
-            }
-        }
-        while (!finished) {
-            color = Color.values()[random];
-            if (!colors.contains(color)) {
-                finished = true;
-            }
-            random = (int) Math.random() * 4;
-        }
+        Color color = Color.values()[game.getListOfPlayers().size()];
 
         Player playerNew = new Player(event.IP(), event.nickname(), color);
         game.addPlayer(playerNew);
@@ -157,6 +141,7 @@ public class EventHandler implements Serializable {
         }
         Ship ship = event.player().getShip();
         ship.setTileInHand(tile);
+        pile.getTilePile().set(event.index(), null);
     }
     /*
     public record RotateTileEvent(Player player, boolean right) implements GameEvent
@@ -181,21 +166,10 @@ public class EventHandler implements Serializable {
     public static void handleEvent(PutDownTileEvent event, Game game) {
         Ship ship = event.player().getShip();
         if (ship.getTileInHand() == null) {
-            throw new IllegalEventException("You need to place a Tile in hand before putting it");
+            throw new IllegalEventException("You need to place a Tile in hand before putting it back down");
         }
-        TilePile pile = game.getTilePile();
-
-        int index = 0;
-        boolean finished = false;
-        for (Tile tile : pile.getTilePile()) {
-            if (tile == null && !finished) {
-                pile.getTilePile().set(index, tile);
-                ship.setTileInHand(null);
-            }
-            index++;
-        }
-
-
+        List<Tile> pile = game.getTilePile().getTilePile();
+        pile.set(pile.indexOf(null), ship.getTileInHand());
     }
 
     //checks correct tile and life support
@@ -210,15 +184,15 @@ public class EventHandler implements Serializable {
         Tile tile = optionalTile.get();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
         tile.accept(cabinTileVisitor);
-        if (cabinTileVisitor.getList().size() == 0) {
-            throw new IllegalEventException("You choosed not a CabinTile");
+        if (cabinTileVisitor.getList().isEmpty()) {
+            throw new IllegalEventException("You chose not a CabinTile");
         }
         CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
         if (cabinTile.getOrange() <= 0) {
             throw new IllegalEventException("There is no Bioadaptors of OrangeType");
         }
-        if (cabinTile.getInhabitants() != CabinInhabitants.NONE) {
-            throw new IllegalEventException("You already placed Inhabitants in this CabinTile");
+        if (cabinTile.getInhabitants().equals(CabinInhabitants.ALIEN)) {
+            throw new IllegalEventException("You already placed an alien in this CabinTile");
         }
         cabinTile.updateInhabitants(CabinInhabitants.ALIEN);
         cabinTile.setAlienColor(AlienColor.ORANGE);
@@ -237,19 +211,18 @@ public class EventHandler implements Serializable {
         Tile tile = optionalTile.get();
         CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
         tile.accept(cabinTileVisitor);
-        if (cabinTileVisitor.getList().size() == 0) {
-            throw new IllegalEventException("You choosed not a CabinTile");
+        if (cabinTileVisitor.getList().isEmpty()) {
+            throw new IllegalEventException("You chose not a CabinTile");
         }
         CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
         if (cabinTile.getPurple() <= 0) {
             throw new IllegalEventException("There is no Bioadaptors of PurpleType");
         }
-        if (cabinTile.getInhabitants() != CabinInhabitants.NONE) {
-            throw new IllegalEventException("You already placed Inhabitants in this CabinTile");
+        if (cabinTile.getInhabitants().equals(CabinInhabitants.ALIEN)) {
+            throw new IllegalEventException("You already placed an alien in this CabinTile");
         }
         cabinTile.updateInhabitants(CabinInhabitants.ALIEN);
         cabinTile.setAlienColor(AlienColor.PURPLE);
-
     }
 
     //FATTO
@@ -290,9 +263,9 @@ public class EventHandler implements Serializable {
         int position = event.position();
         int place = 0;
         if (position == 1) {
-            place = 4;
+            place = 6;
         } else if (position == 2) {
-            place = 2;
+            place = 3;
         } else if (position == 3) {
             place = 1;
         } else {
@@ -303,6 +276,7 @@ public class EventHandler implements Serializable {
         for (Player player : game.getListOfActivePlayers()) {
             if (player.getShip().getTravelDays() == place) {
                 present = true;
+                break;
             }
         }
         if (!present) {
@@ -331,9 +305,14 @@ public class EventHandler implements Serializable {
     //FATTO
     public static void handleEvent(PickUpReservedTileEvent event) {
         Ship ship = event.player().getShip();
+        if(event.index() > ship.getReservedTiles().size() - 1) {
+            throw new IllegalEventException("you have not saved a tile at index" + event.index());
+        }
         Tile tile = ship.getReservedTiles().get(event.index());
         ship.setTileInHand(tile);
     }
+
+    //todo da qui
 
     public static void handleEvent(ViewDeckEvent event) {
     }
