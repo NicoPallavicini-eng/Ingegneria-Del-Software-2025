@@ -1393,6 +1393,20 @@ public class JsonParsing{
     private ArrayList<ShieldTile> shields;
     private ArrayList<BioadaptorTile> bioadaptors;
 
+    public List<Tile> getCompleteList(){
+        List<Tile> completeList = new ArrayList<>();
+        completeList.addAll(connectors);
+        completeList.addAll(cabins);
+        completeList.addAll(batteries);
+        completeList.addAll(engines);
+        completeList.addAll(cargos);
+        completeList.addAll(cannons);
+        completeList.addAll(shields);
+        completeList.addAll(bioadaptors);
+
+        return completeList;
+    }
+
     public ArrayList<Tile> getConnectors(){
         return connectors;
     }
