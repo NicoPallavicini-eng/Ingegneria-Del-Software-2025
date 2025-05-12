@@ -406,6 +406,8 @@ public class TUI{
 
     public void printMyShip(Game game){}
 
+    public void printShips(Game game){}
+
     public void printCurrentCard(Game game){
         System.out.println("Current card: ");
         GameState gameState = game.getGameState();
@@ -422,7 +424,16 @@ public class TUI{
 
     private void checkCard(Card card){
         if (card != null){
-            if (card instanceof CombatZoneCard){
+            if (card instanceof CombatZoneCard) { // TODO decide if we want to print the affected player's nickname or not
+                System.out.println("Combat Zone Card \n" +
+                        "Days to lose: " + ((CombatZoneCard) card).getDaysLost() + " \n");
+                if (card instanceof CombatZoneCardL) {
+                    System.out.println("Crew lost: " + ((CombatZoneCard) card).getCrewLost() + " \n");
+                } else if (card instanceof CombatZoneCardNotL) {
+                    System.out.println("Cargo lost: " + ((CombatZoneCard) card).getCargoLost() + " \n");
+                }
+                List <Cannonball> balls = ((CombatZoneCard) card).getCannonballList();
+                printBalls(balls);
             }
             else if (card instanceof EpidemicCard){
                 System.out.println("Epidemic Card \n");
@@ -452,18 +463,7 @@ public class TUI{
                         "Credits: " + ((PiratesCard) card).getCredits() + " \n" +
                         "Days to lose: " + ((PiratesCard) card).getDaysToLose() + " \n");
                 List <Cannonball> balls = ((PiratesCard) card).getCannonballList();
-                System.out.println("Cannonballs: Tot number = " + balls.size() + "\n");
-                int i = 1;
-                for (Cannonball ball : balls) {
-                    System.out.println("   " + i + ": ");
-                    if (ball.bigCannonball()) {
-                        System.out.println("Size = Big, ");
-                    } else {
-                        System.out.println("Size = Small, ");
-                    }
-                    System.out.println("Direction = " + ball.direction() + "\n");
-                    i++;
-                }
+                printBalls(balls);
             }
             else if (card instanceof PlanetsCard){
                 List <Planet> planets = ((PlanetsCard) card).getPlanetsList();
@@ -498,8 +498,8 @@ public class TUI{
             }
             else if (card instanceof ShipCard){
                 System.out.println("Ship Card: \n" +
-                        "Credits: " + ((ShipCard) card).getCredits() + " \n"+
-                        "Crew lost: " + ((ShipCard) card).getCrewNumberLost() + " \n"+
+                        "Credits: " + ((ShipCard) card).getCredits() + " \n" +
+                        "Crew lost: " + ((ShipCard) card).getCrewNumberLost() + " \n" +
                         "Days to lose: " + ((ShipCard) card).getDaysToLose() + "\n");
             }
             else if (card instanceof SlaversCard){
@@ -513,27 +513,7 @@ public class TUI{
                 List<Integer> blocks = ((SmugglersCard)card).getBlocksList();
                 System.out.println("Smugglers Card: \n" +
                         "Firepower: " + ((SmugglersCard) card).getFirepower() + "\n");
-                List <Integer> blocks1 = new ArrayList<>();
-                List <Integer> blocks2 = new ArrayList<>();
-                List <Integer> blocks3 = new ArrayList<>();
-                List <Integer> blocks4 = new ArrayList<>();
-                for (int i = 0; i < blocks.size(); i++) {
-                    if (blocks.get(i) == 1) {
-                        blocks1.add(i);
-                    } else if (blocks.get(i) == 2) {
-                        blocks2.add(i);
-                    } else if (blocks.get(i) == 3) {
-                        blocks3.add(i);
-                    } else if (blocks.get(i) == 4) {
-                        blocks4.add(i);
-                    }
-                }
-                int size = blocks1.size() + blocks2.size() + blocks3.size() + blocks4.size();
-                System.out.print("Blocks: Tot value = " + size + "\n" +
-                        "   Blue = " + blocks1.size() + ",\n" +
-                        "   Green = " + blocks2.size() + ",\n" +
-                        "   Yellow = " + blocks3.size() + ",\n" +
-                        "   Red = " + blocks4.size() + "\n");
+                printBlocks(blocks);
                 System.out.println("Days to lose: " + ((SmugglersCard) card).getDaysToLose() + "\n");
             }
             else if (card instanceof StardustCard){
@@ -543,29 +523,48 @@ public class TUI{
                 List<Integer> blocks = ((StationCard)card).getBlockList();
                 System.out.println("Station Card: \n"+
                         "Crew needed: " + ((StationCard) card).getCrewNumberNeeded() + "\n");
-                List <Integer> blocks1 = new ArrayList<>();
-                List <Integer> blocks2 = new ArrayList<>();
-                List <Integer> blocks3 = new ArrayList<>();
-                List <Integer> blocks4 = new ArrayList<>();
-                for (int i = 0; i < blocks.size(); i++) {
-                    if (blocks.get(i) == 1) {
-                        blocks1.add(i);
-                    } else if (blocks.get(i) == 2) {
-                        blocks2.add(i);
-                    } else if (blocks.get(i) == 3) {
-                        blocks3.add(i);
-                    } else if (blocks.get(i) == 4) {
-                        blocks4.add(i);
-                    }
-                }
-                int size = blocks1.size() + blocks2.size() + blocks3.size() + blocks4.size();
-                System.out.print("Blocks: Tot value = " + size + "\n" +
-                        "   Blue = " + blocks1.size() + ",\n" +
-                        "   Green = " + blocks2.size() + ",\n" +
-                        "   Yellow = " + blocks3.size() + ",\n" +
-                        "   Red = " + blocks4.size() + "\n");
+                printBlocks(blocks);
                 System.out.println("Days to lose: " + ((StationCard) card).getDaysToLose() + " \n");
             }
+        }
+    }
+
+    private void printBlocks(List<Integer> blocks) {
+        List <Integer> blocks1 = new ArrayList<>();
+        List <Integer> blocks2 = new ArrayList<>();
+        List <Integer> blocks3 = new ArrayList<>();
+        List <Integer> blocks4 = new ArrayList<>();
+        for (int i = 0; i < blocks.size(); i++) {
+            if (blocks.get(i) == 1) {
+                blocks1.add(i);
+            } else if (blocks.get(i) == 2) {
+                blocks2.add(i);
+            } else if (blocks.get(i) == 3) {
+                blocks3.add(i);
+            } else if (blocks.get(i) == 4) {
+                blocks4.add(i);
+            }
+        }
+        int size = blocks1.size() + blocks2.size() + blocks3.size() + blocks4.size();
+        System.out.print("Blocks: Tot value = " + size + "\n" +
+                "   Blue = " + blocks1.size() + ",\n" +
+                "   Green = " + blocks2.size() + ",\n" +
+                "   Yellow = " + blocks3.size() + ",\n" +
+                "   Red = " + blocks4.size() + "\n");
+    }
+
+    private void printBalls(List<Cannonball> balls) {
+        System.out.println("Cannonballs: Tot number = " + balls.size() + "\n");
+        int i = 1;
+        for (Cannonball ball : balls) {
+            System.out.println("   " + i + ": ");
+            if (ball.bigCannonball()) {
+                System.out.println("Size = Big, ");
+            } else {
+                System.out.println("Size = Small, ");
+            }
+            System.out.println("Direction = " + ball.direction() + "\n");
+            i++;
         }
     }
 }
