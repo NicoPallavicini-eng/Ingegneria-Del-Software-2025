@@ -5,12 +5,13 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TUI{
+public class TUI {
     private Game game;
     private String nickname;
 
@@ -46,7 +47,6 @@ public class TUI{
                 middleRow.add("│  " + ii + "  │ ");
                 lowerRow.add("╰─────╯ ");
             }
-            buildTile(tile);
             List<List<String>> allRow = buildTile(tile);
             upperRow.addAll(allRow.get(0));
             middleRow.addAll(allRow.get(1));
@@ -60,6 +60,180 @@ public class TUI{
             System.out.print(upperRow.get(j));
             System.out.print(middleRow.get(j));
             System.out.print(lowerRow.get(j));
+        }
+    }
+
+    public void printShips(Game game){
+        this.game = game;
+        for (Player player : game.getListOfPlayers()) {
+            System.out.println(nickname + "'s ship: \n");
+            printMyShip(game, player.getNickname());
+            System.out.println();
+        }
+    }
+
+    public void printMyShip(Game game, String nickname) {
+        this.game = game;
+        ArrayList<ArrayList<Tile>> shipList;
+        Ship ship = null;
+        for (Player p : game.getListOfPlayers()) {
+            if (p.getNickname().equals(nickname)) {
+                ship = p.getShip();
+            }
+        }
+        shipList = ship.getFloorplanArrayList();
+        List<String> upperRow = new ArrayList<>();
+        List<String> middleRow = new ArrayList<>();
+        List<String> lowerRow = new ArrayList<>();
+        int i = 5;
+        printShipHeaders();
+        for (ArrayList<Tile> row : shipList) {
+            upperRow.add("╭─────╮ ");
+            middleRow.add("│  " + i + "  │ ");
+            lowerRow.add("╰─────╯ ");
+            for (Tile tile : row) {
+                List<List<String>> allRow = buildTile(tile);
+                upperRow.addAll(allRow.get(0));
+                middleRow.addAll(allRow.get(1));
+                lowerRow.addAll(allRow.get(2));
+            }
+            upperRow.add("╭─────╮ ");
+            middleRow.add("│     │ ");
+            lowerRow.add("╰─────╯ ");
+            i++;
+            for (int j = 0; j < upperRow.size(); j++) {
+                System.out.print(upperRow.get(j));
+                System.out.print(middleRow.get(j));
+                System.out.print(lowerRow.get(j));
+            }
+        }
+        printShipFooters();
+        System.out.println();
+        printReservedTiles(ship);
+        System.out.println("Crew: " + ship.getNumberOfInhabitants() + " \n");
+        int humans = 0;
+        int aliens = 0;
+        AlienColor color = null;
+        List <CabinTile> cabinsList = ship.getListOfCabin();
+        for (CabinTile cabin : cabinsList) {
+            CabinInhabitants n = cabin.getInhabitants();
+            if (n == CabinInhabitants.TWO) {
+                humans += 2;
+            } else if (n == CabinInhabitants.ONE) {
+                humans += 1;
+            } else if (n == CabinInhabitants.ALIEN) {
+                aliens += 1;
+                color = cabin.getAlienColor();
+            }
+        }
+        System.out.println("   Humans: " + humans + ", \n");
+        if (aliens == 2) {
+            System.out.println("   Aliens: 2 - both colors \n");
+        } else if (aliens == 1) {
+            if (color == AlienColor.ORANGE) {
+                System.out.println("   Aliens: 1 - orange \n");
+            } else if (color == AlienColor.PURPLE) {
+                System.out.println("   Aliens: 1 - purple \n");
+            }
+        } else if (aliens == 0) {
+            System.out.println("   Aliens: 0 \n");
+        }
+        System.out.println("Batteries: " + ship.getBatteries() + "\n");
+        int normCargo = 0;
+        int redCargo = 0;
+        List <CargoTile> cargoList = ship.getListOfCargo();
+        for (CargoTile cargo : cargoList) {
+            if (cargo.fitsRed()) {
+                redCargo += cargo.getSlotsNumber();
+            } else {
+                normCargo += cargo.getSlotsNumber();
+            }
+        }
+        int allCargo = redCargo + normCargo;
+        System.out.println("Cargo: " + allCargo + " \n" +
+                "   Normal: " + normCargo + ", \n" +
+                "   Red: " + redCargo + " \n");
+        int firepower = 0;
+        List <CannonTile> cannonList = ship.getListOfFirepower();
+        for (CannonTile cannon : cannonList) {
+            if (cannon.getDoublePower()) {
+                firepower += 2;
+            } else {
+                firepower += 1;
+            }
+        }
+        System.out.println("Firepower: " + firepower + " \n");
+        int enginePower = 0;
+        List <EngineTile> engineList = ship.getListOfEngine();
+        for (EngineTile engine : engineList) {
+            if (engine.getDoublePower()) {
+                enginePower += 2;
+            } else {
+                enginePower += 1;
+            }
+        }
+        System.out.println("Engine Power: " + enginePower + " \n");
+        boolean north = false;
+        boolean east = false;
+        boolean south = false;
+        boolean west = false;
+        List <ShieldTile> shieldList = ship.getListOfShield();
+        for (ShieldTile shield : shieldList) {
+            if (shield.getOrientation() == ShieldOrientation.NORTHEAST) {
+                north = true;
+                east = true;
+            } else if (shield.getOrientation() == ShieldOrientation.SOUTHEAST) {
+                east = true;
+                south = true;
+            } else if (shield.getOrientation() == ShieldOrientation.SOUTHWEST) {
+                south = true;
+                west = true;
+            } else if (shield.getOrientation() == ShieldOrientation.NORTHWEST) {
+                west = true;
+                north = true;
+            }
+        }
+        System.out.println("Shielded sides: ");
+        if (north) {
+            System.out.println("N ");
+        }
+        if (east) {
+            System.out.println("E ");
+        }
+        if (south) {
+            System.out.println("S ");
+        }
+        if (west) {
+            System.out.println("W ");
+        }
+        if (!north && !east && !south) {
+            // west is automatically false because north & south are
+            System.out.println("none \n");
+        } else {
+            System.out.println("\n");
+        }
+        System.out.println();
+    }
+
+    private void printReservedTiles(Ship ship) {
+        List <Tile> reserved = ship.getReservedTiles();
+        if (!reserved.isEmpty()) {
+            System.out.println("Reserved Tiles: \n");
+            List<String> upperRow = new ArrayList<>();
+            List<String> middleRow = new ArrayList<>();
+            List<String> lowerRow = new ArrayList<>();
+            for (Tile tile : reserved) {
+                List<List<String>> allRow = buildTile(tile);
+                upperRow.addAll(allRow.get(0));
+                middleRow.addAll(allRow.get(1));
+                lowerRow.addAll(allRow.get(2));
+            }
+            for (int j = 0; j < upperRow.size(); j++) {
+                System.out.print(upperRow.get(j));
+                System.out.print(middleRow.get(j));
+                System.out.print(lowerRow.get(j));
+            }
+            System.out.println();
         }
     }
 
@@ -103,7 +277,12 @@ public class TUI{
                 }
                 else if(tile instanceof CabinTile){
                     CabinTile cabinTile = (CabinTile) tile;
-                    String type = "  ⚲  ";
+                    String type;
+                    if (cabinTile.isMainCapsule()) { // in ship this is used
+                        type = "  ⌂  ";
+                    } else {
+                        type = "  ⚲  ";
+                    }
                     List<ConnectorType> connectors = cabinTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
@@ -281,6 +460,22 @@ public class TUI{
         );
     }
 
+    private void printShipHeaders(){
+        System.out.println(
+                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
+                "│     │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │     │\n" +
+                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
+        );
+    }
+
+    private void printShipFooters(){
+        System.out.println(
+                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
+                "│     │ │     │ │     │ │     │ │     │ │     │ │     │ │     │ │     │\n" +
+                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
+        );
+    }
+
     private List<String> checkConnectors(List<ConnectorType> connectors){
         List<String> connectorList = new ArrayList<String>();
         ConnectorType north = connectors.get(0);
@@ -403,10 +598,6 @@ public class TUI{
     }
 
     public void printCurrentCard(Card card){}
-
-    public void printMyShip(Game game){}
-
-    public void printShips(Game game){}
 
     public void printCurrentCard(Game game){
         System.out.println("Current card: ");

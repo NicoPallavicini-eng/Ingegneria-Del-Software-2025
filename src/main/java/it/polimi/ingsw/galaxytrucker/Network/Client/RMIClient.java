@@ -105,7 +105,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     @Override
     public void viewMyShip(Game game, String nickname) throws RemoteException {
-        tui.printMyShip(game);
+        tui.printMyShip(game ,nickname);
     }
 
     @Override
@@ -121,6 +121,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void defaultView(Game game, String nickname) throws RemoteException {
          tui.viewTilePile(game);
-         tui.printMyShip(game);
+         tui.printMyShip(game, nickname);
     }
 }
