@@ -23,13 +23,8 @@ public class Ship implements Serializable {
 
     int row_max;
     int col_max;
-    Tile pickedTile;
-
-    //serve per vedere se il giocatore decide di atterare;
-    private boolean playerEngaged;
 
     //serve per I blocchi di pianeta
-    private ArrayList<Integer> cargoFromCards;
 
     private boolean purpleAlien;
     private boolean orangeAlien;
@@ -42,7 +37,6 @@ public class Ship implements Serializable {
         lostTiles=0;
         credits=0;
         travelDays=null;
-        playerEngaged=false;
         reservedTiles=new ArrayList<>();
         cargoFromCards = new ArrayList<>();
         purpleAlien=false;
@@ -427,12 +421,6 @@ public class Ship implements Serializable {
     public void addBlocks(List<Integer> cargoFromCards) {
         this.cargoFromCards.addAll(cargoFromCards);
     }
-    public boolean isPlayerEngaged(){
-        return playerEngaged;
-    }
-    public void setPlayerEngaged(boolean playerEngaged){
-        this.playerEngaged = playerEngaged;
-    }
     public void setCredits(int credits) {
         this.credits = credits;
     }
@@ -548,7 +536,7 @@ public class Ship implements Serializable {
             }
         }
         if(getPurpleAlien()){
-            firepower++;
+            firepower+=2;
         }
         return firepower;
     }
@@ -618,7 +606,7 @@ public class Ship implements Serializable {
             multiplicator=1;
         }
         if(getOrangeAlien()){
-            enginePower++;
+            enginePower+=2;
         }
         return enginePower;
     }
@@ -779,7 +767,7 @@ public class Ship implements Serializable {
         ArrayList<CabinTile> cabinList = getListOfCabin();
         int inhabitants = 0;
         for(CabinTile cabinTile : cabinList){
-            if(cabinTile.getInhabitants()==CabinInhabitants.ALIEN|cabinTile.getInhabitants()==CabinInhabitants.ONE){
+            if(cabinTile.getInhabitants()==CabinInhabitants.ALIEN || cabinTile.getInhabitants()==CabinInhabitants.ONE){
                 inhabitants++;
             } else if (cabinTile.getInhabitants()==CabinInhabitants.TWO) {
                 inhabitants+=2;
@@ -936,6 +924,12 @@ public class Ship implements Serializable {
         ArrayList<EngineTile> enginelist = getListOfDoubleEnginePower();
         for( EngineTile engineTile : enginelist){
             engineTile.setActiveState(false);
+        }
+    }
+
+    public void ejectAll(){
+        for(CabinTile cabinTile : getListOfCabin()){
+            cabinTile.updateInhabitants(CabinInhabitants.NONE);
         }
     }
 }

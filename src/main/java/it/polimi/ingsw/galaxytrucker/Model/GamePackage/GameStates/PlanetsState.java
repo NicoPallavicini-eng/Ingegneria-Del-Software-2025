@@ -7,10 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlanetsState extends TravellingState implements Serializable {
     private PlanetsCard currentCard;
@@ -35,7 +32,7 @@ public class PlanetsState extends TravellingState implements Serializable {
     public void init(){
         super.init();
         planets = currentCard.getPlanetsList();
-        chosenPlanets = new HashMap<>();
+        chosenPlanets = new LinkedHashMap<>();
         satisfiedPlayers = new ArrayList<>();
     }
 
@@ -64,7 +61,9 @@ public class PlanetsState extends TravellingState implements Serializable {
     }
 
     private void loseDays(){
-        for(Player player : chosenPlanets.keySet()){
+        List<Player> turns = new LinkedList<>(chosenPlanets.keySet());
+        Collections.reverse(turns);
+        for(Player player : turns){
             EventHandler.moveBackward(player.getShip(), currentCard.getDaysToLose(), game);
         }
     }
