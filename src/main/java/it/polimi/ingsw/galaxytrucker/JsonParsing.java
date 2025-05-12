@@ -1510,6 +1510,7 @@ public class JsonParsing{
             shieldTiles.add(shield);
         }
 
+        setShields(shieldTiles);
         ArrayList<CabinTile> cabinTiles = new ArrayList<>();
 
         Type typeCabin = new TypeToken<Map<String,CabinTileParse>>(){}.getType();
