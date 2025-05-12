@@ -89,4 +89,5 @@ public class StationState extends TravellingState implements Serializable {
         else {
             next();
         }
-    }}
+    }
+}

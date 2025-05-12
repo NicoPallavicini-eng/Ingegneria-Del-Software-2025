@@ -40,6 +40,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         super.init();
         cargoToLose = new LinkedHashMap<>();
         reckoningPhase = false;
+        availableResources = currentCard.getBlocksList();
     }
 
     public void handleInput(ActivateCannonsEvent event){
@@ -71,6 +72,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         }
         else{
             EventHandler.moveBackward(smugglersSlayer.getShip(), currentCard.getDaysToLose(), game);
+            slayerCommits = true;
         }
     }
 
@@ -114,5 +116,46 @@ public class SmugglersState extends TravellingState implements Serializable {
         }
     }
 
-    //todo gestione cargo come in station
+    public void handleEvent(AddCargoEvent event){
+        if(!event.player().equals(smugglersSlayer) && slayerCommits){
+            throw new IllegalEventException("you have not right over these cargos");
+        }
+        else {
+            if (!availableResources.contains(event.resource())) {
+                throw new IllegalEventException("the block you are trying to add is not present");
+            } else {
+                EventHandler.handleEvent(event);
+                availableResources.remove(event.resource());
+            }
+        }
+    }
+
+    public void handleEvent(RemoveCargoEvent event){
+        if(!event.player().equals(smugglersSlayer) && slayerCommits){
+            throw new IllegalEventException("you have not landed");
+        }
+        else {
+            EventHandler.handleEvent(event);
+            availableResources.add(event.resource());
+        }
+    }
+
+    public void handleEvent(SwitchCargoEvent event){
+        if(!event.player().equals(smugglersSlayer) && slayerCommits){
+            throw new IllegalEventException("you have not landed");
+        }
+        else {
+            EventHandler.handleEvent(event);
+        }
+    }
+
+    public void handleEvent(DoneEvent event){
+        if(!event.player().equals(smugglersSlayer) && slayerCommits){
+            throw new IllegalEventException("you have not landed");
+        }
+        else {
+            next();
+        }
+    }
+
 }
