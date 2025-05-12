@@ -2,7 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
-import it.polimi.ingsw.galaxytrucker.View.TUI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

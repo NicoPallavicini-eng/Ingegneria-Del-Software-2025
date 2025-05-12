@@ -4,42 +4,38 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CombatZoneCard extends Card implements Serializable {
-    private final int daysLostLessCrew;
-    private final int crewLostLessEngine;
+    private final int daysLost;
+    private final int crewLost;
+    private final int cargoLost;
     private final List <Cannonball> cannonballList;
 
-    public CombatZoneCard(boolean levelTwo, boolean used, int daysLostLessCrew, int crewLostLessEngine, List <Cannonball> cannonballList) {
+    public CombatZoneCard(boolean levelTwo, boolean used, int daysLost, int crewLost, int cargoLost, List <Cannonball> cannonballList) {
         super(levelTwo, used);
-        this.daysLostLessCrew = daysLostLessCrew;
-        this.crewLostLessEngine = crewLostLessEngine;
+        this.daysLost = daysLost;
+        this.crewLost = crewLost;
+        this.cargoLost = cargoLost;
         this.cannonballList = cannonballList;
     }
 
-    public int getDaysLostLessCrew() {
-        return daysLostLessCrew;
+    public int getDaysLost() {
+        return daysLost;
     }
 
-    public int getCrewLostLessEngine() {
-        return crewLostLessEngine;
+    public int getCrewLost() {
+        return crewLost;
+    }
+
+    public int getCargoLost() {
+        return cargoLost;
     }
 
     public List <Cannonball> getCannonballList() {
         return cannonballList;
     }
 
-/*    public void lessCrewProcess(Ship ship) {
-        ship.setTravelDays(ship.getTravelDays() - daysLostLessCrew);
-    }
-
-    public void lessEngineProcess(Ship ship) {
-        ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewLostLessEngine);
-    }
-
-    public void lessFirepowerProcess(Ship ship) {
-        for (Cannonball cannonball : cannonballList) {
-            cannonball.getHit(ship);
-        }
-    }
-
- */
+//    public void lessCrewProcess(Ship ship) {}
+//
+//    public void lessEngineProcess(Ship ship) {}
+//
+//    public void lessFirepowerProcess(Ship ship) {}
 }

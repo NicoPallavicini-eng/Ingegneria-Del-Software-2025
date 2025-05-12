@@ -1,11 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.View;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
-import it.polimi.ingsw.galaxytrucker.Model.ParsingJSON;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
@@ -406,7 +404,7 @@ public class TUI{
 
     public void printCurrentCard(Card card){}
 
-    public void printMyShip(Game game, String nickname){}
+    public void printMyShip(Game game){}
 
     public void printCurrentCard(Game game){
         System.out.println("Current card: ");

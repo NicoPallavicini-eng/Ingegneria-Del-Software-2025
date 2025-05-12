@@ -6,11 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
 
-import java.rmi.NotBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
@@ -109,12 +105,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     @Override
     public void viewMyShip(Game game, String nickname) throws RemoteException {
-        tui.printMyShip(game, nickname);
+        tui.printMyShip(game);
     }
 
     @Override
     public void viewShips(Game game) throws RemoteException {
-        tui.printShips(game);
+        // tui.printShips(game); not exists (?)
     }
 
     @Override
@@ -125,6 +121,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void defaultView(Game game, String nickname) throws RemoteException {
          tui.viewTilePile(game);
-         tui.printMyShip(game, nickname);
+         tui.printMyShip(game);
     }
 }
