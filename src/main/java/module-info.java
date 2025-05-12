@@ -11,6 +11,7 @@ module it.polimi.ingsw.galaxytrucker {
     requires jackson.core;
     requires jackson.databind;
     requires jackson.annotations;
+    requires com.google.gson;
 
     requires java.sql;
 

@@ -17,6 +17,7 @@ public class Ship implements Serializable {
     private ArrayList<Tile> reservedTiles;
     private Tile tileInHand;
     private Tile lastPlacedTile;
+    private ArrayList<Integer> cargoFromCards;
 
     private int credits;
     private Integer travelDays;
