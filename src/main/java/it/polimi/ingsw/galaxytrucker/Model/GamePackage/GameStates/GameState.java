@@ -108,4 +108,16 @@ public abstract class GameState implements Serializable {
     public void handleEvent(SetNumberOfPlayersEvent event) throws IllegalEventException {
         throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
+
+    public void handleEvent(FlipHourglassEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(NoChoiceEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    public void handleEvent(DoneEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
 }

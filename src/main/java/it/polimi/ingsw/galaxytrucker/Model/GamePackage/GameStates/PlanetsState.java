@@ -47,7 +47,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
-    private void handleEvent(NoChoiceEvent event){
+    public void handleEvent(NoChoiceEvent event){
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
         }

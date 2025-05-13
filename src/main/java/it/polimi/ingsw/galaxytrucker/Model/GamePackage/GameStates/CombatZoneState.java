@@ -11,4 +11,10 @@ public class CombatZoneState extends TravellingState implements Serializable {
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
     }
+
+
+    //todo
+    public void init(){
+        next();
+    }
 }

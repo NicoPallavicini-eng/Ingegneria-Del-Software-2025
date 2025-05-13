@@ -34,10 +34,11 @@ public class Game implements Serializable {
         return listOfActivePlayers;
     }
 
-    public void updateListOfActivePlayers(List<Player> list) {
-        List<Player> listOfActivePlayers = list.stream().filter(p -> p.getShip().getTravelDays() != null).collect(Collectors.toList());
-        this.listOfPlayers.clear();
-        this.listOfActivePlayers.addAll(listOfActivePlayers);
+    public void updateListOfActivePlayers() {
+
+        List<Player> list = listOfPlayers.stream().filter(p -> p.getShip().getTravelDays() != null).collect(Collectors.toList());
+        listOfActivePlayers.clear();
+        listOfActivePlayers.addAll(list);
     }
 
     public void addPlayer(Player newPlayer){

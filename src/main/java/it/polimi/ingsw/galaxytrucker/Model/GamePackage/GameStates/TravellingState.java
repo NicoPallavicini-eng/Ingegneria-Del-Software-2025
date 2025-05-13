@@ -49,6 +49,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     public void next() {
         game.getListOfActivePlayers().stream().forEach(player -> player.getShip().disactivateEverything());
         EventHandler.checkGiveUp(game);
+        game.updateListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
             getGame().setGameState(new FinalState(game));
