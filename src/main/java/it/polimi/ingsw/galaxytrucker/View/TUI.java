@@ -227,24 +227,27 @@ public class TUI {
 
     private void printReservedTiles(Ship ship) {
         List <Tile> reserved = ship.getReservedTiles();
-        if (!reserved.isEmpty()) {
-            System.out.println("Reserved Tiles: \n");
-            List<String> upperRow = new ArrayList<>();
-            List<String> middleRow = new ArrayList<>();
-            List<String> lowerRow = new ArrayList<>();
-            for (Tile tile : reserved) {
-                List<List<String>> allRow = buildTile(tile);
-                upperRow.addAll(allRow.get(0));
-                middleRow.addAll(allRow.get(1));
-                lowerRow.addAll(allRow.get(2));
-            }
-            for (int j = 0; j < upperRow.size(); j++) {
-                System.out.print(upperRow.get(j));
-                System.out.print(middleRow.get(j));
-                System.out.print(lowerRow.get(j));
-            }
-            System.out.println();
+        System.out.println("Reserved Tiles: ");
+        StringBuilder upperRow = new StringBuilder();
+        StringBuilder middleRow = new StringBuilder();
+        StringBuilder lowerRow = new StringBuilder();
+        int i = 0;
+        for (i = 0; i < reserved.size(); i++) {
+            Tile tile = reserved.get(i);
+            List<List<String>> allRow = buildTile(tile);
+            upperRow.append(allRow.get(0));
+            middleRow.append(allRow.get(1));
+            lowerRow.append(allRow.get(2));
         }
+        for (; i < 2; i++) {
+            upperRow.append("╭─────╮ ");
+            middleRow.append("│ [ ] │ ");
+            lowerRow.append("╰─────╯ ");
+        }
+        System.out.println(upperRow.toString());
+        System.out.println(middleRow.toString());
+        System.out.println(lowerRow.toString());
+        System.out.println();
     }
 
     private List<List<String>> buildTile(Tile tile){
