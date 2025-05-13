@@ -3,7 +3,6 @@ package it.polimi.ingsw.galaxytrucker;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.lang.reflect.Type;
@@ -1311,13 +1310,6 @@ class JsonTiles{
     }
 }
 
-class TileParse{
-    public ConnectorType northConnector;
-    public ConnectorType westConnector;
-    public ConnectorType southConnector;  // Qui usa il tipo enum
-    public ConnectorType eastConnector;
-}
-
 class CannonTileParse{
     public boolean doublePower;
     public boolean activeState;
@@ -1381,6 +1373,13 @@ class BatteryTileParse{
     public ConnectorType west;
     public ConnectorType south;  // Qui usa il tipo enum
     public ConnectorType east;
+}
+
+class TileParse {
+    public ConnectorType northConnector;
+    public ConnectorType westConnector;
+    public ConnectorType southConnector;  // Qui usa il tipo enum
+    public ConnectorType eastConnector;
 }
 
 public class JsonParsing{

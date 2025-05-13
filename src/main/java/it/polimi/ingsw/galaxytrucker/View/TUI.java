@@ -380,25 +380,6 @@ public class TUI {
     }
 
     public static void printHelpMessage(){
-/*
-        System.out.println(
-                "╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" +
-                "-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n" +
-                "╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯"
-        );
-        System.out.println(
-                "╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮  ╭─|||─╮\n" +
-                "-  1  -  -  2  -  -  3  -  -  4  -  -  5  -  -  6  -  -  7  -  -  8  -  -  9  -  - 1 0 -  - 1 1 -  - 1 2 -  - 1 3 -  - 1 4 -  - 1 5 -  - 1 6 -\n" +
-                "╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯  ╰─|||─╯"
-        );*/
-        for (int i = 0; i<150; i++){
-            if (i == 50){
-                System.out.println();
-            }
-            System.out.print("╭─────╮");
-
-        }
-/*
         System.out.println(
                 "Help message: \n" +
                         "Every command must be preceded by a slash (/) and could require parameters divided by a comma (,)\n" +
@@ -444,7 +425,6 @@ public class TUI {
                         "\nEND GAME PHASE\n" +
                         "/claimreward - Claim the end of the game reward. No parameters needed.\n"
         );
- */
     }
 
     private void printVoidTile(int i,int j){
