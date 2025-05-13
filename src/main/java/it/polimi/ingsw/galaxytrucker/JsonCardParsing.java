@@ -456,6 +456,24 @@ public class JsonCardParsing {
         completeList.addAll(stardustCards);
         return completeList;
     }
+    public List<Card> getCompleteListLevel1(){
+        List<Card> completeList = new ArrayList<>();
+        for(Card card:getCompleteList()){
+            if(!card.isLevelTwo()){
+                completeList.add(card);
+            }
+        }
+        return completeList;
+    }
+    public List<Card> getCompleteListLevel2(){
+        List<Card> completeList = new ArrayList<>();
+        for(Card card:getCompleteList()){
+            if(card.isLevelTwo()){
+                completeList.add(card);
+            }
+        }
+        return completeList;
+    }
 
     public JsonCardParsing(){
         JsonCards jsonCards = new JsonCards();
@@ -601,12 +619,13 @@ public class JsonCardParsing {
             for(CannonballParse cannonballParse: battleZoneParseCard.cannonballList){
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball,Direction.valueOf(cannonballParse.direction),RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
-            CombatZoneCard combatZoneCard = new CombatZoneCard(battleZoneParseCard.levelTwo,battleZoneParseCard.used,battleZoneParseCard.daysLostLessCrew,battleZoneParseCard.crewLostLessEngine,cannonball2);
+            //Da rivedere
+            CombatZoneCard combatZoneCard = new CombatZoneCard(battleZoneParseCard.levelTwo,battleZoneParseCard.used,battleZoneParseCard.daysLostLessCrew,battleZoneParseCard.crewLostLessEngine,0,cannonball2);
             combatZoneCardList.add(combatZoneCard);
         }
 
         setCombatZoneCards(combatZoneCardList);
-
+    /*
         System.out.println("is level two: "+openSpaceList.get(3).isLevelTwo());
         System.out.println("is Used: "+openSpaceList.get(3).isUsed());
 
@@ -674,8 +693,8 @@ public class JsonCardParsing {
 
         System.out.println("\nLevel 2: " + combatZoneCardList.get(0).isLevelTwo());
         System.out.println("Used: " + combatZoneCardList.get(0).isUsed());
-        System.out.println("CrewLostLessEngine: " + combatZoneCardList.get(0).getCrewLostLessEngine());
-        System.out.println("DaysLostLessCrew: " + combatZoneCardList.get(0).getDaysLostLessCrew());
+        //System.out.println("CrewLostLessEngine: " + combatZoneCardList.get(0).getCrewLostLessEngine());
+        //System.out.println("DaysLostLessCrew: " + combatZoneCardList.get(0).getDaysLostLessCrew());
         for (Cannonball cannonball : combatZoneCardList.get(0).getCannonballList()) {
             System.out.println("  Meteor");
             System.out.println("  Big Cannonball: " + cannonball.bigCannonball());
@@ -683,6 +702,8 @@ public class JsonCardParsing {
             System.out.println("  Row or Column: " + cannonball.rowOrColumn());
         }
 
+
+     */
     }
 
 }

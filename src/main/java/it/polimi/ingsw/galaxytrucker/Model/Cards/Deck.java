@@ -36,7 +36,7 @@ public class Deck implements Serializable {
         gameDeck = new ArrayList<>(allCardsLev1.subList(0, cardsNumberLev1));
 
         int cardsNumberLev2 = 8;
-        List <Card> secondPart = new ArrayList<>(allCardsLev2.subList(0, cardsNumberLev2));
+        List<Card> secondPart = new ArrayList<>(allCardsLev2.subList(0, cardsNumberLev2));
 
         // Concatenate the two parts
         gameDeck.addAll(secondPart);
