@@ -15,8 +15,9 @@ module it.polimi.ingsw.galaxytrucker {
 
     requires java.sql;
 
-    opens it.polimi.ingsw.galaxytrucker to javafx.fxml;
-    opens it.polimi.ingsw.galaxytrucker.Model.Tiles to jackson.databind;
+    opens it.polimi.ingsw.galaxytrucker to javafx.fxml, com.google.gson;
+    opens it.polimi.ingsw.galaxytrucker.Model.Tiles to com.google.gson;
+
 
     exports it.polimi.ingsw.galaxytrucker;
     exports it.polimi.ingsw.galaxytrucker.Controller.Server;
