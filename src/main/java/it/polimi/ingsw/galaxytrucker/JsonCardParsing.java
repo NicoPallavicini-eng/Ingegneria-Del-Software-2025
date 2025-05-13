@@ -13,44 +13,44 @@ import java.util.List;
 import java.util.Map;
 
 class JsonCards{
-    public String spaceCards;
+    public String openSpaceCards;
     public String planetsCards;
-    public String meteorCards;
+    public String meteorsCards;
     public String stationCards;
-    public String abbandonShipCards;
+    public String ShipCards;
     public String slaversCards;
     public String smugglersCards;
-    public String pirateCards;
+    public String piratesCards;
     public String stardustCards;
-    public String battleZoneCards;
+    public String combatZoneCards;
     public String epidemicCards;
 
     public JsonCards(){
-        spaceCards = "{\"spaceCard1\":{\n" +
+        openSpaceCards = "{\"openSpaceCard1\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard2\":{\n" +
+                "\t\"openSpaceCard2\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard3\":{\n" +
+                "\t\"openSpaceCard3\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard4\":{\n" +
+                "\t\"openSpaceCard4\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard5\":{\n" +
+                "\t\"openSpaceCard5\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard6\":{\n" +
+                "\t\"openSpaceCard6\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false\n" +
                 "\t},\n" +
-                "\t\"spaceCard7\":{\n" +
+                "\t\"openSpaceCard7\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false\n" +
                 "\t}}";
@@ -102,32 +102,32 @@ class JsonCards{
                 "\t\t\"planets\":[{ \"blocks\": [4,4,4,3] },{ \"blocks\": [4,4,2,2] },{ \"blocks\": [4,1,1,1,1]}],\n" +
                 "\t\t\"daysToLose\":4\n" +
                 "\t}}";
-        meteorCards = "{\"meteorCard1\":{\n" +
+        meteorsCards = "{\"meteorsCard1\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\t},\n" +
-                "\t\"meteorCard2\":{\n" +
+                "\t\"meteorsCard2\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
                 "\t},\n" +
-                "\t\"meteorCard3\":{\n" +
+                "\t\"meteorsCard3\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\t},\n" +
-                "\t\"meteorCard4\":{\n" +
+                "\t\"meteorsCard4\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\t},\n" +
-                "\t\"meteorCard5\":{\n" +
+                "\t\"meteorsCard5\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"}]\n" +
                 "\t},\n" +
-                "\t\"meteorCard6\":{\n" +
+                "\t\"meteorsCard6\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
@@ -160,28 +160,28 @@ class JsonCards{
                 "\t\t\"daysToLose\":2,\n" +
                 "\t\t\"blocks\":[3,3,2]\n" +
                 "\t}}";
-        abbandonShipCards = "{\"abbandonShipCard1\":{\n" +
+        ShipCards = "{\"ShipCard1\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"crewNumberLost\":3,\n" +
                 "\t\t\"credits\":4,\n" +
                 "\t\t\"daysToLose\":1\n" +
                 "\t},\n" +
-                "\t\"abbandonShipCard2\":{\n" +
+                "\t\"ShipCard2\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"crewNumberLost\":2,\n" +
                 "\t\t\"credits\":3,\n" +
                 "\t\t\"daysToLose\":1\n" +
                 "\t},\n" +
-                "\t\"abbandonShipCard3\":{\n" +
+                "\t\"ShipCard3\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"crewNumberLost\":5,\n" +
                 "\t\t\"credits\":8,\n" +
                 "\t\t\"daysToLose\":2\n" +
                 "\t},\n" +
-                "\t\"abbandonShipCard4\":{\n" +
+                "\t\"ShipCard4\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"crewNumberLost\":4,\n" +
@@ -220,7 +220,7 @@ class JsonCards{
                 "\t\t\"lostBlocksNumber\":3,\n" +
                 "\t\t\"daysToLose\":1\n" +
                 "\t}}";
-        pirateCards = "{\"pirateCard1\":{\n" +
+        piratesCards = "{\"piratesCard1\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"firepower\":5,\n" +
@@ -228,7 +228,7 @@ class JsonCards{
                 "\t\t\"daysToLose\":1,\n" +
                 "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\t},\n" +
-                "\t\"pirateCard2\":{\n" +
+                "\t\"piratesCard2\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"firepower\":6,\n" +
@@ -244,20 +244,22 @@ class JsonCards{
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false\n" +
                 "\t}}";
-        battleZoneCards = "{\"battleZoneCard1\":{\n" +
+        combatZoneCards = "{\"combatZoneCard1\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
-                "\t\t\"daysLostLessCrew\":3,\n" +
-                "\t\t\"crewLostLessEngine\":2,\n" +
+                "\t\t\"daysLost\":3,\n" +
+                "\t\t\"crewLost\":2,\n" +
+                "\t\t\"cargoLost\":0,\n" +
                 "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\n" +
                 "\t},\n" +
-                "\t\"battleZoneCard2\":{\n" +
+                "\t\"combatZoneCard2\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false,\n" +
-                "\t\t\"daysLostLessCrew\":3,\n" +
-                "\t\t\"crewLostLessEngine\":2,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+                "\t\t\"daysLost\":4,\n" +
+                "\t\t\"crewLost\":0,\n" +
+                "\t\t\"cargoLost\":3,\n" +
+                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\n" +
                 "\t}}";
         epidemicCards = "{\"epidemicCard1\":{\n" +
@@ -346,8 +348,9 @@ class MeteorCardParse {
 class BattleZoneCardParse {
     public boolean levelTwo;
     public boolean used;
-    public int daysLostLessCrew;
-    public int crewLostLessEngine;
+    public int daysLost;
+    public int crewLost;
+    public int cargoLost;
     public List<CannonballParse> cannonballList;
 }
 
@@ -356,7 +359,7 @@ public class JsonCardParsing {
     private ArrayList<PiratesCard> piratesCards;
     private ArrayList<MeteorsCard> meteorsCards;
     private ArrayList<PlanetsCard> planetsCards;
-    private ArrayList<OpenSpaceCard> spaceCards;
+    private ArrayList<OpenSpaceCard> openSpaceCards;
     private ArrayList<SmugglersCard> smugglersCards;
     private ArrayList<EpidemicCard> epidemicCards;
     private ArrayList<ShipCard> shipCards;
@@ -385,7 +388,7 @@ public class JsonCardParsing {
         return smugglersCards;
     }
     public ArrayList<OpenSpaceCard> getSpaceCards(){
-        return spaceCards;
+        return openSpaceCards;
     }
     public ArrayList<PlanetsCard> getPlanetsCards() {
         return planetsCards;
@@ -433,8 +436,8 @@ public class JsonCardParsing {
         this.smugglersCards = smugglersCards;
     }
 
-    public void setSpaceCards(ArrayList<OpenSpaceCard> spaceCards) {
-        this.spaceCards = spaceCards;
+    public void setSpaceCards(ArrayList<OpenSpaceCard> openSpaceCards) {
+        this.openSpaceCards = openSpaceCards;
     }
 
     public void setStardustCards(ArrayList<StardustCard> stardustCards) {
@@ -448,7 +451,7 @@ public class JsonCardParsing {
         completeList.addAll(meteorsCards);
         completeList.addAll(epidemicCards);
         completeList.addAll(combatZoneCards);
-        completeList.addAll(spaceCards);
+        completeList.addAll(openSpaceCards);
         completeList.addAll(stardustCards);
         completeList.addAll(smugglersCards);
         completeList.addAll(shipCards);
@@ -465,12 +468,12 @@ public class JsonCardParsing {
 
         Type type = new TypeToken<Map<String,SpaceCardParse>>(){}.getType();
 
-        Map<String,SpaceCardParse> spaceCards = gson.fromJson(jsonCards.spaceCards, type);
+        Map<String,SpaceCardParse> openSpaceCards = gson.fromJson(jsonCards.openSpaceCards, type);
 
-        for (String connectorKey : spaceCards.keySet()) {
-            SpaceCardParse spaceCardParse = spaceCards.get(connectorKey);
+        for (String connectorKey : openSpaceCards.keySet()) {
+            SpaceCardParse openSpaceCardParse = openSpaceCards.get(connectorKey);
 
-            OpenSpaceCard space = new OpenSpaceCard(spaceCardParse.levelTwo, spaceCardParse.used);
+            OpenSpaceCard space = new OpenSpaceCard(openSpaceCardParse.levelTwo, openSpaceCardParse.used);
             openSpaceList.add(space);
         }
         setSpaceCards(openSpaceList);
@@ -488,10 +491,10 @@ public class JsonCardParsing {
 
         ArrayList<ShipCard> shipCardList = new ArrayList<>();
         Type shipCardType = new TypeToken<Map<String,AbbandonShipCardParse>>(){}.getType();
-        Map<String,AbbandonShipCardParse> shipCards = gson.fromJson(jsonCards.abbandonShipCards, shipCardType);
+        Map<String,AbbandonShipCardParse> shipCards = gson.fromJson(jsonCards.ShipCards, shipCardType);
         for (String connectorKey : shipCards.keySet()) {
-            AbbandonShipCardParse abbandonShipCardParse = shipCards.get(connectorKey);
-            ShipCard ship = new ShipCard(abbandonShipCardParse.levelTwo,abbandonShipCardParse.used,abbandonShipCardParse.crewNumberLost,abbandonShipCardParse.credits,abbandonShipCardParse.daysToLose);
+            AbbandonShipCardParse ShipCardParse = shipCards.get(connectorKey);
+            ShipCard ship = new ShipCard(ShipCardParse.levelTwo,ShipCardParse.used,ShipCardParse.crewNumberLost,ShipCardParse.credits,ShipCardParse.daysToLose);
             shipCardList.add(ship);
         }
         setShipCards(shipCardList);
@@ -554,13 +557,13 @@ public class JsonCardParsing {
         }
         setPlanetsCards(planetsCardList);
 
-        ArrayList<MeteorsCard> meteorCardList = new ArrayList<>();
+        ArrayList<MeteorsCard> meteorsCardList = new ArrayList<>();
 
-        Type meteorCardType = new TypeToken<Map<String, MeteorCardParse>>() {}.getType();
-        Map<String, MeteorCardParse> meteorCards = gson.fromJson(jsonCards.meteorCards, meteorCardType);
+        Type meteorsCardType = new TypeToken<Map<String, MeteorCardParse>>() {}.getType();
+        Map<String, MeteorCardParse> meteorsCards = gson.fromJson(jsonCards.meteorsCards, meteorsCardType);
 
-        for (String key : meteorCards.keySet()) {
-            MeteorCardParse meteorParseCard = meteorCards.get(key);
+        for (String key : meteorsCards.keySet()) {
+            MeteorCardParse meteorParseCard = meteorsCards.get(key);
 
             List<Meteor> meteorList = new ArrayList<>();
             for (MeteorParse meteorParse : meteorParseCard.meteors) {
@@ -568,17 +571,17 @@ public class JsonCardParsing {
             }
 
             MeteorsCard meteor = new MeteorsCard(meteorParseCard.levelTwo, meteorParseCard.used, meteorList);
-            meteorCardList.add(meteor);
+            meteorsCardList.add(meteor);
         }
 
-        setMeteorsCards(meteorCardList);
+        setMeteorsCards(meteorsCardList);
 
         ArrayList<PiratesCard> piratesCardList = new ArrayList<>();
 
-        Type pirateCardType = new TypeToken<Map<String, PirateCardParse>>() {}.getType();
-        Map<String,PirateCardParse> pirateCards = gson.fromJson(jsonCards.pirateCards, pirateCardType);
-        for (String key : pirateCards.keySet()) {
-            PirateCardParse pirateParseCard = pirateCards.get(key);
+        Type piratesCardType = new TypeToken<Map<String, PirateCardParse>>() {}.getType();
+        Map<String,PirateCardParse> piratesCards = gson.fromJson(jsonCards.piratesCards, piratesCardType);
+        for (String key : piratesCards.keySet()) {
+            PirateCardParse pirateParseCard = piratesCards.get(key);
 
             List<Cannonball> cannonball = new ArrayList<>();
             for(CannonballParse cannonballParse: pirateParseCard.cannonballList){
@@ -593,70 +596,70 @@ public class JsonCardParsing {
 
         ArrayList<CombatZoneCard> combatZoneCardList = new ArrayList<>();
         Type battleZoneCardType = new TypeToken<Map<String, BattleZoneCardParse>>(){}.getType();
-        Map<String, BattleZoneCardParse> battleZoneCards = gson.fromJson(jsonCards.battleZoneCards, battleZoneCardType);
+        Map<String, BattleZoneCardParse> combatZoneCards = gson.fromJson(jsonCards.combatZoneCards, battleZoneCardType);
 
-        for(String key : battleZoneCards.keySet()){
-            BattleZoneCardParse battleZoneParseCard = battleZoneCards.get(key);
+        for(String key : combatZoneCards.keySet()){
+            BattleZoneCardParse battleZoneParseCard = combatZoneCards.get(key);
             List<Cannonball> cannonball2 = new ArrayList<>();
             for(CannonballParse cannonballParse: battleZoneParseCard.cannonballList){
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball,Direction.valueOf(cannonballParse.direction),RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
-            CombatZoneCard combatZoneCard = new CombatZoneCard(battleZoneParseCard.levelTwo,battleZoneParseCard.used,battleZoneParseCard.daysLostLessCrew,battleZoneParseCard.crewLostLessEngine,cannonball2);
+            CombatZoneCard combatZoneCard = new CombatZoneCard(battleZoneParseCard.levelTwo,battleZoneParseCard.used,battleZoneParseCard.daysLost,battleZoneParseCard.crewLost,battleZoneParseCard.cargoLost,cannonball2);
             combatZoneCardList.add(combatZoneCard);
         }
 
         setCombatZoneCards(combatZoneCardList);
 
-        System.out.println("is level two: "+openSpaceList.get(3).isLevelTwo());
-        System.out.println("is Used: "+openSpaceList.get(3).isUsed());
+        System.out.println("Level two: "+openSpaceList.get(3).isLevelTwo());
+        System.out.println("Used: "+openSpaceList.get(3).isUsed());
 
         System.out.println("\nLevel two: " + stationCardList.get(3).isLevelTwo());
-        System.out.println("Is used: " +  stationCardList.get(3).isUsed());
+        System.out.println("Used: " +  stationCardList.get(3).isUsed());
         System.out.println("Crew Numbers: " + stationCardList.get(3).getCrewNumberNeeded());
         System.out.println("Days to Lose: " + stationCardList.get(3).getDaysToLose());
         System.out.println("Blocks:" + stationCardList.get(3).getBlockList());
 
         System.out.println("\nLevel two: " + shipCardList.get(3).isLevelTwo());
-        System.out.println("Is used: " +  shipCardList.get(3).isUsed());
+        System.out.println("Used: " +  shipCardList.get(3).isUsed());
         System.out.println("Crew Numbers Loose: " + shipCardList.get(3).getCrewNumberLost());
         System.out.println("Days to Lose: " + shipCardList.get(3).getDaysToLose());
         System.out.println("Credits:" + shipCardList.get(3).getCredits());
 
         System.out.println("\nLevel two: " + slaversCardList.get(1).isLevelTwo());
-        System.out.println("Is used: " +  slaversCardList.get(1).isUsed());
+        System.out.println("Used: " +  slaversCardList.get(1).isUsed());
         System.out.println("Crew Numbers Loose: " + slaversCardList.get(1).getNumberOfCrewLost());
         System.out.println("Days to Lose: " + slaversCardList.get(1).getNumberOfDaysToLose());
         System.out.println("Credits:" + slaversCardList.get(1).getNumberOfCredits());
         System.out.println("Firepower: " + slaversCardList.get(1).getFirepower());
 
         System.out.println("\nLevel two: " + smugglersCardList.get(1).isLevelTwo());
-        System.out.println("Is used: " +  smugglersCardList.get(1).isUsed());
+        System.out.println("Used: " +  smugglersCardList.get(1).isUsed());
         System.out.println("Firepower: " + smugglersCardList.get(1).getFirepower());
         System.out.println("Blocks: " + smugglersCardList.get(1).getBlocksList());
         System.out.println("Days to loose: " + smugglersCardList.get(1).getDaysToLose());
         System.out.println("Lost Blocks Number " + smugglersCardList.get(1).getLostBlocksNumber());
 
-        System.out.println("\nis level two: "+ stardustCardList.get(0).isLevelTwo());
-        System.out.println("is Used: "+ stardustCardList.get(0).isUsed());
+        System.out.println("\nLevel two: "+ stardustCardList.get(0).isLevelTwo());
+        System.out.println("Used: "+ stardustCardList.get(0).isUsed());
 
-        System.out.println("\nis level two: "+ stardustCardList.get(0).isLevelTwo());
-        System.out.println("is Used: "+ stardustCardList.get(0).isUsed());
+        System.out.println("\nLevel two: "+ stardustCardList.get(0).isLevelTwo());
+        System.out.println("Used: "+ stardustCardList.get(0).isUsed());
 
-        System.out.println("\nis level two: "+ planetsCardList.get(0).isLevelTwo());
+        System.out.println("\nLevel two: "+ planetsCardList.get(0).isLevelTwo());
         System.out.println("is Used: "+ planetsCardList.get(0).isUsed());
         System.out.println("Days to loose: "+ planetsCardList.get(0).getDaysToLose());
         System.out.println("Days to loose: "+ planetsCardList.get(0).getPlanetsList().toString());
         System.out.println("Days to loose: "+ planetsCardList.get(0).getPlanetsList().get(1).getBlocks());
 
-        System.out.println("MeteorCard:");
-        System.out.println("  Level Two: " + meteorCardList.get(0).isLevelTwo());
-        System.out.println("  Used: " + meteorCardList.get(0).isUsed());
+        System.out.println("MeteorCard: ");
+        System.out.println("Level Two: " + meteorsCardList.get(0).isLevelTwo());
+        System.out.println("Used: " + meteorsCardList.get(0).isUsed());
 
-        for (Meteor meteor : meteorCardList.get(0).getMeteorsList()) {
-            System.out.println("    Meteor:");
-            System.out.println("      Big Meteor: " + meteor.bigMeteor());
-            System.out.println("      Direction: " + meteor.direction());
-            System.out.println("      Row/Column: " + meteor.rowOrColumn());
+        for (Meteor meteor : meteorsCardList.get(0).getMeteorsList()) {
+            System.out.println("  Meteor:");
+            System.out.println("  Big Meteor: " + meteor.bigMeteor());
+            System.out.println("  Direction: " + meteor.direction());
+            System.out.println("  Row/Column: " + meteor.rowOrColumn());
         }
 
         System.out.println("\nLevel 2: " + piratesCardList.get(0).isLevelTwo());
@@ -666,7 +669,7 @@ public class JsonCardParsing {
         System.out.println("Days to Lose: " + piratesCardList.get(0).getDaysToLose());
 
         for (Cannonball cannonball : piratesCardList.get(0).getCannonballList()) {
-            System.out.println("  Meteor");
+            System.out.println("  Cannonball");
             System.out.println("  Big Cannonball: " + cannonball.bigCannonball());
             System.out.println("  Direction: " + cannonball.direction());
             System.out.println("  Row or Column: " + cannonball.rowOrColumn());
@@ -674,10 +677,11 @@ public class JsonCardParsing {
 
         System.out.println("\nLevel 2: " + combatZoneCardList.get(0).isLevelTwo());
         System.out.println("Used: " + combatZoneCardList.get(0).isUsed());
-        System.out.println("CrewLostLessEngine: " + combatZoneCardList.get(0).getCrewLostLessEngine());
-        System.out.println("DaysLostLessCrew: " + combatZoneCardList.get(0).getDaysLostLessCrew());
+        System.out.println("DaysLost: " + combatZoneCardList.get(0).getDaysLost());
+        System.out.println("CrewLost: " + combatZoneCardList.get(0).getCrewLost());
+        System.out.println("Cargo Lost: " + combatZoneCardList.get(0).getCargoLost());
         for (Cannonball cannonball : combatZoneCardList.get(0).getCannonballList()) {
-            System.out.println("  Meteor");
+            System.out.println("  Cannonball");
             System.out.println("  Big Cannonball: " + cannonball.bigCannonball());
             System.out.println("  Direction: " + cannonball.direction());
             System.out.println("  Row or Column: " + cannonball.rowOrColumn());

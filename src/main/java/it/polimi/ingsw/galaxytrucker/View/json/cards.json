@@ -1,29 +1,29 @@
 {
-	"spaceCard1":{
+	"openSpaceCard1":{
 		"levelTwo":false,
 		"used":false
 	},
-	"spaceCard2":{
+	"openSpaceCard2":{
 		"levelTwo":false,
 		"used":false
 	},
-	"spaceCard3":{
+	"openSpaceCard3":{
 		"levelTwo":false,
 		"used":false
 	},
-	"spaceCard4":{
+	"openSpaceCard4":{
 		"levelTwo":true,
 		"used":false
 	},
-	"spaceCard5":{
+	"openSpaceCard5":{
 		"levelTwo":true,
 		"used":false
 	},
-	"spaceCard6":{
+	"openSpaceCard6":{
 		"levelTwo":true,
 		"used":false
 	},
-	"spaceCard7":{
+	"openSpaceCard7":{
 		"levelTwo":false,
 		"used":false
 	},
@@ -75,32 +75,32 @@
 		"planets":[{ "blocks": [4,4,4,3] },{ "blocks": [4,4,2,2] },{ "blocks": [4,1,1,1,1]}],
 		"daysToLose":4
 	},
-	"meteorCard1":{
+	"meteorsCard1":{
 		"levelTwo":false,
 		"used":false,
 		"meteors":[{ "bigMeteor": true,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": true,"direction":"NORTH","rowOrColumn":"COLUMN"}]
 	},
-	"meteorCard2":{
+	"meteorsCard2":{
 		"levelTwo":false,
 		"used":false,
 		"meteors":[{ "bigMeteor": true,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"WEST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"EAST","rowOrColumn":"ROW"}]
 	},
-	"meteorCard3":{
+	"meteorsCard3":{
 		"levelTwo":false,
 		"used":false,
 		"meteors":[{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"WEST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"EAST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"SOUTH","rowOrColumn":"COLUMN"}]
 	},
-	"meteorCard4":{
+	"meteorsCard4":{
 		"levelTwo":true,
 		"used":false,
 		"meteors":[{ "bigMeteor": true,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": true,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"SOUTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"SOUTH","rowOrColumn":"COLUMN"}]
 	},
-	"meteorCard5":{
+	"meteorsCard5":{
 		"levelTwo":true,
 		"used":false,
 		"meteors":[{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": true,"direction":"WEST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"WEST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"WEST","rowOrColumn":"ROW"}]
 	},
-	"meteorCard6":{
+	"meteorsCard6":{
 		"levelTwo":true,
 		"used":false,
 		"meteors":[{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": false,"direction":"NORTH","rowOrColumn":"COLUMN"},{ "bigMeteor": true,"direction":"EAST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"EAST","rowOrColumn":"ROW"},{ "bigMeteor": false,"direction":"EAST","rowOrColumn":"ROW"}]
@@ -133,28 +133,28 @@
 		"daysToLose":2,
 		"blocks":[3,3,2]
 	},
-	"abbandonShipCard1":{
+	"ShipCard1":{
 		"levelTwo":false,
 		"used":false,
 		"crewNumberLost":3,
 		"credits":4,
 		"daysToLose":1
 	},
-	"abbandonShipCard2":{
+	"ShipCard2":{
 		"levelTwo":false,
 		"used":false,
 		"crewNumberLost":2,
 		"credits":3,
 		"daysToLose":1
 	},
-	"abbandonShipCard3":{
+	"ShipCard3":{
 		"levelTwo":true,
 		"used":false,
 		"crewNumberLost":5,
 		"credits":8,
 		"daysToLose":2
 	},
-	"abbandonShipCard4":{
+	"ShipCard4":{
 		"levelTwo":true,
 		"used":false,
 		"crewNumberLost":4,
@@ -193,7 +193,7 @@
 		"lostBlocksNumber":3,
 		"daysToLose":1
 	},
-	"pirateCard1":{
+	"piratesCard1":{
 		"levelTwo":false,
 		"used":false,
 		"firepower":5,
@@ -201,7 +201,7 @@
 		"daysToLose":1,
 		"cannonballList":[{"bigCannonball":false,"direction":"NORTH","rowOrColumn":"COLUMN"},{"bigCannonball":true,"direction":"NORTH","rowOrColumn":"COLUMN"},{"bigCannonball":false,"direction":"NORTH","rowOrColumn":"COLUMN"}]
 	},
-	"pirateCard2":{
+	"piratesCard2":{
 		"levelTwo":true,
 		"used":false,
 		"firepower":6,
@@ -217,20 +217,22 @@
 		"levelTwo":true,
 		"used":false
 	},
-	"battleZoneCard1":{
+	"combatZoneCard1":{
 		"levelTwo":false,
 		"used":false,
-		"daysLostLessCrew":3,
-		"crewLostLessEngine":2,
+		"daysLost":3,
+		"crewLost":2,
+		"cargoLost": 0,
 		"cannonballList":[{"bigCannonball":false,"direction":"SOUTH","rowOrColumn":"COLUMN"},{"bigCannonball":true,"direction":"SOUTH","rowOrColumn":"COLUMN"}]
 
 	},
-	"battleZoneCard2":{
+	"combatZoneCard2":{
 		"levelTwo":true,
 		"used":false,
-		"daysLostLessCrew":3,
-		"crewLostLessEngine":2,
-		"cannonballList":[{"bigCannonball":false,"direction":"SOUTH","rowOrColumn":"COLUMN"},{"bigCannonball":true,"direction":"SOUTH","rowOrColumn":"COLUMN"}]
+		"daysLost":4,
+		"crewLost":0,
+		"cargoLost":3,
+		"cannonballList":[{"bigCannonball":false,"direction":"NORTH","rowOrColumn":"COLUMN"},{"bigCannonball":false,"direction":"WEST","rowOrColumn":"ROW"},{"bigCannonball":false,"direction":"EAST","rowOrColumn":"ROW"},{"bigCannonball":true,"direction":"SOUTH","rowOrColumn":"COLUMN"}]
 
 	},
 	"epidemicCard1":{
