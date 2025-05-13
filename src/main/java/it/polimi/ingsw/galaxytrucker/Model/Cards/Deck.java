@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import java.io.Serializable;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,10 +33,10 @@ public class Deck implements Serializable {
     public void assembleGameDeck() {
         // TODO implement CardNumber logic for also tut
         int cardsNumberLev1 = 4;
-        gameDeck = allCardsLev1.subList(0, cardsNumberLev1);
+        gameDeck = new ArrayList<>(allCardsLev1.subList(0, cardsNumberLev1));
 
         int cardsNumberLev2 = 8;
-        List <Card> secondPart = allCardsLev2.subList(0, cardsNumberLev2);
+        List <Card> secondPart = new ArrayList<>(allCardsLev2.subList(0, cardsNumberLev2));
 
         // Concatenate the two parts
         gameDeck.addAll(secondPart);
