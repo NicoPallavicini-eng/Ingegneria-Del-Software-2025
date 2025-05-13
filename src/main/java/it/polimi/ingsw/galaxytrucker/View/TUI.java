@@ -82,9 +82,8 @@ public class TUI {
             }
         }
         shipList = ship.getFloorplanArrayList();
-        int i = 5;
+        int i = 5; // row
         printShipHeaders();
-
         for (ArrayList<Tile> row : shipList) {
             StringBuilder upperRow;
             StringBuilder middleRow;
@@ -92,6 +91,7 @@ public class TUI {
             upperRow = new StringBuilder("╭─────╮ ");
             middleRow = new StringBuilder("│  " + i + "  │ ");
             lowerRow = new StringBuilder("╰─────╯ ");
+            int j = 4; // column
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile);
                 if (tile != null) {
@@ -99,10 +99,17 @@ public class TUI {
                     middleRow.append(allRow.get(1));
                     lowerRow.append(allRow.get(2));
                 } else {
+                    if (((i == 5) && (j == 4 || j == 5 || j == 7 || j == 9 || j == 10))
+                        || ((i == 6) && (j == 4 || j == 10))
+                        || ((i == 9) && (j == 7))) { // non-selectable tiles
+                        middleRow.append("│     │ ");
+                    } else {
+                        middleRow.append("│ [ ] │ ");
+                    }
                     upperRow.append("╭─────╮ ");
-                    middleRow.append("│     │ ");
                     lowerRow.append("╰─────╯ ");
                 }
+                j++;
             }
             upperRow.append("╭─────╮ ");
             middleRow.append("│     │ ");
@@ -112,7 +119,6 @@ public class TUI {
             System.out.println(middleRow.toString());
             System.out.println(lowerRow.toString());
         }
-
         printShipFooters();
         System.out.println();
         printReservedTiles(ship);
