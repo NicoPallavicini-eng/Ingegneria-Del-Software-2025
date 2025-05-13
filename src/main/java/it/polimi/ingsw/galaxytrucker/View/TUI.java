@@ -82,35 +82,35 @@ public class TUI {
             }
         }
         shipList = ship.getFloorplanArrayList();
-        List<String> upperRow = new ArrayList<>();
-        List<String> middleRow = new ArrayList<>();
-        List<String> lowerRow = new ArrayList<>();
         int i = 5;
         printShipHeaders();
+
         for (ArrayList<Tile> row : shipList) {
-            upperRow.add("╭─────╮ ");
-            middleRow.add("│  " + i + "  │ ");
-            lowerRow.add("╰─────╯ ");
+            StringBuilder upperRow;
+            StringBuilder middleRow;
+            StringBuilder lowerRow;
+            upperRow = new StringBuilder("╭─────╮ ");
+            middleRow = new StringBuilder("│  " + i + "  │ ");
+            lowerRow = new StringBuilder("╰─────╯ ");
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile);
-                upperRow.addAll(allRow.get(0));
-                middleRow.addAll(allRow.get(1));
-                lowerRow.addAll(allRow.get(2));
+                upperRow.append(allRow.get(0));
+                middleRow.append(allRow.get(1));
+                lowerRow.append(allRow.get(2));
             }
-            upperRow.add("╭─────╮ ");
-            middleRow.add("│     │ ");
-            lowerRow.add("╰─────╯ ");
+            upperRow.append("╭─────╮ ");
+            middleRow.append("│     │ ");
+            lowerRow.append("╰─────╯ ");
             i++;
-            for (int j = 0; j < upperRow.size(); j++) {
-                System.out.print(upperRow.get(j));
-                System.out.print(middleRow.get(j));
-                System.out.print(lowerRow.get(j));
-            }
+            System.out.println(upperRow.toString());
+            System.out.println(middleRow.toString());
+            System.out.println(lowerRow.toString());
         }
+
         printShipFooters();
         System.out.println();
         printReservedTiles(ship);
-        System.out.println("Crew: " + ship.getNumberOfInhabitants() + " \n");
+        System.out.println("Crew: " + ship.getNumberOfInhabitants());
         int humans = 0;
         int aliens = 0;
         AlienColor color = null;
@@ -126,19 +126,19 @@ public class TUI {
                 color = cabin.getAlienColor();
             }
         }
-        System.out.println("   Humans: " + humans + ", \n");
+        System.out.println("   Humans: " + humans);
         if (aliens == 2) {
-            System.out.println("   Aliens: 2 - both colors \n");
+            System.out.println("   Aliens: 2 - both colors");
         } else if (aliens == 1) {
             if (color == AlienColor.ORANGE) {
-                System.out.println("   Aliens: 1 - orange \n");
+                System.out.println("   Aliens: 1 - orange");
             } else if (color == AlienColor.PURPLE) {
-                System.out.println("   Aliens: 1 - purple \n");
+                System.out.println("   Aliens: 1 - purple");
             }
         } else if (aliens == 0) {
-            System.out.println("   Aliens: 0 \n");
+            System.out.println("   Aliens: 0");
         }
-        System.out.println("Batteries: " + ship.getBatteries() + "\n");
+        System.out.println("Batteries: " + ship.getBatteries());
         int normCargo = 0;
         int redCargo = 0;
         List <CargoTile> cargoList = ship.getListOfCargo();
@@ -151,8 +151,8 @@ public class TUI {
         }
         int allCargo = redCargo + normCargo;
         System.out.println("Cargo: " + allCargo + " \n" +
-                "   Normal: " + normCargo + ", \n" +
-                "   Red: " + redCargo + " \n");
+                "   Normal: " + normCargo + "\n" +
+                "   Red: " + redCargo);
         int firepower = 0;
         List <CannonTile> cannonList = ship.getListOfFirepower();
         for (CannonTile cannon : cannonList) {
@@ -162,7 +162,7 @@ public class TUI {
                 firepower += 1;
             }
         }
-        System.out.println("Firepower: " + firepower + " \n");
+        System.out.println("Firepower: " + firepower);
         int enginePower = 0;
         List <EngineTile> engineList = ship.getListOfEngine();
         for (EngineTile engine : engineList) {
@@ -172,7 +172,7 @@ public class TUI {
                 enginePower += 1;
             }
         }
-        System.out.println("Engine Power: " + enginePower + " \n");
+        System.out.println("Engine Power: " + enginePower);
         boolean north = false;
         boolean east = false;
         boolean south = false;
@@ -193,26 +193,24 @@ public class TUI {
                 north = true;
             }
         }
-        System.out.println("Shielded sides: ");
+        String shieldLine = "Shielded sides: ";
         if (north) {
-            System.out.println("N ");
+            shieldLine += "N ";
         }
         if (east) {
-            System.out.println("E ");
+            shieldLine += "E ";
         }
         if (south) {
-            System.out.println("S ");
+            shieldLine += "S ";
         }
         if (west) {
-            System.out.println("W ");
+            shieldLine += "W ";
         }
         if (!north && !east && !south) {
             // west is automatically false because north & south are
-            System.out.println("none \n");
-        } else {
-            System.out.println("\n");
+            shieldLine += "none";
         }
-        System.out.println();
+        System.out.println(shieldLine + "\n");
     }
 
     private void printReservedTiles(Ship ship) {
