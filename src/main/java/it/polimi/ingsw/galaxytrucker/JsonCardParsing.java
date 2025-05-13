@@ -460,6 +460,25 @@ public class JsonCardParsing {
         return completeList;
     }
 
+    public List<Card> getCompleteListLevel1(){
+        List<Card> completeList = new ArrayList<>();
+        for(Card card:getCompleteList()){
+            if(!card.isLevelTwo()){
+                completeList.add(card);
+            }
+        }
+        return completeList;
+    }
+    public List<Card> getCompleteListLevel2(){
+        List<Card> completeList = new ArrayList<>();
+        for(Card card:getCompleteList()){
+            if(card.isLevelTwo()){
+                completeList.add(card);
+            }
+        }
+        return completeList;
+    }
+
     public JsonCardParsing(){
         JsonCards jsonCards = new JsonCards();
         Gson gson = new Gson();
