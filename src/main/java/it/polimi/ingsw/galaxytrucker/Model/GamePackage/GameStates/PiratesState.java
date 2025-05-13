@@ -30,7 +30,7 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void init(){
-        currentPlayer = game.getListOfPlayers().get(0);
+        currentPlayer = game.getListOfActivePlayers().get(0);
         defeatedPlayers = new ArrayList<>();
         defendedPlayers = new ArrayList<>();
     }

@@ -38,7 +38,7 @@ public class BuildingState extends GameState implements Serializable {
         finishedBuildingPlayers = new ArrayList<>();
         playersWithLegalShips = new ArrayList<>();
         placedAliens = new HashMap<>();
-        for(Player player : game.getListOfPlayers()){
+        for(Player player : game.getListOfActivePlayers()){
             placedAliens.put(player, new Boolean[] {false, false});
         }
     }
@@ -51,10 +51,10 @@ public class BuildingState extends GameState implements Serializable {
         else{
             EventHandler.handleEvent(event,this.game);
             finishedBuildingPlayers.add(event.player());
-            if(finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
+            if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
                 timeIsUp = true;
                 //controlla le navi
-                if(playersWithLegalShips.containsAll(game.getListOfPlayers())) {
+                if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
                     next();
                 }
             }
@@ -63,7 +63,7 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     public void handleEvent(RemoveTileEvent event) {
-        if(!finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
+        if(!finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
             throw new IllegalEventException("You have to wait for all rockets to be placed");
         }
         else if(playersWithLegalShips.contains(event.player())){
@@ -193,7 +193,7 @@ public class BuildingState extends GameState implements Serializable {
 
     private void checkNext(){
         boolean flag = false;
-        for(Player player : game.getListOfPlayers()){
+        for(Player player : game.getListOfActivePlayers()){
             if(placedAliens.get(player)[0] == false || placedAliens.get(player)[1] == false){
                 flag = true;
                 break;

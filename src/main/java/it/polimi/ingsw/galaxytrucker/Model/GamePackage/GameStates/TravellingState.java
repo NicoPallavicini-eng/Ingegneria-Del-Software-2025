@@ -2,10 +2,10 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,8 +47,9 @@ public abstract class TravellingState extends GameState implements Serializable 
 
     @Override
     public void next() {
-        game.getListOfPlayers().stream().forEach(player -> player.getShip().disactivateEverything());
-        game.sortListOfPlayers();
+        game.getListOfActivePlayers().stream().forEach(player -> player.getShip().disactivateEverything());
+        EventHandler.checkGiveUp(game);
+        game.updateListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
             getGame().setGameState(new FinalState(game));
@@ -59,17 +60,17 @@ public abstract class TravellingState extends GameState implements Serializable 
     }
 
     protected void nextPlayer(){
-        int index = game.getListOfPlayers().indexOf(currentPlayer) + 1;
-        if(index == game.getListOfPlayers().size()){
+        int index = game.getListOfActivePlayers().indexOf(currentPlayer) + 1;
+        if(index == game.getListOfActivePlayers().size()){
             currentPlayer = null;
             }
         else{
-            currentPlayer = game.getListOfPlayers().get(index);
+            currentPlayer = game.getListOfActivePlayers().get(index);
         }
     }
 
     public void init(){
-        currentPlayer = game.getListOfPlayers().getFirst();
+        currentPlayer = game.getListOfActivePlayers().getFirst();
     }
 
     //todo maybe insert the drawing state after each travelling

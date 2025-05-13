@@ -23,7 +23,7 @@ public class TUI {
     public void viewLeaderboard(Game game){
         System.out.println("LeaderBoard: ");
         int i = 1;
-        for (Player player : game.getListOfPlayers()) {
+        for (Player player : game.getListOfActivePlayers()) {
             System.out.println(i +": " + player.getNickname() + ", " + player.getShip().getColor() +
                     ": " + player.getShip().getTravelDays() + " Travel Days\n");
             i++;

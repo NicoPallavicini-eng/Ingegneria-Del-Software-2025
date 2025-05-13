@@ -47,13 +47,13 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
-    private void handleEvent(NoChoiceEvent event){
+    public void handleEvent(NoChoiceEvent event){
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
         }
         else{
             satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfPlayers())){
+            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
                 next();
             }
             nextPlayer();
@@ -122,7 +122,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else {
             satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfPlayers())){
+            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
                 next();
             }
         }

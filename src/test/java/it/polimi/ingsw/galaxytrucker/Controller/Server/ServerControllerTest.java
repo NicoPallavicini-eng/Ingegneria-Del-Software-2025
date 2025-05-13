@@ -1,11 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Controller.Server;
 
-import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Network.Client.RMIClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
-import it.polimi.ingsw.galaxytrucker.Network.Server.RMIServer;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +59,7 @@ class ServerControllerTest {
 
         // Verify connections
         Game game = serverController.getGame();
-        assertEquals(2, game.getListOfPlayers().size());
+        assertEquals(2, game.getListOfActivePlayers().size());
 
         // Simulate operations from each client
         serverController.handleUserInput(client1, "/help");

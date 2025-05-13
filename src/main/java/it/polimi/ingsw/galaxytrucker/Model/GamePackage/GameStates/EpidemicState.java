@@ -27,7 +27,7 @@ public class EpidemicState extends TravellingState implements Serializable {
     }
 
     public void process(){
-        for(Player player : game.getListOfPlayers()){
+        for(Player player : game.getListOfActivePlayers()){
             Thread t = new Thread(() -> {
                 List <CabinTile> InhabitedCabins = player.getShip().getListOfCabin().stream()
                         .filter(c -> c.getInhabitants() != NONE).toList();

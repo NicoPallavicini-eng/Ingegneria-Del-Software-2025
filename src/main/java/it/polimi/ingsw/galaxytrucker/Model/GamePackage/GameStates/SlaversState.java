@@ -1,7 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Cannonball;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.PiratesCard;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.SlaversCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
@@ -27,7 +25,7 @@ public class SlaversState extends TravellingState implements Serializable {
     private boolean reckoningPhase = false;
 
     public void init(){
-        currentPlayer = game.getListOfPlayers().get(0);
+        currentPlayer = game.getListOfActivePlayers().get(0);
         defeatedPlayers = new ArrayList<>();
         handledPlayers = new ArrayList<>();
     }
@@ -124,7 +122,7 @@ public class SlaversState extends TravellingState implements Serializable {
     }
 
     private void checkNext(){
-        if(handledPlayers.containsAll(game.getListOfPlayers())){
+        if(handledPlayers.containsAll(game.getListOfActivePlayers())){
             next();
         }
     }
@@ -132,7 +130,7 @@ public class SlaversState extends TravellingState implements Serializable {
     private void reckoning(){
        reckoningPhase = true;
        currentPlayer = null;
-       handledPlayers.addAll(game.getListOfPlayers());
+       handledPlayers.addAll(game.getListOfActivePlayers());
        handledPlayers.removeAll(defeatedPlayers);
        handledPlayers.remove(slaversSlayer);
        //handle all ships with less crew
