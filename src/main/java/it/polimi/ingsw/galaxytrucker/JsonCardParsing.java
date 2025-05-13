@@ -625,7 +625,7 @@ public class JsonCardParsing {
         }
 
         setCombatZoneCards(combatZoneCardList);
-
+    /*
         System.out.println("is level two: "+openSpaceList.get(3).isLevelTwo());
         System.out.println("is Used: "+openSpaceList.get(3).isUsed());
 
@@ -702,6 +702,8 @@ public class JsonCardParsing {
             System.out.println("  Row or Column: " + cannonball.rowOrColumn());
         }
 
+
+     */
     }
 
 }
