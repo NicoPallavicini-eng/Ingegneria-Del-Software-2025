@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
+import it.polimi.ingsw.galaxytrucker.JsonCardParsing;
+import it.polimi.ingsw.galaxytrucker.JsonParsing;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
@@ -20,6 +22,11 @@ public class Game implements Serializable {
 
     public Game (){
         // TODO assemble gameDeck (?)
+        JsonParsing jsonTile = new JsonParsing();
+        tilePile = new TilePile(jsonTile.getCompleteList());
+
+        JsonCardParsing jsonCardParsing = new JsonCardParsing();
+        deck = new Deck(jsonCardParsing.getCompleteListLevel1(), jsonCardParsing.getCompleteListLevel2());
     }
 
     public List<Player> getListOfPlayers() {
