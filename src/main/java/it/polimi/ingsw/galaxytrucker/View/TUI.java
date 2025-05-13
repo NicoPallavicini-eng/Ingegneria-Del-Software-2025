@@ -94,9 +94,15 @@ public class TUI {
             lowerRow = new StringBuilder("╰─────╯ ");
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile);
-                upperRow.append(allRow.get(0));
-                middleRow.append(allRow.get(1));
-                lowerRow.append(allRow.get(2));
+                if (tile != null) {
+                    upperRow.append(allRow.get(0));
+                    middleRow.append(allRow.get(1));
+                    lowerRow.append(allRow.get(2));
+                } else {
+                    upperRow.append("╭─────╮ ");
+                    middleRow.append("│     │ ");
+                    lowerRow.append("╰─────╯ ");
+                }
             }
             upperRow.append("╭─────╮ ");
             middleRow.append("│     │ ");

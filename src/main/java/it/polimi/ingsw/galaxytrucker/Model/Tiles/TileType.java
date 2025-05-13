@@ -11,4 +11,5 @@ public enum TileType implements Serializable {
     BATTERY,        // B §
     SHIELD          // S #
     // connector tile: "   " content of tile is null
+    // empty : [ ]
 }
