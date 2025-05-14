@@ -78,6 +78,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void setNickname(String nickname) throws RemoteException{
         this.nickname = nickname;
+        tui.setNickname(nickname);
     }
     @Override
     public String getNickname() throws RemoteException {
@@ -96,6 +97,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void viewTilepile(Game game) throws RemoteException{
         tui.viewTilePile(game);
+    }
+
+    @Override
+    public void setMainCabin(Game game) throws RemoteException {
+        // TODO add main cabin to center of ship (check color of mainCabin == color of ship)
     }
 
     @Override
@@ -119,7 +125,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     }
 
     @Override
-    public void defaultView(Game game, String nickname) throws RemoteException {
+    public void defaultView(Game game) throws RemoteException {
          tui.viewTilePile(game);
          tui.printMyShip(game, nickname);
     }

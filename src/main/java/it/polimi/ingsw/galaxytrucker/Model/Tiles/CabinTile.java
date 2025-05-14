@@ -2,23 +2,33 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 
 import java.io.Serializable;
 
 public class CabinTile extends Tile implements Serializable {
     private CabinInhabitants inhabitants;
     private final boolean mainCapsule;
+    private Color color;
     private int pinkAdaptors;
     private int orangeAdaptors;
     private AlienColor alienColor;
 
     @JsonCreator
-    public CabinTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("inhabitants") CabinInhabitants inhabitants,@JsonProperty("mainCapsule") boolean mainCapsule,@JsonProperty("pinkAdaptors") int pinkAdaptors,@JsonProperty("orangeAdaptors") int orangeAdaptors) {
+    public CabinTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("inhabitants") CabinInhabitants inhabitants,@JsonProperty("mainCapsule") boolean mainCapsule,@JsonProperty("color") Color color,@JsonProperty("pinkAdaptors") int pinkAdaptors,@JsonProperty("orangeAdaptors") int orangeAdaptors) {
         super(north, west, south, east);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;
+        if (mainCapsule) {
+            this.color = color;
+        } else {
+            this.color = color;
+        }
         this.pinkAdaptors = pinkAdaptors;
         this.orangeAdaptors = orangeAdaptors;
+    }
+    public Color getColor() {
+        return color;
     }
     public AlienColor getAlienColor() {
         return alienColor;

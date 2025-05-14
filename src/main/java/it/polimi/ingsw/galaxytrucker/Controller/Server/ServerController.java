@@ -19,18 +19,14 @@ import java.util.Optional;
  */
 
 public class ServerController {
-    private final Game game = new Game();
+    private static final Game game = new Game();
 
     public ServerController(){
 
     }
 
-    public Game getGame() {
+    public static Game getGame() {
         return game;
-    }
-
-    private void updateView() {
-        // TODO do
     }
 
     /**
@@ -117,6 +113,17 @@ public class ServerController {
                 }
 
             }
+            case "viewtilepile" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
+                        client.invalidCommand("/viewtilepile doesn't support parameters!");
+                    }
+                    client.viewTilepile(game);
+                }else{
+                    client.invalidCommand("You are not connected to the game!");
+                }
+            }
             case "viewships" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
@@ -146,8 +153,8 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
-                                    client.defaultView(game, nickname);
-                                    // TODO update view
+                                    client.setMainCabin(game); // TODO fix
+                                    client.defaultView(game);
                                 }
                                 catch(IllegalArgumentException e){
                                     client.invalidCommand("Error: " + e.getMessage());
@@ -242,7 +249,7 @@ public class ServerController {
                             String side = firstParameters.get(0);
                             RotateTileEvent event = new RotateTileEvent(player, side);
                             game.getGameState().handleEvent(event);
-                            client.defaultView(game, client.getNickname());
+                            client.defaultView(game);
                         }
                         else{
                             client.invalidCommand("/rotatetile supports only one parameter!");
@@ -262,7 +269,7 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         PutDownTileEvent event = new PutDownTileEvent(player);
                         game.getGameState().handleEvent(event);
-                        client.defaultView(game, client.getNickname());
+                        client.defaultView(game);
                     }
                     else{
                         client.invalidCommand("/putdowntile doesn't support parameters!");
@@ -288,7 +295,7 @@ public class ServerController {
                             else{
                                 PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
                                 game.getGameState().handleEvent(event);
-                                client.defaultView(game, client.getNickname());
+                                client.defaultView(game);
                             }
                         }
                         else{
@@ -313,7 +320,7 @@ public class ServerController {
                             else{
                                 ReserveTileEvent event = new ReserveTileEvent(player, index-1);
                                 game.getGameState().handleEvent(event);
-                                client.defaultView(game, client.getNickname());
+                                client.defaultView(game);
                             }
                         }
                     }

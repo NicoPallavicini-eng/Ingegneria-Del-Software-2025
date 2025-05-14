@@ -18,6 +18,7 @@ public class ParsingJSON {
                 new TypeReference<Map<String, Map<String, Object>>>() {});
 
         List<Object> instantiatedTiles = new ArrayList<>();
+        List<Object> mainCabins = new ArrayList<>();
 
         for (Map.Entry<String, Map<String, Object>> entry : allTiles.entrySet()) {
             String key = entry.getKey();
@@ -45,7 +46,11 @@ public class ParsingJSON {
                 continue;
             }
 
-            instantiatedTiles.add(tile);
+            if (key.startsWith("centralCabin")) {
+                mainCabins.add(tile); // TODO understand if useful
+            } else {
+                instantiatedTiles.add(tile);
+            }
         }
 
         System.out.println("Tiles loaded: " + instantiatedTiles.size());

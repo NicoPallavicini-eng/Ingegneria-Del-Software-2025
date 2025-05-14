@@ -406,6 +406,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":true,
+    "Color":"RED",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -416,6 +417,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":true,
+    "Color":"YELLOW",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -426,6 +428,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":true,
+    "Color":"GREEN",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -436,6 +439,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":true,
+    "Color":"BLUE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -446,6 +450,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -456,6 +461,7 @@
     "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -466,6 +472,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -476,6 +483,7 @@
     "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -486,6 +494,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -496,6 +505,7 @@
     "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -506,6 +516,7 @@
     "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -516,6 +527,7 @@
     "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -526,6 +538,7 @@
     "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -536,6 +549,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -546,6 +560,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -556,6 +571,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -566,6 +582,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -576,6 +593,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -586,6 +604,7 @@
     "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -596,6 +615,7 @@
     "eastConnector":"UNIVERSAL",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },
@@ -606,6 +626,7 @@
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
+    "Color":"NONE",
     "pinkAdaptors":0,
     "orangeAdaptors":0
     },

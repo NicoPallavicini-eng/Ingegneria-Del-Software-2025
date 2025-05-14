@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 
 import java.lang.reflect.Type;
@@ -836,6 +837,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":true,\n" +
+                "    \"color\":\"RED\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -846,6 +848,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":true,\n" +
+                "    \"color\":\"YELLOW\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -856,6 +859,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":true,\n" +
+                "    \"color\":\"GREEN\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -866,6 +870,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":true,\n" +
+                "    \"color\":\"BLUE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -876,6 +881,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -886,6 +892,7 @@ class JsonTiles{
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -896,6 +903,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -906,6 +914,7 @@ class JsonTiles{
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -916,6 +925,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -926,6 +936,7 @@ class JsonTiles{
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -936,6 +947,7 @@ class JsonTiles{
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -946,6 +958,7 @@ class JsonTiles{
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -956,6 +969,7 @@ class JsonTiles{
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -966,6 +980,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -976,6 +991,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -986,6 +1002,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -996,6 +1013,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -1006,6 +1024,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -1016,6 +1035,7 @@ class JsonTiles{
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -1026,6 +1046,7 @@ class JsonTiles{
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
@@ -1036,6 +1057,7 @@ class JsonTiles{
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
+                "    \"color\":\"NONE\",\n" +
                 "    \"pinkAdaptors\":0,\n" +
                 "    \"orangeAdaptors\":0\n" +
                 "    }}";
@@ -1335,6 +1357,7 @@ class CabinTileParse{
     public ConnectorType east;
     public CabinInhabitants inhabitants;
     public boolean mainCapsule;
+    public Color color;
     public int pinkAdaptors;
     public int orangeAdaptors;
 }
@@ -1385,6 +1408,7 @@ class TileParse {
 public class JsonParsing{
     private ArrayList<Tile> connectors;
     private ArrayList<CabinTile> cabins;
+    private ArrayList<CabinTile> mainCabins;
     private ArrayList<BatteryTile> batteries;
     private ArrayList<EngineTile> engines;
     private ArrayList<CargoTile> cargos;
@@ -1392,10 +1416,14 @@ public class JsonParsing{
     private ArrayList<ShieldTile> shields;
     private ArrayList<BioadaptorTile> bioadaptors;
 
-    public List<Tile> getCompleteList(){
+    public List<Tile> getCompleteList(){ // NB main capsules not included in tilePile obv
         List<Tile> completeList = new ArrayList<>();
         completeList.addAll(connectors);
-        completeList.addAll(cabins);
+        for (CabinTile tile : cabins) {
+            if (!tile.isMainCapsule()) {
+                completeList.add(tile);
+            }
+        }
         completeList.addAll(batteries);
         completeList.addAll(engines);
         completeList.addAll(cargos);
@@ -1411,6 +1439,9 @@ public class JsonParsing{
     }
     public ArrayList<CabinTile> getCabins(){
         return cabins;
+    }
+    public ArrayList<CabinTile> getMainCabins(){
+        return mainCabins;
     }
     public ArrayList<BatteryTile> getBatteries(){
         return batteries;
@@ -1436,6 +1467,9 @@ public class JsonParsing{
     }
     public void setCabins(ArrayList<CabinTile> cabins){
         this.cabins = cabins;
+    }
+    public void setMainCabins(ArrayList<CabinTile> mainCabins) {
+        this.mainCabins = mainCabins;
     }
     public void setBatteries(ArrayList<BatteryTile> batteries){
         this.batteries = batteries;
@@ -1511,6 +1545,7 @@ public class JsonParsing{
 
         setShields(shieldTiles);
         ArrayList<CabinTile> cabinTiles = new ArrayList<>();
+        ArrayList<CabinTile> mainCabins = new ArrayList<>();
 
         Type typeCabin = new TypeToken<Map<String,CabinTileParse>>(){}.getType();
 
@@ -1518,8 +1553,12 @@ public class JsonParsing{
 
         for (String connectorKey : cabinsMap.keySet()) {
             CabinTileParse cabinParse = cabinsMap.get(connectorKey);
-            CabinTile cabin = new CabinTile(cabinParse.north,cabinParse.south,cabinParse.east,cabinParse.west,cabinParse.inhabitants,cabinParse.mainCapsule,cabinParse.pinkAdaptors,cabinParse.orangeAdaptors);
-            cabinTiles.add(cabin);
+            CabinTile cabin = new CabinTile(cabinParse.north,cabinParse.south,cabinParse.east,cabinParse.west,cabinParse.inhabitants,cabinParse.mainCapsule,cabinParse.color,cabinParse.pinkAdaptors,cabinParse.orangeAdaptors);
+            if (!cabin.isMainCapsule()) {
+                cabinTiles.add(cabin);
+            } else {
+                mainCabins.add(cabin);
+            }
         }
 
         ArrayList<BioadaptorTile> bioadaptorTiles = new ArrayList<>();

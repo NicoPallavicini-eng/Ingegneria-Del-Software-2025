@@ -17,9 +17,12 @@ public class TUI {
     private Game game;
     private String nickname;
 
-
     public void start(){
 
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
     }
 
     public void viewLeaderboard(Game game){
@@ -88,9 +91,8 @@ public class TUI {
     public void printShips(Game game){
         this.game = game;
         for (Player player : game.getListOfPlayers()) {
-            System.out.println(nickname + "'s ship: \n");
+            System.out.println(player.getNickname() + "'s ship: ");
             printMyShip(game, player.getNickname());
-            System.out.println();
         }
     }
 

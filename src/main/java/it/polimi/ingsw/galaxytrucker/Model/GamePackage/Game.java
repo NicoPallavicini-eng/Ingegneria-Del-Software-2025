@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.io.Serializable;
@@ -22,15 +23,18 @@ public class Game implements Serializable {
     private TilePile tilePile;  
     private Deck deck;
     private final int lapLenght = 24;
-
+    private List<CabinTile> mainCabins = new ArrayList<>();
 
     public Game (){
-        // TODO assemble gameDeck (?)
         JsonParsing jsonTile = new JsonParsing();
-        tilePile = new TilePile(jsonTile.getCompleteList());
-
+        tilePile = new TilePile(jsonTile.getCompleteList()); // shuffle is now automated in TilePile class
+        mainCabins = jsonTile.getMainCabins();
         JsonCardParsing jsonCardParsing = new JsonCardParsing();
         deck = new Deck(jsonCardParsing.getCompleteListLevel1(), jsonCardParsing.getCompleteListLevel2());
+    }
+
+    public List<CabinTile> getMainCabins() {
+        return mainCabins;
     }
 
     public List<Player> getListOfPlayers() {

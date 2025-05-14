@@ -1,5 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
+
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 public class TilePile implements Serializable {
@@ -10,6 +13,7 @@ public class TilePile implements Serializable {
     }
 
     public List<Tile> getTilePile() {
+        shuffle(tilePile);
         return tilePile;
     }
 
@@ -21,5 +25,10 @@ public class TilePile implements Serializable {
     public void putDownTile(Tile tile){
         tile.setChoosable(true);
         tile.flip();
+    }
+
+    public void shuffle(List <Tile> tiles) {
+        // Shuffle the deck using Collections.shuffle() with a randomizer
+        Collections.shuffle(tiles);
     }
 }
