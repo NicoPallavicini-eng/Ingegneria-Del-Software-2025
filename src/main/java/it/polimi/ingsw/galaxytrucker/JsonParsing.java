@@ -1598,6 +1598,7 @@ public class JsonParsing{
 
         setConnectors(connectorTiles);
         setCabins(cabinTiles);
+        setMainCabins(mainCabins);
         setBioadaptors(bioadaptorTiles);
         setCargos(cargoTiles);
         setBatteries(batteryTiles);

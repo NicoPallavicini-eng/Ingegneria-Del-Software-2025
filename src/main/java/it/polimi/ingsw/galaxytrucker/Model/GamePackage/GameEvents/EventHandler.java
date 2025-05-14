@@ -121,7 +121,7 @@ public class EventHandler implements Serializable {
         ArrayList<CabinTile> mainCabins = (ArrayList<CabinTile>) game.getMainCabins();
         for (CabinTile cabinTile : mainCabins) {
             if (cabinTile.getColor() == color) {
-                shipNew.setTileOnFloorPlan(7, 7, cabinTile);
+                shipNew.setTileOnFloorPlan(7-5, 7-4, cabinTile);
             }
         }
         game.addPlayer(playerNew);
