@@ -78,7 +78,7 @@ STORAGE REGULAR DOUBLE: "2 □"
 STORAGE REGULAR TRIPLE: "3 □"
 MAIN CAPSULE: " ⌂ "
 REGULAR CAPSULE: " ⚲ "
-STRUCTURAL: "   "
+STRUCTURAL: " $ "
 STORAGE RED SINGLE: "1 ■"
 STORAGE RED DOUBLE: "2 ■"
 SINGLE ENGINE: "1 ¤"
@@ -477,56 +477,56 @@ BACK: " x "
 53: STRUCTURAL
     ╭────|||────╮
     │           │
-    -           ≡
+    -     $     ≡
     │           │
     ╰───────────╯
 
 54: STRUCTURAL
     ╭──── | ────╮
     │           │
-    ≡           ≡
+    ≡     $     ≡
     │           │
     ╰───────────╯
 
 55: STRUCTURAL
     ╭──── | ────╮
     │           │
-    ≡           ≡
+    ≡     $     ≡
     │           │
     ╰──── | ────╯
 
 56: STRUCTURAL
     ╭──── | ────╮
     │           │
-    ≡           ≡
+    ≡     $     ≡
     │           │
     ╰────| |────╯
 
 57: STRUCTURAL
     ╭────| |────╮
     │           │
-    ≡           ≡
+    ≡     $     ≡
     │           │
     ╰───────────╯
 
 58: STRUCTURAL
     ╭────|||────╮
     │           │
-    ≡           -
+    ≡     $     -
     │           │
     ╰────| |────╯
 
 59: STRUCTURAL
     ╭────|||────╮
     │           │
-    ≡           =
+    ≡     $     =
     │           │
     ╰───────────╯
 
 60: STRUCTURAL
     ╭────|||────╮
     │           │
-    ≡           =
+    ≡     $     =
     │           │
     ╰────| |────╯
 

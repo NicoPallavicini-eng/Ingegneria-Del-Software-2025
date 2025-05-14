@@ -1,12 +1,14 @@
 package it.polimi.ingsw.galaxytrucker.View;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,35 +34,55 @@ public class TUI {
 
     public void viewTilePile(Game game){
         this.game = game;
-        TilePile tilePile = game.getTilePile();
-        List<String> upperRow = new ArrayList<>();
-        List<String> middleRow = new ArrayList<>();
-        List<String> lowerRow = new ArrayList<>();
-        int i = 0;
         System.out.println("Tile pile: ");
-        List<Tile> pile = tilePile.getTilePile();
-        printHeaders();
-        for (Tile tile : pile) {
-            if (i%16 == 0){
-                int ii = i++;
-                upperRow.add("╭─────╮ ");
-                middleRow.add("│  " + ii + "  │ ");
-                lowerRow.add("╰─────╯ ");
+        List<Tile> pile = game.getTilePile().getTilePile();
+        ArrayList <ArrayList <Tile>> pileMatrix = new ArrayList<>();
+        for (int k = 0; k < pile.size(); k += 16) {
+            ArrayList <Tile> row = new ArrayList<>();
+            if (k + 16 >= pile.size()) {
+                for (int j = k; j < pile.size(); j++) {
+                    row.add(pile.get(j));
+                }
+            } else {
+                for (int j = k; j < k + 16; j++) {
+                    row.add(pile.get(j));
+                }
             }
-            List<List<String>> allRow = buildTile(tile);
-            upperRow.addAll(allRow.get(0));
-            middleRow.addAll(allRow.get(1));
-            lowerRow.addAll(allRow.get(2));
+            pileMatrix.add(row);
+        }
+        printPileHeaders();
+        int i = 0;
+        for (ArrayList<Tile> row : pileMatrix) {
+            StringBuilder upperRow;
+            StringBuilder middleRow;
+            StringBuilder lowerRow;
+            upperRow = new StringBuilder("╭─────╮ ");
+            middleRow = new StringBuilder("│  " + i + "  │ ");
+            lowerRow = new StringBuilder("╰─────╯ ");
+            for (Tile tile : row) {
+                List<List<String>> allRow = buildTile(tile, null);
+                if (tile != null) {
+                    if (tile.getFacingUp()) {
+                        upperRow.append(allRow.get(0));
+                        middleRow.append(allRow.get(1));
+                        lowerRow.append(allRow.get(2));
+                    } else {
+                        upperRow.append("╭─────╮ ");
+                        middleRow.append("│  x  │ ");
+                        lowerRow.append("╰─────╯ ");
+                    }
+                } else {
+                    upperRow.append("       ");
+                    middleRow.append("       ");
+                    lowerRow.append("       ");
+                }
+            }
             i++;
+            System.out.println(upperRow);
+            System.out.println(middleRow);
+            System.out.println(lowerRow);
         }
-        for (int j =0; j<upperRow.size(); j++){
-            if(j%16 == 0){
-                System.out.println();
-            }
-            System.out.print(upperRow.get(j));
-            System.out.print(middleRow.get(j));
-            System.out.print(lowerRow.get(j));
-        }
+        System.out.println();
     }
 
     public void printShips(Game game){
@@ -81,6 +103,15 @@ public class TUI {
                 ship = p.getShip();
             }
         }
+        if (ship.getColor() == Color.RED) {
+            System.out.println(AnsiColor.RED.fg() + "Red Ship:" + AnsiColor.RESET);
+        } else if (ship.getColor() == Color.BLUE) {
+            System.out.println(AnsiColor.BLUE.fg() + "Blue Ship:" + AnsiColor.RESET);
+        } else if (ship.getColor() == Color.GREEN) {
+            System.out.println(AnsiColor.GREEN.fg() + "Green Ship:" + AnsiColor.RESET);
+        } else if (ship.getColor() == Color.YELLOW) {
+            System.out.println(AnsiColor.YELLOW.fg() + "Yellow Ship:" + AnsiColor.RESET);
+        }
         shipList = ship.getFloorplanArrayList();
         int i = 5; // row
         printShipHeaders();
@@ -93,7 +124,7 @@ public class TUI {
             lowerRow = new StringBuilder("╰─────╯ ");
             int j = 4; // column
             for (Tile tile : row) {
-                List<List<String>> allRow = buildTile(tile);
+                List<List<String>> allRow = buildTile(tile, ship);
                 if (tile != null) {
                     upperRow.append(allRow.get(0));
                     middleRow.append(allRow.get(1));
@@ -115,14 +146,14 @@ public class TUI {
             middleRow.append("│     │ ");
             lowerRow.append("╰─────╯ ");
             i++;
-            System.out.println(upperRow.toString());
-            System.out.println(middleRow.toString());
-            System.out.println(lowerRow.toString());
+            System.out.println(upperRow);
+            System.out.println(middleRow);
+            System.out.println(lowerRow);
         }
         printShipFooters();
         System.out.println();
-        printReservedTiles(ship);
-        System.out.println("Crew: " + ship.getNumberOfInhabitants());
+        printReservedAndHand(ship);
+        System.out.println(AnsiColor.CABIN_COLOR.fg() + "Crew: " + ship.getNumberOfInhabitants() + AnsiColor.RESET);
         int humans = 0;
         int aliens = 0;
         AlienColor color = null;
@@ -138,19 +169,27 @@ public class TUI {
                 color = cabin.getAlienColor();
             }
         }
-        System.out.println("   Humans: " + humans);
+        System.out.println(AnsiColor.CABIN_COLOR.fg() + "   Humans: " + humans + AnsiColor.RESET);
         if (aliens == 2) {
-            System.out.println("   Aliens: 2 - both colors");
+            System.out.println(AnsiColor.ORANGE.fg() + "   A" + AnsiColor.PURPLE.fg()
+                    + "l" + AnsiColor.ORANGE.fg() + "i" + AnsiColor.PURPLE.fg()
+                    + "e" + AnsiColor.ORANGE.fg() + "n" + AnsiColor.PURPLE.fg()
+                    + "s" + AnsiColor.ORANGE.fg() + ":" + AnsiColor.PURPLE.fg()
+                    + " 2 " + AnsiColor.ORANGE.fg() + "-" + AnsiColor.PURPLE.fg() + " both" + AnsiColor.PURPLE.fg() + " kinds" + AnsiColor.RESET);
         } else if (aliens == 1) {
             if (color == AlienColor.ORANGE) {
-                System.out.println("   Aliens: 1 - orange");
+                System.out.println(AnsiColor.ORANGE.fg() + "   Aliens: 1 - orange" + AnsiColor.RESET);
             } else if (color == AlienColor.PURPLE) {
-                System.out.println("   Aliens: 1 - purple");
+                System.out.println(AnsiColor.PURPLE.fg() + "   Aliens: 1 - purple" + AnsiColor.RESET);
             }
         } else if (aliens == 0) {
-            System.out.println("   Aliens: 0");
+            System.out.println(AnsiColor.ORANGE.fg() + "   A" + AnsiColor.PURPLE.fg()
+                    + "l" + AnsiColor.ORANGE.fg() + "i" + AnsiColor.PURPLE.fg()
+                    + "e" + AnsiColor.ORANGE.fg() + "n" + AnsiColor.PURPLE.fg()
+                    + "s" + AnsiColor.ORANGE.fg() + ":" + AnsiColor.PURPLE.fg()
+                    + " 0" + AnsiColor.RESET);
         }
-        System.out.println("Batteries: " + ship.getBatteries());
+        System.out.println(AnsiColor.BATTERY_COLOR.fg() + "Batteries: " + ship.getBatteries() + AnsiColor.RESET);
         int normCargo = 0;
         int redCargo = 0;
         List <CargoTile> cargoList = ship.getListOfCargo();
@@ -162,9 +201,9 @@ public class TUI {
             }
         }
         int allCargo = redCargo + normCargo;
-        System.out.println("Cargo: " + allCargo + " \n" +
-                "   Normal: " + normCargo + "\n" +
-                "   Red: " + redCargo);
+        System.out.println(AnsiColor.REGULAR_CARGO_COLOR.fg() + "Cargo: " + allCargo + " \n" +
+                "   Normal: " + normCargo + "\n" + AnsiColor.RED_CARGO_COLOR.fg() +
+                "   Red: " + redCargo + AnsiColor.RESET);
         int firepower = 0;
         List <CannonTile> cannonList = ship.getListOfFirepower();
         for (CannonTile cannon : cannonList) {
@@ -174,7 +213,7 @@ public class TUI {
                 firepower += 1;
             }
         }
-        System.out.println("Firepower: " + firepower);
+        System.out.println(AnsiColor.CANNON_COLOR.fg() + "Firepower: " + firepower + AnsiColor.RESET);
         int enginePower = 0;
         List <EngineTile> engineList = ship.getListOfEngine();
         for (EngineTile engine : engineList) {
@@ -184,7 +223,7 @@ public class TUI {
                 enginePower += 1;
             }
         }
-        System.out.println("Engine Power: " + enginePower);
+        System.out.println(AnsiColor.ENGINE_COLOR.fg() + "Engine Power: " + enginePower + AnsiColor.RESET);
         boolean north = false;
         boolean east = false;
         boolean south = false;
@@ -222,19 +261,20 @@ public class TUI {
             // west is automatically false because north & south are
             shieldLine += "none";
         }
-        System.out.println(shieldLine + "\n");
+        System.out.println(AnsiColor.SHIELD_COLOR.fg() + shieldLine + AnsiColor.RESET);
     }
 
-    private void printReservedTiles(Ship ship) {
+    private void printReservedAndHand(Ship ship) {
+        Tile hand = ship.getTileInHand();
         List <Tile> reserved = ship.getReservedTiles();
-        System.out.println("Reserved Tiles: ");
+        System.out.println("Reserved:           Hand: ");
         StringBuilder upperRow = new StringBuilder();
         StringBuilder middleRow = new StringBuilder();
         StringBuilder lowerRow = new StringBuilder();
         int i = 0;
         for (i = 0; i < reserved.size(); i++) {
             Tile tile = reserved.get(i);
-            List<List<String>> allRow = buildTile(tile);
+            List<List<String>> allRow = buildTile(tile, null);
             upperRow.append(allRow.get(0));
             middleRow.append(allRow.get(1));
             lowerRow.append(allRow.get(2));
@@ -244,19 +284,32 @@ public class TUI {
             middleRow.append("│ [ ] │ ");
             lowerRow.append("╰─────╯ ");
         }
-        System.out.println(upperRow.toString());
-        System.out.println(middleRow.toString());
-        System.out.println(lowerRow.toString());
+        upperRow.append("    ");
+        middleRow.append("    ");
+        lowerRow.append("    ");
+        List<List<String>> allRow = buildTile(hand, null);
+        if (hand != null) {
+            upperRow.append(allRow.get(0));
+            middleRow.append(allRow.get(1));
+            lowerRow.append(allRow.get(2));
+        } else {
+            upperRow.append("╭─────╮ ");
+            middleRow.append("│ [ ] │ ");
+            lowerRow.append("╰─────╯ ");
+        }
+        System.out.println(upperRow);
+        System.out.println(middleRow);
+        System.out.println(lowerRow);
         System.out.println();
     }
 
-    private List<List<String>> buildTile(Tile tile){
+    private List<List<String>> buildTile(Tile tile, Ship ship){
         List<String> upperRow = new ArrayList<>();
         List<String> middleRow = new ArrayList<>();
         List<String> lowerRow = new ArrayList<>();
         List <List <String>> allRow = new ArrayList<>();
         if (tile != null){
-            if(tile.getUpsideDown()){
+            if(tile.getFacingUp()){
                 if(tile instanceof BioadaptorTile){
                     BioadaptorTile bioadaptorTile = (BioadaptorTile) tile;
                     String type = "     ";
@@ -269,7 +322,11 @@ public class TUI {
                     List<ConnectorType> connectors = bioadaptorTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    if (bioadaptorTile.getAlienColor() == AlienColor.ORANGE) {
+                        middleRow.add(strConnectors.get(1) + AnsiColor.ORANGE.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    } else if (bioadaptorTile.getAlienColor() == AlienColor.PURPLE) {
+                        middleRow.add(strConnectors.get(1) + AnsiColor.PURPLE.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    }
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof BatteryTile){
@@ -284,58 +341,69 @@ public class TUI {
                     List<ConnectorType> connectors = batteryTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    middleRow.add(strConnectors.get(1) + AnsiColor.BATTERY_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
 
                 }
                 else if(tile instanceof CabinTile){
                     CabinTile cabinTile = (CabinTile) tile;
                     String type;
-                    if (cabinTile.isMainCapsule()) { // in ship this is used
-                        type = "  ⌂  ";
-                    } else {
-                        type = "  ⚲  ";
-                    }
                     List<ConnectorType> connectors = cabinTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    if (cabinTile.isMainCapsule()) { // in ship this is used
+                        type = "  ⌂  ";
+                        if (ship.getColor() == Color.RED) {
+                            middleRow.add(strConnectors.get(1) + AnsiColor.RED.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        } else if (ship.getColor() == Color.BLUE) {
+                            middleRow.add(strConnectors.get(1) + AnsiColor.BLUE.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        } else if (ship.getColor() == Color.GREEN) {
+                            middleRow.add(strConnectors.get(1) + AnsiColor.GREEN.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        } else if (ship.getColor() == Color.YELLOW) {
+                            middleRow.add(strConnectors.get(1) + AnsiColor.YELLOW.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        }
+                    } else {
+                        type = "  ⚲  ";
+                        middleRow.add(strConnectors.get(1) + AnsiColor.CABIN_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    }
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof CargoTile){
                     CargoTile cargoTile = (CargoTile) tile;
                     String type = "     ";
+                    List<ConnectorType> connectors = cargoTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
                     if (cargoTile.fitsRed()){
                         if (cargoTile.getSlotsNumber() == 1) {
                             type = " 1 ■ ";
                         } else if (cargoTile.getSlotsNumber() == 2) {
                             type = " 2 ■ ";
                         }
+                        middleRow.add(strConnectors.get(1) + AnsiColor.RED_CARGO_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     } else {
                         if (cargoTile.getSlotsNumber() == 2) {
                             type = " 2 □ ";
                         } else if (cargoTile.getSlotsNumber() == 3) {
                             type = " 3 □ ";
                         }
+                        middleRow.add(strConnectors.get(1) + AnsiColor.REGULAR_CARGO_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     }
-                    List<ConnectorType> connectors = cargoTile.getConnectors();
-                    List<String> strConnectors = checkConnectors(connectors);
-                    upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof EngineTile){
                     EngineTile engineTile = (EngineTile) tile;
                     String type;
-                    if (engineTile.getDoublePower()){
-                        type = " 2 ¤ ";
-                    } else {
-                        type = " 1 ¤ ";
-                    }
                     List<ConnectorType> connectors = engineTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    if (engineTile.getDoublePower()){
+                        type = " 2 ¤ ";
+                        middleRow.add(strConnectors.get(1) + AnsiColor.DOUBLE_ENGINE_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    } else {
+                        type = " 1 ¤ ";
+                        middleRow.add(strConnectors.get(1) + AnsiColor.ENGINE_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    }
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof ShieldTile){
@@ -356,27 +424,36 @@ public class TUI {
                     List<ConnectorType> connectors = shieldTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    middleRow.add(strConnectors.get(1) + AnsiColor.SHIELD_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof CannonTile){
                     CannonTile cannonTile = (CannonTile) tile;
                     String type;
-                    if(cannonTile.getDoublePower()){
-                        type = " 2 + ";
-                    } else {
-                        type = " 1 + ";
-                    }
                     List<ConnectorType> connectors = cannonTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1)+type+strConnectors.get(3));
+                    if(cannonTile.getDoublePower()){
+                        type = " 2 + ";
+                        middleRow.add(strConnectors.get(1) + AnsiColor.DOUBLE_CANNON_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    } else {
+                        type = " 1 + ";
+                        middleRow.add(strConnectors.get(1) + AnsiColor.CANNON_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    }
+                    lowerRow.add(strConnectors.get(2));
+                } else { // structural
+                    Tile structuralTile = tile;
+                    String type = "  $  ";
+                    List<ConnectorType> connectors = structuralTile.getConnectors();
+                    List<String> strConnectors = checkConnectors(connectors);
+                    upperRow.add(strConnectors.get(0));
+                    middleRow.add(strConnectors.get(1) + AnsiColor.STRUCTURAL_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
                 }
             }
             else {
                 upperRow.add("╭─────╮ ");
-                middleRow.add("│     │ ");
+                middleRow.add("│  x  │ ");
                 lowerRow.add("╰─────╯ ");
             }
         }
@@ -445,10 +522,10 @@ public class TUI {
         System.out.print(voidTile);
     }
 
-    private void printHeaders(){
+    private void printPileHeaders(){
         System.out.println(
                 "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
-                "│     │ │  1  │ │  2  │ │  3  │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │ 1 1 │ │ 1 2 │ │ 1 3 │ │ 1 4 │ │ 1 5 │ │ 1 6 │\n" +
+                "│     │ │  0  │ │  1  │ │  2  │ │  3  │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │ 1 1 │ │ 1 2 │ │ 1 3 │ │ 1 4 │ │ 1 5 │\n" +
                 "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
         );
     }
@@ -579,7 +656,7 @@ public class TUI {
     }
 
     public void printTile(Tile tile){
-        List<List<String>> allRow = buildTile(tile);
+        List<List<String>> allRow = buildTile(tile, null);
         List<String> upperRow = allRow.get(0);
         List<String> middleRow = allRow.get(1);
         List<String> lowerRow = allRow.get(2);

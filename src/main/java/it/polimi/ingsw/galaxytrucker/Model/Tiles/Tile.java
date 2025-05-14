@@ -17,7 +17,7 @@ public class Tile implements Serializable {
     private ConnectorType eastConnector;
 
     private boolean attached;
-    private boolean upsideDown;
+    private boolean facingUp;
     private boolean choosable;
 
     /**
@@ -35,7 +35,7 @@ public class Tile implements Serializable {
         this.westConnector = west;
         this.southConnector = south;
         this.eastConnector = east;
-        this.upsideDown = false;
+        this.facingUp = false;
         this.choosable = true;
         this.attached = false;
     }
@@ -104,7 +104,7 @@ public class Tile implements Serializable {
      */
 
     public void flip(){
-        upsideDown = false;
+        facingUp = false;
     }
 
     /**
@@ -113,8 +113,8 @@ public class Tile implements Serializable {
      * @return true if the tile is upside down, false otherwise.
      */
 
-    public boolean getUpsideDown(){
-        return upsideDown;
+    public boolean getFacingUp(){
+        return facingUp;
     }
 
     /**
