@@ -18,7 +18,7 @@ public class Game implements Serializable {
     private final List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers = -1;
     private GameState gameState = new WaitingState(this);
-    private final Hourglass hourglass = new Hourglass();
+    private Hourglass hourglass;
     private TilePile tilePile;  
     private Deck deck;
     private final int lapLenght = 24;
@@ -85,5 +85,9 @@ public class Game implements Serializable {
 
     public int getLapLenght() {
         return lapLenght;
+    }
+
+    public void setHourglass(Hourglass hourglass) {
+        this.hourglass = hourglass;
     }
 }

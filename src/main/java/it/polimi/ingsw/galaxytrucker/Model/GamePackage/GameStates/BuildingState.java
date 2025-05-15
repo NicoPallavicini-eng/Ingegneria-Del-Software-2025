@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Hourglass;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
@@ -41,6 +42,8 @@ public class BuildingState extends GameState implements Serializable {
         for(Player player : game.getListOfActivePlayers()){
             placedAliens.put(player, new Boolean[] {false, false});
         }
+        game.setHourglass(new Hourglass(this));
+        game.getHourglass().flip();
     }
 
 
@@ -202,6 +205,10 @@ public class BuildingState extends GameState implements Serializable {
         if (!flag){
             next();
         }
+    }
+
+    public void timeUp(){
+        timeIsUp = true;
     }
 
 
