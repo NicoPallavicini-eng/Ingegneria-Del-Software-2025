@@ -37,7 +37,9 @@ public class SlaversState extends TravellingState implements Serializable {
         else{
             EventHandler.handleEvent(event);
             if(currentPlayer.getShip().getFirepower() < currentCard.getFirepower()){
-                defeatedPlayers.add(currentPlayer);
+                synchronized (defeatedPlayers) {
+                    defeatedPlayers.add(currentPlayer);
+                }
                 nextPlayer();
             }
             else if(currentPlayer.getShip().getFirepower() == currentCard.getFirepower()){
@@ -81,7 +83,9 @@ public class SlaversState extends TravellingState implements Serializable {
             }
             else{
                 if(currentPlayer.getShip().getFirepower() < currentCard.getFirepower()){
-                    defeatedPlayers.add(currentPlayer);
+                    synchronized (defeatedPlayers) {
+                        defeatedPlayers.add(currentPlayer);
+                    }
                     nextPlayer();
                 }
                 else if(currentPlayer.getShip().getFirepower() == currentCard.getFirepower()){

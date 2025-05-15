@@ -28,7 +28,7 @@ public class BuildingState extends GameState implements Serializable {
 
     public void next() {
         //todo populate everything that is not an alien
-        game.sortListOfPlayers();
+        game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
         getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
         game.getGameState().init();
@@ -112,7 +112,7 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
-    public void handleEvevent(PlaceTileEvent event) {
+    public void handleEvent(PlaceTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer place any tiles");
         }
@@ -178,7 +178,7 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("Hourglass flipping phase is over");
         }
         else{
-            EventHandler.handleEvent(event);
+            EventHandler.handleEvent(event, game);
         }
     }
 

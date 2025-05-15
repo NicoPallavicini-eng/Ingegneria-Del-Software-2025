@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import java.io.Serializable;
 
 public abstract class GameState implements Serializable {
+    protected Game game;
 
     public void handleEvent(GameEvent gameEvent) throws IllegalEventException {
          throw new IllegalEventException("The player used a command not available in this phase of the game.");
@@ -15,11 +16,12 @@ public abstract class GameState implements Serializable {
     public void init(){};
 
     public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {
-        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+        EventHandler.handleEvent(event, game);
+        //todo check if we have to do checks
     }
 
     public void handleEvent(DisconnectEvent event) throws IllegalEventException {
-        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+        EventHandler.handleEvent(event, game);
     }
 
     public void handleEvent(PickUpTileEvent event) throws IllegalEventException {

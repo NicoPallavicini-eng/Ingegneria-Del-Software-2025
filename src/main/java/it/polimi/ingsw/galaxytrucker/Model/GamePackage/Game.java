@@ -25,7 +25,6 @@ public class Game implements Serializable {
 
 
     public Game (){
-        // TODO assemble gameDeck (?)
         JsonParsing jsonTile = new JsonParsing();
         tilePile = new TilePile(jsonTile.getCompleteList());
 
@@ -43,17 +42,13 @@ public class Game implements Serializable {
 
     public void updateListOfActivePlayers() {
 
-        List<Player> list = listOfPlayers.stream().filter(p -> p.getShip().getTravelDays() != null).collect(Collectors.toList());
+        List<Player> list = listOfPlayers.stream().filter(p -> p.getShip().getTravelDays() != null && p.getOnlineStatus()).collect(Collectors.toList());
         listOfActivePlayers.clear();
         listOfActivePlayers.addAll(list);
     }
 
     public void addPlayer(Player newPlayer){
         listOfPlayers.add(newPlayer);
-    }
-
-    public void removePlayer(Player disconnectedPlayer){
-        listOfPlayers.remove(disconnectedPlayer);
     }
 
     public int getNumberOfPlayers() {
@@ -64,7 +59,7 @@ public class Game implements Serializable {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public void sortListOfPlayers(){
+    public void sortListOfActivePlayers(){
         listOfActivePlayers.sort((p1, p2) -> p1.getShip().getTravelDays() - p2.getShip().getTravelDays());
     }
 
@@ -86,14 +81,6 @@ public class Game implements Serializable {
 
     public Deck getDeck() {
         return deck;
-    }
-
-    public void setTilePile(TilePile tilePile) {
-        this.tilePile = tilePile;
-    }
-
-    public void setDeck(Deck deck) {
-        this.deck = deck;
     }
 
     public int getLapLenght() {

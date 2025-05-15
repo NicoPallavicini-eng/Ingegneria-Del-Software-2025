@@ -41,6 +41,9 @@ public class PlanetsState extends TravellingState implements Serializable {
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
         }
+        else if(chosenPlanets.containsValue(planets.get(event.planetIndex()))){
+            throw new IllegalEventException("The planet has already been chosen");
+        }
         else{
             chosenPlanets.put(event.player(), planets.get(event.planetIndex()));
             nextPlayer();
@@ -52,11 +55,13 @@ public class PlanetsState extends TravellingState implements Serializable {
             throw new IllegalEventException("It is not your turn to land");
         }
         else{
-            satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
-                next();
+            synchronized (satisfiedPlayers) {
+                satisfiedPlayers.add(event.player());
+                if (satisfiedPlayers.containsAll(game.getListOfActivePlayers())) {
+                    next();
+                }
+                nextPlayer();
             }
-            nextPlayer();
         }
     }
 
@@ -77,11 +82,13 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else {
             List<Integer> availableResources = chosenPlanets.get(event.player()).getBlocks();
-            if (!availableResources.contains(event.resource())) {
-                throw new IllegalEventException("the block you are trying to add is not present");
-            } else {
-                EventHandler.handleEvent(event);
-                availableResources.remove(event.resource());
+            synchronized (availableResources) {
+                if (!availableResources.contains(event.resource())) {
+                    throw new IllegalEventException("the block you are trying to add is not present");
+                } else {
+                    EventHandler.handleEvent(event);
+                    availableResources.remove(event.resource());
+                }
             }
         }
     }
@@ -96,7 +103,9 @@ public class PlanetsState extends TravellingState implements Serializable {
         else {
             List<Integer> availableResources = chosenPlanets.get(event.player()).getBlocks();
             EventHandler.handleEvent(event);
-            availableResources.add(event.resource());
+            synchronized (availableResources) {
+                availableResources.add(event.resource());
+            }
 
         }
     }
@@ -121,9 +130,11 @@ public class PlanetsState extends TravellingState implements Serializable {
             throw new IllegalEventException("You have already concluded you selection");
         }
         else {
-            satisfiedPlayers.add(event.player());
-            if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
-                next();
+            synchronized (satisfiedPlayers) {
+                satisfiedPlayers.add(event.player());
+                if (satisfiedPlayers.containsAll(game.getListOfActivePlayers())) {
+                    next();
+                }
             }
         }
     }

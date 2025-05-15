@@ -3,6 +3,8 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GiveUpEvent;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
@@ -10,7 +12,6 @@ import java.util.List;
 
 
 public abstract class TravellingState extends GameState implements Serializable {
-    protected final Game game;
     protected final Card currentCard;
     protected List<Player> handledPlayers;
     protected Player currentPlayer;
@@ -34,7 +35,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     public TravellingState(Game game, Card currentCard) {
         this.game = game;
         this.currentCard = currentCard;
-        game.sortListOfPlayers();
+        game.sortListOfActivePlayers();
     }
 
     public Player getCurrentPlayer() {
@@ -73,6 +74,8 @@ public abstract class TravellingState extends GameState implements Serializable 
         currentPlayer = game.getListOfActivePlayers().getFirst();
     }
 
-    //todo maybe insert the drawing state after each travelling
-    // to see the effects of stardust and to give the possibility to give up
+    public void handleEvent(GiveUpEvent event) throws IllegalEventException {
+        EventHandler.handleEvent(event);
+    }
+
 }
