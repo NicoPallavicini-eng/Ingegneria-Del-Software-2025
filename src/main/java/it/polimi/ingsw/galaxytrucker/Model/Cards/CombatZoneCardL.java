@@ -18,21 +18,5 @@ public class CombatZoneCardL extends CombatZoneCard implements Serializable {
         return cannonballList;
     }
 
-//    @Override
-//    public void lessCrewProcess(Ship ship) {
-//        ship.setTravelDays(ship.getTravelDays() - getDaysLost());
-//    }
-//
-//    @Override
-//    public void lessEngineProcess(Ship ship) {
-//        ship.setCrewMembers(ship.getNumberOfInhabitants() - getCrewLost());
-//        // TODO make this functional (player chooses)
-//    }
-//
-//    @Override
-//    public void lessFirepowerProcess(Ship ship) {
-//        for (Cannonball cannonball : getCannonballList()) {
-//            cannonball.getHit(ship);
-//        }
-//    }
+
 }

@@ -8,11 +8,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-//todo fix
-//the Timer class implementation is kept (in comments) for possible future use
 public class Hourglass implements Serializable {
-    private int flipNumber = -1;
-    private boolean hasEnded;
+    private int flipNumber = 0;
+    private boolean hasEnded = true;
     private long startTime;
     private BuildingState state;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -30,7 +28,7 @@ public class Hourglass implements Serializable {
         flipNumber++;
         scheduler.schedule(() -> {
             hasEnded = true;
-            if(flipNumber == 2){
+            if(flipNumber == 3){
                 state.timeUp();
             }
         }, 60, TimeUnit.SECONDS);
