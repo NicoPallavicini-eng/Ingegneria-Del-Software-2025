@@ -193,6 +193,7 @@ public class EventHandler implements Serializable {
                 if (ship.getTileInHand() == null) {
                     throw new IllegalEventException("You need to place a Tile in hand before putting it back down");
                 }
+                ship.getTileInHand().setChoosable(true);
                 pile.set(pile.indexOf(null), ship.getTileInHand());
             }
         }

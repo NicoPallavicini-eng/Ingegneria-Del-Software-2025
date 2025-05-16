@@ -1,6 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
-//import it.polimi.ingsw.controller.CounterController;
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClientHandler;
@@ -20,7 +19,7 @@ public class SocketServer {
 
     public SocketServer(ServerSocket listenSocket) {
         this.listenSocket = listenSocket;
-        this.serverController = new ServerController();
+        this.serverController = new ServerController(this);
     }
 
     public void run() throws IOException {

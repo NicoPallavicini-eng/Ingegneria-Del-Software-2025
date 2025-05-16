@@ -35,6 +35,10 @@ public class TUI {
         }
     }
 
+    public void printMessage(String message){
+        System.out.println(message);
+    }
+
     public void viewTilePile(Game game){
         this.game = game;
         System.out.println("Tile pile: ");
@@ -94,6 +98,10 @@ public class TUI {
             System.out.println(player.getNickname() + "'s ship: ");
             printMyShip(game, player.getNickname());
         }
+    }
+
+    public void printVoid() {
+        System.out.println();
     }
 
     public void printMyShip(Game game, String nickname) {
