@@ -30,7 +30,7 @@ public class SlaversState extends TravellingState implements Serializable {
         handledPlayers = new ArrayList<>();
     }
 
-    public void handleInput(ActivateCannonsEvent event){
+    public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }

@@ -318,25 +318,29 @@ public class EventHandler implements Serializable {
     //FATTO
     public static void handleEvent(PickUpFromShipEvent event) {
         Ship ship = event.player().getShip();
-        if (ship.getTileInHand() != null) {
-            throw new IllegalEventException("You need to place a Tile in hand first");
-        }
-        if (ship.getLastPlacedTile() != null) {
-            ship.setTileInHand(ship.getLastPlacedTile());
-            ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(ship.getTileInHand()), ship.findTileOnFloorPlanColumn(ship.getTileInHand()), null);
-        } else {
-            throw new IllegalEventException("You need to have placed the tile before");
+        synchronized (ship) {
+            if (ship.getTileInHand() != null) {
+                throw new IllegalEventException("You need to place a Tile in hand first");
+            }
+            if (ship.getLastPlacedTile() != null) {
+                ship.setTileInHand(ship.getLastPlacedTile());
+                ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(ship.getTileInHand()), ship.findTileOnFloorPlanColumn(ship.getTileInHand()), null);
+            } else {
+                throw new IllegalEventException("You need to have placed the tile before");
+            }
         }
     }
 
     //FATTO
     public static void handleEvent(PickUpReservedTileEvent event) {
         Ship ship = event.player().getShip();
-        if(event.index() > ship.getReservedTiles().size() - 1) {
-            throw new IllegalEventException("you have not saved a tile at index" + event.index());
+        synchronized (ship) {
+            if (event.index() > ship.getReservedTiles().size() - 1) {
+                throw new IllegalEventException("you have not saved a tile at index" + event.index());
+            }
+            Tile tile = ship.getReservedTiles().get(event.index());
+            ship.setTileInHand(tile);
         }
-        Tile tile = ship.getReservedTiles().get(event.index());
-        ship.setTileInHand(tile);
     }
 
     public static void handleEvent(ViewDeckEvent event) {
