@@ -355,10 +355,13 @@ public class ServerController {
                             String pos = firstParameters.get(0);
                             int position = Integer.parseInt(pos);
                             int maxNumberOfPlayers = game.getNumberOfPlayers();
-                            if (position < 1 || position > maxNumberOfPlayers) {
+                            if (position < 1 || position > maxNumberOfPlayers && maxNumberOfPlayers != -1) {
                                 client.invalidCommand("Position not valid. It must be between 1 and " + maxNumberOfPlayers);
-                            } else {
-                                // Check if position is valid?
+                            }
+                            else if (maxNumberOfPlayers == -1){
+                                client.invalidCommand("You need to set the number of players before setting the position.");
+                            }
+                            else {
                                 SetPositionEvent event = new SetPositionEvent(player, position);
                                 game.getGameState().handleEvent(event);
                                 client.viewLeaderboard(game);
