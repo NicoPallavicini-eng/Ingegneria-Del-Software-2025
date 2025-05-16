@@ -9,7 +9,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Server {
-    //public RMIServer rmiServer;
     public SocketServer socketServer;
 
     public Server() throws RemoteException , IOException {

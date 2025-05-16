@@ -29,9 +29,14 @@ public class TUI {
         System.out.println("LeaderBoard: ");
         int i = 1;
         for (Player player : game.getListOfPlayers()) {
-            System.out.println(i +": " + player.getNickname() + ", " + player.getShip().getColor() +
-                    ": " + player.getShip().getTravelDays() + " Travel Days\n");
-            i++;
+            if(player.getShip().getTravelDays() == null){
+                System.out.println(player.getNickname() + ": has not finished yet");
+                i++;
+            }else {
+                System.out.println(i + ": " + player.getNickname() + ", " + player.getShip().getColor() +
+                        ": " + player.getShip().getTravelDays() + " Travel Days");
+                i++;
+            }
         }
     }
 
@@ -752,9 +757,18 @@ public class TUI {
         System.out.println(String.join("", lowerRow));
     }
 
-    public void printCurrentCard(Card card){
-        System.out.println("Current card: \n");
-        checkCard(card);
+    public void viewCard(Game game){
+        //need instanceof for current card.... or attribute currend card in every gamestate and whrere not needed set to null.
+        if (game.getGameState() instanceof TravellingState){
+            TravellingState travellingState = (TravellingState) game.getGameState();
+            Card card = travellingState.getCurrentCard();
+            System.out.println("Current card: ");
+            checkCard(card);
+        }
+        else{
+            System.out.println("No current card available");
+        }
+
     }
 
     public void printCurrentCard(Game game){

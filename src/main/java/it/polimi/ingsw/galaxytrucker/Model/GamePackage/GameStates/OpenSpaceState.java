@@ -16,6 +16,10 @@ public class OpenSpaceState extends TravellingState implements Serializable {
         super(game, card);
     }
 
+    public void init(){
+        super.init();
+    }
+
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         if (!event.player().equals(currentPlayer)) {

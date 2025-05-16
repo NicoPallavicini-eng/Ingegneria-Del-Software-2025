@@ -135,4 +135,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
         tui.printMessage(message);
     }
 
+    @Override
+    public void viewCard(Game game) throws RemoteException{
+        tui.viewCard(game);
+    }
 }

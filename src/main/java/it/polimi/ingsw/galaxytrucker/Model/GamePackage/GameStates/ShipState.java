@@ -18,7 +18,9 @@ public class ShipState extends TravellingState implements Serializable {
         super(game, card);
     }
 
-
+    public void init(){
+        super.init();
+    }
 
     public void handleEvent(EjectPeopleEvent event){
         if(!event.player().equals(currentPlayer)){

@@ -195,6 +195,7 @@ public class EventHandler implements Serializable {
                 }
                 ship.getTileInHand().setChoosable(true);
                 pile.set(pile.indexOf(null), ship.getTileInHand());
+                ship.setTileInHand(null);
             }
         }
     }
@@ -314,7 +315,7 @@ public class EventHandler implements Serializable {
         boolean present = false;
         synchronized (game) {
             for (Player player : game.getListOfPlayers()) {
-                if (player.getShip().getTravelDays() == place) {
+                if (player.getShip().getTravelDays() != null && player.getShip().getTravelDays() == place) {
                     present = true;
                     break;
                 }

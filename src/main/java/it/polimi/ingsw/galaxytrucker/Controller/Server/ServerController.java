@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -308,6 +309,9 @@ public class ServerController {
                 }
                 client.helpMessage();
             } //ok
+            case "viewcard" -> {
+                client.viewCard(game);
+            }
             case "viewleaderboard" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
@@ -568,14 +572,24 @@ public class ServerController {
                             } else if (maxNumberOfPlayers == -1) {
                                 client.invalidCommand("You need to set the number of players before setting the position.");
                             } else {
-                                SetPositionEvent event = new SetPositionEvent(player, position);
-                                game.getGameState().handleEvent(event);
-                                client.viewLeaderboard(game);
-                                List<VirtualClient> clientsRMI = rmiServer.getClients();
-                                for (VirtualClient virtualClient : clientsRMI) {
-                                    if (!virtualClient.getNickname().equals(client.getNickname())) {
-                                        virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
+                                try {
+                                    SetPositionEvent event = new SetPositionEvent(player, position);
+                                    game.getGameState().handleEvent(event);
+                                    client.viewLeaderboard(game);
+                                    List<VirtualClient> clientsRMI = rmiServer.getClients();
+                                    for (VirtualClient virtualClient : clientsRMI) {
+                                        if (!virtualClient.getNickname().equals(client.getNickname())) {
+                                            virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
+                                        }
+                                        client.printMessage(game.getGameState().toString());
+
+                                        if (game.getGameState() instanceof TravellingState) {
+
+                                            virtualClient.viewCard(game);
+                                        }
                                     }
+                                } catch (IllegalArgumentException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
                                 }
                             }
                         }

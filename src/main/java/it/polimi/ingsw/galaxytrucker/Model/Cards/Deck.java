@@ -22,7 +22,9 @@ public class Deck implements Serializable {
     }
 
     public Card drawCard() {
-        return gameDeck.getFirst();
+        Card firstCard = gameDeck.getFirst();
+        gameDeck.removeFirst();
+        return firstCard;
     }
 
     public void shuffle(List <Card> cards) {
