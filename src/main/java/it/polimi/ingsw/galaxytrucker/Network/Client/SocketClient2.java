@@ -16,6 +16,7 @@ public class SocketClient2 implements VirtualClientSocket {
     //final BufferedReader input;
     final VirtualServerSocket server;
     private final ObjectInputStream objIn;
+    private String nickname=null;
     //private final ObjectOutputStream objOut;
 
     protected SocketClient2(ObjectInputStream objIn, ObjectOutputStream objOut) throws UnknownHostException, IOException {
@@ -57,7 +58,7 @@ public class SocketClient2 implements VirtualClientSocket {
             System.out.print("> ");
             String message = scan.nextLine();
             //int command = scan.nextInt();
-            server.sendMessageToServer(message);
+            server.sendMessageToServer(message,nickname);
 
         }
     }

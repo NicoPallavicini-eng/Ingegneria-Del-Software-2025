@@ -17,6 +17,7 @@ public class SocketClient implements VirtualClientSocket {
     private final ObjectInputStream objIn;
     private Game game;
     private TUI tui;
+    private String nickname = null;
 
     //private final ObjectOutputStream objOut;
 
@@ -63,7 +64,7 @@ public class SocketClient implements VirtualClientSocket {
             System.out.print("> ");
             String message = scan.nextLine();
             //int command = scan.nextInt();
-            server.sendMessageToServer(message);
+            server.sendMessageToServer(message,nickname);
 
         }
     }
@@ -79,18 +80,30 @@ public void metodoClientClient(String message){
         System.out.println(message);
 }
 
-public void referMethod(Message msg){
+public void referMethod(Message msg) throws RemoteException {
     if(msg.isStringMessage()){
         String line = msg.getMessage();
         switch(line){
             case "helpMessage" ->{
                 helpMessage();
-            }default -> {
+            }case "setNickname" ->{
+                setNickname(msg);
+                //System.out.println("Nickname set to: " + nickname);
+            }
+            default -> {
                 System.out.println(line);
             }
         }
     }else{
+        String line = msg.getMessage();
         //metodi di Game
+        switch(line){
+            case "defaultView" -> {
+                game = msg.getGame();
+                defaultView(game, msg.getNickname());
+            }
+
+        }
     }
 }
 
@@ -98,8 +111,16 @@ public void showMessageFromServer(String message){
     System.out.println("You recieved this : " + message);
 }
 
+    public void defaultView(Game game, String nickname) throws RemoteException {
+        tui.viewTilePile(game);
+        tui.printMyShip(game, nickname);
+    }
+
     public void helpMessage(){
         tui.printHelpMessage();
+    }
+    public void setNickname(Message msg){
+        nickname = msg.getNickname();
     }
 
     public static void main(String[] args) throws IOException, UnknownHostException {

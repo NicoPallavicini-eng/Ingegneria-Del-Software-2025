@@ -76,10 +76,10 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        executeCommand(command,firstParameters,secondParameters,objOut);
+        executeCommand(command,firstParameters,secondParameters,objOut,msg);
     }
 
-    public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut) throws IOException {
+    public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut,Message msg) throws IOException {
         switch (command) {
             case "help" ->{
                 Message newMessage;
@@ -109,43 +109,136 @@ public class ServerController {
 //                }
 //
 //            } //ok
-//            case "connect" -> {
-//                //GameState gameState = game.getGameState();
-//                if (secondParameters.isEmpty()) {
-//                    if (firstParameters.size() == 1) {
-//                        String clientNickname = client.getNickname();
-//                        String nickname = firstParameters.get(0);
-//                        if (clientNickname != null) {
-//                            client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
-//                        } else {
-//                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
-//                                    .filter(player1 -> player1.getNickname().equals(nickname))
-//                                    .findAny();
-//
-//                            if (!playerOptional.isPresent()) {
-//                                try{
-//                                    ConnectEvent event = new ConnectEvent(nickname, "localhost");
-//                                    game.getGameState().handleEvent(event, game);
-//                                    client.setNickname(nickname);
-//                                    client.defaultView(game, nickname);
-//                                    // TODO update view
-//                                }
-//                                catch(IllegalArgumentException e){
-//                                    client.invalidCommand("Error: " + e.getMessage());
-//                                }
-//
-//                            } else {
-//                                client.invalidCommand("Nickname already taken, please choose another one!");
-//                            }
-//                        }
-//                    } else {
-//                        client.invalidCommand("/connect request one parameter.");
-//                    }
-//                }
-//                else{
-//                    client.invalidCommand("/connect request one parameter.");
-//                }
-//            } //ok
+            case "connect" -> {
+                //GameState gameState = game.getGameState();
+                Message newMessage;
+                if (secondParameters.isEmpty()) {
+                    if (firstParameters.size() == 1) {
+                        String clientNickname = msg.getNickname();
+                        String nickname = firstParameters.get(0);
+                        if (clientNickname != null) {
+                            newMessage = new Message("String",null,"It's forbidden for one client to connect to the game more than once!");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            //client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
+                        } else {
+                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                                    .filter(player1 -> player1.getNickname().equals(nickname))
+                                    .findAny();
+
+                            if (!playerOptional.isPresent()) {
+                                try{
+                                    ConnectEvent event = new ConnectEvent(nickname, "localhost");
+                                    game.getGameState().handleEvent(event, game);
+                                    newMessage = new Message("String",null,"setNickname");
+                                    newMessage.setNickname(nickname);
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.setNickname(nickname);
+                                    newMessage = new Message("Game",game,"defaultView");
+                                    newMessage.setNickname(nickname);
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.defaultView(game, nickname);
+                                    // TODO update view
+                                }
+                                catch(IllegalArgumentException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.invalidCommand("Error: " + e.getMessage());
+                                }
+
+                            } else {
+                                newMessage = new Message("String",null,"Nickname already taken, please choose another one!");
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                                //client.invalidCommand("Nickname already taken, please choose another one!");
+                            }
+                        }
+                    } else {
+                        newMessage = new Message("String",null,"/connect request one parameter.");
+                        objOut.writeObject(newMessage);
+                        objOut.flush();
+                        //client.invalidCommand("/connect request one parameter.");
+                    }
+                }
+                else{
+                    newMessage = new Message("String",null,"/connect request one parameter.");
+                    objOut.writeObject(newMessage);
+                    objOut.flush();
+                    //client.invalidCommand("/connect request one parameter.");
+                }
+            } //ok
+            case "disconnect" -> {
+                Message newMessage;
+                Player player = checkPlayer(msg.getNickname());
+                if (player != null) {
+                    if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
+                        DisconnectEvent event = new DisconnectEvent(player);
+                        game.getGameState().handleEvent(event);
+                    }
+                    else {
+                        newMessage = new Message("String",null,"/disconnect doesn't support parameters!");
+                        objOut.writeObject(newMessage);
+                        objOut.flush();
+                        //client.invalidCommand("/disconnect doesn't support parameters!");
+                    }
+                }
+                else {
+                    newMessage = new Message("String",null,"You are not connected to the game!");
+                    objOut.writeObject(newMessage);
+                    objOut.flush();
+                    //client.invalidCommand("You are not connected to the game!");
+                }
+            } //ok
+            case "setnumberofplayers" -> {
+                Message newMessage;
+                Player player = checkPlayer(msg.getNickname());
+                if (player != null) {
+                    if (secondParameters.isEmpty()) {
+                        if (firstParameters.size() == 1) {
+                            String numberOfPlayersStr = firstParameters.get(0);
+                            int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
+                            if (numberOfPlayers < 2 || numberOfPlayers > 4) {
+                                newMessage = new Message("String",null,"Number of players not valid. It must be between 2 and 4");
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                                //client.invalidCommand("Number of players not valid. It must be between 2 and 4");
+                            } else {
+                                SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                try{
+                                    game.getGameState().handleEvent(event);
+                                    newMessage = new Message("String",null,"Hai settato il numero dei giocatori");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }catch (IllegalArgumentException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
+
+                            }
+                        } else {
+                            newMessage = new Message("String",null,"/setnumberofplayers supports only one parameter!");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            //client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                        }
+                    } else {
+                        newMessage = new Message("String",null,"/setnumberofplayers supports only one parameter!");
+                        objOut.writeObject(newMessage);
+                        objOut.flush();
+                        //client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                    }
+                }
+                else {
+                    newMessage = new Message("String",null,"You are not connected to the game!");
+                    objOut.writeObject(newMessage);
+                    objOut.flush();
+                    //client.invalidCommand("You are not connected to the game!");
+                }
+            } //ok
         }
     }
 

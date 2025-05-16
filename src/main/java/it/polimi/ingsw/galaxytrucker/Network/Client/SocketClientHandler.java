@@ -39,8 +39,9 @@ public class SocketClientHandler implements VirtualClientSocket {
             try{
                 msg = (Message) objIn.readObject();
                 //msg = (Message) objIn.readObject();
-                serverController.handleUserInput(msg,objOut);
                 showMessage(msg);
+                serverController.handleUserInput(msg,objOut);
+
                 //callSpecificMethod(msg);
                 //sendMessageToClient(msg.getMessage());
             }catch(EOFException e){

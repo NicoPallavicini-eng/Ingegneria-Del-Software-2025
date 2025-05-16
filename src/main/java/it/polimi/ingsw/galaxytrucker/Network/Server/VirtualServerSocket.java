@@ -26,12 +26,13 @@ metodo corrispondente
      */
     //output aggiuge in coda i messaggi
     @Override
-    public void sendMessageToServer(String message) throws IOException{
+    public void sendMessageToServer(String message,String nickname) throws IOException{
         //output.println(message);
         //output.flush();
         //objOut.writeObject(message);
         //objOut.flush();
         Message obj = new Message("String",null,message);
+        obj.setNickname(nickname);
         objOut.writeObject(obj);
         objOut.flush();
         System.out.println("Message sent to server: " + message);
