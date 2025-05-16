@@ -463,8 +463,10 @@ public class TUI {
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
                     if (engineTile.getDoublePower()){
-                        type = " 2 ¤ ";
-                        middleRow.add(strConnectors.get(1) + AnsiColor.DOUBLE_ENGINE_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        type = AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                                AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "2 ¤" + AnsiColor.RESET +
+                                AnsiColor.GREEN.bg() + " " + AnsiColor.RESET;
+                        middleRow.add(strConnectors.get(1) + type + AnsiColor.RESET + strConnectors.get(3));
                     } else {
                         type = " 1 ¤ ";
                         middleRow.add(strConnectors.get(1) + AnsiColor.ENGINE_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
@@ -473,23 +475,26 @@ public class TUI {
                 }
                 else if(tile instanceof ShieldTile){
                     ShieldTile shieldTile = (ShieldTile) tile;
-                    String type = "     ";
+                    String type = "   ";
                     if (shieldTile.getOrientation() == ShieldOrientation.NORTHWEST){
-                        type = " NW# ";
+                        type = "NW#";
                     }
                     else if (shieldTile.getOrientation() == ShieldOrientation.NORTHEAST){
-                        type = " NE# ";
+                        type = "NE#";
                     }
                     else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHWEST){
-                        type = " SW# ";
+                        type = "SW#";
                     }
                     else if (shieldTile.getOrientation() == ShieldOrientation.SOUTHEAST){
-                        type = " SE# ";
+                        type = "SE#";
                     }
                     List<ConnectorType> connectors = shieldTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
-                    middleRow.add(strConnectors.get(1) + AnsiColor.SHIELD_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                    String type2 = AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                            AnsiColor.SHIELD_COLOR.fg() + type + AnsiColor.RESET +
+                            AnsiColor.GREEN.bg() + " " + AnsiColor.RESET;
+                    middleRow.add(strConnectors.get(1) + type2 + AnsiColor.RESET + strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
                 }
                 else if(tile instanceof CannonTile){
@@ -499,8 +504,10 @@ public class TUI {
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
                     if(cannonTile.getDoublePower()){
-                        type = " 2 + ";
-                        middleRow.add(strConnectors.get(1) + AnsiColor.DOUBLE_CANNON_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
+                        type = AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                                AnsiColor.DOUBLE_CANNON_COLOR.fg() + "2 +" + AnsiColor.RESET +
+                                AnsiColor.GREEN.bg() + " " + AnsiColor.RESET;
+                        middleRow.add(strConnectors.get(1) + type + AnsiColor.RESET + strConnectors.get(3));
                     } else {
                         type = " 1 + ";
                         middleRow.add(strConnectors.get(1) + AnsiColor.CANNON_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
@@ -637,16 +644,16 @@ public class TUI {
             connectorList.add("╭─|||─╮ ");
         }
         else if (north == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╭─" + AnsiColor.CANNON_COLOR + " ↑ " + AnsiColor.RESET + "─╮ ");
+            connectorList.add("╭─" + AnsiColor.CANNON_COLOR.fg() + " ↑ " + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╭─" + AnsiColor.CANNON_COLOR + "↑ ↑" + AnsiColor.RESET + "─╮ ");
+            connectorList.add("╭─" + AnsiColor.DOUBLE_CANNON_COLOR.fg() + "↑ ↑" + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╭─" + AnsiColor.ENGINE_COLOR + " V " + AnsiColor.RESET + "─╮ ");
+            connectorList.add("╭─" + AnsiColor.ENGINE_COLOR.fg() + " V " + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╭─" + AnsiColor.ENGINE_COLOR + "V V" + AnsiColor.RESET + "─╮ ");
+            connectorList.add("╭─" + AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "V V" + AnsiColor.RESET + "─╮ ");
         }
 
         if (west == ConnectorType.NONE){
@@ -662,16 +669,16 @@ public class TUI {
             connectorList.add("≡");
         }
         else if (west == ConnectorType.CANNON_SINGLE){
-            connectorList.add(AnsiColor.CANNON_COLOR + "←" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.CANNON_COLOR.fg() + "←" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.CANNON_DOUBLE){
-            connectorList.add(AnsiColor.CANNON_COLOR + "⇇" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "⇇" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_SINGLE){
-            connectorList.add(AnsiColor.ENGINE_COLOR + ">" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.ENGINE_COLOR.fg() + ">" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add(AnsiColor.ENGINE_COLOR + "≥" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "≥" + AnsiColor.RESET);
         }
 
         if (south == ConnectorType.NONE){
@@ -687,16 +694,16 @@ public class TUI {
             connectorList.add("╰─|||─╯ ");
         }
         else if (south == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╰─" + AnsiColor.CANNON_COLOR + " ↓ " + AnsiColor.RESET + "─╯ ");
+            connectorList.add("╰─" + AnsiColor.CANNON_COLOR.fg() + " ↓ " + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╰─" + AnsiColor.CANNON_COLOR + "↓ ↓" + AnsiColor.RESET + "─╯ ");
+            connectorList.add("╰─" + AnsiColor.DOUBLE_CANNON_COLOR.fg() + "↓ ↓" + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╰─" + AnsiColor.ENGINE_COLOR + " Λ " + AnsiColor.RESET + "─╯ ");
+            connectorList.add("╰─" + AnsiColor.ENGINE_COLOR.fg() + " Λ " + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╰─" + AnsiColor.ENGINE_COLOR + "Λ Λ" + AnsiColor.RESET + "─╯ ");
+            connectorList.add("╰─" + AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "Λ Λ" + AnsiColor.RESET + "─╯ ");
         }
 
         if (east == ConnectorType.NONE){
@@ -712,16 +719,16 @@ public class TUI {
             connectorList.add("≡ ");
         }
         else if (east == ConnectorType.CANNON_SINGLE){
-            connectorList.add(AnsiColor.CANNON_COLOR + "→ " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.CANNON_COLOR.fg() + "→ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.CANNON_DOUBLE){
-            connectorList.add(AnsiColor.CANNON_COLOR + "⇉ " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "⇉ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_SINGLE){
-            connectorList.add(AnsiColor.ENGINE_COLOR + "< " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.ENGINE_COLOR.fg() + "< " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add(AnsiColor.ENGINE_COLOR + "≤ " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "≤ " + AnsiColor.RESET);
         }
         return connectorList;
     }
