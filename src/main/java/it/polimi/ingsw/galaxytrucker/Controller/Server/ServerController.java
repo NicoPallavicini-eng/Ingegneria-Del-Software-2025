@@ -6,7 +6,10 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
+import it.polimi.ingsw.galaxytrucker.Network.Message;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,9 +39,116 @@ public class ServerController {
     /**
      * Handles user input from the client and executes the corresponding command.
      *
-     * @param client The VirutalView instance representing the client.
-     * @param input The input string received from the client.
+     *
      */
+    public void handleUserInput(Message msg, ObjectOutputStream objOut) throws IOException {
+        String input = msg.getMessage();
+        if (input == null || !input.startsWith("/")) {
+            Message newMessage = new Message("String",null,"Invalid command");
+            objOut.writeObject(newMessage);
+            objOut.flush();
+            return;
+        }
+        // Input to lowercase
+        input = input.toLowerCase();
+        // Remove / from the command
+        String cleanInput = input.substring(1).trim();
+
+        // Split input into command and parameters
+        String[] parts = cleanInput.split(" ", 2);
+        String command = parts[0];
+        String par = parts.length > 1 ? parts[1].trim() : "";
+
+        String[] subParameters = par.split(";", 2);
+
+        List<String> firstParameters = new ArrayList<>();
+        List<String> secondParameters = new ArrayList<>();
+
+        if (subParameters.length >= 1 && !subParameters[0].isBlank()) {
+            firstParameters = Arrays.stream(subParameters[0].split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+        }
+        if (subParameters.length == 2 && !subParameters[1].isBlank()){
+            secondParameters = Arrays.stream(subParameters[1].split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+        }
+        executeCommand(command,firstParameters,secondParameters,objOut);
+    }
+
+    public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut) throws IOException {
+        switch (command) {
+            case "help" ->{
+                Message newMessage;
+                if (!firstParameters.isEmpty() || !secondParameters.isEmpty()){
+                    newMessage = new Message("String",null,"/help doesn't support parameters, but here is the help command anyway!");
+                    objOut.writeObject(newMessage);
+                    objOut.flush();
+                }
+                String help = "helpMessage";
+                newMessage = new Message("String",null,help);
+                objOut.writeObject(newMessage);
+                objOut.flush();
+
+            }
+//            case "viewleaderboard" -> {
+//                Message newMessage;
+//                Player player = checkPlayer(client.getNickname());
+//                if (player != null) {
+//                    if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
+//                        client.invalidCommand("/viewleaderboard doesn't support parameters!");
+//                    }
+//                    client.viewLeaderboard(game);
+//                }else{
+//                    newMessage = new Message("String",null,"You are not connected to the game!");
+//                    objOut.writeObject(newMessage);
+//                    objOut.flush();
+//                }
+//
+//            } //ok
+//            case "connect" -> {
+//                //GameState gameState = game.getGameState();
+//                if (secondParameters.isEmpty()) {
+//                    if (firstParameters.size() == 1) {
+//                        String clientNickname = client.getNickname();
+//                        String nickname = firstParameters.get(0);
+//                        if (clientNickname != null) {
+//                            client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
+//                        } else {
+//                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+//                                    .filter(player1 -> player1.getNickname().equals(nickname))
+//                                    .findAny();
+//
+//                            if (!playerOptional.isPresent()) {
+//                                try{
+//                                    ConnectEvent event = new ConnectEvent(nickname, "localhost");
+//                                    game.getGameState().handleEvent(event, game);
+//                                    client.setNickname(nickname);
+//                                    client.defaultView(game, nickname);
+//                                    // TODO update view
+//                                }
+//                                catch(IllegalArgumentException e){
+//                                    client.invalidCommand("Error: " + e.getMessage());
+//                                }
+//
+//                            } else {
+//                                client.invalidCommand("Nickname already taken, please choose another one!");
+//                            }
+//                        }
+//                    } else {
+//                        client.invalidCommand("/connect request one parameter.");
+//                    }
+//                }
+//                else{
+//                    client.invalidCommand("/connect request one parameter.");
+//                }
+//            } //ok
+        }
+    }
+
     public void handleUserInput(VirtualClient client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
             client.invalidCommand("Invalid command");

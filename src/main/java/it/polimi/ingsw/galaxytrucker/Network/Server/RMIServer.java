@@ -17,7 +17,7 @@ public class RMIServer implements VirtualServer {
 
     public RMIServer() throws RemoteException {
         super();
-        new ParsingJSON();
+        //new ParsingJSON();
     }
 
     @Override
