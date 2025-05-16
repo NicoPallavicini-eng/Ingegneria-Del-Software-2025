@@ -428,8 +428,8 @@ public class ServerController {
                                 PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 game.getGameState().handleEvent(event);
                                 Tile currentTile = player.getShip().getTileInHand();
-                                client.viewMyShip(game, client.getNickname());
                                 client.viewTilepile(game);
+                                client.viewMyShip(game, client.getNickname());
 
                             } else {
                                 client.invalidCommand("Tile position not valid. It must be between 1 and 156");

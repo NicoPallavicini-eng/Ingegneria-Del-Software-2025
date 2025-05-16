@@ -59,9 +59,9 @@ public class TUI {
             StringBuilder upperRow;
             StringBuilder middleRow;
             StringBuilder lowerRow;
-            upperRow = new StringBuilder("╭─────╮ ");
-            middleRow = new StringBuilder("│  " + i + "  │ ");
-            lowerRow = new StringBuilder("╰─────╯ ");
+            upperRow = new StringBuilder("║       ");
+            middleRow = new StringBuilder("║ [" + i + "]   ");
+            lowerRow = new StringBuilder("║       ");
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile, null);
                 if (tile != null) {
@@ -75,16 +75,26 @@ public class TUI {
                         lowerRow.append("╰─────╯ ");
                     }
                 } else {
-                    upperRow.append("       ");
-                    middleRow.append("       ");
-                    lowerRow.append("       ");
+                    upperRow.append("        ");
+                    middleRow.append("        ");
+                    lowerRow.append("        ");
                 }
+            }
+            if (i < 9) {
+                upperRow.append("      ║ ");
+                middleRow.append("      ║ ");
+                lowerRow.append("      ║ ");
+            } else {
+                upperRow.append("                                                                      ║ ");
+                middleRow.append("                                                                      ║ ");
+                lowerRow.append("                                                                      ║ ");
             }
             i++;
             System.out.println(String.join("", upperRow));
             System.out.println(String.join("", middleRow));
             System.out.println(String.join("", lowerRow));
         }
+        printPileFooters();
         System.out.println();
     }
 
@@ -98,13 +108,19 @@ public class TUI {
 
     public void printMyShip(Game game, String nickname) {
         this.game = game;
-        ArrayList<ArrayList<Tile>> shipList;
         Ship ship = null;
         for (Player p : game.getListOfPlayers()) {
             if (p.getNickname().equals(nickname)) {
                 ship = p.getShip();
             }
         }
+        printActualShip(ship);
+        System.out.println();
+        printReservedAndHand(ship);
+        printShipDetails(ship);
+    }
+
+    public void printActualShip(Ship ship) {
         if (ship.getColor() == Color.RED) {
             System.out.println(AnsiColor.RED.fg() + "Red Ship:" + AnsiColor.RESET);
         } else if (ship.getColor() == Color.BLUE) {
@@ -114,16 +130,16 @@ public class TUI {
         } else if (ship.getColor() == Color.YELLOW) {
             System.out.println(AnsiColor.YELLOW.fg() + "Yellow Ship:" + AnsiColor.RESET);
         }
-        shipList = ship.getFloorplanArrayList();
-        int i = 5; // row
+        ArrayList<ArrayList<Tile>> shipList = ship.getFloorplanArrayList();
         printShipHeaders();
+        int i = 5;
         for (ArrayList<Tile> row : shipList) {
             StringBuilder upperRow;
             StringBuilder middleRow;
             StringBuilder lowerRow;
-            upperRow = new StringBuilder("╭─────╮ ");
-            middleRow = new StringBuilder("│  " + i + "  │ ");
-            lowerRow = new StringBuilder("╰─────╯ ");
+            upperRow = new StringBuilder("║       ");
+            middleRow = new StringBuilder("║ [" + i + "]   ");
+            lowerRow = new StringBuilder("║       ");
             int j = 4; // column
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile, ship);
@@ -133,29 +149,78 @@ public class TUI {
                     lowerRow.append(allRow.get(2).get(0));
                 } else {
                     if (((i == 5) && (j == 4 || j == 5 || j == 7 || j == 9 || j == 10))
-                        || ((i == 6) && (j == 4 || j == 10))
-                        || ((i == 9) && (j == 7))) { // non-selectable tiles
-                        middleRow.append("│     │ ");
+                            || ((i == 6) && (j == 4 || j == 10))
+                            || ((i == 9) && (j == 7))) { // non-selectable tiles
+                        upperRow.append("        ");
+                        middleRow.append("        ");
+                        lowerRow.append("        ");
                     } else {
+                        upperRow.append("╭─────╮ ");
                         middleRow.append("│ [ ] │ ");
+                        lowerRow.append("╰─────╯ ");
                     }
-                    upperRow.append("╭─────╮ ");
-                    lowerRow.append("╰─────╯ ");
                 }
                 j++;
             }
-            upperRow.append("╭─────╮ ");
-            middleRow.append("│     │ ");
-            lowerRow.append("╰─────╯ ");
+            upperRow.append("      ║ ");
+            middleRow.append("      ║ ");
+            lowerRow.append("      ║ ");
             i++;
             System.out.println(String.join("", upperRow));
             System.out.println(String.join("", middleRow));
             System.out.println(String.join("", lowerRow));
         }
         printShipFooters();
-        System.out.println();
-        printReservedAndHand(ship);
-        System.out.println(AnsiColor.CABIN_COLOR.fg() + "Crew: " + ship.getNumberOfInhabitants() + AnsiColor.RESET);
+    }
+
+    private List<List<String>> appendReserved(Ship ship) {
+        List<List<String>> allRow = new ArrayList<>();
+        List <Tile> reserved = ship.getReservedTiles();
+        List<String> upperRow = new ArrayList<>();
+        List<String> middleRow = new ArrayList<>();
+        List<String> lowerRow = new ArrayList<>();
+        int i;
+        for (i = 0; i < reserved.size(); i++) {
+            Tile tile = reserved.get(i);
+            allRow = buildTile(tile, null);
+            upperRow.add(allRow.get(0).get(0));
+            middleRow.add(allRow.get(1).get(0));
+            lowerRow.add(allRow.get(2).get(0));
+        }
+        for (; i < 2; i++) {
+            upperRow.add("╭─────╮ ");
+            middleRow.add("│ [ ] │ ");
+            lowerRow.add("╰─────╯ ");
+        }
+        allRow.clear();
+        allRow.add(upperRow);
+        allRow.add(middleRow);
+        allRow.add(lowerRow);
+        return allRow;
+    }
+
+    private List<List<String>> appendHand(Ship ship) {
+        Tile hand = ship.getTileInHand();
+        List<String> upperRow = new ArrayList<>();
+        List<String> middleRow = new ArrayList<>();
+        List<String> lowerRow = new ArrayList<>();
+        if (hand != null) {
+            List<List<String>> allRow = buildTile(hand, null);
+            upperRow.add(allRow.get(0).get(0));
+            middleRow.add(allRow.get(1).get(0));
+            lowerRow.add(allRow.get(2).get(0));
+            allRow.clear();
+            allRow.add(upperRow);
+            allRow.add(middleRow);
+            allRow.add(lowerRow);
+            return allRow;
+        } else {
+            return null;
+        }
+    }
+
+    private void printShipDetails(Ship ship) {
+        System.out.println(AnsiColor.CREW_COLOR.fg() + "Crew: " + ship.getNumberOfInhabitants() + AnsiColor.RESET);
         int humans = 0;
         int aliens = 0;
         AlienColor color = null;
@@ -203,9 +268,9 @@ public class TUI {
             }
         }
         int allCargo = redCargo + normCargo;
-        System.out.println(AnsiColor.REGULAR_CARGO_COLOR.fg() + "Cargo: " + allCargo + " \n" +
-                "   Normal: " + normCargo + "\n" + AnsiColor.RED_CARGO_COLOR.fg() +
-                "   Red: " + redCargo + AnsiColor.RESET);
+        System.out.println(AnsiColor.CARGO_COLOR.fg() + "Cargo: " + allCargo + AnsiColor.RESET);
+        System.out.println(AnsiColor.REGULAR_CARGO_COLOR.fg() + "   Normal: " + normCargo + AnsiColor.RESET);
+        System.out.println(AnsiColor.RED_CARGO_COLOR.fg() + "   red: " + redCargo + AnsiColor.RESET);
         int firepower = 0;
         List <CannonTile> cannonList = ship.getListOfFirepower();
         for (CannonTile cannon : cannonList) {
@@ -267,37 +332,27 @@ public class TUI {
     }
 
     private void printReservedAndHand(Ship ship) {
-        Tile hand = ship.getTileInHand();
-        List <Tile> reserved = ship.getReservedTiles();
-        System.out.println("Reserved:           Hand: ");
         StringBuilder upperRow = new StringBuilder();
         StringBuilder middleRow = new StringBuilder();
         StringBuilder lowerRow = new StringBuilder();
-        int i = 0;
-        for (i = 0; i < reserved.size(); i++) {
-            Tile tile = reserved.get(i);
-            List<List<String>> allRow = buildTile(tile, null);
+        List<List<String>> allRow = appendReserved(ship);
+        upperRow.append(allRow.get(0).get(0));
+        upperRow.append(allRow.get(0).get(1));
+        middleRow.append(allRow.get(1).get(0));
+        middleRow.append(allRow.get(1).get(1));
+        lowerRow.append(allRow.get(2).get(0));
+        lowerRow.append(allRow.get(2).get(1));
+        allRow = appendHand(ship);
+        if (allRow != null) {
+            upperRow.append("    ");
+            middleRow.append("    ");
+            lowerRow.append("    ");
             upperRow.append(allRow.get(0).get(0));
             middleRow.append(allRow.get(1).get(0));
             lowerRow.append(allRow.get(2).get(0));
-        }
-        for (; i < 2; i++) {
-            upperRow.append("╭─────╮ ");
-            middleRow.append("│ [ ] │ ");
-            lowerRow.append("╰─────╯ ");
-        }
-        upperRow.append("    ");
-        middleRow.append("    ");
-        lowerRow.append("    ");
-        List<List<String>> allRow = buildTile(hand, null);
-        if (hand != null) {
-            upperRow.append(allRow.get(0).get(0));
-            middleRow.append(allRow.get(1).get(0));
-            lowerRow.append(allRow.get(2).get(0));
+            System.out.println("Reserved:           Hand: ");
         } else {
-            upperRow.append("╭─────╮ ");
-            middleRow.append("│ [ ] │ ");
-            lowerRow.append("╰─────╯ ");
+            System.out.println("Reserved:");
         }
         System.out.println(String.join("", upperRow));
         System.out.println(String.join("", middleRow));
@@ -466,7 +521,6 @@ public class TUI {
         allRow.add(upperRow);
         allRow.add(middleRow);
         allRow.add(lowerRow);
-
         return allRow;
     }
 
@@ -525,25 +579,33 @@ public class TUI {
 
     private void printPileHeaders(){
         System.out.println(
-                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
-                "│     │ │  0  │ │  1  │ │  2  │ │  3  │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │ 1 1 │ │ 1 2 │ │ 1 3 │ │ 1 4 │ │ 1 5 │\n" +
-                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
+                "╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n" +
+                "║         [0]     [1]     [2]     [3]     [4]     [5]     [6]     [7]     [8]     [9]    [1 0]   [1 1]   [1 2]   [1 3]   [1 4]   [1 5]        ║\n" +
+                "║                                                                                                                                             ║"
+        );
+    }
+
+    private void printPileFooters(){
+        System.out.println(
+                "║                                                                                                                                             ║\n" +
+                "║                                                                                                                                             ║\n" +
+                "╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝"
         );
     }
 
     private void printShipHeaders(){
         System.out.println(
-                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
-                "│     │ │  4  │ │  5  │ │  6  │ │  7  │ │  8  │ │  9  │ │ 1 0 │ │     │\n" +
-                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
+                "╔═════════════════════════════════════════════════════════════════════╗\n" +
+                "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                "║                                                                     ║"
         );
     }
 
     private void printShipFooters(){
         System.out.println(
-                "╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮ ╭─────╮\n" +
-                "│     │ │     │ │     │ │     │ │     │ │     │ │     │ │     │ │     │\n" +
-                "╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯ ╰─────╯"
+                "║                                                                     ║\n" +
+                "║                                                                     ║\n" +
+                "╚═════════════════════════════════════════════════════════════════════╝"
         );
     }
 
@@ -567,16 +629,16 @@ public class TUI {
             connectorList.add("╭─|||─╮ ");
         }
         else if (north == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╭─ ↑ ─╮ ");
+            connectorList.add("╭─" + AnsiColor.CANNON_COLOR + " ↑ " + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╭─↑ ↑─╮ ");
+            connectorList.add("╭─" + AnsiColor.CANNON_COLOR + "↑ ↑" + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╭─ V ─╮ ");
+            connectorList.add("╭─" + AnsiColor.ENGINE_COLOR + " V " + AnsiColor.RESET + "─╮ ");
         }
         else if (north == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╭─V V─╮ ");
+            connectorList.add("╭─" + AnsiColor.ENGINE_COLOR + "V V" + AnsiColor.RESET + "─╮ ");
         }
 
         if (west == ConnectorType.NONE){
@@ -592,16 +654,16 @@ public class TUI {
             connectorList.add("≡");
         }
         else if (west == ConnectorType.CANNON_SINGLE){
-            connectorList.add("←");
+            connectorList.add(AnsiColor.CANNON_COLOR + "←" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("⇇");
+            connectorList.add(AnsiColor.CANNON_COLOR + "⇇" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_SINGLE){
-            connectorList.add(">");
+            connectorList.add(AnsiColor.ENGINE_COLOR + ">" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("≥");
+            connectorList.add(AnsiColor.ENGINE_COLOR + "≥" + AnsiColor.RESET);
         }
 
         if (south == ConnectorType.NONE){
@@ -617,16 +679,16 @@ public class TUI {
             connectorList.add("╰─|||─╯ ");
         }
         else if (south == ConnectorType.CANNON_SINGLE){
-            connectorList.add("╰─ ↓ ─╯ ");
+            connectorList.add("╰─" + AnsiColor.CANNON_COLOR + " ↓ " + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("╰─↓ ↓─╯ ");
+            connectorList.add("╰─" + AnsiColor.CANNON_COLOR + "↓ ↓" + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╰─ Λ ─╯ ");
+            connectorList.add("╰─" + AnsiColor.ENGINE_COLOR + " Λ " + AnsiColor.RESET + "─╯ ");
         }
         else if (south == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╰─Λ Λ─╯ ");
+            connectorList.add("╰─" + AnsiColor.ENGINE_COLOR + "Λ Λ" + AnsiColor.RESET + "─╯ ");
         }
 
         if (east == ConnectorType.NONE){
@@ -642,16 +704,16 @@ public class TUI {
             connectorList.add("≡ ");
         }
         else if (east == ConnectorType.CANNON_SINGLE){
-            connectorList.add("→ ");
+            connectorList.add(AnsiColor.CANNON_COLOR + "→ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.CANNON_DOUBLE){
-            connectorList.add("⇉ ");
+            connectorList.add(AnsiColor.CANNON_COLOR + "⇉ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("< ");
+            connectorList.add(AnsiColor.ENGINE_COLOR + "< " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("≤ ");
+            connectorList.add(AnsiColor.ENGINE_COLOR + "≤ " + AnsiColor.RESET);
         }
         return connectorList;
     }

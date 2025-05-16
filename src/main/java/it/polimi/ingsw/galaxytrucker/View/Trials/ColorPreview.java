@@ -6,15 +6,15 @@ public class ColorPreview {
                 // Main structures
                 196, 226, 46, 33, 201, 208,
                 // Tiles
-                90, 166, 250, 245, 117, 203, 120, 194
+                90, 166, 15, 245, 117, 203, 120, 156, 224, 189
         };
 
         String[] names = {
                 // Main structures
                 "Red", "Yellow", "Green", "Blue", "Purple", "Orange",
                 // Tiles
-                "Darker Purple", "Darker Orange", "Light Grey", "Grey",
-                "Light Blue", "Light Red", "Light Green", "Very Light Green"
+                "Darker Purple", "Darker Orange", "White", "Grey",
+                "Light Blue", "Light Red", "Light Green", "Lime Green", "Light Ochre", "Light Lilac"
         };
 
         for (int i = 0; i < codes.length; i++) {
