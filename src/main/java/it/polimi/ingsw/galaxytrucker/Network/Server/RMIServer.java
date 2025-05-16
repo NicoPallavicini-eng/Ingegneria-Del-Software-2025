@@ -12,18 +12,22 @@ import java.util.List;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualClient> clients = new ArrayList<>();
-    private ServerController serverController = new ServerController();
+    private ServerController serverController = new ServerController(this);
 
     public RMIServer() throws RemoteException {
         super();
-        //new ParsingJSON();
     }
+
 
     @Override
     public void connect(VirtualClient virtualClient) throws RemoteException {
         this.clients.add(virtualClient);
     }
 
+    @Override
+    public List<VirtualClient> getClients() throws RemoteException{
+        return clients;
+    }
     @Override
     public void showMessage(String input) throws RemoteException {
         System.out.println(input);

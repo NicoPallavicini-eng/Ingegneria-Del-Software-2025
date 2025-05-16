@@ -18,5 +18,6 @@ public interface VirtualClient extends Remote {
     void viewMyShip(Game game, String nickname) throws RemoteException;
     void viewShips(Game game) throws RemoteException;
     void viewTile(Tile currentTile) throws RemoteException;
-    void defaultView(Game game) throws RemoteException;
+    void connectView(Game game) throws RemoteException;
+    void printMessage(String message) throws RemoteException;
 }
