@@ -29,8 +29,7 @@ public class Tile implements Serializable {
      * @param east The connector type on the east side
      */
 
-    @JsonCreator
-    public Tile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west) {
+    public Tile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
         this.northConnector = north;
         this.westConnector = west;
         this.southConnector = south;
@@ -115,6 +114,10 @@ public class Tile implements Serializable {
 
     public boolean getFacingUp(){
         return facingUp;
+    }
+
+    public void setFacingUp(boolean facingUp) {
+        this.facingUp = facingUp;
     }
 
     /**
