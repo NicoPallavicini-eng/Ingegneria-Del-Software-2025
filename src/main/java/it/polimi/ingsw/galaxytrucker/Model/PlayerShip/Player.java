@@ -13,10 +13,9 @@ public class Player implements Serializable {
     private String playerIp;
     private boolean onlineStatus;
 
-
     public Player(String playerIp, String nickname, Color color){
         this.playerIp = playerIp;
-        setNickname(nickname);
+        this.nickname = nickname;
         //assegno
         setShip(new Ship(color));
         //setCredits(0);

@@ -6,14 +6,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public class ShieldTile extends Tile implements Serializable {
-    private ShieldOrientation orientation;
+    private ShieldOrientation orientation = ShieldOrientation.NORTHEAST;
     private boolean activeState;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public ShieldTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("orientation") ShieldOrientation orientation,@JsonProperty("activeState") boolean activeState) {
+    public ShieldTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, ShieldOrientation orientation, boolean activeState) {
         super(north, west, south, east);
         this.orientation = orientation;
         this.activeState = activeState;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
 
     public void setActiveState(boolean activeState) {

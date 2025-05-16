@@ -13,17 +13,22 @@ public class CabinTile extends Tile implements Serializable {
     private int pinkAdaptors;
     private int orangeAdaptors;
     private AlienColor alienColor;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public CabinTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("inhabitants") CabinInhabitants inhabitants,@JsonProperty("mainCapsule") boolean mainCapsule,@JsonProperty("color") Color color,@JsonProperty("pinkAdaptors") int pinkAdaptors,@JsonProperty("orangeAdaptors") int orangeAdaptors) {
+    public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, Color color, int pinkAdaptors, int orangeAdaptors) {
         super(north, west, south, east);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;
         if (mainCapsule) {
-            this.color = color;
+            this.facingUp = true;
         } else {
-            this.color = color;
+            this.facingUp = false;
         }
+        this.color = color;
+        this.choosable = true;
+        this.attached = false;
         this.pinkAdaptors = pinkAdaptors;
         this.orangeAdaptors = orangeAdaptors;
     }

@@ -10,13 +10,18 @@ public class CargoTile extends Tile implements Serializable {
     private final int slotsNumber;
     private final boolean fitsRed;
     private List<Integer> tileContent;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public CargoTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("slotsNumber") int slotsNumber,@JsonProperty("fitsRed") boolean fitsRed,@JsonProperty("tileContent") List<Integer> tileContent) {
+    public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
         super(north, west, south, east);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;
         this.tileContent = tileContent;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
 
     public List<Integer> getTileContent() {

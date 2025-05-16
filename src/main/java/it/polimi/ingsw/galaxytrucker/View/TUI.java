@@ -66,9 +66,9 @@ public class TUI {
                 List<List<String>> allRow = buildTile(tile, null);
                 if (tile != null) {
                     if (tile.getFacingUp()) {
-                        upperRow.append(allRow.get(0));
-                        middleRow.append(allRow.get(1));
-                        lowerRow.append(allRow.get(2));
+                        upperRow.append(allRow.get(0).toString());
+                        middleRow.append(allRow.get(1).toString());
+                        lowerRow.append(allRow.get(2).toString());
                     } else {
                         upperRow.append("╭─────╮ ");
                         middleRow.append("│  x  │ ");
@@ -81,9 +81,9 @@ public class TUI {
                 }
             }
             i++;
-            System.out.println(upperRow);
-            System.out.println(middleRow);
-            System.out.println(lowerRow);
+            System.out.println(String.join("", upperRow));
+            System.out.println(String.join("", middleRow));
+            System.out.println(String.join("", lowerRow));
         }
         System.out.println();
     }
@@ -128,9 +128,9 @@ public class TUI {
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile, ship);
                 if (tile != null) {
-                    upperRow.append(allRow.get(0));
-                    middleRow.append(allRow.get(1));
-                    lowerRow.append(allRow.get(2));
+                    upperRow.append(allRow.get(0).toString());
+                    middleRow.append(allRow.get(1).toString());
+                    lowerRow.append(allRow.get(2).toString());
                 } else {
                     if (((i == 5) && (j == 4 || j == 5 || j == 7 || j == 9 || j == 10))
                         || ((i == 6) && (j == 4 || j == 10))
@@ -148,9 +148,9 @@ public class TUI {
             middleRow.append("│     │ ");
             lowerRow.append("╰─────╯ ");
             i++;
-            System.out.println(upperRow);
-            System.out.println(middleRow);
-            System.out.println(lowerRow);
+            System.out.println(String.join("", upperRow));
+            System.out.println(String.join("", middleRow));
+            System.out.println(String.join("", lowerRow));
         }
         printShipFooters();
         System.out.println();
@@ -277,9 +277,9 @@ public class TUI {
         for (i = 0; i < reserved.size(); i++) {
             Tile tile = reserved.get(i);
             List<List<String>> allRow = buildTile(tile, null);
-            upperRow.append(allRow.get(0));
-            middleRow.append(allRow.get(1));
-            lowerRow.append(allRow.get(2));
+            upperRow.append(allRow.get(0).toString());
+            middleRow.append(allRow.get(1).toString());
+            lowerRow.append(allRow.get(2).toString());
         }
         for (; i < 2; i++) {
             upperRow.append("╭─────╮ ");
@@ -291,17 +291,17 @@ public class TUI {
         lowerRow.append("    ");
         List<List<String>> allRow = buildTile(hand, null);
         if (hand != null) {
-            upperRow.append(allRow.get(0));
-            middleRow.append(allRow.get(1));
-            lowerRow.append(allRow.get(2));
+            upperRow.append(allRow.get(0).toString());
+            middleRow.append(allRow.get(1).toString());
+            lowerRow.append(allRow.get(2).toString());
         } else {
             upperRow.append("╭─────╮ ");
             middleRow.append("│ [ ] │ ");
             lowerRow.append("╰─────╯ ");
         }
-        System.out.println(upperRow);
-        System.out.println(middleRow);
-        System.out.println(lowerRow);
+        System.out.println(String.join("", upperRow));
+        System.out.println(String.join("", middleRow));
+        System.out.println(String.join("", lowerRow));
         System.out.println();
     }
 
@@ -460,9 +460,9 @@ public class TUI {
             }
         }
         else{
-            upperRow.add("       ");
-            middleRow.add("       ");
-            lowerRow.add("       ");
+            upperRow.add("        ");
+            middleRow.add("        ");
+            lowerRow.add("        ");
         }
         allRow.add(upperRow);
         allRow.add(middleRow);
@@ -658,15 +658,22 @@ public class TUI {
     }
 
     public void printTile(Tile tile){
+        StringBuilder upperRow = new StringBuilder();
+        StringBuilder middleRow = new StringBuilder();
+        StringBuilder lowerRow = new StringBuilder();
         List<List<String>> allRow = buildTile(tile, null);
-        List<String> upperRow = allRow.get(0);
-        List<String> middleRow = allRow.get(1);
-        List<String> lowerRow = allRow.get(2);
-        for (int j =0; j<upperRow.size(); j++){
-            System.out.print(upperRow.get(j));
-            System.out.print(middleRow.get(j));
-            System.out.print(lowerRow.get(j));
+        if (tile != null) {
+            upperRow.append(allRow.get(0).toString());
+            middleRow.append(allRow.get(1).toString());
+            lowerRow.append(allRow.get(2).toString());
+        } else {
+            upperRow.append("╭─────╮ ");
+            middleRow.append("│     │ ");
+            lowerRow.append("╰─────╯ ");
         }
+        System.out.println(String.join("", upperRow));
+        System.out.println(String.join("", middleRow));
+        System.out.println(String.join("", lowerRow));
     }
 
     public void printCurrentCard(Card card){
