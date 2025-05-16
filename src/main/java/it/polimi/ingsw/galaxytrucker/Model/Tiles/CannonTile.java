@@ -9,13 +9,19 @@ import java.io.Serializable;
 public class CannonTile extends Tile implements Serializable {
     private final boolean doublePower;
     private boolean activeState;
-    private Direction direction;
+    private Direction direction = Direction.NORTH;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
     @JsonCreator
-    public CannonTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("doublePower") boolean doublePower,@JsonProperty("activeState") boolean activeState) {
+    public CannonTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, boolean doublePower, boolean activeState) {
         super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
 
     public Direction getDirection() {

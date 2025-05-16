@@ -8,12 +8,17 @@ import java.io.Serializable;
 public class BatteryTile extends Tile implements Serializable {
     private final int slotsNumber;
     private int slotsFilled;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public BatteryTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("slotsNumber") int slotsNumber,@JsonProperty("slotsFilled") int slotsFilled) {
+    public BatteryTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, int slotsFilled) {
         super(north, west, south, east);
         this.slotsNumber = slotsNumber;
         this.slotsFilled = slotsFilled;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
 
     public int removeBattery(int quantity){

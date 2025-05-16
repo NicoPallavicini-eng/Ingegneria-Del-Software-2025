@@ -9,11 +9,16 @@ public class BioadaptorTile extends Tile implements Serializable {
     private final AlienColor color;
     private boolean isOrange;
     private boolean isPurple;
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public BioadaptorTile(@JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west,@JsonProperty("color") AlienColor color){
+    public BioadaptorTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, AlienColor color){
         super(north, west, south, east);
         this.color = color;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
     public AlienColor getColor() {
         return this.color;

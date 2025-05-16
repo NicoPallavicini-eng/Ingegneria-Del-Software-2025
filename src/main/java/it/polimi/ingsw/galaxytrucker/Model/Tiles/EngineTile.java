@@ -11,13 +11,17 @@ public class EngineTile extends Tile implements Serializable {
     private final boolean doublePower;
     private boolean activeState;
     private Direction direction = Direction.SOUTH;
-    //todo check south is ok
+    private boolean attached;
+    private boolean facingUp;
+    private boolean choosable;
 
-    @JsonCreator
-    public EngineTile(@JsonProperty("doublePower") boolean doublePower,@JsonProperty("activeState") boolean activeState, @JsonProperty("northConnector")ConnectorType north, @JsonProperty("southConnector")ConnectorType south, @JsonProperty("eastConnector")ConnectorType east, @JsonProperty("westConnector")ConnectorType west) {
+    public EngineTile(boolean doublePower, boolean activeState, ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
         super(north, west, south, east);
         this.doublePower = doublePower;
         this.activeState = activeState;
+        this.facingUp = false;
+        this.choosable = true;
+        this.attached = false;
     }
 
     public boolean getDoublePower(){

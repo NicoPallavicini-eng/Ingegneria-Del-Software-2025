@@ -10,10 +10,10 @@ public class TilePile implements Serializable {
 
     public TilePile(List<Tile> tilePile) {
         this.tilePile = tilePile;
+        shuffle(this.tilePile);
     }
 
     public List<Tile> getTilePile() {
-        shuffle(tilePile);
         return tilePile;
     }
 
