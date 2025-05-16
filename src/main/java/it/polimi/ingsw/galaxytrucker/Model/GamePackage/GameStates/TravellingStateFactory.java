@@ -7,8 +7,12 @@ import java.io.Serializable;
 
 public class TravellingStateFactory implements Serializable {
 
-    public static GameState createGameState(Game game, CombatZoneCard card){
-        return new CombatZoneState(game, card);
+    public static GameState createGameState(Game game, CombatZoneCardL card){
+        return new CombatZoneLState(game, card);
+    }
+
+    public static GameState createGameState(Game game, CombatZoneCardNotL card){
+        return new CombatZoneNotLState(game, card);
     }
 
     public static GameState createGameState(Game game, EpidemicCard card){

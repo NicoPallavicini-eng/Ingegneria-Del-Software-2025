@@ -30,14 +30,16 @@ public class SlaversState extends TravellingState implements Serializable {
         handledPlayers = new ArrayList<>();
     }
 
-    public void handleInput(ActivateCannonsEvent event){
+    public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }
         else{
             EventHandler.handleEvent(event);
             if(currentPlayer.getShip().getFirepower() < currentCard.getFirepower()){
-                defeatedPlayers.add(currentPlayer);
+                synchronized (defeatedPlayers) {
+                    defeatedPlayers.add(currentPlayer);
+                }
                 nextPlayer();
             }
             else if(currentPlayer.getShip().getFirepower() == currentCard.getFirepower()){
@@ -81,7 +83,9 @@ public class SlaversState extends TravellingState implements Serializable {
             }
             else{
                 if(currentPlayer.getShip().getFirepower() < currentCard.getFirepower()){
-                    defeatedPlayers.add(currentPlayer);
+                    synchronized (defeatedPlayers) {
+                        defeatedPlayers.add(currentPlayer);
+                    }
                     nextPlayer();
                 }
                 else if(currentPlayer.getShip().getFirepower() == currentCard.getFirepower()){

@@ -121,11 +121,13 @@ public class SmugglersState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not right over these cargos");
         }
         else {
-            if (!availableResources.contains(event.resource())) {
-                throw new IllegalEventException("the block you are trying to add is not present");
-            } else {
-                EventHandler.handleEvent(event);
-                availableResources.remove(event.resource());
+            synchronized (availableResources) {
+                if (!availableResources.contains(event.resource())) {
+                    throw new IllegalEventException("the block you are trying to add is not present");
+                } else {
+                    EventHandler.handleEvent(event);
+                    availableResources.remove(event.resource());
+                }
             }
         }
     }
@@ -135,8 +137,10 @@ public class SmugglersState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not landed");
         }
         else {
-            EventHandler.handleEvent(event);
-            availableResources.add(event.resource());
+            synchronized (availableResources) {
+                EventHandler.handleEvent(event);
+                availableResources.add(event.resource());
+            }
         }
     }
 

@@ -16,9 +16,9 @@ public class OpenSpaceState extends TravellingState implements Serializable {
         super(game, card);
     }
 
-    public void handleInput(ActivateEnginesEvent event)throws IllegalEventException {
+    public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
-        if (event.player().equals(currentPlayer)) {
+        if (!event.player().equals(currentPlayer)) {
             throw new IllegalEventException("It is not your turn");
         } else {
             EventHandler.handleEvent(event);
@@ -37,7 +37,7 @@ public class OpenSpaceState extends TravellingState implements Serializable {
 
     public void handleEvent(NoChoiceEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
-        if (event.player().equals(currentPlayer)) {
+        if (!event.player().equals(currentPlayer)) {
             throw new IllegalEventException("It is not your turn");
         }
         else if(ship.getEnginePower() == 0){
