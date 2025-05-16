@@ -66,9 +66,9 @@ public class TUI {
                 List<List<String>> allRow = buildTile(tile, null);
                 if (tile != null) {
                     if (tile.getFacingUp()) {
-                        upperRow.append(allRow.get(0).toString());
-                        middleRow.append(allRow.get(1).toString());
-                        lowerRow.append(allRow.get(2).toString());
+                        upperRow.append(allRow.get(0).get(0));
+                        middleRow.append(allRow.get(1).get(0));
+                        lowerRow.append(allRow.get(2).get(0));
                     } else {
                         upperRow.append("╭─────╮ ");
                         middleRow.append("│  x  │ ");
@@ -128,9 +128,9 @@ public class TUI {
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile, ship);
                 if (tile != null) {
-                    upperRow.append(allRow.get(0).toString());
-                    middleRow.append(allRow.get(1).toString());
-                    lowerRow.append(allRow.get(2).toString());
+                    upperRow.append(allRow.get(0).get(0));
+                    middleRow.append(allRow.get(1).get(0));
+                    lowerRow.append(allRow.get(2).get(0));
                 } else {
                     if (((i == 5) && (j == 4 || j == 5 || j == 7 || j == 9 || j == 10))
                         || ((i == 6) && (j == 4 || j == 10))
@@ -277,9 +277,9 @@ public class TUI {
         for (i = 0; i < reserved.size(); i++) {
             Tile tile = reserved.get(i);
             List<List<String>> allRow = buildTile(tile, null);
-            upperRow.append(allRow.get(0).toString());
-            middleRow.append(allRow.get(1).toString());
-            lowerRow.append(allRow.get(2).toString());
+            upperRow.append(allRow.get(0).get(0));
+            middleRow.append(allRow.get(1).get(0));
+            lowerRow.append(allRow.get(2).get(0));
         }
         for (; i < 2; i++) {
             upperRow.append("╭─────╮ ");
@@ -291,9 +291,9 @@ public class TUI {
         lowerRow.append("    ");
         List<List<String>> allRow = buildTile(hand, null);
         if (hand != null) {
-            upperRow.append(allRow.get(0).toString());
-            middleRow.append(allRow.get(1).toString());
-            lowerRow.append(allRow.get(2).toString());
+            upperRow.append(allRow.get(0).get(0));
+            middleRow.append(allRow.get(1).get(0));
+            lowerRow.append(allRow.get(2).get(0));
         } else {
             upperRow.append("╭─────╮ ");
             middleRow.append("│ [ ] │ ");
@@ -354,7 +354,7 @@ public class TUI {
                     List<String> strConnectors = checkConnectors(connectors);
                     upperRow.add(strConnectors.get(0));
                     if (cabinTile.isMainCapsule()) { // in ship this is used
-                        type = "  ⌂  ";
+                        type = "  ◉  ";
                         if (ship.getColor() == Color.RED) {
                             middleRow.add(strConnectors.get(1) + AnsiColor.RED.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                         } else if (ship.getColor() == Color.BLUE) {
@@ -365,7 +365,7 @@ public class TUI {
                             middleRow.add(strConnectors.get(1) + AnsiColor.YELLOW.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                         }
                     } else {
-                        type = "  ⚲  ";
+                        type = "  ○  ";
                         middleRow.add(strConnectors.get(1) + AnsiColor.CABIN_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     }
                     lowerRow.add(strConnectors.get(2));
@@ -452,8 +452,7 @@ public class TUI {
                     middleRow.add(strConnectors.get(1) + AnsiColor.STRUCTURAL_COLOR.fg() + type + AnsiColor.RESET + strConnectors.get(3));
                     lowerRow.add(strConnectors.get(2));
                 }
-            }
-            else {
+            } else {
                 upperRow.add("╭─────╮ ");
                 middleRow.add("│  x  │ ");
                 lowerRow.add("╰─────╯ ");
@@ -663,9 +662,9 @@ public class TUI {
         StringBuilder lowerRow = new StringBuilder();
         List<List<String>> allRow = buildTile(tile, null);
         if (tile != null) {
-            upperRow.append(allRow.get(0).toString());
-            middleRow.append(allRow.get(1).toString());
-            lowerRow.append(allRow.get(2).toString());
+            upperRow.append(allRow.get(0).get(0));
+            middleRow.append(allRow.get(1).get(0));
+            lowerRow.append(allRow.get(2).get(0));
         } else {
             upperRow.append("╭─────╮ ");
             middleRow.append("│     │ ");
