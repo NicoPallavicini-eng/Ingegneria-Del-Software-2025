@@ -23,11 +23,12 @@ public class CabinTile extends Tile implements Serializable {
         this.mainCapsule = mainCapsule;
         if (mainCapsule) {
             this.facingUp = true;
+            this.choosable = false;
         } else {
             this.facingUp = false;
+            this.choosable = true;
         }
         this.color = color;
-        this.choosable = true;
         this.attached = false;
         this.pinkAdaptors = pinkAdaptors;
         this.orangeAdaptors = orangeAdaptors;
