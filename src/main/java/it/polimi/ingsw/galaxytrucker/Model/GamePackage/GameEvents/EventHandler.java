@@ -148,6 +148,8 @@ public class EventHandler implements Serializable {
         }
         Ship ship = event.player().getShip();
         ship.setTileInHand(tile);
+        tile.setFacingUp(true);
+        tile.setChoosable(false);
         pile.getTilePile().set(event.index(), null);
     }
     /*

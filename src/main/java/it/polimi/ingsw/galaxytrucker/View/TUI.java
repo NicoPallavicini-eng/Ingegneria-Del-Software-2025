@@ -580,7 +580,7 @@ public class TUI {
             connectorList.add("╭─V V─╮ ");
         }
 
-        else if (west == ConnectorType.NONE){
+        if (west == ConnectorType.NONE){
             connectorList.add("│");
         }
         else if (west == ConnectorType.SINGLE){
@@ -605,7 +605,7 @@ public class TUI {
             connectorList.add("≥");
         }
 
-        else if (south == ConnectorType.NONE){
+        if (south == ConnectorType.NONE){
             connectorList.add("╰─────╯ ");
         }
         else if (south == ConnectorType.SINGLE){
@@ -630,7 +630,7 @@ public class TUI {
             connectorList.add("╰─V V─╯ ");
         }
 
-        else if (east == ConnectorType.NONE){
+        if (east == ConnectorType.NONE){
             connectorList.add("│ ");
         }
         else if (east == ConnectorType.SINGLE){

@@ -215,15 +215,18 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null){
                     if (secondParameters.isEmpty()){
-                        if(firstParameters.size() == 1) {
-                            String tilePosition = firstParameters.get(0);
-                            int tilePositionInt = Integer.parseInt(tilePosition); //CHECK MAX NUMBER OF TILES IN TILEPILE
-                            if (tilePositionInt > 0 && tilePositionInt < 156) {
+                        if(firstParameters.size() == 2) {
+                            String tileRow = firstParameters.get(0);
+                            String tileColumn = firstParameters.get(1);
+                            int tileRowInt = Integer.parseInt(tileRow);
+                            int tileColumnInt = Integer.parseInt(tileColumn);
+                            int tilePositionInt = (tileRowInt * 16) + tileColumnInt;
+                            if (tilePositionInt > 0 && tilePositionInt < 152) {
                                 PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 game.getGameState().handleEvent(event);
                                 Tile currentTile = player.getShip().getTileInHand();
-                                client.viewTile(currentTile);
                                 client.viewMyShip(game, client.getNickname());
+                                client.viewTilepile(game);
 
                             } else {
                                 client.invalidCommand("Tile position not valid. It must be between 1 and 156");
