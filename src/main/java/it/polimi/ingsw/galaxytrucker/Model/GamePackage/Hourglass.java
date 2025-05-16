@@ -13,7 +13,7 @@ public class Hourglass implements Serializable {
     private boolean hasEnded = true;
     private long startTime;
     private BuildingState state;
-    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private transient final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     public Hourglass(BuildingState state) {
         this.state = state;

@@ -447,7 +447,7 @@ public class ServerController {
                     client.invalidCommand("You are not connected to the game!");
                 }
             } // ok
-            case "rotatetile" -> {
+            case "rotate" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null){
                     if (secondParameters.isEmpty()){
@@ -1252,16 +1252,22 @@ public class ServerController {
         if (row == 5){
             if (col == 4 || col == 5 || col == 7 || col == 9 || col == 10){
                 checkPosition = false;
+            } else {
+                checkPosition = true;
             }
         }
         else if (row == 6){
             if(col == 4 || col == 10){
                 checkPosition = false;
+            } else{
+                checkPosition = true;
             }
         }
         else if (row == 9){
             if (col == 7){
                 checkPosition = false;
+            } else{
+                checkPosition = true;
             }
         }
         else{
