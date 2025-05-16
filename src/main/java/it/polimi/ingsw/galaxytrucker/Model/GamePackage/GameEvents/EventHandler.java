@@ -267,6 +267,8 @@ public class EventHandler implements Serializable {
                 throw new IllegalEventException("Can't place Tile because spot is occupied");
             }
             ship.setTileOnFloorPlan(event.row(), event.col(), ship.getTileInHand());
+            ship.setLastPlacedTile(ship.getTileInHand());
+            ship.setTileInHand(null);
         }
     }
 

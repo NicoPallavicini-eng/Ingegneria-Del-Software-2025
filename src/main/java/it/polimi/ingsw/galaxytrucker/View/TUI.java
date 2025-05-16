@@ -623,10 +623,10 @@ public class TUI {
             connectorList.add("╰─↓ ↓─╯ ");
         }
         else if (south == ConnectorType.ENGINE_SINGLE){
-            connectorList.add("╰─ V ─╯ ");
+            connectorList.add("╰─ Λ ─╯ ");
         }
         else if (south == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add("╰─V V─╯ ");
+            connectorList.add("╰─Λ Λ─╯ ");
         }
 
         if (east == ConnectorType.NONE){
