@@ -32,23 +32,4 @@ public class PiratesCard extends Card implements Serializable {
     public List <Cannonball> getCannonballList() {
         return cannonballList;
     }
-
-/*    public void process(Player player, SequentialTravellingState state) {
-        Ship ship = player.getShip();
-
-        if (ship.getFirepower() < firepower) {
-            for (Cannonball cannonball : cannonballList) {
-                cannonball.getHit(ship);
-            }
-        } else if (ship.getFirepower() > firepower) {
-            state.setAccomplished(true);
-
-            if (player.getEngages()) {
-                ship.setCredits(ship.getCredits() + credits);
-                ship.setTravelDays(ship.getTravelDays() - daysToLose);
-            }
-        }
-    }
-
- */
 }

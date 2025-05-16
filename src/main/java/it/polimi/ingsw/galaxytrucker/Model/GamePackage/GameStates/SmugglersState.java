@@ -6,7 +6,6 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import java.util.Map;
 public class SmugglersState extends TravellingState implements Serializable {
 
     private Map<Player, Integer> cargoToLose;
+    private Map<Player, Integer> batteriesToLose;
     protected SmugglersCard currentCard;
     private Player smugglersSlayer;
     private Boolean slayerCommits;
@@ -29,7 +29,7 @@ public class SmugglersState extends TravellingState implements Serializable {
     protected void nextPlayer() {
         super.nextPlayer();
         if(currentPlayer == null){
-            reckoningPhase = true;
+            reckoning();
             currentCard = null;
             slayerCommits = false;
             checkNext();
@@ -43,7 +43,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         availableResources = currentCard.getBlocksList();
     }
 
-    public void handleInput(ActivateCannonsEvent event){
+    public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }
@@ -58,7 +58,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             }
             else{
                 smugglersSlayer = currentPlayer;
-                reckoningPhase = true;
+                reckoning();
             }
         }
     }
@@ -103,7 +103,7 @@ public class SmugglersState extends TravellingState implements Serializable {
                 }
                 else{
                     smugglersSlayer = currentPlayer;
-                    reckoningPhase = true;
+                    reckoning();
                 }
             }
         }
@@ -159,6 +159,18 @@ public class SmugglersState extends TravellingState implements Serializable {
         }
         else {
             next();
+        }
+    }
+
+    private void reckoning(){
+        reckoningPhase = true;
+        for(Player p : cargoToLose.keySet()){
+            long available = p.getShip().getListOfCargo().stream()
+                    .flatMap(c -> c.getTileContent().stream())
+                    .count();
+            if(available <= currentCard.getLostBlocksNumber()){
+                p.getShip().removeAllCargo();
+            }
         }
     }
 
