@@ -91,11 +91,11 @@ public class TUI {
             }
             if (i < 9) {
                 upperRow.append("      ║ ");
-                middleRow.append("      ║ ");
+                middleRow.append("  [" + i + "] ║ ");
                 lowerRow.append("      ║ ");
             } else {
                 upperRow.append("                                                                      ║ ");
-                middleRow.append("                                                                      ║ ");
+                middleRow.append("                                                                  [" + i + "] ║ ");
                 lowerRow.append("                                                                      ║ ");
             }
             i++;
@@ -176,7 +176,7 @@ public class TUI {
                 j++;
             }
             upperRow.append("      ║ ");
-            middleRow.append("      ║ ");
+            middleRow.append("  [" + i + "] ║ ");
             lowerRow.append("      ║ ");
             i++;
             System.out.println(String.join("", upperRow));
@@ -608,7 +608,7 @@ public class TUI {
     private void printPileFooters(){
         System.out.println(
                 "║                                                                                                                                             ║\n" +
-                "║                                                                                                                                             ║\n" +
+                "║         [0]     [1]     [2]     [3]     [4]     [5]     [6]     [7]     [8]     [9]    [1 0]   [1 1]   [1 2]   [1 3]   [1 4]   [1 5]        ║\n" +
                 "╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝"
         );
     }
@@ -624,7 +624,7 @@ public class TUI {
     private void printShipFooters(){
         System.out.println(
                 "║                                                                     ║\n" +
-                "║                                                                     ║\n" +
+                "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
                 "╚═════════════════════════════════════════════════════════════════════╝"
         );
     }
