@@ -30,6 +30,11 @@ public class ServerController {
     private static final Game game = new Game();
     private RMIServer rmiServer = null;
     private SocketServer socketServer = null;
+    private final List<String> finalCommands = List.of("help", "viewcard", "viewleaderboard", "viewmyship", "viewtilepile", "viewships",
+            "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
+            "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
+            "removecargo", "addcargo", "switchcargo", "ejectpeople", "giveup", "viewinventory", "claimreward", "choosesubship", "nochoice",
+            "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet");
 
     public ServerController(RMIServer rmiServer) {
         this.rmiServer = rmiServer;
@@ -272,6 +277,17 @@ public class ServerController {
         String command = parts[0];
         String par = parts.length > 1 ? parts[1].trim() : "";
 
+        // Trying to fix the command
+        if (!finalCommands.contains(command)){
+            String correttedCommand = tryCorrectCommand(command);
+            if (correttedCommand == null){
+                client.invalidCommand("Invalid command");
+                return;
+            }
+            command = correttedCommand;
+        }
+
+
         String[] subParameters = par.split(";", 2);
 
         List<String> firstParameters = new ArrayList<>();
@@ -387,9 +403,44 @@ public class ServerController {
                             }
                         }
                     } else {
-                        client.invalidCommand("/connect request one parameter.");
+                            client.invalidCommand("/connect request one parameter.");
                     }
-                } else {
+                } else if (secondParameters.size() == 1 && game.getListOfPlayers().isEmpty()){
+                    if (firstParameters.size() == 1){
+                        String clientNickname = client.getNickname();
+                        String nickname = firstParameters.get(0);
+                        if(clientNickname != null){
+                            client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
+                        } else{
+                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                                    .filter(player1 -> player1.getNickname().equals(nickname))
+                                    .findAny();
+                            if (!playerOptional.isPresent()) {
+                                String numberOfPlayersStr = secondParameters.get(0);
+                                int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
+                                if (numberOfPlayers < 2 || numberOfPlayers > 4){
+                                    client.invalidCommand("Number of players not valid. It must be between 2 and 4");
+                                }
+                                else {
+                                    try {
+                                        ConnectEvent event = new ConnectEvent(nickname, "localhost");
+                                        game.getGameState().handleEvent(event, game);
+                                        SetNumberOfPlayersEvent setNumberOfPlayersEvent = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                        game.getGameState().handleEvent(setNumberOfPlayersEvent);
+                                        client.setNickname(nickname);
+                                        client.setMainCabin(game); // TODO fix
+                                        client.connectView(game);
+                                    } catch (IllegalArgumentException e) {
+                                        client.invalidCommand("Error: " + e.getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (secondParameters.size() == 1 && !game.getListOfPlayers().isEmpty()){
+                    client.invalidCommand("You are not the first player. You cannot set the number of players.");
+                } else{
                     client.invalidCommand("/connect request one parameter.");
                 }
             } //ok
@@ -409,25 +460,30 @@ public class ServerController {
             case "setnumberofplayers" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
-                    if (secondParameters.isEmpty()) {
-                        if (firstParameters.size() == 1) {
-                            String numberOfPlayersStr = firstParameters.get(0);
-                            int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
-                            if (numberOfPlayers < 2 || numberOfPlayers > 4) {
-                                client.invalidCommand("Number of players not valid. It must be between 2 and 4");
+                    if (game.getNumberOfPlayers() != -1) {
+                        if (secondParameters.isEmpty()) {
+                            if (firstParameters.size() == 1) {
+                                String numberOfPlayersStr = firstParameters.get(0);
+                                int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
+                                if (numberOfPlayers < 2 || numberOfPlayers > 4) {
+                                    client.invalidCommand("Number of players not valid. It must be between 2 and 4");
+                                } else {
+                                    SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                    game.getGameState().handleEvent(event);
+                                }
                             } else {
-                                SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
-                                game.getGameState().handleEvent(event);
+                                client.invalidCommand("/setnumberofplayers supports only one parameter!");
                             }
                         } else {
                             client.invalidCommand("/setnumberofplayers supports only one parameter!");
                         }
-                    } else {
-                        client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                    } else{
+                        client.invalidCommand("Max number of players already set. You can't change it.");
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");
                 }
+
             } //ok
             case "pickuptile" -> {
                 Player player = checkPlayer(client.getNickname());
@@ -439,7 +495,7 @@ public class ServerController {
                             int tileRowInt = Integer.parseInt(tileRow);
                             int tileColumnInt = Integer.parseInt(tileColumn);
                             int tilePositionInt = (tileRowInt * 16) + tileColumnInt;
-                            if (tilePositionInt > 0 && tilePositionInt < 152) {
+                            if (tilePositionInt >= 0 && tilePositionInt <= 152) {
                                 PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                 game.getGameState().handleEvent(event);
                                 Tile currentTile = player.getShip().getTileInHand();
@@ -1230,7 +1286,28 @@ public class ServerController {
         return checkPosition;
     }
 
-    private void updateAllClients(GameState gameState) {
+    private String tryCorrectCommand(String command){
+        for (String valid : finalCommands){
+            if (hammingDistance(command, valid) <= 2){
+                return valid;
+            }
+        }
+        return null;
+    }
 
+    private int hammingDistance(String str1, String str2) {
+        if (str1.length() != str2.length()) {
+            return Integer.MAX_VALUE;
+        }
+        int distance = 0;
+        for (int i = 0; i < str1.length(); i++) {
+            if (str1.charAt(i) != str2.charAt(i)) {
+                distance++;
+            }
+            if (distance > 1){
+                return distance;
+            }
+        }
+        return distance;
     }
 }

@@ -137,7 +137,7 @@ public class EventHandler implements Serializable {
     public static void handleEvent(DisconnectEvent event, Game game) {
         Player player = event.player();
         player.setOnlineStatus(false);
-        synchronized(game.getListOfActivePlayers()){
+        synchronized (game.getListOfActivePlayers()) {
             game.getListOfActivePlayers().remove(player);
         }
     }
@@ -157,6 +157,7 @@ public class EventHandler implements Serializable {
                     throw new IllegalEventException("you have already picked up a tile");
                 }
                 ship.setTileInHand(tile);
+                ship.setLastPlacedTile(null);
                 tile.setFacingUp(true);
                 tile.setChoosable(false);
             }
@@ -353,6 +354,7 @@ public class EventHandler implements Serializable {
                 throw new IllegalEventException("you have not saved a tile at index" + event.index());
             }
             Tile tile = ship.getReservedTiles().get(event.index());
+            ship.getReservedTiles().remove(event.index());
             ship.setTileInHand(tile);
         }
     }
