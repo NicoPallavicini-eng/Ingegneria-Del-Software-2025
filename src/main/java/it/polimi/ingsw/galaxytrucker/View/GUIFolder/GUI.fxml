@@ -46,12 +46,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="452.0" prefWidth="653.0" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView fitHeight="452.0" fitWidth="781.0" opacity="0.63" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 101%; -fx-scale-y: 101%;" AnchorPane.leftAnchor="-0.0" AnchorPane.topAnchor="0.0">
-               <image>
-                  <Image url="@../../../../../../../resources/Images/cardboard/cardboard-1b.jpg" />
-               </image>
-            </ImageView>
-            <GridPane layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.25" prefHeight="452.0" prefWidth="630.0" style="-fx-background-image: url(&quot;\Images\cardboard\cardboard-1b.jpg&quot;); -fx-background-size: 100% 100%;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="630.0" style="-fx-background-image: url(&quot;\Images\cardboard\cardboard-1b.jpg&quot;); -fx-background-size: 100% 100%;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="83.1" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="83.1" />
@@ -69,7 +64,7 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="83.1" vgrow="SOMETIMES" />
               </rowConstraints>
                <padding>
-                  <Insets left="19.0" top="17.0" />
+                  <Insets left="20.0" top="17.0" />
                </padding>
                <children>
                   <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="106.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -101,6 +96,24 @@
                   <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="106.0" text="Button" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
+            <GridPane layoutX="447.0" layoutY="12.0" opacity="0.39" prefHeight="84.0" prefWidth="171.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="83.1" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="83.1" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="83.1" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="106.0" text="Button" />
+                  <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="106.0" text="Button" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <ImageView fitHeight="452.0" fitWidth="781.0" opacity="0.63" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 101%; -fx-scale-y: 101%;" AnchorPane.leftAnchor="-0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../../../../../../../resources/Images/cardboard/cardboard-1b.jpg" />
+               </image>
+            </ImageView>
       </children>
     </AnchorPane>
   </children>
