@@ -35,6 +35,6 @@ metodo corrispondente
         obj.setNickname(nickname);
         objOut.writeObject(obj);
         objOut.flush();
-        System.out.println("Message sent to server: " + message);
+        //System.out.println("Message sent to server: " + message);
     }
 }
