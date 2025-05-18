@@ -7,9 +7,10 @@ public enum TileType implements Serializable {
     ENGINE,         // E ¤                                      ORANGE/SLIGHTLY DARKER ORANGE
     CAPSULE,        // C main capsule: ⌂    regular: ⚲          LIGHT GREY
     STORAGE,        // S red: ■             regular: □          LIGHT BLUE/LIGHT RED
-    BIOADAPTOR,     // B ⚘                                      PURPLE/ORANGE
+    BIOADAPTOR,     // B ✶                                      PURPLE/ORANGE
     BATTERY,        // B §                                      LIGHT GREEN
     SHIELD          // S #                                      VERY LIGHT GREEN
     // structural tile: " $ " content of tile is null           GREY
     // empty : [ ]
+    // upside down : x
 }

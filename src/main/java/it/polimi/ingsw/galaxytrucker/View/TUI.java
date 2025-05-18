@@ -127,10 +127,165 @@ public class TUI {
                 ship = p.getShip();
             }
         }
+        // printGuide();
         printActualShip(ship);
         System.out.println();
         printReservedAndHand(ship);
         printShipDetails(ship);
+    }
+
+    public void printGuide() {
+        System.out.println("                                                 " + AnsiColor.CABIN_COLOR.fg() +
+                "⊱ ────── {.⋅ " + AnsiColor.RED.fg() + "༺✧༻" + AnsiColor.CABIN_COLOR.fg() + " ⋅.} ────── ⊰");
+        System.out.println("                                                 " + AnsiColor.CABIN_COLOR.fg() +
+                "│   " + AnsiColor.BLUE.fg() + "༺✧༻" + AnsiColor.CABIN_COLOR.fg() + "    GUIDE     " + AnsiColor.YELLOW.fg() + "༺✧༻" + AnsiColor.CABIN_COLOR.fg() + "  │");
+        System.out.println("                                                 " + AnsiColor.CABIN_COLOR.fg() +
+                "⊱ ────── {.⋅ " + AnsiColor.GREEN.fg() + "༺✧༻" + AnsiColor.CABIN_COLOR.fg() + " ⋅.} ────── ⊰");
+
+        System.out.println();
+        System.out.println("                                                 " + AnsiColor.CABIN_COLOR.fg() +
+                " .⋅ ༺✧༻    TILES     ༺✧༻ ⋅." + AnsiColor.RESET);
+
+        StringBuilder upperRow1 = new StringBuilder("╭─────╮ ");
+        StringBuilder middleRow1 = new StringBuilder("│" + AnsiColor.ORANGE.fg() + " O ✶ " + AnsiColor.RESET + "│ ");
+        StringBuilder lowerRow1 = new StringBuilder("╰─────╯ ");
+        upperRow1.append("                   ");
+        middleRow1.append(AnsiColor.ORANGE.fg() + "ORANGE BIOADAPTOR  " + AnsiColor.RESET);
+        lowerRow1.append("                   ");
+
+        upperRow1.append("╭─────╮ ");
+        middleRow1.append("│" + AnsiColor.PURPLE.fg() + " P ✶ " + AnsiColor.RESET + "│ ");
+        lowerRow1.append("╰─────╯ ");
+        upperRow1.append("                   ");
+        middleRow1.append(AnsiColor.PURPLE.fg() + "PURPLE BIOADAPTOR  " + AnsiColor.RESET);
+        lowerRow1.append("                   ");
+
+        upperRow1.append("╭─────╮ ");
+        middleRow1.append("│" + AnsiColor.BATTERY_COLOR.fg() + " 2 § " + AnsiColor.RESET + "│ ");
+        lowerRow1.append("╰─────╯ ");
+        upperRow1.append("                   ");
+        middleRow1.append(AnsiColor.BATTERY_COLOR.fg() + "BATTERY            " + AnsiColor.RESET);
+        lowerRow1.append("                   ");
+
+        upperRow1.append("╭─────╮ ");
+        middleRow1.append("│" + AnsiColor.BLUE.fg() + "  ◉  " + AnsiColor.RESET + "│ ");
+        lowerRow1.append("╰─────╯ ");
+        upperRow1.append("                   ");
+        middleRow1.append(AnsiColor.BLUE.fg() + "MAIN CABIN         " + AnsiColor.RESET);
+        lowerRow1.append("                   ");
+
+        upperRow1.append("╭─────╮ ");
+        middleRow1.append("│" + AnsiColor.CABIN_COLOR.fg() + "  ○  " + AnsiColor.RESET + "│ ");
+        lowerRow1.append("╰─────╯ ");
+        upperRow1.append("                   ");
+        middleRow1.append(AnsiColor.CABIN_COLOR.fg() + "CABIN              " + AnsiColor.RESET);
+        lowerRow1.append("                   ");
+
+        StringBuilder upperRow2 = new StringBuilder("╭─────╮ ");
+        StringBuilder middleRow2 = new StringBuilder("│" + AnsiColor.REGULAR_CARGO_COLOR.fg() + " 2 □ " + AnsiColor.RESET + "│ ");
+        StringBuilder lowerRow2 = new StringBuilder("╰─────╯ ");
+        upperRow2.append("                   ");
+        middleRow2.append(AnsiColor.REGULAR_CARGO_COLOR.fg() + "REGULAR CARGO      " + AnsiColor.RESET);
+        lowerRow2.append("                   ");
+
+        upperRow2.append("╭─────╮ ");
+        middleRow2.append("│" + AnsiColor.RED_CARGO_COLOR.fg() + " 1 ■ " + AnsiColor.RESET + "│ ");
+        lowerRow2.append("╰─────╯ ");
+        upperRow2.append("                   ");
+        middleRow2.append(AnsiColor.RED_CARGO_COLOR.fg() + "RED CARGO          " + AnsiColor.RESET);
+        lowerRow2.append("                   ");
+
+        upperRow2.append("╭─────╮ ");
+        middleRow2.append("│" + AnsiColor.ENGINE_COLOR.fg() + " 1 ¤ " + AnsiColor.RESET + "│ ");
+        lowerRow2.append("╰─────╯ ");
+        upperRow2.append("                   ");
+        middleRow2.append(AnsiColor.ENGINE_COLOR.fg() + "SINGLE ENGINE      " + AnsiColor.RESET);
+        lowerRow2.append("                   ");
+
+        upperRow2.append("╭─────╮ ");
+        middleRow2.append("│" + AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "2 ¤" + AnsiColor.RESET +
+                AnsiColor.GREEN.bg() + " " + AnsiColor.RESET + "│ ");
+        lowerRow2.append("╰─────╯ ");
+        upperRow2.append("                   ");
+        middleRow2.append(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "DOUBLE ENGINE      " + AnsiColor.RESET);
+        lowerRow2.append("(BATTERY POWERED)  ");
+
+        upperRow2.append("╭─────╮ ");
+        middleRow2.append("│" + AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                AnsiColor.SHIELD_COLOR.fg() + "NW#" + AnsiColor.RESET +
+                AnsiColor.GREEN.bg() + " " + AnsiColor.RESET + "│ ");
+        lowerRow2.append("╰─────╯ ");
+        upperRow2.append("                   ");
+        middleRow2.append(AnsiColor.SHIELD_COLOR.fg() + "SHIELD             " + AnsiColor.RESET);
+        lowerRow2.append("(BATTERY POWERED)  ");
+
+        StringBuilder upperRow3 = new StringBuilder("╭─────╮ ");
+        StringBuilder middleRow3 = new StringBuilder("│" + AnsiColor.CANNON_COLOR.fg() + " 1 + " + AnsiColor.RESET + "│ ");
+        StringBuilder lowerRow3 = new StringBuilder("╰─────╯ ");
+        upperRow3.append("                   ");
+        middleRow3.append(AnsiColor.CANNON_COLOR.fg() + "SINGLE CANNON      " + AnsiColor.RESET);
+        lowerRow3.append("                   ");
+
+        upperRow3.append("╭─────╮ ");
+        middleRow3.append("│" + AnsiColor.GREEN.bg() + " " + AnsiColor.RESET +
+                AnsiColor.DOUBLE_CANNON_COLOR.fg() + "2 +" + AnsiColor.RESET +
+                AnsiColor.GREEN.bg() + " " + AnsiColor.RESET + "│ ");
+        lowerRow3.append("╰─────╯ ");
+        upperRow3.append("                   ");
+        middleRow3.append(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "DOUBLE CANNON      " + AnsiColor.RESET);
+        lowerRow3.append("(BATTERY POWERED)  ");
+
+        upperRow3.append("╭─────╮ ");
+        middleRow3.append("│" + AnsiColor.STRUCTURAL_COLOR.fg() + "  $  " + AnsiColor.RESET + "│ ");
+        lowerRow3.append("╰─────╯ ");
+        upperRow3.append("                   ");
+        middleRow3.append(AnsiColor.STRUCTURAL_COLOR.fg() + "STRUCTURAL         " + AnsiColor.RESET);
+        lowerRow3.append("                   ");
+
+        upperRow3.append("╭─────╮ ");
+        middleRow3.append("│ [ ] │ ");
+        lowerRow3.append("╰─────╯ ");
+        upperRow3.append("                   ");
+        middleRow3.append("EMPTY TILE SLOT    ");
+        lowerRow3.append("                   ");
+
+        upperRow3.append("╭─────╮ ");
+        middleRow3.append("│  x  │ ");
+        lowerRow3.append("╰─────╯ ");
+        upperRow3.append("                   ");
+        middleRow3.append("UPSIDE DOWN TILE   ");
+        lowerRow3.append("                   ");
+
+        System.out.println(String.join("", upperRow1));
+        System.out.println(String.join("", middleRow1));
+        System.out.println(String.join("", lowerRow1));
+
+        System.out.println(String.join("", upperRow2));
+        System.out.println(String.join("", middleRow2));
+        System.out.println(String.join("", lowerRow2));
+
+        System.out.println(String.join("", upperRow3));
+        System.out.println(String.join("", middleRow3));
+        System.out.println(String.join("", lowerRow3));
+
+        System.out.println();
+        System.out.println("                                                  " + AnsiColor.CABIN_COLOR.fg() +
+                " .⋅ ༺✧༻  CONNECTORS  ༺✧༻ ⋅." + AnsiColor.RESET);
+        System.out.println();
+
+        StringBuilder upperRow4 = new StringBuilder("|,  " + "-,  " + "SINGLE CONNECTOR;  ");
+        upperRow4.append("||,  " + "=,  " + "DOUBLE CONNECTOR;  ");
+        upperRow4.append("|||,  " + "≡,  " + "TRIPLE CONNECTOR");
+        StringBuilder middleRow4 = new StringBuilder(AnsiColor.CANNON_COLOR.fg() + "↑,  " + "↓,  " + "→,  " + "←,  " + "SINGLE CANNON;  " + AnsiColor.RESET
+                + AnsiColor.DOUBLE_CANNON_COLOR.fg() + "↑ ↑,  " + "↓ ↓,  " + "▸,  " + "◂,  " + "DOUBLE CANNON" + AnsiColor.RESET);
+        StringBuilder lowerRow4 = new StringBuilder(AnsiColor.ENGINE_COLOR.fg() + "V,  " + "Λ,  " + "<,  " + ">,  " + "SINGLE ENGINE;  " + AnsiColor.RESET
+                + AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "V V,  " + "Λ Λ,  " + "«,  " + "»,  " + "DOUBLE ENGINE" + AnsiColor.RESET);
+
+        System.out.println(String.join("", upperRow4));
+        System.out.println(String.join("", middleRow4));
+        System.out.println(String.join("", lowerRow4));
+        System.out.println();
     }
 
     public void printActualShip(Ship ship) {
@@ -384,10 +539,10 @@ public class TUI {
                     BioadaptorTile bioadaptorTile = (BioadaptorTile) tile;
                     String type = "     ";
                     if(bioadaptorTile.getAlienColor() == AlienColor.ORANGE){
-                        type = " O ⚘ ";
+                        type = " O ✶ ";
                     }
                     else if(bioadaptorTile.getAlienColor() == AlienColor.PURPLE){
-                        type = " P ⚘ ";
+                        type = " P ✶ ";
                     }
                     List<ConnectorType> connectors = bioadaptorTile.getConnectors();
                     List<String> strConnectors = checkConnectors(connectors);
@@ -677,13 +832,13 @@ public class TUI {
             connectorList.add(AnsiColor.CANNON_COLOR.fg() + "←" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.CANNON_DOUBLE){
-            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "⇇" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "◂" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_SINGLE){
             connectorList.add(AnsiColor.ENGINE_COLOR.fg() + ">" + AnsiColor.RESET);
         }
         else if (west == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "≥" + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "»" + AnsiColor.RESET);
         }
 
         if (south == ConnectorType.NONE){
@@ -727,13 +882,13 @@ public class TUI {
             connectorList.add(AnsiColor.CANNON_COLOR.fg() + "→ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.CANNON_DOUBLE){
-            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "⇉ " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_CANNON_COLOR.fg() + "▸ " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_SINGLE){
             connectorList.add(AnsiColor.ENGINE_COLOR.fg() + "< " + AnsiColor.RESET);
         }
         else if (east == ConnectorType.ENGINE_DOUBLE){
-            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "≤ " + AnsiColor.RESET);
+            connectorList.add(AnsiColor.DOUBLE_ENGINE_COLOR.fg() + "« " + AnsiColor.RESET);
         }
         return connectorList;
     }
