@@ -90,6 +90,8 @@ public void referMethod(Message msg) throws RemoteException {
             }case "setNickname" ->{
                 setNickname(msg);
                 //System.out.println("Nickname set to: " + nickname);
+                pongNickname();
+
             }case "PING"->{
 
             }
@@ -153,8 +155,16 @@ public void showMessageFromServer(String message){
     public void helpMessage(){
         tui.printHelpMessage();
     }
-    public void setNickname(Message msg){
+    public void setNickname(Message msg)throws RemoteException{
         nickname = msg.getNickname();
+    }
+    public void pongNickname() {
+        try{
+            server.sendMessageToServer("/NICKNAME_PONG",nickname);
+        }catch(IOException e){
+            System.err.println(e.getMessage());
+        }
+
     }
 
     public static void main(String[] args) throws IOException, UnknownHostException {

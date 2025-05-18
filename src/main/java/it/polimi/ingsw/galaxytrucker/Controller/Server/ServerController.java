@@ -111,6 +111,65 @@ public class ServerController {
                 }
 
             } //ok
+            case "riconnect" ->{
+                Message newMessage;
+                if(secondParameters.isEmpty()){
+                    if(firstParameters.size()==1){
+                        String clientNickname = msg.getNickname();
+                        String nickname = firstParameters.get(0);
+                        if(clientNickname==null){
+                            //trovare il Player di quel nickname
+                            //trovare il Player di quel nickname
+                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                                    .filter(player1 -> player1.getNickname().equals(nickname))
+                                    .findAny();
+                            if (playerOptional.isPresent()) {
+                                //gestire lo status se offline riconetti,se no manda errore
+                                Player player = playerOptional.get();
+                                if(player.getOnlineStatus()){
+                                    newMessage = new Message("String",null,"Il giocatore è online");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.invalidCommand("Il giocatore è online");
+                                }else{
+                                    player.setOnlineStatus(true);
+                                    newMessage = new Message("String",null,"setNickname");
+                                    newMessage.setNickname(nickname);
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    newMessage = new Message("Game",game,"defaultView");
+                                    newMessage.setNickname(nickname);
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.setNickname(nickname);
+                                }
+
+
+                            } else {
+                                newMessage = new Message("String",null,"Il nickname di Player is not present");
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                                //client.invalidCommand("Il nickname di Player is not present");
+                            }
+                        }else{
+                            newMessage = new Message("String",null,"/You already riconnected to the game");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            //client.invalidCommand("/You already riconnected to the game");
+                        }
+                    }else{
+                        newMessage = new Message("String",null,"/riconnect request one parameter.");
+                        objOut.writeObject(newMessage);
+                        objOut.flush();
+                        //client.invalidCommand("/riconnect request one parameter.");
+                    }
+                }else{
+                    newMessage = new Message("String",null,"/riconnect request one parameter.");
+                    objOut.writeObject(newMessage);
+                    objOut.flush();
+                    //client.invalidCommand("/riconnect request one parameter.");
+                }
+            }
             case "connect" -> {
                 //GameState gameState = game.getGameState();
                 Message newMessage;
@@ -1455,6 +1514,9 @@ public class ServerController {
                     //client.invalidCommand("You are not connected to the game!");
                 }
             }
+            case "nickname_pong"->{
+                //serve per settare nickname a SocketClientHandler
+            }
             default -> {
                 Message newMessage;
                 newMessage = new Message("String",null,"Invalid command. Type /help for a list of available commands.");
@@ -1469,6 +1531,13 @@ public class ServerController {
         Player player = checkPlayer(nickname);
         if (player != null) {
             //gestire la disconessione
+            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                    .filter(player1 -> player1.getNickname().equals(nickname))
+                    .findAny();
+            if (playerOptional.isPresent()) {
+                Player player1 = playerOptional.get();
+                player.setOnlineStatus(false);
+            }
 
         }
     }
@@ -1573,6 +1642,41 @@ public class ServerController {
                     client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
+            case "riconnect" ->{
+                if(secondParameters.isEmpty()){
+                    if(firstParameters.size()==1){
+                        String clientNickname = client.getNickname();
+                        String nickname = firstParameters.get(0);
+                        if(clientNickname==null){
+                            //trovare il Player di quel nickname
+                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                                    .filter(player1 -> player1.getNickname().equals(nickname))
+                                    .findAny();
+                            if (playerOptional.isPresent()) {
+                                //gestire la riconessione
+                                //gestire lo status se offline riconetti,se no manda errore
+                                Player player = playerOptional.get();
+                                if(player.getOnlineStatus()){
+                                    client.invalidCommand("Il giocatore è online");
+                                }else{
+                                    client.setNickname(nickname);
+                                    player.setOnlineStatus(true);
+                                    client.defaultView(game);
+                                }
+
+                            } else {
+                                client.invalidCommand("Il nickname di Player is not present");
+                            }
+                        }else{
+                            client.invalidCommand("/You already riconnected to the game");
+                        }
+                    }else{
+                        client.invalidCommand("/riconnect request one parameter.");
+                    }
+                }else{
+                    client.invalidCommand("/riconnect request one parameter.");
+                }
+            }
             case "connect" -> {
               //GameState gameState = game.getGameState();
                 if (secondParameters.isEmpty()) {

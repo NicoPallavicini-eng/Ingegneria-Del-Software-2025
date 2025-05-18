@@ -63,7 +63,7 @@ public class SocketClientHandler implements VirtualClientSocket {
                 msg = (Message) objIn.readObject();
                 //msg = (Message) objIn.readObject();
                 showMessage(msg);
-                nickname = msg.getNickname();
+                this.nickname = msg.getNickname();
                 serverController.handleUserInput(msg,objOut);
 
                 //callSpecificMethod(msg);
