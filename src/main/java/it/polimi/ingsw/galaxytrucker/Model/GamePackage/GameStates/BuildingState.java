@@ -31,7 +31,7 @@ public class BuildingState extends GameState implements Serializable {
         //todo populate everything that is not an alien
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
-        getGame().setGameState(TravellingStateFactory.createGameState(game, nextCard));
+        getGame().setGameState(nextCard.createGameState(game));
         game.getGameState().init();
     }
 
