@@ -30,9 +30,6 @@ public class Ship implements Serializable {
     private boolean purpleAlien;
     private boolean orangeAlien;
 
-    //player position
-    private int playerPosition;
-
     public Ship(Color color){
         this.color = color;
         lostTiles=0;
@@ -42,7 +39,6 @@ public class Ship implements Serializable {
         cargoFromCards = new ArrayList<>();
         purpleAlien=false;
         orangeAlien=false;
-        playerPosition=0;
         row_max=5;
         col_max=7;
 
@@ -409,12 +405,6 @@ public class Ship implements Serializable {
 
     }
 
-    public int getPlayerPosition() {
-        return playerPosition;
-    }
-    public void setPlayerPosition(int playerPosition) {
-        this.playerPosition = playerPosition;
-    }
 
     public ArrayList<Integer> getCargoFromCards() {
         return cargoFromCards;

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
@@ -7,8 +10,6 @@ import java.util.List;
 
 public class Planet implements Serializable {
     private final List <Integer> blocks;
-    private Ship shipLanded = null;
-
     public Planet(List <Integer> blocks) {
         this.blocks = blocks;
     }
@@ -17,11 +18,5 @@ public class Planet implements Serializable {
         return blocks;
     }
 
-    public Ship getShipLanded() {
-        return shipLanded;
-    }
 
-    public void setShipLanded(Ship shipLanded) {
-        this.shipLanded = shipLanded;
-    }
 }

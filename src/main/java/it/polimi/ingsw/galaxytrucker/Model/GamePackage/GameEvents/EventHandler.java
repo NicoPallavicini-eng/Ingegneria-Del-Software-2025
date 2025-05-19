@@ -310,8 +310,9 @@ public class EventHandler implements Serializable {
 
         boolean present = false;
         synchronized (game) {
-            for (Player player : game.getListOfPlayers()) {
-                if (player.getShip().getTravelDays() == place) {
+            for (Player player : game.getListOfActivePlayers()) {
+                Integer travelDays = player.getShip().getTravelDays();
+                if (travelDays != null  && travelDays.equals(place)) {
                     present = true;
                     break;
                 }
@@ -892,7 +893,7 @@ public class EventHandler implements Serializable {
         ship.setTravelDays(null);
     }
 
-    public void handleEvent(RemoveBatteriesEvent event) {
+    public static void handleEvent(RemoveBatteriesEvent event) {
         Ship s = event.player().getShip();
         Optional<Tile> ot = s.getTileOnFloorPlan(event.batteries().get(0), event.batteries().get(1));
         if(!ot.isPresent()) {

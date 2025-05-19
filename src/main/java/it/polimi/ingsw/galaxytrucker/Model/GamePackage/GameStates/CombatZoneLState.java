@@ -14,8 +14,9 @@ import java.util.OptionalInt;
 public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected CombatZoneCardL currentCard;
 
-    public CombatZoneLState(Game game, CombatZoneCard card) {
+    public CombatZoneLState(Game game, CombatZoneCardL card) {
         super(game, card);
+        currentCard = card;
     }
 
     public void init(){

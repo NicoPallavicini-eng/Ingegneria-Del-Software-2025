@@ -27,6 +27,8 @@ public class PiratesState extends TravellingState implements Serializable {
 
     public PiratesState(Game game, PiratesCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     public void init(){

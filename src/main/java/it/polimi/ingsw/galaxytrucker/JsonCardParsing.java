@@ -22,7 +22,8 @@ class JsonCards{
     public String smugglersCards;
     public String piratesCards;
     public String stardustCards;
-    public String combatZoneCards;
+    public String combatZoneCardsL;
+    public String combatZoneCardsNotL;
     public String epidemicCards;
 
     public JsonCards(){
@@ -244,7 +245,7 @@ class JsonCards{
                 "\t\t\"levelTwo\":true,\n" +
                 "\t\t\"used\":false\n" +
                 "\t}}";
-        combatZoneCards = "{\"combatZoneCard1\":{\n" +
+        combatZoneCardsL = "{\"combatZoneCardL\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"daysLost\":3,\n" +
@@ -255,6 +256,15 @@ class JsonCards{
                 "\t},\n" +
                 "\t\"combatZoneCard2\":{\n" +
                 "\t\t\"levelTwo\":true,\n" +
+                "\t\t\"used\":false,\n" +
+                "\t\t\"daysLost\":4,\n" +
+                "\t\t\"crewLost\":0,\n" +
+                "\t\t\"cargoLost\":3,\n" +
+                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+                "\n" +
+                "\t}}";
+        combatZoneCardsNotL ="{\"combatZoneCardNotL\":{\n" +
+                "\t\t\"levelTwo\":false,\n" +
                 "\t\t\"used\":false,\n" +
                 "\t\t\"daysLost\":4,\n" +
                 "\t\t\"crewLost\":0,\n" +
@@ -345,7 +355,7 @@ class MeteorCardParse {
     public boolean used;
     public List<MeteorParse> meteors;
 }
-class BattleZoneCardParse {
+class BattleZoneCardLParse {
     public boolean levelTwo;
     public boolean used;
     public int daysLost;
@@ -353,6 +363,16 @@ class BattleZoneCardParse {
     public int cargoLost;
     public List<CannonballParse> cannonballList;
 }
+
+class BattleZoneCardNotLParse {
+    public boolean levelTwo;
+    public boolean used;
+    public int daysLost;
+    public int crewLost;
+    public int cargoLost;
+    public List<CannonballParse> cannonballList;
+}
+
 
 public class JsonCardParsing {
 
@@ -366,10 +386,14 @@ public class JsonCardParsing {
     private ArrayList<StardustCard> stardustCards;
     private ArrayList<SlaversCard> slaversCards;
     private ArrayList<StationCard> stationCards ;
-    private ArrayList<CombatZoneCard> combatZoneCards;
+    private ArrayList<CombatZoneCardL> combatZoneLCards;
+    private ArrayList<CombatZoneCardNotL> combatZoneNotLCards;
 
-    public ArrayList<CombatZoneCard> getCombatZoneCards() {
-        return combatZoneCards;
+    public ArrayList<CombatZoneCardL> getCombatZoneLCards() {
+        return combatZoneLCards;
+    }
+    public ArrayList<CombatZoneCardNotL> getCombatZoneNotLCards() {
+        return combatZoneNotLCards;
     }
 
     public ArrayList<StationCard> getStationCards() {
@@ -403,8 +427,11 @@ public class JsonCardParsing {
         return epidemicCards;
     }
 
-    public void setCombatZoneCards(ArrayList<CombatZoneCard> combatZoneCards) {
-        this.combatZoneCards = combatZoneCards;
+    public void setCombatZoneLCards(ArrayList<CombatZoneCardL> combatZoneLCards) {
+        this.combatZoneLCards = combatZoneLCards;
+    }
+    public void setCombatZoneNotLCards(ArrayList<CombatZoneCardNotL> combatZoneNotLCards) {
+        this.combatZoneNotLCards = combatZoneNotLCards;
     }
     public void setStationCards(ArrayList<StationCard> stationCards) {
         this.stationCards = stationCards;
@@ -450,7 +477,8 @@ public class JsonCardParsing {
         completeList.addAll(planetsCards);
         completeList.addAll(meteorsCards);
         completeList.addAll(epidemicCards);
-        completeList.addAll(combatZoneCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
         completeList.addAll(openSpaceCards);
         completeList.addAll(stardustCards);
         completeList.addAll(smugglersCards);
@@ -613,21 +641,37 @@ public class JsonCardParsing {
 
         setPiratesCards(piratesCardList);
 
-        ArrayList<CombatZoneCard> combatZoneCardList = new ArrayList<>();
-        Type battleZoneCardType = new TypeToken<Map<String, BattleZoneCardParse>>(){}.getType();
-        Map<String, BattleZoneCardParse> combatZoneCards = gson.fromJson(jsonCards.combatZoneCards, battleZoneCardType);
+        ArrayList<CombatZoneCardL> combatZoneLCardList = new ArrayList<>();
+        Type battleZoneCardLType = new TypeToken<Map<String, BattleZoneCardLParse>>(){}.getType();
+        Map<String, BattleZoneCardLParse> combatZoneCards = gson.fromJson(jsonCards.combatZoneCardsL, battleZoneCardLType);
 
         for(String key : combatZoneCards.keySet()){
-            BattleZoneCardParse battleZoneParseCard = combatZoneCards.get(key);
+            BattleZoneCardLParse battleZoneCardLParse = combatZoneCards.get(key);
             List<Cannonball> cannonball2 = new ArrayList<>();
-            for(CannonballParse cannonballParse: battleZoneParseCard.cannonballList){
+            for(CannonballParse cannonballParse: battleZoneCardLParse.cannonballList){
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball,Direction.valueOf(cannonballParse.direction),RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
-            CombatZoneCard combatZoneCard = new CombatZoneCard(battleZoneParseCard.levelTwo,battleZoneParseCard.used,battleZoneParseCard.daysLost,battleZoneParseCard.crewLost,battleZoneParseCard.cargoLost,cannonball2);
-            combatZoneCardList.add(combatZoneCard);
+            CombatZoneCardL combatZoneCard = new CombatZoneCardL(battleZoneCardLParse.levelTwo,battleZoneCardLParse.used);
+            combatZoneLCardList.add(combatZoneCard);
         }
 
-        setCombatZoneCards(combatZoneCardList);
+        setCombatZoneLCards(combatZoneLCardList);
+
+        ArrayList<CombatZoneCardNotL> combatZoneNotLCardList = new ArrayList<>();
+        Type battleZoneCardNotLType = new TypeToken<Map<String, BattleZoneCardNotLParse>>(){}.getType();
+        Map<String, BattleZoneCardNotLParse> combatZoneCardsNotL = gson.fromJson(jsonCards.combatZoneCardsNotL, battleZoneCardNotLType);
+
+        for (String key : combatZoneCardsNotL.keySet()) {
+            BattleZoneCardNotLParse battleZoneCardNotLParse = combatZoneCardsNotL.get(key);
+            List<Cannonball> cannonball2 = new ArrayList<>();
+            for (CannonballParse cannonballParse : battleZoneCardNotLParse.cannonballList) {
+                cannonball2.add(new Cannonball(cannonballParse.bigCannonball, Direction.valueOf(cannonballParse.direction), RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
+            }
+            CombatZoneCardNotL combatZoneCard = new CombatZoneCardNotL(battleZoneCardNotLParse.levelTwo, battleZoneCardNotLParse.used);
+            combatZoneNotLCardList.add(combatZoneCard);
+        }
+
+        setCombatZoneNotLCards(combatZoneNotLCardList);
     }
 
 }

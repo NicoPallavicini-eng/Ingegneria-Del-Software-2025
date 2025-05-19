@@ -23,6 +23,8 @@ public class SmugglersState extends TravellingState implements Serializable {
 
     public SmugglersState(Game game, SmugglersCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     @Override

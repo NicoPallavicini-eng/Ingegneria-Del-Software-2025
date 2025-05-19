@@ -11,9 +11,12 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import java.io.Serializable;
 
 public class OpenSpaceState extends TravellingState implements Serializable {
+    private OpenSpaceCard currentCard;
 
     public OpenSpaceState(Game game, OpenSpaceCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {

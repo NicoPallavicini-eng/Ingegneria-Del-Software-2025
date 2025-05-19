@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,21 +23,8 @@ public class CombatZoneCardNotL extends CombatZoneCard implements Serializable {
         return cannonballList;
     }
 
-//    @Override
-//    public void lessCrewProcess(Ship ship) {
-//        for (Cannonball cannonball : getCannonballList()) {
-//            cannonball.getHit(ship);
-//        }
-//    }
-//
-//    @Override
-//    public void lessEngineProcess(Ship ship) {
-//        ship.setCargo(ship.getListOfCargo().size() - getCargoLost());
-//        // TODO make this functional (player chooses)
-//    }
-//
-//    @Override
-//    public void lessFirepowerProcess(Ship ship) {
-//        ship.setTravelDays(ship.getTravelDays() - getDaysLost());
-//    }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
+    }
+
 }

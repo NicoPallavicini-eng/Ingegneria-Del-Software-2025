@@ -14,6 +14,7 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
 
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
+        currentCard = card;
     }
         protected Player currentLoser;
         protected CombatZoneChallenge currentChallenge;

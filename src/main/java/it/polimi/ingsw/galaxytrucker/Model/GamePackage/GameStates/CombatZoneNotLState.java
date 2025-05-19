@@ -16,6 +16,7 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
 
     public CombatZoneNotLState(Game game, CombatZoneCardNotL card) {
         super(game, card);
+        currentCard = card;
     }
 
     public void init(){

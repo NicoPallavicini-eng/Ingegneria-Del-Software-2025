@@ -19,6 +19,8 @@ public class PlanetsState extends TravellingState implements Serializable {
 
     public PlanetsState(Game game, PlanetsCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     public void nextPlayer(){

@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
 import java.io.Serializable;
 
 public class ShipCard extends Card implements Serializable {
@@ -26,17 +30,7 @@ public class ShipCard extends Card implements Serializable {
         return crewNumberLost;
     }
 
- /*   public void process(Player player, SequentialTravellingState state) {
-        Ship ship = player.getShip();
-
-        if ((ship.getNumberOfCrewMembers() >= crewNumberLost) && player.getEngages()) {
-            state.setAccomplished(true);
-
-            ship.setCredits(ship.getCredits() + credits);
-            ship.setCrewMembers(ship.getNumberOfCrewMembers() - crewNumberLost);
-            ship.setTravelDays(ship.getTravelDays() - daysToLose);
-        }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
-
-  */
 }

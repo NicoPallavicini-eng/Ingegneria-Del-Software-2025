@@ -56,7 +56,11 @@ public class BuildingState extends GameState implements Serializable {
             finishedBuildingPlayers.add(event.player());
             if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
                 timeIsUp = true;
-                //controlla le navi
+                for(Player player : game.getListOfActivePlayers()) {
+                    if(player.getShip().checkFloorPlanConnection()){
+                        playersWithLegalShips.add(player);
+                    }
+                }
                 if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
                     next();
                 }

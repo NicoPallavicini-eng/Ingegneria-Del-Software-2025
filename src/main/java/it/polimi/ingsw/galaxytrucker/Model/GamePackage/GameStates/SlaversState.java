@@ -17,6 +17,8 @@ and the slayer has decided whether they want to claim the reward or not
 public class SlaversState extends TravellingState implements Serializable {
     public SlaversState(Game game, SlaversCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     private SlaversCard currentCard;
