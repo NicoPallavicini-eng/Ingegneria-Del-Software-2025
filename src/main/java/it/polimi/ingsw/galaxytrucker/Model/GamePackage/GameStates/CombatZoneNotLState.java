@@ -38,11 +38,6 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
     }
 
 
-    }
-
-
-
-
-
 }
+
 

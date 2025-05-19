@@ -165,12 +165,12 @@ public class SmugglersState extends TravellingState implements Serializable {
         if(!reckoningPhase || !cargoToLose.keySet().contains(p)){
             throw new IllegalEventException("you don't have to remove batteries");
         }
-        else if(event.batteries().size() > cargoToLose.get(p)){
+        else if(event.batteries().get(2) > cargoToLose.get(p)){
             throw new IllegalEventException("you don't need to remove all these batteries");
         }
         else {
             EventHandler.handleEvent(event);
-            cargoToLose.put(p, cargoToLose.get(p) - event.batteries().size());
+            cargoToLose.put(p, cargoToLose.get(p) - event.batteries().get(2));
             if(cargoToLose.get(p) == 0){
                 cargoToLose.remove(p);
                 checkNext();

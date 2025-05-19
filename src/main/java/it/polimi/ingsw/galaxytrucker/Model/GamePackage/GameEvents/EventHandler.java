@@ -892,6 +892,25 @@ public class EventHandler implements Serializable {
         ship.setTravelDays(null);
     }
 
+    public void handleEvent(RemoveBatteriesEvent event) {
+        Ship s = event.player().getShip();
+        Optional<Tile> ot = s.getTileOnFloorPlan(event.batteries().get(0), event.batteries().get(1));
+        if(!ot.isPresent()) {
+            throw new IllegalEventException("Not a tile");
+        }
+        else {
+            Tile t = ot.get();
+            BatteryTileVisitor btv = new BatteryTileVisitor();
+            t.accept(btv);
+            if(btv.getList().isEmpty()) {
+                throw new IllegalEventException("Not a battery tile");
+            }
+            else{
+                btv.getList().getFirst().removeBattery(event.batteries().get(2));
+            }
+        }
+    }
+
     public static void moveForward(Ship ship, int days, Game game) {
         synchronized (game) {
             int startposition = ship.getTravelDays();
