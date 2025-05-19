@@ -693,7 +693,7 @@ public class EventHandler implements Serializable {
                 List<Integer> listGoods = cargoTile.getTileContent();
 
                 if ((cargoTile.getSlotsNumber() - listGoods.size()) > 0) {
-                    cargoTile.setTileContent(event.resource());
+                    cargoTile.addBlock(event.resource());
                 } else {
                     throw new IllegalEventException("CargoTile is full");
                 }
@@ -763,7 +763,7 @@ public class EventHandler implements Serializable {
 
                     if ((cargoTile2.getSlotsNumber() - listGoods2.size()) > 0) {
                         cargoTile.removeBlock(event.resource());
-                        cargoTile2.setTileContent(event.resource());
+                        cargoTile2.addBlock(event.resource());
                     } else {
                         throw new IllegalEventException("Next CargoTile is full");
                     }

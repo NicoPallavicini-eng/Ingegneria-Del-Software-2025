@@ -54,6 +54,7 @@ public class Game implements Serializable {
 
     public void addPlayer(Player newPlayer){
         listOfPlayers.add(newPlayer);
+        listOfActivePlayers.add(newPlayer);
     }
 
     public int getNumberOfPlayers() {

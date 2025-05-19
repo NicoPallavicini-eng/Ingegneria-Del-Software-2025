@@ -933,4 +933,22 @@ public class Ship implements Serializable {
             cabinTile.updateInhabitants(CabinInhabitants.NONE);
         }
     }
+
+    public void removeAllCargo(){
+        for(CargoTile cargoTile : getListOfCargo()){
+            for(Integer i : cargoTile.getTileContent()){
+                cargoTile.removeBlock(i);
+            }
+        }
+    }
+
+    public void removeAllBatteries(){
+        for(BatteryTile batteryTile : getListOfBattery()){
+            batteryTile.removeBattery(getBatteries());
+        }
+    }
+
+
+
+
 }
