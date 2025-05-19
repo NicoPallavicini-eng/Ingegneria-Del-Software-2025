@@ -8,13 +8,15 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
+import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Game implements Serializable {
+public class Game implements Serializable, Observable {
+    private final List<Observer> observers = new ArrayList<>();
     private final List<Player> listOfActivePlayers = new ArrayList<>();
     private final List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers = -1;
@@ -74,6 +76,7 @@ public class Game implements Serializable {
 
     public void setGameState( GameState gameState) {
         this.gameState = gameState;
+        notifyObservers(this);
     }
 
     public Hourglass getHourglass() {
@@ -95,4 +98,22 @@ public class Game implements Serializable {
     public void setHourglass(Hourglass hourglass) {
         this.hourglass = hourglass;
     }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Game game) {
+        for (Observer observer : observers) {
+            observer.update(game);
+        }
+    }
+
 }
