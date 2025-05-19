@@ -1,10 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder;
 
+import javax.swing.*;
+
 public class GUITrials {
     public GUITrials() {
     }
 
     public static void main(String[] args) {
-        System.out.println(GUITrials.class.getResource("/images/cardboard/cardboard-1b.jpg"));
+        ImageIcon icon = new ImageIcon(GUITrials.class.getResource("/images/cardboard/cardboard-1b.jpg"));
+        System.out.println(icon.getImage());
     }
 }

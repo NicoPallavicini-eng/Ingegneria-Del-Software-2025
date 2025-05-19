@@ -14,6 +14,7 @@ module it.polimi.ingsw.galaxytrucker {
     requires com.google.gson;
 
     requires java.sql;
+    requires java.desktop;
 
     opens it.polimi.ingsw.galaxytrucker to javafx.fxml, com.google.gson;
     opens it.polimi.ingsw.galaxytrucker.Model.Tiles to com.google.gson;
