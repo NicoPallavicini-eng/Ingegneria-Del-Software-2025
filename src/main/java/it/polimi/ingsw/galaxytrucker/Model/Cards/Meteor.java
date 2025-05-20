@@ -49,7 +49,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             List<EngineTile> engineTileList = ship.getListOfEngine();
             Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
             if (!engineTileList.contains(firstTile)) {
-                ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
+                ship.removeFirstTile(diceRoll, direction);
             }
         } else {
             ArrayList<ShieldTile> shields = ship.getListOfShield();
@@ -71,7 +71,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
-                    ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
+                    ship.removeFirstTile(diceRoll, direction);
                 }
             } else if (this.direction == EAST) {
                 if ((firstTile.getConnectors().getLast() != ConnectorType.NONE
@@ -80,7 +80,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
-                    ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
+                    ship.removeFirstTile(diceRoll, direction);
                 }
             }
         }
@@ -93,7 +93,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             Tile firstLeft = ship.getColumnListTiles(diceRoll - 1).getFirst();
             Tile firstRight = ship.getColumnListTiles(diceRoll + 1).getFirst();
             if (!engineTileList.contains(firstTile) && !engineTileList.contains(firstLeft) && !engineTileList.contains(firstRight)) {
-                ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
+                ship.removeFirstTile(diceRoll, direction);
             }
         } else {
             ArrayList<ShieldTile> shields = ship.getListOfShield();
@@ -115,7 +115,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
                         || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
                         && !hasShield) {
-                    ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
+                    ship.removeFirstTile(diceRoll, direction);
                 }
             } else if (this.direction == SOUTH) {
                 if ((firstTile.getConnectors().get(2) != ConnectorType.NONE
