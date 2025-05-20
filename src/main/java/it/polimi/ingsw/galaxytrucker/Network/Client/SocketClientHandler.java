@@ -133,10 +133,16 @@ lato client del metodo corrispondente
         }catch (IOException e) {
         }
         connect = false;
+        server.deleteClientFromList(this);
         System.out.println("Connessione chiusa correttamente.");
         //notify serverController
     }
-
+    public String getNickname() {
+        return nickname;
+    }
+    public ObjectOutputStream getObjOut() {
+        return objOut;
+    }
     public void callSpecificMethod(Message msg) throws ClassNotFoundException {
         if(msg.isStringMessage()){
             System.out.println("Message is String Message");

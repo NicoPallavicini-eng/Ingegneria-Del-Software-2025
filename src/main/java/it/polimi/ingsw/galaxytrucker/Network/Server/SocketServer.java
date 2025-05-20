@@ -67,8 +67,14 @@ public class SocketServer {
         return serverController.getGame();
     }
 
-
-
+    public void deleteClientFromList(SocketClientHandler handler){
+        synchronized (this.clients) {
+            clients.remove(handler);
+        }
+    }
+    public List<SocketClientHandler> getClientsList(){
+        return clients;
+    }
     public static void main(String[] args) throws IOException {
         String host = "localhost";
         int port = 12343;

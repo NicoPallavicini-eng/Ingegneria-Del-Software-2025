@@ -7,6 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClientHandler;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.Network.Server.RMIServer;
@@ -115,13 +116,16 @@ public class ServerController {
                 if (player != null) {
                     if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
                         newMessage = new Message("String",null,"/viewleaderboard doesn't support parameters!");
+                        newMessage.setNickname(msg.getNickname());
                         objOut.writeObject(newMessage);
                         objOut.flush();
                         //client.invalidCommand("/viewleaderboard doesn't support parameters!");
                     }
                     newMessage = new Message("Game",game,"viewLeaderboard");
+                    newMessage.setNickname(msg.getNickname());
                     objOut.writeObject(newMessage);
                     objOut.flush();
+                    objOut.reset();
                     //client.viewLeaderboard(game);
                 }else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
@@ -160,6 +164,7 @@ public class ServerController {
                                     newMessage.setNickname(nickname);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.setNickname(nickname);
                                 }
 
@@ -214,11 +219,13 @@ public class ServerController {
                                     newMessage.setNickname(nickname);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+
                                     //client.setNickname(nickname);
                                     newMessage = new Message("Game", game, "defaultView");
                                     newMessage.setNickname(nickname);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.defaultView(game, nickname);
                                     // TODO update view
                                 } catch (IllegalArgumentException e) {
@@ -338,9 +345,12 @@ public class ServerController {
                         objOut.flush();
                         //client.invalidCommand("/viewship doesn't support parameters!");
                     }
+
                     newMessage = new Message("Game",game,"viewMyShip");
+                    newMessage.setNickname(msg.getNickname());
                     objOut.writeObject(newMessage);
                     objOut.flush();
+                    objOut.reset();
                     //client.viewMyShip(game, client.getNickname());
                 }else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
@@ -361,8 +371,10 @@ public class ServerController {
                         //client.invalidCommand("/viewtilepile doesn't support parameters!");
                     }
                     newMessage = new Message("Game",game,"viewTilepile");
+                    newMessage.setNickname(msg.getNickname());
                     objOut.writeObject(newMessage);
                     objOut.flush();
+                    objOut.reset();
                     //client.viewTilepile(game);
                 }else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
@@ -379,11 +391,14 @@ public class ServerController {
                         newMessage = new Message("String",null,"/viewships doesn't support parameters!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
+                        objOut.reset();
                         //client.invalidCommand("/viewships doesn't support parameters!");
                     }
                     newMessage = new Message("Game",game,"viewShips");
+                    newMessage.setNickname(msg.getNickname());
                     objOut.writeObject(newMessage);
                     objOut.flush();
+                    objOut.reset();
                     //client.viewShips(game);
                 }else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
@@ -409,12 +424,16 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                     Tile currentTile = player.getShip().getTileInHand();
                                     newMessage = new Message("Game",game,"viewMyShip");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.viewMyShip(game, client.getNickname());
                                     newMessage = new Message("Game",game,"viewTilepile");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.viewTilepile(game);
                                 }catch(IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
@@ -464,6 +483,7 @@ public class ServerController {
                                 newMessage = new Message("Game",game,"defaultView");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
+                                objOut.reset();
                                 //client.defaultView(game);
                             }catch (IllegalEventException e){
                                 newMessage = new Message("String",null,e.getMessage());
@@ -504,6 +524,7 @@ public class ServerController {
                             newMessage = new Message("Game",game,"defaultView");
                             objOut.writeObject(newMessage);
                             objOut.flush();
+                            objOut.reset();
                             //client.defaultView(game);
                         }catch (IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
@@ -549,6 +570,7 @@ public class ServerController {
                                     newMessage = new Message("Game",game,"defaultView");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.defaultView(game);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
@@ -593,6 +615,7 @@ public class ServerController {
                                     newMessage = new Message("Game",game,"defaultView");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.defaultView(game);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
@@ -660,13 +683,44 @@ public class ServerController {
                                 //client.invalidCommand("You need to set the number of players before setting the position.");
                             }
                             else {
-                                try{
+                                ObjectOutputStream objOutHandler = null;
+                                try {
                                     SetPositionEvent event = new SetPositionEvent(player, position);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"viewLeaderboard");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.viewLeaderboard(game);
+                                    //List<VirtualClient> clientsRMI = rmiServer.getClients();
+                                    List<SocketClientHandler> clientsSocket = socketServer.getClientsList();
+                                    for (SocketClientHandler client : clientsSocket) {
+                                        if (!client.getNickname().equals(msg.getNickname())) {
+                                            newMessage = new Message("String",null,player.getNickname() + " has set the position to " + position);
+                                            objOutHandler = client.getObjOut();
+                                            objOutHandler.writeObject(newMessage);
+                                            objOutHandler.flush();
+                                            //virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
+                                        }
+                                        newMessage = new Message("String",null,game.getGameState().toString());
+                                        objOut.writeObject(newMessage);
+                                        objOut.flush();
+                                        //client.printMessage(game.getGameState().toString());
+
+                                        if (game.getGameState() instanceof TravellingState) {
+                                            newMessage = new Message("Game",game,"viewCard");
+                                            objOutHandler = client.getObjOut();
+                                            objOutHandler.writeObject(newMessage);
+                                            objOutHandler.flush();
+                                            objOut.reset();
+                                            //virtualClient.viewCard(game);
+                                        }
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                   //client.invalidCommand("Error: " + e.getMessage());
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -703,6 +757,7 @@ public class ServerController {
                             newMessage.setTile(currentTile);
                             objOut.writeObject(newMessage);
                             objOut.flush();
+                            objOut.reset();
                             //client.viewTile(currentTile);
                         }catch (IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
@@ -748,6 +803,7 @@ public class ServerController {
                                     newMessage.setTile(reservedTile);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.viewTile(reservedTile);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
@@ -1621,6 +1677,7 @@ public class ServerController {
                                     newMessage = new Message("Game",game,"viewMyShip");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                    objOut.reset();
                                     //client.viewMyShip(game, client.getNickname());
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
