@@ -27,6 +27,8 @@ public class PiratesState extends TravellingState implements Serializable {
 
     public PiratesState(Game game, PiratesCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     public void init(){
@@ -143,7 +145,7 @@ public class PiratesState extends TravellingState implements Serializable {
 
     public void handleEvent(ActivateShieldEvent event){
         if(!reckoningPhase){
-            throw new IllegalEventException("Not time for acivating shield");
+            throw new IllegalEventException("Not time for activating shield");
         }
         else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
             throw new IllegalEventException("you shall not defend");

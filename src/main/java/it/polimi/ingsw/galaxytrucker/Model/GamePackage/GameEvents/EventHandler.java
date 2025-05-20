@@ -315,8 +315,9 @@ public class EventHandler implements Serializable {
 
         boolean present = false;
         synchronized (game) {
-            for (Player player : game.getListOfPlayers()) {
-                if (player.getShip().getTravelDays() != null && player.getShip().getTravelDays() == place) {
+            for (Player player : game.getListOfPlayers()) { // TODO check if should be active before building
+                Integer travelDays = player.getShip().getTravelDays();
+                if (travelDays != null  && travelDays.equals(place)) {
                     present = true;
                     break;
                 }
@@ -699,7 +700,7 @@ public class EventHandler implements Serializable {
                 List<Integer> listGoods = cargoTile.getTileContent();
 
                 if ((cargoTile.getSlotsNumber() - listGoods.size()) > 0) {
-                    cargoTile.setTileContent(event.resource());
+                    cargoTile.addBlock(event.resource());
                 } else {
                     throw new IllegalEventException("CargoTile is full");
                 }
@@ -769,7 +770,7 @@ public class EventHandler implements Serializable {
 
                     if ((cargoTile2.getSlotsNumber() - listGoods2.size()) > 0) {
                         cargoTile.removeBlock(event.resource());
-                        cargoTile2.setTileContent(event.resource());
+                        cargoTile2.addBlock(event.resource());
                     } else {
                         throw new IllegalEventException("Next CargoTile is full");
                     }
@@ -896,6 +897,25 @@ public class EventHandler implements Serializable {
     public static void handleEvent(GiveUpEvent event) {
         Ship ship = event.player().getShip();
         ship.setTravelDays(null);
+    }
+
+    public static void handleEvent(RemoveBatteriesEvent event) {
+        Ship s = event.player().getShip();
+        Optional<Tile> ot = s.getTileOnFloorPlan(event.batteries().get(0), event.batteries().get(1));
+        if(!ot.isPresent()) {
+            throw new IllegalEventException("Not a tile");
+        }
+        else {
+            Tile t = ot.get();
+            BatteryTileVisitor btv = new BatteryTileVisitor();
+            t.accept(btv);
+            if(btv.getList().isEmpty()) {
+                throw new IllegalEventException("Not a battery tile");
+            }
+            else{
+                btv.getList().getFirst().removeBattery(event.batteries().get(2));
+            }
+        }
     }
 
     public static void moveForward(Ship ship, int days, Game game) {

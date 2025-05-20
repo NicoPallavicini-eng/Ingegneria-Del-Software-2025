@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,28 +31,8 @@ public class StationCard extends Card implements Serializable {
         return crewNumberNeeded;
     }
 
-//    public void acceptCardVisitorSequential(SequentialTravellingState state, StationCardVisitor visitor, List <Player> players) {
-//        for (Player player : players) {
-//            visitor.handleStationCard(state,this, player);
-//            if (state.getAccomplished()) {
-//                break;
-//            }
-//        }
-//    }
-//
-//    public void acceptNextVisitor(GameState state, StationCardVisitor visitor, Game game) {
-//        visitor.setNextStateStationCard(state, game, this);
-//    }
-//
-//    public void process(Player player, SequentialTravellingState state) {
-//        Ship ship = player.getShip();
-//
-//        if ((ship.getNumberOfCrewMembers() >= crewNumberNeeded) && player.getEngages()) {
-//            state.setAccomplished(true);
-//
-//            ship.addBlocks(blocks);
-//            ship.setTravelDays(ship.getTravelDays() - daysToLose);
-//
-//        }
-//    }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
+    }
+
 }

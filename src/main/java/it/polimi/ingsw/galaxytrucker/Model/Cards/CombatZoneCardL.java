@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +19,10 @@ public class CombatZoneCardL extends CombatZoneCard implements Serializable {
         cannonballList.add(new Cannonball(false, Direction.SOUTH, RowOrColumn.COLUMN));
         cannonballList.add(new Cannonball(true, Direction.SOUTH, RowOrColumn.COLUMN));
         return cannonballList;
+    }
+
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
 
 

@@ -30,67 +30,9 @@ public class BuildingState extends GameState implements Serializable {
     public void next() {
         //todo populate everything that is not an alien
         game.sortListOfActivePlayers();
-        if (game.getDeck() == null){
-            throw new IllegalStateException("The deck is null");
-        }
-        else if (game.getDeck().drawCard() == null){
-            throw new IllegalEventException("Card is null");
-        }
-        Card nextCard = game.getDeck().drawCard();
-        game.setGameState(TravellingStateFactory.createGameState(game, nextCard));
-        //TODO CHECK IF IT'S OK!
-//        if(nextCard instanceof EpidemicCard epidemicCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, epidemicCard));
-//            game.getGameState().init();
-//        }
-//        else if(nextCard instanceof MeteorsCard meteorsCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, meteorsCard));
-//            game.getGameState().init();
-//        }
-//        else if(nextCard instanceof OpenSpaceCard openSpaceCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, openSpaceCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof PiratesCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, (PiratesCard) nextCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof PlanetsCard planetsCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, planetsCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof ShipCard shipCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, shipCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof SlaversCard slaversCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, slaversCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof SmugglersCard smugglersCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, smugglersCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof StardustCard stardustCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, stardustCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof StationCard stationCard){
-//            game.setGameState(TravellingStateFactory.createGameState(game, stationCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof CombatZoneCardL){
-//            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardL) nextCard));
-//            game.getGameState().init();
-//        }
-//        else if (nextCard instanceof CombatZoneCardNotL){
-//            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardNotL) nextCard));
-//            game.getGameState().init();
-//        }
-//        else{
-//            throw new IllegalEventException("The card is not a valid card");
-//        }
-
+        Card nextCard = getGame().getDeck().drawCard();
+        getGame().setGameState(nextCard.createGameState(game));
+        game.getGameState().init();
     }
 
     public void init(){
@@ -117,9 +59,13 @@ public class BuildingState extends GameState implements Serializable {
             }
             if(finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
                 timeIsUp = true;
-                //controlla le navi
-                if(playersWithLegalShips.containsAll(game.getListOfPlayers())) {
-                    game.updateListOfActivePlayers();
+                for(Player player : game.getListOfActivePlayers()) {
+                    if(player.getShip().checkFloorPlanConnection()){
+                        playersWithLegalShips.add(player);
+                    }
+                }
+                if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
+                    game.updateListOfActivePlayers(); // TODO check it isn't done elsewhere
                     next();
                 }
             }

@@ -25,8 +25,8 @@ public class CargoTile extends Tile implements Serializable {
         return tileContent;
     }
 
-    public void setTileContent(Integer tileContent) {
-        this.tileContent.add(tileContent);
+    public void addBlock(Integer block) {
+        this.tileContent.add(block);
     }
 
     public void removeBlock(Integer block) {

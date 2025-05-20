@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 
 import java.io.Serializable;
 
@@ -21,9 +20,11 @@ public class BatteryTile extends Tile implements Serializable {
         this.attached = false;
     }
 
-    public int removeBattery(int quantity){
+    public void removeBattery(int quantity){
+        if(slotsFilled <= quantity){
+            throw new IllegalEventException("not enough batteries");
+        }
         slotsFilled -= quantity;
-        return slotsFilled;
     }
 
     public int getSlotsNumber() {

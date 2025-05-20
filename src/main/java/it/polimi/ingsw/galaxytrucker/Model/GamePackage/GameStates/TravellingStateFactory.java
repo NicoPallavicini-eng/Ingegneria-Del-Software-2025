@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 
 import java.io.Serializable;
 
@@ -55,9 +56,9 @@ public class TravellingStateFactory implements Serializable {
         return new StationState(game, card);
     }
 
-    // shall never be called, here just for overloads, maybe put exception
+    // shall never be called, here just for overloads2
     public static GameState createGameState(Game game, Card card){
-        return null;
+        throw new IllegalEventException("TravellingStateFactory has failed");
     }
 
 }

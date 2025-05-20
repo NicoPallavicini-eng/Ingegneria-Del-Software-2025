@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,18 +25,7 @@ public class PlanetsCard extends Card implements Serializable {
         return daysToLose;
     }
 
-/*
-    public void process(Player player) {
-        if (player.getEngages()) {
-            Ship ship = player.getShip();
-
-            Planet chosenPlanet = planets.get(player.getInput());
-            chosenPlanet.setShipLanded(ship);
-
-            ship.addBlocks(chosenPlanet.getBlocks());
-            ship.setTravelDays(ship.getTravelDays() - daysToLose);
-        }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
-
- */
 }

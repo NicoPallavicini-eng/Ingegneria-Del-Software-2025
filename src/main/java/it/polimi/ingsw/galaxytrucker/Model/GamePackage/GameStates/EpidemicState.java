@@ -14,11 +14,13 @@ import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 
 public class EpidemicState extends TravellingState implements Serializable {
-
+    private EpidemicCard currentCard;
     private ArrayList<Thread> threads;
+
 
     public EpidemicState(Game game, EpidemicCard card) {
         super(game, card);
+        currentCard = card;
     }
 
     public void init(){

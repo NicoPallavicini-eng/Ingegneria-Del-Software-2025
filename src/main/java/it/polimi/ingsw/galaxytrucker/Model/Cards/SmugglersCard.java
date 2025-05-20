@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,30 +37,8 @@ public class SmugglersCard extends Card implements Serializable {
         return lostBlocksNumber;
     }
 
-/*    public void process(Player player, SequentialTravellingState state) {
-        Ship ship = player.getShip();
-
-        if (ship.getFirepower() < firepower) {
-            ArrayList <CargoTile> cargoTiles = ship.getListOfCargo();
-            List <Integer> cargo = new ArrayList<>();
-
-            for (CargoTile tile : cargoTiles) {
-                cargo.addAll(tile.getTileContent());
-            }
-
-            // considering that list is ordered:
-            for (int i = 0; i < lostBlocksNumber; i++) {
-                cargo.removeFirst();
-            }
-        } else if (ship.getFirepower() > firepower) {
-            state.setAccomplished(true);
-
-            if (player.getEngages()) {
-                ship.addBlocks(blocks);
-                ship.setTravelDays(ship.getTravelDays() - daysToLose);
-            }
-        }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
 
- */
 }

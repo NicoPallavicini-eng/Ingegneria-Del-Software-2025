@@ -11,8 +11,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class StardustState extends TravellingState implements Serializable {
+    private StardustCard currentCard;
+
     public StardustState(Game game, StardustCard card) {
         super(game, card);
+        currentCard = card;
+
     }
     private List<Player> turns;
 

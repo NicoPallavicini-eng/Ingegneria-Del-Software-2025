@@ -26,6 +26,7 @@ public class MeteorsState extends TravellingState implements Serializable {
 
     public MeteorsState(Game game, MeteorsCard card) {
         super(game, card);
+        currentCard = card;
     }
 
     public void init(){

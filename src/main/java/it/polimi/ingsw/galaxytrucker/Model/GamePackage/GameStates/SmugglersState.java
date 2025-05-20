@@ -4,32 +4,34 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.SmugglersCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.BatteryTile;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SmugglersState extends TravellingState implements Serializable {
 
     private Map<Player, Integer> cargoToLose;
+    private Map<Player, Integer> batteriesToLose;
     protected SmugglersCard currentCard;
     private Player smugglersSlayer;
     private Boolean slayerCommits;
     private boolean reckoningPhase;
     private List<Integer> availableResources;
+    private List<Player> cargoless;
 
 
     public SmugglersState(Game game, SmugglersCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     @Override
     protected void nextPlayer() {
         super.nextPlayer();
         if(currentPlayer == null){
-            reckoningPhase = true;
+            reckoning();
             currentCard = null;
             slayerCommits = false;
             checkNext();
@@ -41,9 +43,10 @@ public class SmugglersState extends TravellingState implements Serializable {
         cargoToLose = new LinkedHashMap<>();
         reckoningPhase = false;
         availableResources = currentCard.getBlocksList();
+        cargoless = new ArrayList<>();
     }
 
-    public void handleInput(ActivateCannonsEvent event){
+    public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }
@@ -58,7 +61,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             }
             else{
                 smugglersSlayer = currentPlayer;
-                reckoningPhase = true;
+                reckoning();
             }
         }
     }
@@ -103,7 +106,7 @@ public class SmugglersState extends TravellingState implements Serializable {
                 }
                 else{
                     smugglersSlayer = currentPlayer;
-                    reckoningPhase = true;
+                    reckoning();
                 }
             }
         }
@@ -133,13 +136,46 @@ public class SmugglersState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(RemoveCargoEvent event){
-        if(!event.player().equals(smugglersSlayer) && slayerCommits){
+        Player p = event.player();
+        if(reckoningPhase && cargoToLose.keySet().contains(p)){
+            Optional<Integer> mvcargo = p.getShip().getListOfCargo().stream()
+                            .flatMap(c -> c.getTileContent().stream())
+                            .max((a,b) -> a-b);
+            if(mvcargo.isPresent() && mvcargo.get() > event.resource()){
+                throw new IllegalEventException("you have to remove your most valuable cargo");
+            }
+            EventHandler.handleEvent(event);
+            cargoToLose.put(p, cargoToLose.get(p) - 1);
+            if(cargoToLose.get(p) == 0){
+                cargoToLose.remove(p);
+                checkNext();
+            }
+        }
+        else if(!event.player().equals(smugglersSlayer) && slayerCommits){
             throw new IllegalEventException("you have not landed");
         }
         else {
             synchronized (availableResources) {
                 EventHandler.handleEvent(event);
                 availableResources.add(event.resource());
+            }
+        }
+    }
+
+    public void handleEvent(RemoveBatteriesEvent event){
+        Player p = event.player();
+        if(!reckoningPhase || !cargoToLose.keySet().contains(p)){
+            throw new IllegalEventException("you don't have to remove batteries");
+        }
+        else if(event.batteries().get(2) > cargoToLose.get(p)){
+            throw new IllegalEventException("you don't need to remove all these batteries");
+        }
+        else {
+            EventHandler.handleEvent(event);
+            cargoToLose.put(p, cargoToLose.get(p) - event.batteries().get(2));
+            if(cargoToLose.get(p) == 0){
+                cargoToLose.remove(p);
+                checkNext();
             }
         }
     }
@@ -158,8 +194,37 @@ public class SmugglersState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not landed");
         }
         else {
-            next();
+            slayerCommits = false;
+            checkNext();
         }
+    }
+
+    private void reckoning(){
+        reckoningPhase = true;
+        for(Player p : cargoToLose.keySet()){
+            long available = p.getShip().getListOfCargo().stream()
+                    .flatMap(c -> c.getTileContent().stream())
+                    .count();
+            if(available <= currentCard.getLostBlocksNumber()){
+                p.getShip().removeAllCargo();
+                cargoToLose.put(p, (int) (cargoToLose.get(p) - available));
+                cargoless.add(p);
+            }
+            if(cargoToLose.get(p) == 0){
+                cargoToLose.remove(p);
+            }
+            else{
+                available = p.getShip().getListOfBattery().stream()
+                        .mapToInt(BatteryTile::getSlotsFilled)
+                        .sum();
+                if(available <= cargoToLose.get(p)) {
+                    p.getShip().removeAllBatteries();
+                    cargoToLose.remove(p);
+                }
+
+            }
+        }
+
     }
 
 }

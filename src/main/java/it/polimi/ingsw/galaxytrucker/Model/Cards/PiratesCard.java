@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,22 +37,8 @@ public class PiratesCard extends Card implements Serializable {
         return cannonballList;
     }
 
-/*    public void process(Player player, SequentialTravellingState state) {
-        Ship ship = player.getShip();
-
-        if (ship.getFirepower() < firepower) {
-            for (Cannonball cannonball : cannonballList) {
-                cannonball.getHit(ship);
-            }
-        } else if (ship.getFirepower() > firepower) {
-            state.setAccomplished(true);
-
-            if (player.getEngages()) {
-                ship.setCredits(ship.getCredits() + credits);
-                ship.setTravelDays(ship.getTravelDays() - daysToLose);
-            }
-        }
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
 
- */
 }

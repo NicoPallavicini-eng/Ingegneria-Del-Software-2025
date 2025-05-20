@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 
@@ -30,9 +32,6 @@ public class Ship implements Serializable {
     private boolean purpleAlien;
     private boolean orangeAlien;
 
-    //player position
-    private int playerPosition;
-
     public Ship(Color color){
         this.color = color;
         lostTiles=0;
@@ -42,7 +41,6 @@ public class Ship implements Serializable {
         cargoFromCards = new ArrayList<>();
         purpleAlien=false;
         orangeAlien=false;
-        playerPosition=0;
         row_max=5;
         col_max=7;
 
@@ -409,12 +407,6 @@ public class Ship implements Serializable {
 
     }
 
-    public int getPlayerPosition() {
-        return playerPosition;
-    }
-    public void setPlayerPosition(int playerPosition) {
-        this.playerPosition = playerPosition;
-    }
 
     public ArrayList<Integer> getCargoFromCards() {
         return cargoFromCards;
@@ -933,4 +925,46 @@ public class Ship implements Serializable {
             cabinTile.updateInhabitants(CabinInhabitants.NONE);
         }
     }
+
+    public void removeAllCargo(){
+        for(CargoTile cargoTile : getListOfCargo()){
+            for(Integer i : cargoTile.getTileContent()){
+                cargoTile.removeBlock(i);
+            }
+        }
+    }
+
+    public void removeAllBatteries(){
+        for(BatteryTile batteryTile : getListOfBattery()){
+            batteryTile.removeBattery(getBatteries());
+        }
+    }
+
+    public void removeFirstTile(int index, Direction direction){
+        Tile t;
+        int index2;
+        switch(direction){
+            case NORTH:
+                t = getColumnListTiles(index).getFirst();
+                index2 = findTileOnFloorplanRow(t);
+                removeTileOnFloorPlan(index2, index);
+                break;
+            case SOUTH:
+                t = getColumnListTiles(index).getLast();
+                index2 = findTileOnFloorplanRow(t);
+                removeTileOnFloorPlan(index2, index);
+                break;
+            case EAST:
+                t = getRowListTiles(index).getFirst();
+                index2 = findTileOnFloorPlanColumn(t);
+                removeTileOnFloorPlan(index, index2);
+                break;
+            case WEST:
+                t = getRowListTiles(index).getLast();
+                index2 = findTileOnFloorPlanColumn(t);
+                removeTileOnFloorPlan(index, index2);
+                break;
+        }
+    }
+
 }

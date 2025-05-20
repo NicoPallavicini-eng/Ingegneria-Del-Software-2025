@@ -16,6 +16,8 @@ public class ShipState extends TravellingState implements Serializable {
 
     public ShipState(Game game, ShipCard card) {
         super(game, card);
+        currentCard = card;
+
     }
 
     public void init(){

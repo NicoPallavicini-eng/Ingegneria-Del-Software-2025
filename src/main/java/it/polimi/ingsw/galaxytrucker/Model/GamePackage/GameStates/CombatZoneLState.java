@@ -14,28 +14,20 @@ import java.util.OptionalInt;
 public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected CombatZoneCardL currentCard;
 
-    public CombatZoneLState(Game game, CombatZoneCard card) {
+    public CombatZoneLState(Game game, CombatZoneCardL card) {
         super(game, card);
+        currentCard = card;
     }
 
     public void init(){
         super.init();
         currentChallenge = CombatZoneChallenge.PEOPLE;
         currentPenalty = CombatZonePenalty.DAYS;
-        lessPeople();
+        peoplePenalty();
     }
 
-    private void lessPeople(){
-        OptionalInt min = game.getListOfActivePlayers().stream()
-                .mapToInt(p -> p.getShip().getNumberOfInhabitants())
-                .min();
-        game.sortListOfActivePlayers();
-        for(Player p : game.getListOfActivePlayers()){
-            if(p.getShip().getNumberOfInhabitants() == min.getAsInt()){
-                currentLoser = p;
-                break;
-            }
-        }
+    protected void peoplePenalty(){
+        super.peoplePenalty();
         EventHandler.moveBackward(currentLoser.getShip(), currentCard.getDaysLost(), game);
         currentLoser = null;
         currentChallenge = CombatZoneChallenge.ENGINES;
@@ -43,76 +35,22 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         super.init();
     }
 
-    public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
-        Ship ship = event.player().getShip();
-        if (event.player().equals(currentPlayer)) {
-            throw new IllegalEventException("It is not your turn");
-        } else {
-            EventHandler.handleEvent(event);
-            if(ship.getEnginePower() == 0){
-                ship.setTravelDays(null);
-            }
-            else {
-                EventHandler.moveForward(ship, ship.getEnginePower(), game);
-                nextPlayer();
-                if (currentPlayer == null) {
-                    peoplePenalty();
-                }
-            }
-        }
-    }
-
-    public void handleEvent(NoChoiceEvent event)throws IllegalEventException {
-        Ship ship = event.player().getShip();
-
-        if(currentChallenge.equals(CombatZoneChallenge.ENGINES)) {
-            if (!event.player().equals(currentPlayer)) {
-                throw new IllegalEventException("It is not your turn");
-            } else if (ship.getEnginePower() == 0) {
-                ship.setTravelDays(null);
-            } else {
-                EventHandler.moveForward(ship, ship.getEnginePower(), game);
-                nextPlayer();
-                if (currentPlayer == null) {
-                    peoplePenalty();
-                }
-            }
-        }
-        else if(currentChallenge.equals(CombatZoneChallenge.CANNONS)){
-            if (!event.player().equals(currentPlayer)) {
-                throw new IllegalEventException("It is not your turn");
-            } else {
-                nextPlayer();
-                if (currentPlayer == null) {
-                    cannonballsPenalty();
-                }
-            }
-        }
-    }
-
-    private void peoplePenalty(){
-        OptionalInt min = game.getListOfActivePlayers().stream()
-                .mapToInt(p -> p.getShip().getEnginePower())
-                .min();
-        game.sortListOfActivePlayers();
-        for(Player p : game.getListOfActivePlayers()){
-            if(p.getShip().getFirepower() == min.getAsInt()){
-                currentLoser = p;
-                break;
-            }
-        }
+    protected void enginesPenalty(){
+        super.enginesPenalty();
         Player p = currentLoser;
         if(p.getShip().getNumberOfInhabitants() <= currentCard.getCrewLost()){
             p.getShip().ejectAll();
             currentChallenge = CombatZoneChallenge.CANNONS;
             currentPenalty = CombatZonePenalty.CANNONBALLS;
             currentLoser = null;
+            super.init();
         }
 
     }
 
     public void handleEvent(EjectPeopleEvent event) {
         if (!currentChallenge.equals(CombatZonePenalty.PEOPLE)) {
+            throw new IllegalEventException("not people ejecting phase");
         }
         if (!currentLoser.equals(event.player())) {
             throw new IllegalEventException("You don't have to give up your crew");
@@ -125,37 +63,13 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
                 currentChallenge = CombatZoneChallenge.CANNONS;
                 currentPenalty = CombatZonePenalty.CANNONBALLS;
                 currentLoser = null;
+                super.init();
             }
         }
     }
 
-    public void handleEvent(ActivateCannonsEvent event){
-        if(!event.player().equals(currentPlayer)){
-            throw new IllegalEventException("It is not your turn");
-        }
-        else{
-            EventHandler.handleEvent(event);
-            nextPlayer();
-            if (currentPlayer == null) {
-                cannonballsPenalty();
-            }
-        }
-    }
-
-
-
-    private void cannonballsPenalty() {
-        OptionalDouble min = game.getListOfActivePlayers().stream()
-                .mapToDouble(p -> p.getShip().getFirepower())
-                .min();
-        game.sortListOfActivePlayers();
-        for (Player p : game.getListOfActivePlayers()) {
-            if (p.getShip().getFirepower() == min.getAsDouble()) {
-                currentLoser = p;
-                break;
-            }
-        }
-        next();
+    protected void cannonsPenalty() {
+        super.cannonsPenalty();
     }
 
 }
