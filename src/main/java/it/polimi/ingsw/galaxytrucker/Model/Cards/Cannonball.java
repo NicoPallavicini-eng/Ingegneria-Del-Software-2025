@@ -42,7 +42,7 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
 
     private void checkForShieldOrRemoveRow(Ship ship, int diceRoll) {
         if (this.bigCannonball) {
-            ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
+            ship.removeFirstTile(diceRoll, direction);
         } else {
             ArrayList <ShieldTile> shields = ship.getListOfShield();
             boolean hasShield = false;
@@ -56,14 +56,14 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
                 }
             }
             if (!hasShield) {
-                ProjectileUtils.removeHitTileRow(this.direction, ship, diceRoll);
+                ship.removeFirstTile(diceRoll, direction);
             }
         }
     }
 
     private void checkForShieldOrRemoveColumn(Ship ship, int diceRoll) {
         if (this.bigCannonball) {
-            ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
+            ship.removeFirstTile(diceRoll, direction);
         } else {
             ArrayList <ShieldTile> shields = ship.getListOfShield();
             boolean hasShield = false;
@@ -77,7 +77,7 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
                 }
             }
             if (!hasShield) {
-                ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
+                ship.removeFirstTile(diceRoll, direction);
             }
         }
     }

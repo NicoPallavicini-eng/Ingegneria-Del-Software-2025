@@ -39,9 +39,11 @@ public class PlanetsState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ChoosePlanetEvent event){
-        // todo check index
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
+        }
+        else if(event.planetIndex() >= planets.size() || event.planetIndex() < 0){
+            throw new IllegalEventException("you selecteded an illegal index");
         }
         else if(chosenPlanets.containsValue(planets.get(event.planetIndex()))){
             throw new IllegalEventException("The planet has already been chosen");

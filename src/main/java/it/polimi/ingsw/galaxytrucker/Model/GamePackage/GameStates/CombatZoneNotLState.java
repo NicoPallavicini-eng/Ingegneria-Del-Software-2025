@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EjectPeopleEve
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.BatteryTile;
 
 import java.io.Serializable;
 import java.util.OptionalInt;
@@ -13,6 +14,7 @@ import java.util.OptionalInt;
 public class CombatZoneNotLState extends CombatZoneState implements Serializable {
 
     private CombatZoneCardNotL card;
+    private int cargoToLose;
 
     public CombatZoneNotLState(Game game, CombatZoneCardNotL card) {
         super(game, card);
@@ -23,6 +25,7 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         super.init();
         currentChallenge = CombatZoneChallenge.CANNONS;
         currentPenalty = CombatZonePenalty.DAYS;
+        cargoToLose = currentCard.getCargoLost();
     }
 
     protected void cannonsPenalty(){
@@ -35,7 +38,31 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
 
     protected void enginesPenalty(){
         super.enginesPenalty();
-        //if total cargo << remove all
+        Player p = currentLoser;
+        long available = p.getShip().getListOfCargo().stream()
+                .flatMap(c -> c.getTileContent().stream())
+                .count();
+        if(available <= cargoToLose){
+            p.getShip().removeAllCargo();
+            available = p.getShip().getListOfBattery().stream()
+                    .mapToInt(BatteryTile::getSlotsFilled)
+                    .sum();
+            if(available <= cargoToLose) {
+                p.getShip().removeAllBatteries();
+                enginesNext();
+            }
+            else if(cargoToLose == 0){
+                enginesNext();
+            }
+        }
+    }
+
+    private void enginesNext(){
+        super.init();
+        currentLoser = null;
+        currentChallenge = CombatZoneChallenge.PEOPLE;
+        currentPenalty = CombatZonePenalty.CANNONBALLS;
+        super.peoplePenalty();
     }
 
 

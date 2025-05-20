@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 
@@ -938,7 +940,31 @@ public class Ship implements Serializable {
         }
     }
 
-
-
+    public void removeFirstTile(int index, Direction direction){
+        Tile t;
+        int index2;
+        switch(direction){
+            case NORTH:
+                t = getColumnListTiles(index).getFirst();
+                index2 = findTileOnFloorplanRow(t);
+                removeTileOnFloorPlan(index2, index);
+                break;
+            case SOUTH:
+                t = getColumnListTiles(index).getLast();
+                index2 = findTileOnFloorplanRow(t);
+                removeTileOnFloorPlan(index2, index);
+                break;
+            case EAST:
+                t = getRowListTiles(index).getFirst();
+                index2 = findTileOnFloorPlanColumn(t);
+                removeTileOnFloorPlan(index, index2);
+                break;
+            case WEST:
+                t = getRowListTiles(index).getLast();
+                index2 = findTileOnFloorPlanColumn(t);
+                removeTileOnFloorPlan(index, index2);
+                break;
+        }
+    }
 
 }
