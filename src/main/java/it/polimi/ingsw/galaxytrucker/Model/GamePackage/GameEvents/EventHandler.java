@@ -365,11 +365,11 @@ public class EventHandler implements Serializable {
         }
     }
 
-    public static void handleEvent(ViewDeckEvent event) {
+    public static void handleEvent(ViewDeckEvent event) { // TODO do
     }
 
     /*
-    public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent
+    public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent TODO se non serve brasare questo
     //il riferimento a Game
      */
     /*

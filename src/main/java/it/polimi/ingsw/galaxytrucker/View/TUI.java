@@ -1007,20 +1007,6 @@ public class TUI {
 
     }
 
-    public void printCurrentCard(Game game){
-        System.out.println("Current card: \n");
-        GameState gameState = game.getGameState();
-        if (gameState instanceof TravellingState){
-            TravellingState travellingState = (TravellingState) gameState;
-            Card currentCard = travellingState.getCurrentCard();
-            checkCard(currentCard);
-        }
-        else{
-            System.out.println("No current card");
-        }
-
-    }
-
     private void checkCard(Card card){
         if (card != null){
             if (card instanceof CombatZoneCard) { // TODO decide if we want to print the affected player's nickname or not
