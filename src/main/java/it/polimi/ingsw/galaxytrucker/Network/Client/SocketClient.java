@@ -64,7 +64,7 @@ public class SocketClient implements VirtualClientSocket {
             try{
                 //serve per ritardare la stampa
                 //in caso non dovesse stampare bene cambiare questo qua
-                Thread.sleep(100);
+                Thread.sleep(300);
                 System.out.print("> ");
                 String message = scan.nextLine();
                 //int command = scan.nextInt();
