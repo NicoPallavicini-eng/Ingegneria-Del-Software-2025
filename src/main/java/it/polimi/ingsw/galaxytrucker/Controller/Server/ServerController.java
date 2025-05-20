@@ -1711,7 +1711,9 @@ public class ServerController {
                     .findAny();
             if (playerOptional.isPresent()) {
                 Player player1 = playerOptional.get();
-                player.setOnlineStatus(false);
+                DisconnectEvent event = new DisconnectEvent(player1);
+                game.getGameState().handleEvent(event);
+                //player.setOnlineStatus(false);
             }
 
         }
