@@ -11,10 +11,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Message;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The ServerController class handles user input and manages the game state on the server side.
@@ -23,6 +20,7 @@ import java.util.Optional;
 
 public class ServerController {
     private static final Game game = new Game();
+    private Map<String,Game> gameMapper;
 
     public ServerController(){
 
@@ -208,6 +206,10 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     //client.invalidCommand("Error: " + e.getMessage());
+                                }catch(IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
                                 }
 
                             } else {
@@ -236,8 +238,14 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        DisconnectEvent event = new DisconnectEvent(player);
-                        game.getGameState().handleEvent(event);
+                        try{
+                            DisconnectEvent event = new DisconnectEvent(player);
+                            game.getGameState().handleEvent(event);
+                        }catch(IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else {
                         newMessage = new Message("String",null,"/disconnect doesn't support parameters!");
@@ -277,8 +285,11 @@ public class ServerController {
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
+                                }catch(IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
                                 }
-
                             }
                         } else {
                             newMessage = new Message("String",null,"/setnumberofplayers supports only one parameter!");
@@ -376,17 +387,24 @@ public class ServerController {
                             int tileColumnInt = Integer.parseInt(tileColumn);
                             int tilePositionInt = (tileRowInt * 16) + tileColumnInt;
                             if (tilePositionInt > 0 && tilePositionInt < 152) {
-                                PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
-                                game.getGameState().handleEvent(event);
-                                Tile currentTile = player.getShip().getTileInHand();
-                                newMessage = new Message("Game",game,"viewMyShip");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.viewMyShip(game, client.getNickname());
-                                newMessage = new Message("Game",game,"viewTilepile");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.viewTilepile(game);
+                                try{
+                                    PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
+                                    game.getGameState().handleEvent(event);
+                                    Tile currentTile = player.getShip().getTileInHand();
+                                    newMessage = new Message("Game",game,"viewMyShip");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.viewMyShip(game, client.getNickname());
+                                    newMessage = new Message("Game",game,"viewTilepile");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.viewTilepile(game);
+                                }catch(IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
+
 
                             } else {
                                 newMessage = new Message("String",null,"Tile position not valid. It must be between 1 and 156");
@@ -422,13 +440,20 @@ public class ServerController {
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
-                            String side = firstParameters.get(0);
-                            RotateTileEvent event = new RotateTileEvent(player, side);
-                            game.getGameState().handleEvent(event);
-                            newMessage = new Message("Game",game,"defaultView");
-                            objOut.writeObject(newMessage);
-                            objOut.flush();
-                            //client.defaultView(game);
+                            try{
+                                String side = firstParameters.get(0);
+                                RotateTileEvent event = new RotateTileEvent(player, side);
+                                game.getGameState().handleEvent(event);
+                                newMessage = new Message("Game",game,"defaultView");
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                                //client.defaultView(game);
+                            }catch (IllegalEventException e){
+                                newMessage = new Message("String",null,e.getMessage());
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                            }
+
                         }
                         else{
                             newMessage = new Message("String",null,"/rotatetile supports only one parameter!");
@@ -456,12 +481,18 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        PutDownTileEvent event = new PutDownTileEvent(player);
-                        game.getGameState().handleEvent(event);
-                        newMessage = new Message("Game",game,"defaultView");
-                        objOut.writeObject(newMessage);
-                        objOut.flush();
-                        //client.defaultView(game);
+                        try{
+                            PutDownTileEvent event = new PutDownTileEvent(player);
+                            game.getGameState().handleEvent(event);
+                            newMessage = new Message("Game",game,"defaultView");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            //client.defaultView(game);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/putdowntile doesn't support parameters!");
@@ -495,12 +526,18 @@ public class ServerController {
                                 //client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                             }
                             else{
-                                PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
-                                game.getGameState().handleEvent(event);
-                                newMessage = new Message("Game",game,"defaultView");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.defaultView(game);
+                                try{
+                                    PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
+                                    game.getGameState().handleEvent(event);
+                                    newMessage = new Message("Game",game,"defaultView");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.defaultView(game);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
                         else{
@@ -533,12 +570,18 @@ public class ServerController {
                                 //client.invalidCommand("Index not valid. It must be either 1 or 2");
                             }
                             else{
-                                ReserveTileEvent event = new ReserveTileEvent(player, index-1);
-                                game.getGameState().handleEvent(event);
-                                newMessage = new Message("Game",game,"defaultView");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.defaultView(game);
+                                try{
+                                    ReserveTileEvent event = new ReserveTileEvent(player, index-1);
+                                    game.getGameState().handleEvent(event);
+                                    newMessage = new Message("Game",game,"defaultView");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.defaultView(game);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
                     }
@@ -555,8 +598,14 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        FlipHourglassEvent event = new FlipHourglassEvent();
-                        game.getGameState().handleEvent(event);
+                        try{
+                            FlipHourglassEvent event = new FlipHourglassEvent();
+                            game.getGameState().handleEvent(event);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/fliphourglass doesn't support parameters!");
@@ -594,12 +643,18 @@ public class ServerController {
                                 //client.invalidCommand("You need to set the number of players before setting the position.");
                             }
                             else {
-                                SetPositionEvent event = new SetPositionEvent(player, position);
-                                game.getGameState().handleEvent(event);
-                                newMessage = new Message("Game",game,"viewLeaderboard");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.viewLeaderboard(game);
+                                try{
+                                    SetPositionEvent event = new SetPositionEvent(player, position);
+                                    game.getGameState().handleEvent(event);
+                                    newMessage = new Message("Game",game,"viewLeaderboard");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.viewLeaderboard(game);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
 
@@ -623,15 +678,20 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                        PickUpFromShipEvent event = new PickUpFromShipEvent(player);
-                        game.getGameState().handleEvent(event);
-                        Tile currentTile = player.getShip().getLastPlacedTile();
-                        newMessage = new Message("Game",game,"viewTile");
-                        newMessage.setTile(currentTile);
-                        objOut.writeObject(newMessage);
-                        objOut.flush();
-                        //client.viewTile(currentTile);
-
+                        try{
+                            PickUpFromShipEvent event = new PickUpFromShipEvent(player);
+                            game.getGameState().handleEvent(event);
+                            Tile currentTile = player.getShip().getLastPlacedTile();
+                            newMessage = new Message("Game",game,"viewTile");
+                            newMessage.setTile(currentTile);
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            //client.viewTile(currentTile);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/pickupfromship doesn't support parameters!");
@@ -663,14 +723,20 @@ public class ServerController {
                                 objOut.flush();
                                 //client.invalidCommand("Index not valid. It must be either 1 or 2");
                             } else {
-                                PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
-                                game.getGameState().handleEvent(event);
-                                Tile reservedTile = player.getShip().getReservedTiles().get(index-1);
-                                newMessage = new Message("Game",game,"viewTile");
-                                newMessage.setTile(reservedTile);
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.viewTile(reservedTile);
+                                try{
+                                    PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
+                                    game.getGameState().handleEvent(event);
+                                    Tile reservedTile = player.getShip().getReservedTiles().get(index-1);
+                                    newMessage = new Message("Game",game,"viewTile");
+                                    newMessage.setTile(reservedTile);
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.viewTile(reservedTile);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
                     }
@@ -760,8 +826,14 @@ public class ServerController {
                                         }
                                     }
                                 }
-                                ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
 
@@ -852,9 +924,15 @@ public class ServerController {
                                         }
                                     }
                                 }
-                                // batteries cannot be ArrayList<Pair<Integer, Integer>>
-                                ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    // batteries cannot be ArrayList<Pair<Integer, Integer>>
+                                    ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
 
@@ -912,8 +990,14 @@ public class ServerController {
                                     //client.invalidCommand("Invalid row or column.");
                                 }
                                 else{
-                                    ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield-5, colShield-4, rowBat-5, colBat-4);
-                                    game.getGameState().handleEvent(event);
+                                    try{
+                                        ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield-5, colShield-4, rowBat-5, colBat-4);
+                                        game.getGameState().handleEvent(event);
+                                    }catch (IllegalEventException e){
+                                        newMessage = new Message("String",null,e.getMessage());
+                                        objOut.writeObject(newMessage);
+                                        objOut.flush();
+                                    }
                                 }
                             }
                             else{
@@ -972,8 +1056,14 @@ public class ServerController {
                                     //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 }
                                 else{
-                                    RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
-                                    game.getGameState().handleEvent(event);
+                                    try{
+                                        RemoveCargoEvent event = new RemoveCargoEvent(player, row-5, col-4, value);
+                                        game.getGameState().handleEvent(event);
+                                    }catch (IllegalEventException e){
+                                        newMessage = new Message("String",null,e.getMessage());
+                                        objOut.writeObject(newMessage);
+                                        objOut.flush();
+                                    }
                                 }
 
                             }
@@ -1025,8 +1115,14 @@ public class ServerController {
                                     objOut.flush();
                                     //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 } else {
-                                    AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
-                                    game.getGameState().handleEvent(event);
+                                    try{
+                                        AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
+                                        game.getGameState().handleEvent(event);
+                                    }catch (IllegalEventException e){
+                                        newMessage = new Message("String",null,e.getMessage());
+                                        objOut.writeObject(newMessage);
+                                        objOut.flush();
+                                    }
                                 }
                             }
                         }
@@ -1081,8 +1177,14 @@ public class ServerController {
                                 objOut.flush();
                                 //client.invalidCommand("Invalid value. It must be between 1 and 3");
                             } else {
-                                SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                         }
 
@@ -1142,8 +1244,14 @@ public class ServerController {
                                         peopleRow.add(col - 4);
                                         peopleRow.add(value);
                                         people.add(peopleRow);
-                                        EjectPeopleEvent event = new EjectPeopleEvent(player, people);
-                                        game.getGameState().handleEvent(event);
+                                        try{
+                                            EjectPeopleEvent event = new EjectPeopleEvent(player, people);
+                                            game.getGameState().handleEvent(event);
+                                        }catch (IllegalEventException e){
+                                            newMessage = new Message("String",null,e.getMessage());
+                                            objOut.writeObject(newMessage);
+                                            objOut.flush();
+                                        }
                                     }
                                 }
                             }
@@ -1170,8 +1278,14 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                        GiveUpEvent event = new GiveUpEvent(player);
-                        game.getGameState().handleEvent(event);
+                        try{
+                            GiveUpEvent event = new GiveUpEvent(player);
+                            game.getGameState().handleEvent(event);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/giveup doesn't support parameters!");
@@ -1219,8 +1333,14 @@ public class ServerController {
                             String engage = firstParameters.get(0);
                             if (engage.equals("true") || engage.equals("false")){
                                 boolean engageBool = Boolean.parseBoolean(engage);
-                                ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
                             else{
                                 newMessage = new Message("String",null,"The parameter must be either true or false.");
@@ -1269,8 +1389,14 @@ public class ServerController {
                                 //client.invalidCommand("Invalid row or column.");
                             }
                             else{
-                                ChooseSubShipEvent event = new ChooseSubShipEvent(player, row-5, col-4);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    ChooseSubShipEvent event = new ChooseSubShipEvent(player, row-5, col-4);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
 
                         }
@@ -1300,9 +1426,14 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                        NoChoiceEvent event = new NoChoiceEvent(player);
-                        game.getGameState().handleEvent(event);
-
+                        try{
+                            NoChoiceEvent event = new NoChoiceEvent(player);
+                            game.getGameState().handleEvent(event);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/nochoice doesn't support parameters!");
@@ -1323,9 +1454,14 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                        DoneEvent event = new DoneEvent(player);
-                        game.getGameState().handleEvent(event);
-
+                        try{
+                            DoneEvent event = new DoneEvent(player);
+                            game.getGameState().handleEvent(event);
+                        }catch (IllegalEventException e){
+                            newMessage = new Message("String",null,e.getMessage());
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                        }
                     }
                     else{
                         newMessage = new Message("String",null,"/done doesn't support parameters!");
@@ -1360,8 +1496,14 @@ public class ServerController {
                                 //client.invalidCommand("Invalid row or column.");
                             }
                             else{
-                                PlaceOrangeAlienEvent event = new PlaceOrangeAlienEvent(player, row-5, col-4);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    PlaceOrangeAlienEvent event = new PlaceOrangeAlienEvent(player, row-5, col-4);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
 
                         }
@@ -1405,8 +1547,14 @@ public class ServerController {
                                 //client.invalidCommand("Invalid row or column.");
                             }
                             else{
-                                PlacePurpleAlienEvent event = new PlacePurpleAlienEvent(player, row-5, col-4);
-                                game.getGameState().handleEvent(event);
+                                try{
+                                    PlacePurpleAlienEvent event = new PlacePurpleAlienEvent(player, row-5, col-4);
+                                    game.getGameState().handleEvent(event);
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
 
                         }
@@ -1450,12 +1598,18 @@ public class ServerController {
                                 //client.invalidCommand("Invalid row or column.");
                             }
                             else{
-                                RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
-                                game.getGameState().handleEvent(event);
-                                newMessage = new Message("Game",game,"viewMyShip");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.viewMyShip(game, client.getNickname());
+                                try{
+                                    RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
+                                    game.getGameState().handleEvent(event);
+                                    newMessage = new Message("Game",game,"viewMyShip");
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                    //client.viewMyShip(game, client.getNickname());
+                                }catch (IllegalEventException e){
+                                    newMessage = new Message("String",null,e.getMessage());
+                                    objOut.writeObject(newMessage);
+                                    objOut.flush();
+                                }
                             }
 
                         }
@@ -1494,10 +1648,14 @@ public class ServerController {
                         else{
                             String indexStr = firstParameters.get(0);
                             int index = Integer.parseInt(indexStr);
-                            ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
-                            game.getGameState().handleEvent(event);
-
-
+                            try{
+                                ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
+                                game.getGameState().handleEvent(event);
+                            }catch (IllegalEventException e){
+                                newMessage = new Message("String",null,e.getMessage());
+                                objOut.writeObject(newMessage);
+                                objOut.flush();
+                            }
                         }
                     }
                     else{

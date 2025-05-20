@@ -12,6 +12,7 @@ public class Message implements Serializable {
     private  String nickname;
     private Tile tile = null;
     private final String message;
+    private String gameID = null;
     public Message(String type,Game game, String message) {
         this.type = type;
         this.game = game;
@@ -43,5 +44,11 @@ public class Message implements Serializable {
     }
     public Game getGame() {
         return game;
+    }
+    public String getGameID() {
+        return gameID;
+    }
+    public void setGameID(String gameID) {
+        this.gameID = gameID;
     }
 }
