@@ -1,5 +1,5 @@
 <h1 align="center"> Software Engineering 2024-2025 </h1>
-<sh align="center"> Prova Finale - Ingegneria del Software - Group n°6 </sh>
+<sh align="center"> Prova Finale - Ingegneria del Software - Gruppo 6 </sh>
 
 ## Authors
 - [Elisa Garsetti](https://github.com/elisagarsetti124)
