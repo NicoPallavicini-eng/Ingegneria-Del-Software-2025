@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
 import java.io.Serializable;
 
@@ -9,7 +10,9 @@ public class Message implements Serializable {
     private final String type;
     private final Game game;
     private  String nickname;
+    private Tile tile = null;
     private final String message;
+    private String gameID = null;
     public Message(String type,Game game, String message) {
         this.type = type;
         this.game = game;
@@ -30,10 +33,22 @@ public class Message implements Serializable {
     public String getType() {
         return type;
     }
+    public Tile getTile() {
+        return tile;
+    }
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
     public String getNickname() {
         return nickname;
     }
     public Game getGame() {
         return game;
+    }
+    public String getGameID() {
+        return gameID;
+    }
+    public void setGameID(String gameID) {
+        this.gameID = gameID;
     }
 }

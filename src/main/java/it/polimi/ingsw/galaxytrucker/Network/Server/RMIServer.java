@@ -8,16 +8,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualClient> clients = new ArrayList<>();
+    final List<String> nicknameList = new ArrayList<>();
+    private Map<VirtualClient,String> mapper = new HashMap<>();
     private ServerController serverController = new ServerController(this);
 
     public RMIServer() throws RemoteException {
         super();
     }
-
 
     @Override
     public void connect(VirtualClient virtualClient) throws RemoteException {
@@ -60,5 +63,32 @@ public class RMIServer implements VirtualServer {
     @Override
     public void handleUserInput(VirtualClient virtualClient, String input) throws RemoteException {
         serverController.handleUserInput(virtualClient,input);
+    }
+    public void addNickname(String nickname) {
+        nicknameList.add(nickname);
+    }
+    @Override
+    public void ping() throws RemoteException {
+        ArrayList<VirtualClient> disconnectedClients = new ArrayList<>();
+        for (VirtualClient virtualClient : clients) {
+            try {
+                virtualClient.pong();
+            } catch (RemoteException e) {
+                System.out.println("Client disconnesso o non raggiungibile");
+                disconnectedClients.add(virtualClient);
+                String nickname = mapper.get(virtualClient);
+                serverController.disconnect(nickname);
+
+                //gestire la disconessione di Client in server Controller
+                //serverController.disconnect(virtualClient)
+            }
+        }
+        for (VirtualClient virtualClient : disconnectedClients) {
+            clients.remove(virtualClient);
+        }
+    }
+    @Override
+    public void mapNicknameClient(VirtualClient virtualClient, String nickname) {
+        mapper.put(virtualClient,nickname);
     }
 }

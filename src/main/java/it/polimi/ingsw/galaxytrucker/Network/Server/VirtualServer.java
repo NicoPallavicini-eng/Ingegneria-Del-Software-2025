@@ -12,4 +12,7 @@ public interface VirtualServer extends Remote{
     void showMessage(String input) throws RemoteException;
     void handleUserInput(VirtualClient virtualClient, String input) throws RemoteException;
     List<VirtualClient> getClients() throws RemoteException;
+    void ping()throws RemoteException;
+    void addNickname(String nickname) throws RemoteException;
+    void mapNicknameClient(VirtualClient virtualClient, String nickname) throws RemoteException;
 }

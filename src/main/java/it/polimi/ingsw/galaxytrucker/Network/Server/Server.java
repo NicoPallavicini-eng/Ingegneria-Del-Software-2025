@@ -7,8 +7,11 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Server {
+    public VirtualServer rmiServer;
     public SocketServer socketServer;
 
     public Server() throws RemoteException , IOException {
@@ -16,11 +19,24 @@ public class Server {
         final String serverName = "AdderServer";
 
         VirtualServer server = new RMIServer();
+        rmiServer = server;
         VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server, 1090);
 
         Registry registry = LocateRegistry.createRegistry(1090);
         registry.rebind(serverName, stub);
         System.out.println("server bound.");
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try{
+                    rmiServer.ping();
+                }catch(RemoteException e){
+                   // System.out.println("Client RMI Disconnesso");
+                }
+            }
+        },0,5000);
 
         String host = "localhost";
         int port = 12343;

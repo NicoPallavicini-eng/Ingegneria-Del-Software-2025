@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServerSocket;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
@@ -89,6 +90,10 @@ public void referMethod(Message msg) throws RemoteException {
             }case "setNickname" ->{
                 setNickname(msg);
                 //System.out.println("Nickname set to: " + nickname);
+                pongNickname();
+
+            }case "PING"->{
+
             }
             default -> {
                 System.out.println(line);
@@ -101,6 +106,22 @@ public void referMethod(Message msg) throws RemoteException {
             case "defaultView" -> {
                 game = msg.getGame();
                 defaultView(game, msg.getNickname());
+            }case "viewLeaderboard" ->{
+                game = msg.getGame();
+                viewLeaderboard(game, msg.getNickname());
+            }case "viewMyShip" ->{
+                game = msg.getGame();
+                viewMyShip(msg.getGame(),msg.getNickname());
+            }case "viewTilepile" ->{
+                game = msg.getGame();
+                viewTilepile(msg.getGame());
+            }case "viewShips"->{
+                game = msg.getGame();
+                viewShips(game);
+            }case "viewTile"->{
+                viewTile(msg.getTile());
+            }default -> {
+                System.out.println("Il messaggio con attributo Game non ha il commando specificato");
             }
 
         }
@@ -111,16 +132,39 @@ public void showMessageFromServer(String message){
     System.out.println("You recieved this : " + message);
 }
 
+    public void viewShips(Game game) throws RemoteException {
+        tui.printShips(game);
+    }
+    public void viewTile(Tile currentTile) throws RemoteException {
+        tui.printTile(currentTile);
+    }
+    public void viewTilepile(Game game) throws RemoteException{
+        tui.viewTilePile(game);
+    }
+
     public void defaultView(Game game, String nickname) throws RemoteException {
         tui.viewTilePile(game);
         tui.printMyShip(game, nickname);
     }
-
+    public void viewLeaderboard(Game game, String nickname) throws RemoteException {
+        tui.viewLeaderboard(game);
+    }
+    public void viewMyShip(Game game, String nickname) throws RemoteException {
+        tui.printMyShip(game, nickname);
+    }
     public void helpMessage(){
         tui.printHelpMessage();
     }
-    public void setNickname(Message msg){
+    public void setNickname(Message msg)throws RemoteException{
         nickname = msg.getNickname();
+    }
+    public void pongNickname() {
+        try{
+            server.sendMessageToServer("/NICKNAME_PONG",nickname);
+        }catch(IOException e){
+            System.err.println(e.getMessage());
+        }
+
     }
 
     public static void main(String[] args) throws IOException, UnknownHostException {
