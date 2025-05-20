@@ -22,7 +22,11 @@ public enum AnsiColor {
     SHIELD_COLOR(156),          // LIGHT LIME
 
     CREW_COLOR(224),            // LIGHT OCHRE
-    CARGO_COLOR(189);           // LIGHT LILAC
+    CARGO_COLOR(189),           // LIGHT LILAC
+
+    BLUE_CARDBOARD(25),
+    PURPLE_CARDBOARD(90),
+    RED_CARDBOARD(88);
 
     private final int code;
 

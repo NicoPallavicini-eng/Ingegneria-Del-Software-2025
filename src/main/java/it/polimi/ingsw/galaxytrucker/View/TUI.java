@@ -25,6 +25,22 @@ public class TUI {
         this.nickname = nickname;
     }
 
+    public void printTitle() {
+        System.out.println();
+        System.out.println(AnsiColor.BLUE_CARDBOARD.fg() +
+                "  ▄████  ▄▄▄       ██▓    ▄▄▄      ▒██   ██▒▓██   ██▓ " + AnsiColor.PURPLE_CARDBOARD.fg() + "  ▄▄▄█████▓ ██▀███   █    ██  ▄████▄   ██ ▄█▀▓█████  ██▀███  \n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                " ██▒ ▀█▒▒████▄    ▓██▒   ▒████▄    ▒▒ █ █ ▒░ ▒██  ██▒ " + AnsiColor.PURPLE_CARDBOARD.fg() + "  ▓  ██▒ ▓▒▓██ ▒ ██▒ ██  ▓██▒▒██▀ ▀█   ██▄█▒ ▓█   ▀ ▓██ ▒ ██▒\n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "▒██░▄▄▄░▒██  ▀█▄  ▒██░   ▒██  ▀█▄  ░░  █   ░  ▒██ ██░ " + AnsiColor.PURPLE_CARDBOARD.fg() + "  ▒ ▓██░ ▒░▓██ ░▄█ ▒▓██  ▒██░▒▓█    ▄ ▓███▄░ ▒███   ▓██ ░▄█ ▒\n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "░▓█  ██▓░██▄▄▄▄██ ▒██░   ░██▄▄▄▄██  ░ █ █ ▒   ░ ▐██▓░ " + AnsiColor.PURPLE_CARDBOARD.fg() + "  ░ ▓██▓ ░ ▒██▀▀█▄  ▓▓█  ░██░▒▓▓▄ ▄██▒▓██ █▄ ▒▓█  ▄ ▒██▀▀█▄  \n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "░▒▓███▀▒ ▓█   ▓██▒░██████▒▓█   ▓██▒▒██▒ ▒██▒  ░ ██▒▓░ " + AnsiColor.PURPLE_CARDBOARD.fg() + "    ▒██▒ ░ ░██▓ ▒██▒▒▒█████▓ ▒ ▓███▀ ░▒██▒ █▄░▒████▒░██▓ ▒██▒\n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                " ░▒   ▒  ▒▒   ▓▒█░░ ▒░▓  ░▒▒   ▓▒█░▒▒ ░ ░▓ ░   ██▒▒▒  " + AnsiColor.PURPLE_CARDBOARD.fg() + "    ▒ ░░   ░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ░ ░▒ ▒  ░▒ ▒▒ ▓▒░░ ▒░ ░░ ▒▓ ░▒▓░\n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "  ░   ░   ▒   ▒▒ ░░ ░ ▒  ░ ▒   ▒▒ ░░░   ░▒ ░ ▓██ ░▒░  " + AnsiColor.PURPLE_CARDBOARD.fg() + "      ░      ░▒ ░ ▒░░░▒░ ░ ░   ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░\n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "░ ░   ░   ░   ▒     ░ ░    ░   ▒    ░    ░   ▒ ▒ ░░   " + AnsiColor.PURPLE_CARDBOARD.fg() + "    ░        ░░   ░  ░░░ ░ ░ ░        ░ ░░ ░    ░     ░░   ░ \n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "      ░       ░  ░    ░  ░     ░  ░ ░    ░   ░ ░      " + AnsiColor.PURPLE_CARDBOARD.fg() + "              ░        ░     ░ ░      ░  ░      ░  ░   ░     \n" + AnsiColor.BLUE_CARDBOARD.fg() +
+                "                                             ░ ░      " + AnsiColor.PURPLE_CARDBOARD.fg() + "                             ░                               " + AnsiColor.RESET);
+        System.out.println();
+    }
+
     public void viewLeaderboard(Game game){
         System.out.println("LeaderBoard: ");
         int i = 1;

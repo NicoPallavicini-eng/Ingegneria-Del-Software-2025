@@ -6,8 +6,9 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 public class UI {
     public static void main(String[] args){
         Game game = ServerController.getGame();
-        //new ParsingJSON();
+        // new ParsingJSON();
         TUI tui = new TUI();
-        tui.viewTilePile(game);
+        // tui.viewTilePile(game);
+        tui.printTitle();
     }
 }
