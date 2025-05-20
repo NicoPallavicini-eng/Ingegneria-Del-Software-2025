@@ -961,11 +961,11 @@ public class TUI {
         if (card != null){
             if (card instanceof CombatZoneCard) { // TODO decide if we want to print the affected player's nickname or not
                 System.out.println(AnsiColor.RED.fg() + "Combat Zone Card \n" + AnsiColor.RESET +
-                        "Days to lose: " + ((CombatZoneCard) card).getDaysLost() + " \n");
+                        "Days to lose: " + ((CombatZoneCard) card).getDaysLost());
                 if (card instanceof CombatZoneCardL) {
-                    System.out.println("Crew lost: " + ((CombatZoneCard) card).getCrewLost() + " \n");
+                    System.out.println("Crew lost: " + ((CombatZoneCard) card).getCrewLost());
                 } else if (card instanceof CombatZoneCardNotL) {
-                    System.out.println("Cargo lost: " + ((CombatZoneCard) card).getCargoLost() + " \n");
+                    System.out.println("Cargo lost: " + ((CombatZoneCard) card).getCargoLost());
                 }
                 List <Cannonball> balls = ((CombatZoneCard) card).getCannonballList();
                 printBalls(balls);
@@ -976,7 +976,7 @@ public class TUI {
             else if (card instanceof MeteorsCard){
                 System.out.println(AnsiColor.ORANGE.fg() + "Meteors Card: \n" + AnsiColor.RESET);
                 List <Meteor> balls = ((MeteorsCard) card).getMeteorsList();
-                System.out.println("Meteors: Tot number = " + balls.size() + "\n");
+                System.out.println("Meteors: Tot number = " + balls.size());
                 int i = 1;
                 for (Meteor ball : balls) {
                     System.out.println("   " + i + ": ");
@@ -985,18 +985,18 @@ public class TUI {
                     } else {
                         System.out.println("Size = Small, ");
                     }
-                    System.out.println("Direction = " + ball.direction() + "\n");
+                    System.out.println("Direction = " + ball.direction());
                     i++;
                 }
             }
             else if (card instanceof OpenSpaceCard){
-                System.out.println(AnsiColor.BLUE.fg() + "Open Space Card \n" + AnsiColor.RESET);
+                System.out.println(AnsiColor.BLUE.fg() + "Open Space Card" + AnsiColor.RESET);
             }
             else if(card instanceof PiratesCard){
                 System.out.println(AnsiColor.PURPLE.fg() + "Pirates Card: \n" + AnsiColor.RESET +
                         "Firepower: " + ((PiratesCard) card).getFirepower() + " \n" +
                         "Credits: " + ((PiratesCard) card).getCredits() + " \n" +
-                        "Days to lose: " + ((PiratesCard) card).getDaysToLose() + " \n");
+                        "Days to lose: " + ((PiratesCard) card).getDaysToLose());
                 List <Cannonball> balls = ((PiratesCard) card).getCannonballList();
                 printBalls(balls);
             }
@@ -1036,31 +1036,31 @@ public class TUI {
                 System.out.println(AnsiColor.CARGO_COLOR.fg() + "Ship Card: \n" + AnsiColor.RESET +
                         "Credits: " + ((ShipCard) card).getCredits() + " \n" +
                         "Crew lost: " + ((ShipCard) card).getCrewNumberLost() + " \n" +
-                        "Days to lose: " + ((ShipCard) card).getDaysToLose() + "\n");
+                        "Days to lose: " + ((ShipCard) card).getDaysToLose());
             }
             else if (card instanceof SlaversCard){
                 System.out.println(AnsiColor.PURPLE.fg() + "Slavers Card: \n"+ AnsiColor.RESET +
                         "Firepower: " + ((SlaversCard) card).getFirepower() + "\n"+
                         "Credits: " + ((SlaversCard) card).getNumberOfCredits() + "\n"+
                         "Crew lost: " + ((SlaversCard) card).getNumberOfCrewLost() + "\n"+
-                        "Days to lose: " + ((SlaversCard) card).getNumberOfDaysToLose() + "\n");
+                        "Days to lose: " + ((SlaversCard) card).getNumberOfDaysToLose());
             }
             else if (card instanceof SmugglersCard){
                 List<Integer> blocks = ((SmugglersCard)card).getBlocksList();
                 System.out.println(AnsiColor.PURPLE.fg() + "Smugglers Card: \n" + AnsiColor.RESET +
-                        "Firepower: " + ((SmugglersCard) card).getFirepower() + "\n");
+                        "Firepower: " + ((SmugglersCard) card).getFirepower());
                 printBlocks(blocks);
-                System.out.println("Days to lose: " + ((SmugglersCard) card).getDaysToLose() + "\n");
+                System.out.println("Days to lose: " + ((SmugglersCard) card).getDaysToLose());
             }
             else if (card instanceof StardustCard){
-                System.out.println(AnsiColor.YELLOW.fg() + "Stardust Card \n" + AnsiColor.RESET);
+                System.out.println(AnsiColor.YELLOW.fg() + "Stardust Card" + AnsiColor.RESET);
             }
             else if (card instanceof StationCard){
                 List<Integer> blocks = ((StationCard)card).getBlockList();
                 System.out.println(AnsiColor.CREW_COLOR.fg() + "Station Card: \n"+ AnsiColor.RESET +
-                        "Crew needed: " + ((StationCard) card).getCrewNumberNeeded() + "\n");
+                        "Crew needed: " + ((StationCard) card).getCrewNumberNeeded());
                 printBlocks(blocks);
-                System.out.println("Days to lose: " + ((StationCard) card).getDaysToLose() + " \n");
+                System.out.println("Days to lose: " + ((StationCard) card).getDaysToLose());
             }
         }
     }
