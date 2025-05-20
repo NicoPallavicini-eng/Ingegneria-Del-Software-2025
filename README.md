@@ -16,23 +16,23 @@
 
 | Functionality                 | Status |
 |------------------------------|--------|
-| Simplified Rules             | 🛠️ |
-| Complete Rules               | ✅ |
-| Socket Support               | 🔬 |
-| RMI Support                  | ✅ |
-| Text-Based UI (TUI)          | 🔬 |
-| Graphical UI (GUI)           | 🛠️ |
-| Test Flight Mode             | 🛠️ |
-| Disconnection Resilience     | 🔬 |
-| Multiple Matches             | ❌ |
-| Persistence (Save System)    | ❌ |
+| Simplified Rules             |  🛠️  |
+| Complete Rules               |  ✅  |
+| Socket Support               |  🔬  |
+| RMI Support                  |  ✅  |
+| Text-Based UI (TUI)          |  🔬  |
+| Graphical UI (GUI)           |  🛠️  |
+| Test Flight Mode             |  🛠️  |
+| Disconnection Resilience     |  🔬  |
+| Multiple Matches             |  ❌  |
+| Persistence (Save System)    |  ❌  |
 
 #### Legend
 - ❌ Not Implemented
 - ✅ Implemented
 - 🛠️ In progress
 - 🔬 Testing
-- 
+
 <!--## Documentation
 ### Test Coverage
 You can check up our JUnit test coverage [here](Deliverables%2FTEST%20COVERAGE%2FtestCoverage.png).-->
