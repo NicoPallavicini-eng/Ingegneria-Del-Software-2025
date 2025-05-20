@@ -34,11 +34,11 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
         int diceRoll = rollTwoDice();
 
         if (this.rowOrColumn == ROW) {
-            if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll).isEmpty()) {
+            if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll-5).isEmpty()) {
                 checkForCannonOrRemoveRow(ship, diceRoll);
             }
         } else if (this.rowOrColumn == COLUMN) {
-            if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll).isEmpty()) {
+            if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll-4).isEmpty()) {
                 checkForCannonOrRemoveColumn(ship, diceRoll);
             }
         }

@@ -10,6 +10,7 @@ public class BatteryTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     public BatteryTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, int slotsFilled) {
         super(north, west, south, east);
@@ -18,6 +19,7 @@ public class BatteryTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
 
     public void removeBattery(int quantity){

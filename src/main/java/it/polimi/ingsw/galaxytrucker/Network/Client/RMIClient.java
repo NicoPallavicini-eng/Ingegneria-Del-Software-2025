@@ -149,4 +149,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     public void pong() throws RemoteException {
 
     }
+
+    @Override
+    public void printIndex(int index) throws RemoteException {
+        System.out.println("Index: " + index);
+    }
 }

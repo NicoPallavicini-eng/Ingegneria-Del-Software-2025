@@ -12,6 +12,7 @@ public class BioadaptorTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     public BioadaptorTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, AlienColor color){
         super(north, west, south, east);
@@ -19,31 +20,14 @@ public class BioadaptorTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
     public AlienColor getColor() {
         return this.color;
     }
 
     public AlienColor getAlienColor(){
-        AlienColor alienColor = null;
-        if (this.isOrange && !this.isPurple){
-            alienColor = AlienColor.ORANGE;
-        }
-        else if (this.isPurple && !this.isOrange){
-            alienColor = AlienColor.PURPLE;
-        }
-        return alienColor;
-    }
-
-    public void setColor(AlienColor color){
-        if (color == AlienColor.ORANGE){
-            this.isOrange = true;
-            this.isPurple = false;
-        }
-        else if (color == AlienColor.PURPLE){
-            this.isPurple = true;
-            this.isOrange = false;
-        }
+        return color;
     }
 
     @Override

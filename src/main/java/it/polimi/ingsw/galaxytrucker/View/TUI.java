@@ -306,25 +306,43 @@ public class TUI {
     }
 
     public void printActualShip(Ship ship) {
-        if (ship.getColor() == Color.RED) {
+        Color color = ship.getColor();
+        if (color == Color.RED) {
             System.out.println(AnsiColor.RED.fg() + "Red Ship:" + AnsiColor.RESET);
-        } else if (ship.getColor() == Color.BLUE) {
+        } else if (color == Color.BLUE) {
             System.out.println(AnsiColor.BLUE.fg() + "Blue Ship:" + AnsiColor.RESET);
-        } else if (ship.getColor() == Color.GREEN) {
+        } else if (color == Color.GREEN) {
             System.out.println(AnsiColor.GREEN.fg() + "Green Ship:" + AnsiColor.RESET);
-        } else if (ship.getColor() == Color.YELLOW) {
+        } else if (color == Color.YELLOW) {
             System.out.println(AnsiColor.YELLOW.fg() + "Yellow Ship:" + AnsiColor.RESET);
         }
         ArrayList<ArrayList<Tile>> shipList = ship.getFloorplanArrayList();
-        printShipHeaders();
+        printShipHeaders(color);
         int i = 5;
         for (ArrayList<Tile> row : shipList) {
             StringBuilder upperRow;
             StringBuilder middleRow;
             StringBuilder lowerRow;
-            upperRow = new StringBuilder("║       ");
-            middleRow = new StringBuilder("║ [" + i + "]   ");
-            lowerRow = new StringBuilder("║       ");
+            upperRow = new StringBuilder();
+            middleRow = new StringBuilder();
+            lowerRow = new StringBuilder();
+            if (color == Color.RED) {
+                upperRow.append(AnsiColor.RED.fg() + "║       " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.RED.fg() + "║ [" + i + "]   " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.RED.fg() + "║       " + AnsiColor.RESET);
+            } else if (color == Color.BLUE) {
+                upperRow.append(AnsiColor.BLUE.fg() + "║       " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.BLUE.fg() + "║ [" + i + "]   " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.BLUE.fg() + "║       " + AnsiColor.RESET);
+            } else if (color == Color.GREEN) {
+                upperRow.append(AnsiColor.GREEN.fg() + "║       " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.GREEN.fg() + "║ [" + i + "]   " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.GREEN.fg() + "║       " + AnsiColor.RESET);
+            } else if (color == Color.YELLOW) {
+                upperRow.append(AnsiColor.YELLOW.fg() + "║       " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.YELLOW.fg() + "║ [" + i + "]   " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.YELLOW.fg() + "║       " + AnsiColor.RESET);
+            }
             int j = 4; // column
             for (Tile tile : row) {
                 List<List<String>> allRow = buildTile(tile, ship);
@@ -347,15 +365,29 @@ public class TUI {
                 }
                 j++;
             }
-            upperRow.append("      ║ ");
-            middleRow.append("  [" + i + "] ║ ");
-            lowerRow.append("      ║ ");
+            if (color == Color.RED) {
+                upperRow.append(AnsiColor.RED.fg() + "      ║ " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.RED.fg() + "  [" + i + "] ║ " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.RED.fg() + "      ║ " + AnsiColor.RESET);
+            } else if (color == Color.BLUE) {
+                upperRow.append(AnsiColor.BLUE.fg() + "      ║ " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.BLUE.fg() + "  [" + i + "] ║ " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.BLUE.fg() + "      ║ " + AnsiColor.RESET);
+            } else if (color == Color.GREEN) {
+                upperRow.append(AnsiColor.GREEN.fg() + "      ║ " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.GREEN.fg() + "  [" + i + "] ║ " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.GREEN.fg() + "      ║ " + AnsiColor.RESET);
+            } else if (color == Color.YELLOW) {
+                upperRow.append(AnsiColor.YELLOW.fg() + "      ║ " + AnsiColor.RESET);
+                middleRow.append(AnsiColor.YELLOW.fg() + "  [" + i + "] ║ " + AnsiColor.RESET);
+                lowerRow.append(AnsiColor.YELLOW.fg() + "      ║ " + AnsiColor.RESET);
+            }
             i++;
             System.out.println(String.join("", upperRow));
             System.out.println(String.join("", middleRow));
             System.out.println(String.join("", lowerRow));
         }
-        printShipFooters();
+        printShipFooters(color);
     }
 
     private List<List<String>> appendReserved(Ship ship) {
@@ -785,20 +817,52 @@ public class TUI {
         );
     }
 
-    private void printShipHeaders(){
-        System.out.println(
-                "╔═════════════════════════════════════════════════════════════════════╗\n" +
-                "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
-                "║                                                                     ║"
-        );
+    private void printShipHeaders(Color color){
+        if (color == Color.RED) {
+            System.out.println(AnsiColor.RED.fg() +
+                    "╔═════════════════════════════════════════════════════════════════════╗\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "║                                                                     ║" + AnsiColor.RESET);
+        } else if (color == Color.BLUE) {
+            System.out.println(AnsiColor.BLUE.fg() +
+                    "╔═════════════════════════════════════════════════════════════════════╗\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "║                                                                     ║" + AnsiColor.RESET);
+        } else if (color == Color.GREEN) {
+            System.out.println(AnsiColor.GREEN.fg() +
+                    "╔═════════════════════════════════════════════════════════════════════╗\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "║                                                                     ║" + AnsiColor.RESET);
+        } else if (color == Color.YELLOW) {
+            System.out.println(AnsiColor.YELLOW.fg() +
+                    "╔═════════════════════════════════════════════════════════════════════╗\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "║                                                                     ║" + AnsiColor.RESET);
+        }
     }
 
-    private void printShipFooters(){
-        System.out.println(
-                "║                                                                     ║\n" +
-                "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
-                "╚═════════════════════════════════════════════════════════════════════╝"
-        );
+    private void printShipFooters(Color color){
+        if (color == Color.RED) {
+            System.out.println(AnsiColor.RED.fg() +
+                    "║                                                                     ║\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "╚═════════════════════════════════════════════════════════════════════╝" + AnsiColor.RESET);
+        } else if (color == Color.BLUE) {
+            System.out.println(AnsiColor.BLUE.fg() +
+                    "║                                                                     ║\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "╚═════════════════════════════════════════════════════════════════════╝" + AnsiColor.RESET);
+        } else if (color == Color.GREEN) {
+            System.out.println(AnsiColor.GREEN.fg() +
+                    "║                                                                     ║\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "╚═════════════════════════════════════════════════════════════════════╝" + AnsiColor.RESET);
+        } else if (color == Color.YELLOW) {
+            System.out.println(AnsiColor.YELLOW.fg() +
+                    "║                                                                     ║\n" +
+                    "║         [4]     [5]     [6]     [7]     [8]     [9]    [1 0]        ║\n" +
+                    "╚═════════════════════════════════════════════════════════════════════╝" + AnsiColor.RESET);
+        }
     }
 
     private List<String> checkConnectors(List<ConnectorType> connectors){
@@ -939,20 +1003,6 @@ public class TUI {
         }
         else{
             System.out.println("No current card available");
-        }
-
-    }
-
-    public void printCurrentCard(Game game){
-        System.out.println("Current card: \n");
-        GameState gameState = game.getGameState();
-        if (gameState instanceof TravellingState){
-            TravellingState travellingState = (TravellingState) gameState;
-            Card currentCard = travellingState.getCurrentCard();
-            checkCard(currentCard);
-        }
-        else{
-            System.out.println("No current card");
         }
 
     }

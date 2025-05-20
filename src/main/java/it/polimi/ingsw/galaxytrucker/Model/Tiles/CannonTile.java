@@ -13,6 +13,7 @@ public class CannonTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     @JsonCreator
     public CannonTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, boolean doublePower, boolean activeState) {
@@ -22,6 +23,7 @@ public class CannonTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
 
     public Direction getDirection() {

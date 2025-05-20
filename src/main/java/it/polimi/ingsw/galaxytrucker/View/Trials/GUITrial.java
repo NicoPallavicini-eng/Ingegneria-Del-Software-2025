@@ -1,16 +1,13 @@
-package it.polimi.ingsw.galaxytrucker;
+package it.polimi.ingsw.galaxytrucker.View.Trials;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-public class GalaxyTruckerApp extends Application {
+public class GUITrial extends Application {
     private static final int ROWS = 5;
     private static final int COLS = 7;
     private static final int TILE_SIZE = 124;

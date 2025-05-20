@@ -22,4 +22,6 @@ module it.polimi.ingsw.galaxytrucker {
     exports it.polimi.ingsw.galaxytrucker.Model to com.google.gson;
     exports it.polimi.ingsw.galaxytrucker;
     exports it.polimi.ingsw.galaxytrucker.Controller.Server;
+    exports it.polimi.ingsw.galaxytrucker.View.Trials;
+    opens it.polimi.ingsw.galaxytrucker.View.Trials to com.google.gson, javafx.fxml;
 }

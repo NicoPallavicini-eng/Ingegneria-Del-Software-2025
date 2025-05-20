@@ -10,6 +10,7 @@ public class CargoTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
         super(north, west, south, east);
@@ -19,6 +20,7 @@ public class CargoTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
 
     public List<Integer> getTileContent() {

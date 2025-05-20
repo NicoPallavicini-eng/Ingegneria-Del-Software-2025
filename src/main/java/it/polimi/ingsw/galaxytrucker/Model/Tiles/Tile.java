@@ -18,6 +18,7 @@ public class Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     /**
      * Constructs a Tile with specified connector types for each side
@@ -36,6 +37,7 @@ public class Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
 
     /**
@@ -102,7 +104,7 @@ public class Tile implements Serializable {
      */
 
     public void flip(){
-        facingUp = false;
+        facingUp = true;
     }
 
     /**
@@ -146,4 +148,12 @@ public class Tile implements Serializable {
      */
 
     public void accept(TileVisitor visitor){}
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
 }

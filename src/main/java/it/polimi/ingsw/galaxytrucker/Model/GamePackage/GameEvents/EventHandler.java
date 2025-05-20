@@ -194,6 +194,9 @@ public class EventHandler implements Serializable {
                 if (ship.getTileInHand() == null) {
                     throw new IllegalEventException("You need to place a Tile in hand before putting it back down");
                 }
+                if (ship.getTileInHand().isReserved()) {
+                    throw new IllegalEventException("You can only place a reserved tile on your ship, not in the pile");
+                }
                 ship.getTileInHand().setChoosable(true);
                 pile.set(pile.indexOf(null), ship.getTileInHand());
                 ship.setTileInHand(null);
@@ -286,6 +289,7 @@ public class EventHandler implements Serializable {
             if (ship.getReservedTiles().size() == 2) {
                 throw new IllegalEventException("You can't reserve more than two tiles");
             }
+            ship.getTileInHand().setReserved(true);
             ship.getReservedTiles().add(ship.getTileInHand());
             ship.setTileInHand(null);
         }
@@ -355,16 +359,17 @@ public class EventHandler implements Serializable {
                 throw new IllegalEventException("you have not saved a tile at index" + event.index());
             }
             Tile tile = ship.getReservedTiles().get(event.index());
+            ship.setLastPlacedTile(null);
             ship.getReservedTiles().remove(event.index());
             ship.setTileInHand(tile);
         }
     }
 
-    public static void handleEvent(ViewDeckEvent event) {
+    public static void handleEvent(ViewDeckEvent event) { // TODO do
     }
 
     /*
-    public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent
+    public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent TODO se non serve brasare questo
     //il riferimento a Game
      */
     /*
