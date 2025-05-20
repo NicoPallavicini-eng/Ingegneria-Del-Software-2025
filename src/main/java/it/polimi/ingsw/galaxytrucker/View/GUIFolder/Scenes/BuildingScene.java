@@ -7,10 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-public class ShipBuildScene {
+public class BuildingScene {
     private final Scene scene;
 
-    public ShipBuildScene() {
+    public BuildingScene() {
         StackPane root = new StackPane();
 
         // Set background image

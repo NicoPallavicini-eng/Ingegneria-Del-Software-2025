@@ -4,10 +4,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class MainMenuScene {
+public class TravellingScene {
     private Scene scene;
 
-    public MainMenuScene() {
+    public TravellingScene() {
         VBox root = new VBox(20);
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
