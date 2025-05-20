@@ -28,7 +28,9 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     public void next() {
-        //todo populate everything that is not an alien
+        for(Player p : game.getListOfActivePlayers()){
+            p.getShip().fill();
+        }
         game.updateListOfActivePlayers();
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
@@ -66,7 +68,7 @@ public class BuildingState extends GameState implements Serializable {
                     }
                 }
                 if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
-                    next();
+                    checkNext();
                 }
             }
 
@@ -182,7 +184,15 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
-
+    public void handleEvent(DoneEvent event) {
+        if(!playersWithLegalShips.contains(event.player())){
+            throw new IllegalEventException("You can't populate your ship until it is a legal ship ready to takeoff");
+        }
+        else{
+            placedAliens.put(event.player(), new Boolean[]{true, true});
+            checkNext();
+        }
+    }
 
     public void handleEvent(FlipHourglassEvent event) {
         if (timeIsUp) {

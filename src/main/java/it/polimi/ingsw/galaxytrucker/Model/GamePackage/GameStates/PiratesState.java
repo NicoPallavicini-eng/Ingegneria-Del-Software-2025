@@ -2,13 +2,18 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Cannonball;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PiratesCard;
+import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.ShieldTileVisitor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /*Players fight pirates according to their travel order,
 once pirates have been slain or all player have been defeated
@@ -143,6 +148,24 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
+    private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
+        switch (shieldOrientation) {
+            case NORTHEAST -> {
+                return direction == Direction.NORTH || direction == Direction.EAST;
+            }
+            case NORTHWEST -> {
+                return direction == Direction.NORTH || direction == Direction.WEST;
+            }
+            case SOUTHEAST -> {
+                return direction == Direction.SOUTH || direction == Direction.EAST;
+            }
+            case SOUTHWEST -> {
+                return direction == Direction.SOUTH || direction == Direction.WEST;
+            }
+        }
+        return false;
+    }
+
     public void handleEvent(ActivateShieldEvent event){
         if(!reckoningPhase){
             throw new IllegalEventException("Not time for activating shield");
@@ -150,10 +173,15 @@ public class PiratesState extends TravellingState implements Serializable {
         else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
             throw new IllegalEventException("you shall not defend");
         }
+        Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());
+        ShieldTileVisitor stv = new ShieldTileVisitor();
+        tile.ifPresent(t -> t.accept(stv));
+        if(stv.getList().isEmpty() || !shieldDefends(stv.getList().getFirst().getOrientation(), currentCannonball.direction())){
+            throw new IllegalEventException("You didn't select a shield able to defend you");
+        }
         else{
             EventHandler.handleEvent(event);
             defendedPlayers.add(event.player());
-            currentCannonball.getHit(event.player().getShip());
             if(defendedPlayers.containsAll(defeatedPlayers)){
                 consequences();
             }

@@ -967,4 +967,12 @@ public class Ship implements Serializable {
         }
     }
 
+    public void fill(){
+        for(CabinTile cabinTile : getListOfCabin()){
+            if(cabinTile.getInhabitants()!=CabinInhabitants.ALIEN){
+                cabinTile.updateInhabitants(CabinInhabitants.TWO);
+            }
+        }
+    }
+
 }

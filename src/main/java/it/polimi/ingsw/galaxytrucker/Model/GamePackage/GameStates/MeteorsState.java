@@ -22,7 +22,6 @@ public class MeteorsState extends TravellingState implements Serializable {
     private ArrayList<Player> handledPlayers;
     private List<Meteor> meteors;
     private Meteor currentMeteor;
-    private int currentMeteorDiceRoll;
 
     public MeteorsState(Game game, MeteorsCard card) {
         super(game, card);
@@ -34,7 +33,6 @@ public class MeteorsState extends TravellingState implements Serializable {
         meteors = currentCard.getMeteorsList();
         currentMeteor = meteors.get(0);
         meteors.remove(0);
-        currentMeteorDiceRoll = currentMeteor.rollTwoDice();
     }
 
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
@@ -96,10 +94,10 @@ public class MeteorsState extends TravellingState implements Serializable {
         Direction direction = currentMeteor.direction();
         int cannonRow = event.cannons().get(0).get(1);
         int cannonCol = event.cannons().get(0).get(0);
-        if(!( (direction == Direction.NORTH && currentMeteorDiceRoll == cannonCol)
-        || (direction == Direction.SOUTH && (currentMeteorDiceRoll >= cannonCol - 1 && currentMeteorDiceRoll <= cannonCol + 1))
-        || (direction == Direction.EAST && (currentMeteorDiceRoll >= cannonRow - 1 && currentMeteorDiceRoll <= cannonRow + 1))
-        || (direction == Direction.WEST && (currentMeteorDiceRoll >= cannonRow - 1 && currentMeteorDiceRoll <= cannonRow + 1)) )){
+        if(!( (direction == Direction.NORTH && currentMeteor.diceRoll() == cannonCol)
+        || (direction == Direction.SOUTH && (currentMeteor.diceRoll() >= cannonCol - 1 && currentMeteor.diceRoll() <= cannonCol + 1))
+        || (direction == Direction.EAST && (currentMeteor.diceRoll() >= cannonRow - 1 && currentMeteor.diceRoll() <= cannonRow + 1))
+        || (direction == Direction.WEST && (currentMeteor.diceRoll() >= cannonRow - 1 && currentMeteor.diceRoll() <= cannonRow + 1)) )){
             throw new IllegalEventException("The cannon's position makes it impossible to fire the incoming meteor");
         }
         else{
@@ -131,7 +129,6 @@ public class MeteorsState extends TravellingState implements Serializable {
             }
             currentMeteor = meteors.get(0);
             meteors.remove(0);
-            currentMeteorDiceRoll = currentMeteor.rollTwoDice();
             for (Player player : game.getListOfActivePlayers()) {
                 player.getShip().disactivateEverything();
             }

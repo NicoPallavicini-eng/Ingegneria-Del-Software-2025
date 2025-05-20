@@ -70,6 +70,7 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
 
     protected void cannonsPenalty() {
         super.cannonsPenalty();
+        cannonballStorm();
     }
 
 }

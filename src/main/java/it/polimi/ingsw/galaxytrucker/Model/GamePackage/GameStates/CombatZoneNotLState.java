@@ -65,5 +65,10 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         super.peoplePenalty();
     }
 
+    protected void peoplePenalty(){
+        super.peoplePenalty();
+        cannonballStorm();
+    }
+
 
 }
