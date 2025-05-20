@@ -7,5 +7,4 @@ public class OpenSpaceCard extends Card implements Serializable {
         super(levelTwo, used);
     }
 
-
 }

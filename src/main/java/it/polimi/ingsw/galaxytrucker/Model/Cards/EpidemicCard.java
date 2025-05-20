@@ -7,7 +7,6 @@ public class EpidemicCard extends Card implements Serializable {
         super(levelTwo, used);
     }
 
-
 /*    public void process(Ship ship) {
         List <CabinTile> cabins = ship.getListOfCabin();
         List <CabinTile> visited = new ArrayList<>();

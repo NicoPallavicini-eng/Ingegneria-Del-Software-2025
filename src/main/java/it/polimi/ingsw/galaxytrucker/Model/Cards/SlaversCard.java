@@ -32,7 +32,6 @@ public class SlaversCard extends Card implements Serializable {
         return daysToLose;
     }
 
-
  /*   public void process(Player player, SequentialTravellingState state) {
         Ship ship = player.getShip();
 

@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 public class TileView extends StackPane {
-    private static final int TILE_SIZE = 125;
+    private static final int TILE_SIZE = 124;
     private ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
 
@@ -15,8 +15,6 @@ public class TileView extends StackPane {
             backgroundImage = new ImageView(new Image(getClass().getResource(backgroundPath).toExternalForm()));
             backgroundImage.setFitWidth(TILE_SIZE);
             backgroundImage.setFitHeight(TILE_SIZE);
-        } else {
-            //
         }
 
         // Set up the top tile image (initially empty)
