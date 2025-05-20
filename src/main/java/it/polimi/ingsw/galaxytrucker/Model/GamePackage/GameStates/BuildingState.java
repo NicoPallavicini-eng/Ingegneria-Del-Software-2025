@@ -37,58 +37,59 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("Card is null");
         }
         Card nextCard = game.getDeck().drawCard();
+        game.setGameState(TravellingStateFactory.createGameState(game, nextCard));
         //TODO CHECK IF IT'S OK!
-        if(nextCard instanceof EpidemicCard epidemicCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, epidemicCard));
-            game.getGameState().init();
-        }
-        else if(nextCard instanceof MeteorsCard meteorsCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, meteorsCard));
-            game.getGameState().init();
-        }
-        else if(nextCard instanceof OpenSpaceCard openSpaceCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, openSpaceCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof PiratesCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, (PiratesCard) nextCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof PlanetsCard planetsCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, planetsCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof ShipCard shipCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, shipCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof SlaversCard slaversCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, slaversCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof SmugglersCard smugglersCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, smugglersCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof StardustCard stardustCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, stardustCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof StationCard stationCard){
-            game.setGameState(TravellingStateFactory.createGameState(game, stationCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof CombatZoneCardL){
-            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardL) nextCard));
-            game.getGameState().init();
-        }
-        else if (nextCard instanceof CombatZoneCardNotL){
-            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardNotL) nextCard));
-            game.getGameState().init();
-        }
-        else{
-            throw new IllegalEventException("The card is not a valid card");
-        }
+//        if(nextCard instanceof EpidemicCard epidemicCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, epidemicCard));
+//            game.getGameState().init();
+//        }
+//        else if(nextCard instanceof MeteorsCard meteorsCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, meteorsCard));
+//            game.getGameState().init();
+//        }
+//        else if(nextCard instanceof OpenSpaceCard openSpaceCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, openSpaceCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof PiratesCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, (PiratesCard) nextCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof PlanetsCard planetsCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, planetsCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof ShipCard shipCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, shipCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof SlaversCard slaversCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, slaversCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof SmugglersCard smugglersCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, smugglersCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof StardustCard stardustCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, stardustCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof StationCard stationCard){
+//            game.setGameState(TravellingStateFactory.createGameState(game, stationCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof CombatZoneCardL){
+//            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardL) nextCard));
+//            game.getGameState().init();
+//        }
+//        else if (nextCard instanceof CombatZoneCardNotL){
+//            game.setGameState(TravellingStateFactory.createGameState(game, (CombatZoneCardNotL) nextCard));
+//            game.getGameState().init();
+//        }
+//        else{
+//            throw new IllegalEventException("The card is not a valid card");
+//        }
 
     }
 
