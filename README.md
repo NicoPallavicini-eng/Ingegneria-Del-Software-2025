@@ -1,28 +1,38 @@
 <h1 align="center"> Software Engineering 2024-2025 </h1>
-<sh align="center"> Prova Finale - Ingegneria del Software - Gruppo 6 </sh>
+<h3 align="center"> Prova Finale - Ingegneria del Software - Gruppo 6 </h3>
 
 ## Authors
 - [Elisa Garsetti](https://github.com/elisagarsetti124)
 - [Nicolò Pallavicini](https://github.com/NicoPallavicini)
 - [Dmitrii Meshcheriakov](https://github.com/Dima765Me)
 - [Luca Papiro](https://github.com/hash-cartographer)
+
 ## Implementation
+
 ### Project specification
-Galaxy Trucker is a board game which stands for the Final Test of the Software Engineering BSc course of PoliMi CompSci
+*Galaxy Trucker* is a digital adaptation of the board game, developed as the final project for the Software Engineering BSc course at PoliMi (Computer Science).
+
 ### Implemented Functionalities
-|       Functionalities        | Status |
-|:----------------------------:|:------:|
-|       Simplified Rules       | 🛠️ |
-|        Complete Rules        | ✅ |
-|            Socket            | 🔬 |
-|             RMI              | ✅ |
-|             TUI              | 🔬 |
-|             GUI              | 🛠️ |
-|         Test Flight          | 🛠️ |
-| Resilience to disconnections | 🔬 |
-|       Multiple Matches       | ❌ |
-|         Persistence          | ❌ |
-###### Legend: ❌ Not Implemented   ✅ Implemented   🛠️ In progress   🔬 Testing
+
+| Functionality                 | Status |
+|------------------------------|--------|
+| Simplified Rules             | 🛠️ |
+| Complete Rules               | ✅ |
+| Socket Support               | 🔬 |
+| RMI Support                  | ✅ |
+| Text-Based UI (TUI)          | 🔬 |
+| Graphical UI (GUI)           | 🛠️ |
+| Test Flight Mode             | 🛠️ |
+| Disconnection Resilience     | 🔬 |
+| Multiple Matches             | ❌ |
+| Persistence (Save System)    | ❌ |
+
+#### Legend
+- ❌ Not Implemented
+- ✅ Implemented
+- 🛠️ In progress
+- 🔬 Testing
+- 
 <!--## Documentation
 ### Test Coverage
 You can check up our JUnit test coverage [here](Deliverables%2FTEST%20COVERAGE%2FtestCoverage.png).-->
