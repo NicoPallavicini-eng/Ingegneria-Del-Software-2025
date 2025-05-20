@@ -1030,7 +1030,7 @@ public class TUI {
                             "   Yellow = " + blocks3.size() + ",\n" +
                             "   Red = " + blocks4.size() + "\n");
                 }
-                System.out.println(AnsiColor.GREEN.fg() + "Planets Card: \n" + planetBlocks + AnsiColor.RESET);
+                System.out.println(AnsiColor.GREEN.fg() + "Planets Card: \n" +  AnsiColor.RESET + planetBlocks);
             }
             else if (card instanceof ShipCard){
                 System.out.println(AnsiColor.CARGO_COLOR.fg() + "Ship Card: \n" + AnsiColor.RESET +
