@@ -27,6 +27,8 @@ public class SocketClient implements VirtualClientSocket {
         this.server = new VirtualServerSocket(objOut);
         if(choise == 1) {
             tui = new TUI();
+            tui.printTitle();
+            tui.printGuide();
         }
     }
 

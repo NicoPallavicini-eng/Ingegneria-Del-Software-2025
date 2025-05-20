@@ -21,6 +21,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
         nickname = null;
         if (choiceUI == 1) {
             tui = new TUI();
+            tui.printTitle();
+            tui.printGuide();
         }
         else{
             //GUI
