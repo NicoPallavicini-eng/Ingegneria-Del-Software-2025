@@ -15,17 +15,17 @@
 ### Implemented Functionalities
 
 | Functionality                 | Status |
-|------------------------------|--------|
-| Simplified Rules             |  🛠️  |
-| Complete Rules               |  ✅  |
-| Socket Support               |  🔬  |
-| RMI Support                  |  ✅  |
-| Text-Based UI (TUI)          |  🔬  |
-| Graphical UI (GUI)           |  🛠️  |
-| Test Flight Mode             |  🛠️  |
-| Disconnection Resilience     |  🔬  |
-| Multiple Matches             |  ❌  |
-| Persistence (Save System)    |  ❌  |
+|------------------------------|---------|
+| Simplified Rules             |   ✅   |
+| Complete Rules               |   ✅   |
+| Socket Support               |   🔬   |
+| RMI Support                  |   ✅   |
+| Text-Based UI (TUI)          |   🔬   |
+| Graphical UI (GUI)           |   🛠️   |
+| Test Flight Mode             |   🛠️   |
+| Disconnection Resilience     |   🔬   |
+| Multiple Matches             |   ❌   |
+| Persistence (Save System)    |   ❌   |
 
 #### Legend
 - ❌ Not Implemented
