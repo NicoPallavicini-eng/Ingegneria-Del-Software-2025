@@ -120,16 +120,24 @@ public void referMethod(Message msg) throws RemoteException {
                 viewLeaderboard(game, msg.getNickname());
             }case "viewMyShip" ->{
                 game = msg.getGame();
-                viewMyShip(msg.getGame(),msg.getNickname());
+                viewMyShip(game,msg.getNickname());
             }case "viewTilepile" ->{
                 game = msg.getGame();
-                viewTilepile(msg.getGame());
+                viewTilepile(game);
             }case "viewShips"->{
+                if(game == msg.getGame()){
+                    System.out.println("I game coincidono");
+                }
+
                 game = msg.getGame();
                 viewShips(game);
             }case "viewTile"->{
                 viewTile(msg.getTile());
-            }default -> {
+            }case "viewCard" ->{
+                game = msg.getGame();
+                viewCard(game);
+            }
+            default -> {
                 System.out.println("Il messaggio con attributo Game non ha il commando specificato");
             }
 
@@ -140,7 +148,9 @@ public void referMethod(Message msg) throws RemoteException {
 public void showMessageFromServer(String message){
     System.out.println("You recieved this : " + message);
 }
-
+    public void viewCard(Game game) throws RemoteException{
+        tui.viewCard(game);
+    }
     public void viewShips(Game game) throws RemoteException {
         tui.printShips(game);
     }
