@@ -481,6 +481,7 @@ public class ServerController {
                                 RotateTileEvent event = new RotateTileEvent(player, side);
                                 game.getGameState().handleEvent(event);
                                 newMessage = new Message("Game",game,"defaultView");
+                                newMessage.setNickname(msg.getNickname());
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
                                 objOut.reset();
