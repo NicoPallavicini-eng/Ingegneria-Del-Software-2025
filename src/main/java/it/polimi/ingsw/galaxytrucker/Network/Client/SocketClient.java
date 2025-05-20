@@ -61,11 +61,18 @@ public class SocketClient implements VirtualClientSocket {
     private void runCli() throws RemoteException,IOException, ClassNotFoundException {
         Scanner scan = new Scanner(System.in);
         while (true) {
+            try{
+                //serve per ritardare la stampa
+                //in caso non dovesse stampare bene cambiare questo qua
+                Thread.sleep(100);
+                System.out.print("> ");
+                String message = scan.nextLine();
+                //int command = scan.nextInt();
+                server.sendMessageToServer(message,nickname);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
 
-            System.out.print("> ");
-            String message = scan.nextLine();
-            //int command = scan.nextInt();
-            server.sendMessageToServer(message,nickname);
 
         }
     }
