@@ -31,7 +31,7 @@ public class ServerController {
             "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
             "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
             "removecargo", "addcargo", "switchcargo", "ejectpeople", "giveup", "viewinventory", "claimreward", "choosesubship", "nochoice",
-            "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet");
+            "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet","riconnect");
     private Map<String,Game> gameMapper;
 
     public ServerController(RMIServer rmiServer) {
@@ -2786,7 +2786,7 @@ public class ServerController {
 
     private String tryCorrectCommand(String command){
         for (String valid : finalCommands){
-            if (hammingDistance(command, valid) <= 2){
+            if (hammingDistance(command, valid) <= 1){
                 return valid;
             }
         }
