@@ -9,8 +9,8 @@
 ### Project specification
 Galaxy Trucker is a board game which stands for the final test of "Software Engineering", a BSc course of PoliMi CompSci.
 ### Implemented Functionalities
-|       Functionalities        | Implemented        |
-|:----------------------------:| :-------------:    |
+|       Functionalities        | Status |
+|:----------------------------:|:------:|
 |       Simplified Rules       | 🛠️ |
 |        Complete Rules        | ✅ |
 |            Socket            | 🔬 |
@@ -21,9 +21,9 @@ Galaxy Trucker is a board game which stands for the final test of "Software Engi
 | Resilience to disconnections | 🔬 |
 |       Multiple Matches       | ❌ |
 |         Persistence          | ❌ |
-###### Legend: ❌ Not Implemented     ✅ Implemented     🛠️ Work in progress     🔬 Testing
-## Documentation
-<!--### Test Coverage
+###### Legend: ❌ Not Implemented   ✅ Implemented   🛠️ In progress   🔬 Testing
+<!--## Documentation
+### Test Coverage
 You can check up our JUnit test coverage [here](Deliverables%2FTEST%20COVERAGE%2FtestCoverage.png).-->
 <!--### UML
 Here you can check our UML diagrams:
