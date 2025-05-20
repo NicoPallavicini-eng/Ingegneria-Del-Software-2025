@@ -14,6 +14,7 @@ public class EngineTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     public EngineTile(boolean doublePower, boolean activeState, ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west) {
         super(north, west, south, east);
@@ -22,6 +23,7 @@ public class EngineTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
 
     public boolean getDoublePower(){

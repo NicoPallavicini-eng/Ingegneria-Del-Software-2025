@@ -12,6 +12,7 @@ public class BioadaptorTile extends Tile implements Serializable {
     private boolean attached;
     private boolean facingUp;
     private boolean choosable;
+    private boolean reserved;
 
     public BioadaptorTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, AlienColor color){
         super(north, west, south, east);
@@ -19,6 +20,7 @@ public class BioadaptorTile extends Tile implements Serializable {
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
+        this.reserved = false;
     }
     public AlienColor getColor() {
         return this.color;
