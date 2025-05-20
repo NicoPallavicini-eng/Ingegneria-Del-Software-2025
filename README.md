@@ -1,13 +1,13 @@
 <h1 align="center"> Prova Finale di Ingegneria del Software - AA 2024-2025 </h1>
 
-## Authors (Group 6).
+## Authors (Group 6)
 - [Elisa Garsetti](https://github.com/elisagarsetti124)
 - [Nicolò Pallavicini](https://github.com/NicoPallavicini)
 - [Dmitrii Meshcheriakov](https://github.com/Dima765Me)
 - [Luca Papiro](https://github.com/hash-cartographer)
-## Implementation of Galaxy Trucker.
+## Implementation of Galaxy Trucker
 ### Project specification
-Galaxy Trucker is a board game which represent the final test of "Software Engineering", a BSc course of PoliMi CompSci.
+Galaxy Trucker is a board game which stands for the final test of "Software Engineering", a BSc course of PoliMi CompSci.
 ### Implemented Functionalities
 |       Functionalities        | Implemented        |
 |:----------------------------:| :-------------:    |
