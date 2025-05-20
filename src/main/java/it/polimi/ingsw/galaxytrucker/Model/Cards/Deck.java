@@ -44,7 +44,7 @@ public class Deck implements Serializable {
         gameDeck.addAll(secondPart);
 
         // Shuffle created gameDeck
-        this.shuffle(gameDeck);
+        shuffle(this.gameDeck);
 
         for (Card card : gameDeck) {
             card.updateUsed(true);
