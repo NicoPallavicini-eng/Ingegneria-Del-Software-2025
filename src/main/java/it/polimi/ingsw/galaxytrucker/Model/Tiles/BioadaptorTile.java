@@ -25,25 +25,7 @@ public class BioadaptorTile extends Tile implements Serializable {
     }
 
     public AlienColor getAlienColor(){
-        AlienColor alienColor = null;
-        if (this.isOrange && !this.isPurple){
-            alienColor = AlienColor.ORANGE;
-        }
-        else if (this.isPurple && !this.isOrange){
-            alienColor = AlienColor.PURPLE;
-        }
-        return alienColor;
-    }
-
-    public void setColor(AlienColor color){
-        if (color == AlienColor.ORANGE){
-            this.isOrange = true;
-            this.isPurple = false;
-        }
-        else if (color == AlienColor.PURPLE){
-            this.isPurple = true;
-            this.isOrange = false;
-        }
+        return color;
     }
 
     @Override

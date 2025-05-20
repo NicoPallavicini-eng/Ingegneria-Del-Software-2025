@@ -102,7 +102,7 @@ public class Tile implements Serializable {
      */
 
     public void flip(){
-        facingUp = false;
+        facingUp = true;
     }
 
     /**

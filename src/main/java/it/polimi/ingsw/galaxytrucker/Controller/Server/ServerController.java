@@ -7,6 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.Network.Server.RMIServer;
@@ -31,7 +32,7 @@ public class ServerController {
             "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
             "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
             "removecargo", "addcargo", "switchcargo", "ejectpeople", "giveup", "viewinventory", "claimreward", "choosesubship", "nochoice",
-            "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet");
+            "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet", "flipall");
     private Map<String,Game> gameMapper;
 
     public ServerController(RMIServer rmiServer) {
@@ -1740,6 +1741,7 @@ public class ServerController {
         String command = parts[0];
         String par = parts.length > 1 ? parts[1].trim() : "";
 
+        /*
         // Trying to fix the command
         if (!finalCommands.contains(command)){
             String correttedCommand = tryCorrectCommand(command);
@@ -1749,7 +1751,7 @@ public class ServerController {
             }
             command = correttedCommand;
         }
-
+        */
 
         String[] subParameters = par.split(";", 2);
 
@@ -1926,7 +1928,7 @@ public class ServerController {
                                         SetNumberOfPlayersEvent setNumberOfPlayersEvent = new SetNumberOfPlayersEvent(numberOfPlayers);
                                         game.getGameState().handleEvent(setNumberOfPlayersEvent);
                                         client.setNickname(nickname);
-                                        client.setMainCabin(game); // TODO fix
+                                        client.setMainCabin(game);
                                         client.connectView(game);
                                     } catch (IllegalArgumentException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
@@ -2723,6 +2725,13 @@ public class ServerController {
                 } else {
                     client.invalidCommand("You are not connected to the game!");
                 }
+            }
+            case "flipall" -> { //TODO Delete
+                TilePile tilePile = game.getTilePile();
+                for (Tile tile : tilePile.getTilePile()){
+                    tile.flip();
+                }
+                client.viewTilepile(game);
             }
             default -> {
                 client.invalidCommand("Invalid command. Type /help for a list of available commands.");
