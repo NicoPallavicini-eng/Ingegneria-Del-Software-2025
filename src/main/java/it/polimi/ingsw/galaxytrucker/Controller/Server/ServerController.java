@@ -1958,30 +1958,25 @@ public class ServerController {
             case "setnumberofplayers" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
-                    if (game.getNumberOfPlayers() != -1) {
-                        if (secondParameters.isEmpty()) {
-                            if (firstParameters.size() == 1) {
-                                String numberOfPlayersStr = firstParameters.get(0);
-                                int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
-                                if (numberOfPlayers < 2 || numberOfPlayers > 4) {
-                                    client.invalidCommand("Number of players not valid. It must be between 2 and 4");
-                                } else {
-                                    SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
-                                    game.getGameState().handleEvent(event);
-                                }
+                    if (secondParameters.isEmpty()) {
+                        if (firstParameters.size() == 1) {
+                            String numberOfPlayersStr = firstParameters.get(0);
+                            int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
+                            if (numberOfPlayers < 2 || numberOfPlayers > 4) {
+                                client.invalidCommand("Number of players not valid. It must be between 2 and 4");
                             } else {
-                                client.invalidCommand("/setnumberofplayers supports only one parameter!");
+                                SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                game.getGameState().handleEvent(event);
                             }
                         } else {
                             client.invalidCommand("/setnumberofplayers supports only one parameter!");
                         }
-                    } else{
-                        client.invalidCommand("Max number of players already set. You can't change it.");
+                    } else {
+                        client.invalidCommand("/setnumberofplayers supports only one parameter!");
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");
                 }
-
             } //ok
             case "pickuptile" -> {
                 Player player = checkPlayer(client.getNickname());
