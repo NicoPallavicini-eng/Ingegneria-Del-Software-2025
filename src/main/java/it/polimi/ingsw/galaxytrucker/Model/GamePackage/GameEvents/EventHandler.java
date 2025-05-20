@@ -315,7 +315,7 @@ public class EventHandler implements Serializable {
 
         boolean present = false;
         synchronized (game) {
-            for (Player player : game.getListOfPlayers()) { // TODO check if should be active before building
+            for (Player player : game.getListOfPlayers()) {
                 Integer travelDays = player.getShip().getTravelDays();
                 if (travelDays != null  && travelDays.equals(place)) {
                     present = true;

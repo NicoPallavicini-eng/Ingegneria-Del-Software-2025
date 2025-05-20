@@ -29,6 +29,7 @@ public class BuildingState extends GameState implements Serializable {
 
     public void next() {
         //todo populate everything that is not an alien
+        game.updateListOfActivePlayers();
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
         getGame().setGameState(nextCard.createGameState(game));
@@ -65,7 +66,6 @@ public class BuildingState extends GameState implements Serializable {
                     }
                 }
                 if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
-                    game.updateListOfActivePlayers(); // TODO check it isn't done elsewhere
                     next();
                 }
             }
