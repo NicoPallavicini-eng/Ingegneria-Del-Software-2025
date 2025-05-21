@@ -13,7 +13,11 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
-public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn) implements Serializable {
+public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn, int diceRoll) implements Serializable {
+
+    public Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn){
+        this(bigCannonball,direction,rowOrColumn,rollTwoDice());
+    }
 
     public static int rollTwoDice() {
         Random rand = new Random();
@@ -27,8 +31,6 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
     }
 
     public void getHit(Ship ship) {
-        int diceRoll = rollTwoDice();
-
         if (this.rowOrColumn == ROW) {
             if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll).isEmpty()) {
                 checkForShieldOrRemoveRow(ship, diceRoll);

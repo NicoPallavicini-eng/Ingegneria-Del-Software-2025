@@ -2,10 +2,8 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.EngineTile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.CannonTileVisitor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +15,11 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
-public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn) implements Serializable {
+public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn, int diceRoll) implements Serializable {
+
+    public Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn) {
+        this(bigMeteor, direction, rowOrColumn, rollTwoDice());
+    }
 
     public static int rollTwoDice() {
         Random rand = new Random();
@@ -31,8 +33,6 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
     }
 
     public void getHit(Ship ship) {
-        int diceRoll = rollTwoDice();
-
         if (this.rowOrColumn == ROW) {
             if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll-5).isEmpty()) {
                 checkForCannonOrRemoveRow(ship, diceRoll);
@@ -46,9 +46,18 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
 
     public void checkForCannonOrRemoveRow(Ship ship, int diceRoll) {
         if (this.bigMeteor) {
-            List<EngineTile> engineTileList = ship.getListOfEngine();
-            Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
-            if (!engineTileList.contains(firstTile)) {
+            List<Tile> list= ship.getRowListTiles(diceRoll);
+            if(!direction.equals(NORTH)){
+                list.addAll(ship.getRowListTiles(diceRoll+1));
+                list.addAll(ship.getRowListTiles(diceRoll-1));
+            }
+            CannonTileVisitor ctv = new CannonTileVisitor();
+            for (Tile t : list) {
+                t.accept(ctv);
+            }
+            if (ctv.getList().stream()
+                    .filter(c -> c.getActiveState() && c.getDirection() == direction).
+                    toList().isEmpty()) {
                 ship.removeFirstTile(diceRoll, direction);
             }
         } else {
@@ -64,35 +73,37 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                 }
             }
             Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
+            ConnectorType c;
             if (this.direction == WEST) {
-                if ((firstTile.getConnectors().get(1) != ConnectorType.NONE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
-                        && !hasShield) {
-                    ship.removeFirstTile(diceRoll, direction);
-                }
-            } else if (this.direction == EAST) {
-                if ((firstTile.getConnectors().getLast() != ConnectorType.NONE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
-                        && !hasShield) {
-                    ship.removeFirstTile(diceRoll, direction);
-                }
+                c = firstTile.getConnectors().get(1);
+            } else {//east
+                c = firstTile.getConnectors().get(3);
+            }
+            if (c != ConnectorType.NONE
+                    && c != ConnectorType.CANNON_SINGLE
+                    && c != ConnectorType.CANNON_DOUBLE
+                    && c != ConnectorType.ENGINE_SINGLE
+                    && c != ConnectorType.ENGINE_DOUBLE
+                    && !hasShield) {
+                ship.removeFirstTile(diceRoll, direction);
             }
         }
     }
 
     public void checkForCannonOrRemoveColumn(Ship ship, int diceRoll) {
         if (this.bigMeteor) {
-            List<EngineTile> engineTileList = ship.getListOfEngine();
-            Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
-            Tile firstLeft = ship.getColumnListTiles(diceRoll - 1).getFirst();
-            Tile firstRight = ship.getColumnListTiles(diceRoll + 1).getFirst();
-            if (!engineTileList.contains(firstTile) && !engineTileList.contains(firstLeft) && !engineTileList.contains(firstRight)) {
+            List<Tile> list = ship.getColumnListTiles(diceRoll);
+            if (!direction.equals(NORTH)) {
+                list.addAll(ship.getColumnListTiles(diceRoll + 1));
+                list.addAll(ship.getColumnListTiles(diceRoll - 1));
+            }
+            CannonTileVisitor ctv = new CannonTileVisitor();
+            for (Tile t : list) {
+                t.accept(ctv);
+            }
+            if (ctv.getList().stream()
+                    .filter(c -> c.getActiveState() && c.getDirection() == direction).
+                    toList().isEmpty()) {
                 ship.removeFirstTile(diceRoll, direction);
             }
         } else {
@@ -107,25 +118,20 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
+            Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
+            ConnectorType c;
             if (this.direction == NORTH) {
-                if ((firstTile.getConnectors().getFirst() != ConnectorType.NONE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
-                        && !hasShield) {
-                    ship.removeFirstTile(diceRoll, direction);
-                }
-            } else if (this.direction == SOUTH) {
-                if ((firstTile.getConnectors().get(2) != ConnectorType.NONE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.CANNON_DOUBLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_SINGLE
-                        || firstTile.getConnectors().get(1) != ConnectorType.ENGINE_DOUBLE)
-                        && !hasShield) {
-                    ProjectileUtils.removeHitTileColumn(this.direction, ship, diceRoll);
-                }
+                c = firstTile.getConnectors().get(0);
+            } else {//south
+                c = firstTile.getConnectors().get(2);
+            }
+            if (c != ConnectorType.NONE
+                    && c != ConnectorType.CANNON_SINGLE
+                    && c != ConnectorType.CANNON_DOUBLE
+                    && c != ConnectorType.ENGINE_SINGLE
+                    && c != ConnectorType.ENGINE_DOUBLE
+                    && !hasShield) {
+                ship.removeFirstTile(diceRoll, direction);
             }
         }
     }
