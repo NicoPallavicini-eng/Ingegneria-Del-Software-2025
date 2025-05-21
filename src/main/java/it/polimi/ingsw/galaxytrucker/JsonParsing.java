@@ -23,241 +23,241 @@ class JsonTiles{
 
     public JsonTiles(){
         engine ="{\"engine1\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine2\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine3\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine4\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine5\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine6\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine7\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine8\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine9\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine10\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine11\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine12\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine13\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
-                "    \"doublePower\":false,\n" +
-                "    \"activeState\":true\n" +
-                "    },\n" +
-                "    \"engine14\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
-                "    \"doublePower\":false,\n" +
-                "    \"activeState\":true\n" +
-                "    },\n" +
-                "    \"engine15\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
-                "    \"doublePower\":false,\n" +
-                "    \"activeState\":true\n" +
-                "    },\n" +
-                "    \"engine16\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
-                "    \"doublePower\":false,\n" +
-                "    \"activeState\":true\n" +
-                "    },\n" +
-                "    \"engine17\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
-                "    \"engine18\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"engine14\":{\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
+                "    \"doublePower\":false,\n" +
+                "    \"activeState\":true\n" +
+                "    },\n" +
+                "    \"engine15\":{\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"doublePower\":false,\n" +
+                "    \"activeState\":true\n" +
+                "    },\n" +
+                "    \"engine16\":{\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
+                "    \"doublePower\":false,\n" +
+                "    \"activeState\":true\n" +
+                "    },\n" +
+                "    \"engine17\":{\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
+                "    \"doublePower\":false,\n" +
+                "    \"activeState\":true\n" +
+                "    },\n" +
+                "    \"engine18\":{\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine19\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine20\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"engine21\":{\n" +
-                "    \"north\":\"ENGINE_SINGLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_SINGLE\",\n" +
+                "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"doublePower\":false,\n" +
                 "    \"activeState\":true\n" +
                 "    },\n" +
                 "    \"doubleEngine1\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
+                "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine2\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine3\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine4\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
+                "    \"north\":\"NONE\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"NONE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
                 "    \"east\":\"UNIVERSAL\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine5\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine6\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine7\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine8\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"doubleEngine9\":{\n" +
-                "    \"north\":\"ENGINE_DOUBLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"ENGINE_DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"doublePower\":true,\n" +
                 "    \"activeState\":false\n" +
@@ -1526,7 +1526,7 @@ public class JsonParsing{
 
             CannonTileParse cannonParse = cannonsMap.get(connectorKey);
             // Crea un oggetto Tile per ogni connettore
-            CannonTile cannon = new CannonTile(cannonParse.north,cannonParse.west,cannonParse.south,cannonParse.east,cannonParse.doublePower,cannonParse.activeState);
+            CannonTile cannon = new CannonTile(cannonParse.north,cannonParse.south,cannonParse.east,cannonParse.west,cannonParse.doublePower,cannonParse.activeState);
 
             cannonTiles.add(cannon);
         }
@@ -1566,7 +1566,7 @@ public class JsonParsing{
         Map<String,BioadaptorTileParse> bioadaptorsMap = gson.fromJson(jsonTiles.bioadaptor, typeBioadaptor);
         for (String connectorKey : bioadaptorsMap.keySet()) {
             BioadaptorTileParse bioadaptorParse = bioadaptorsMap.get(connectorKey);
-            BioadaptorTile bioadaptor = new BioadaptorTile(bioadaptorParse.north,bioadaptorParse.west,bioadaptorParse.south,bioadaptorParse.east,bioadaptorParse.color);
+            BioadaptorTile bioadaptor = new BioadaptorTile(bioadaptorParse.north,bioadaptorParse.south,bioadaptorParse.east,bioadaptorParse.west,bioadaptorParse.color);
             bioadaptorTiles.add(bioadaptor);
         }
 

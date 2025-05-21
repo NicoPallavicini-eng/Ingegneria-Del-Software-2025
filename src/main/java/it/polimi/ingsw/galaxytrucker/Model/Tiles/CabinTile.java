@@ -19,7 +19,7 @@ public class CabinTile extends Tile implements Serializable {
     private boolean reserved;
 
     public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, Color color, int pinkAdaptors, int orangeAdaptors) {
-        super(north, west, south, east);
+        super(north, south, east, west);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;
         if (mainCapsule) {

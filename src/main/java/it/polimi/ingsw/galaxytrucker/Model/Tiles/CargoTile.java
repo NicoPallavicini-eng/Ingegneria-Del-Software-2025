@@ -13,7 +13,7 @@ public class CargoTile extends Tile implements Serializable {
     private boolean reserved;
 
     public CargoTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, boolean fitsRed, List<Integer> tileContent) {
-        super(north, west, south, east);
+        super(north, south, east, west);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;
         this.tileContent = tileContent;

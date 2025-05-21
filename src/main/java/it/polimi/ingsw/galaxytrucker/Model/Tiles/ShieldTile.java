@@ -14,7 +14,7 @@ public class ShieldTile extends Tile implements Serializable {
     private boolean reserved;
 
     public ShieldTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, ShieldOrientation orientation, boolean activeState) {
-        super(north, west, south, east);
+        super(north, south, east, west);
         this.orientation = orientation;
         this.activeState = activeState;
         this.facingUp = false;

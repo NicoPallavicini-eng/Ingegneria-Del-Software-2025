@@ -13,7 +13,7 @@ public class BatteryTile extends Tile implements Serializable {
     private boolean reserved;
 
     public BatteryTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, int slotsNumber, int slotsFilled) {
-        super(north, west, south, east);
+        super(north, south, east, west);
         this.slotsNumber = slotsNumber;
         this.slotsFilled = slotsFilled;
         this.facingUp = false;
