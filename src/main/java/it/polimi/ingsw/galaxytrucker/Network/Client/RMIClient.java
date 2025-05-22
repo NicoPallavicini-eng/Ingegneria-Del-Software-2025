@@ -63,24 +63,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
         System.out.println("Exited Loop");
         System.exit(0);
     }
-/*
-    public static void main(String[] args) throws RemoteException, NotBoundException {
-        final String serverName = "AdderServer";
 
-        Registry registry = LocateRegistry.getRegistry("localhost", 1090);
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
-
-        new RMIClient(server, ).run();
-    }*/
-
-    @Override
-    public String sayHello() throws RemoteException {
-        return "Hello, world!";
-    }
     @Override
     public void setNickname(String nickname) throws RemoteException{
         this.nickname = nickname;
-        //server.addNickname(nickname);
         server.mapNicknameClient(this, nickname);
         tui.setNickname(nickname);
     }
@@ -148,10 +134,5 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void pong() throws RemoteException {
 
-    }
-
-    @Override
-    public void printIndex(int index) throws RemoteException {
-        System.out.println("Index: " + index);
     }
 }

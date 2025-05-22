@@ -7,7 +7,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface VirtualClient extends Remote {
-    String sayHello() throws RemoteException;
     void setNickname(String nickname) throws RemoteException;
     void setMainCabin(Game game) throws RemoteException;
     String getNickname() throws RemoteException;
@@ -20,7 +19,6 @@ public interface VirtualClient extends Remote {
     void viewTile(Tile currentTile) throws RemoteException;
     void connectView(Game game) throws RemoteException;
     void printMessage(String message) throws RemoteException;
-    void printIndex(int index) throws RemoteException;
     void viewCard(Game game) throws RemoteException;
     void pong()throws RemoteException;
 }
