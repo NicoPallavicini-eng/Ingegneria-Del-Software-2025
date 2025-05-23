@@ -2,8 +2,10 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.BuildingState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -17,6 +19,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServerSocketInterface
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -29,6 +32,7 @@ public class ServerController {
     private static final Game game = new Game();
     private static RMIServer rmiServer = null;
     private static SocketServer socketServer = null;
+    private RemoteObserver remoteObserver = null;
     private final List<String> finalCommands = List.of("help", "viewcard", "viewleaderboard", "viewmyship", "viewtilepile", "viewships",
             "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
             "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
@@ -39,14 +43,67 @@ public class ServerController {
 
     public ServerController(RMIServer rmiServer) {
         this.rmiServer = rmiServer;
+        remoteObserver = new RemoteObserver(this, game);
     }
 
     public ServerController(SocketServer socketServer) {
         this.socketServer = socketServer;
+        remoteObserver = new RemoteObserver(this, game);
     }
 
     public static Game getGame() {
         return game;
+    }
+
+    public void updateView(Game game, String message){
+        GameState gameState = game.getGameState();
+        try {
+            List<VirtualClient> rmiClients = this.rmiServer.getClients();
+            if (gameState instanceof BuildingState) {
+                if (Objects.equals(message, "gamestate")) {
+                    if (rmiClients == null || rmiClients.isEmpty()) {
+                        return;
+                    }
+                    for (VirtualClient rmiClient : rmiClients) {
+                        if (rmiClient != null) {
+                            try {
+                                rmiClient.printMessage("Started Building State");
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } else if (Objects.equals(message, "time")) {
+                    if (rmiClients == null || rmiClients.isEmpty()) {
+                        return;
+                    }
+                    for (VirtualClient rmiClient : rmiClients) {
+                        if (rmiClient != null) {
+                            try {
+                                rmiClient.printMessage("Time is up, building phase is now over. You can place your alien in the ship and when you are done, type /done");
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } else if (Objects.equals(message, "finish")) {
+                    if (rmiClients == null || rmiClients.isEmpty()) {
+                        return;
+                    }
+                    for (VirtualClient rmiClient : rmiClients) {
+                        if (rmiClient != null) {
+                            try {
+                                rmiClient.viewShips(game);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
