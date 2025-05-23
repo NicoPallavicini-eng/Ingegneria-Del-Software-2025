@@ -65,15 +65,11 @@ public class GUITrial extends Application {
 //        root.getChildren().add(res4);
 
         Scene scene = new Scene(root);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Galaxy Trucker - JavaFX");
         primaryStage.setResizable(false);
-
-        primaryStage.getIcons().add(
-                new javafx.scene.image.Image(getClass().getResource("/Images/icon/window_simple_icon.png").toExternalForm())
-        );
-
-        // Post-show correction for window decoration
+        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/icon/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
     }
 

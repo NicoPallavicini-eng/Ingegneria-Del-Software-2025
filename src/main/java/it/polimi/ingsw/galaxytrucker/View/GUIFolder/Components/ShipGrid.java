@@ -77,10 +77,6 @@ public class ShipGrid extends Pane {
 
         cells[2][3].setTileImage(mainCabinIcon);
 
-        // used to test, works
-//        resCells[0].setTileImage(mainCabinIcon);
-//        resCells[1].setTileImage(mainCabinIcon);
-
         // Absolute positioning
         getChildren().addAll(bgView, grid, resGrid);
 
