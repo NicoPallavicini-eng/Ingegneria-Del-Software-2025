@@ -77,7 +77,7 @@ public class Game implements Serializable, Observable {
 
     public void setGameState( GameState gameState) {
         this.gameState = gameState;
-        notifyObservers(this);
+        notifyObservers(this, "gamestate");
     }
 
     public Hourglass getHourglass() {
@@ -111,9 +111,9 @@ public class Game implements Serializable, Observable {
     }
 
     @Override
-    public void notifyObservers(Game game) {
+    public void notifyObservers(Game game, String message) {
         for (Observer observer : observers) {
-            observer.update(game);
+            observer.update(game, message);
         }
     }
 
