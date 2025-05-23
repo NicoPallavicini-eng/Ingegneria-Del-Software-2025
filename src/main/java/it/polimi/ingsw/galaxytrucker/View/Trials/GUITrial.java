@@ -33,7 +33,7 @@ public class GUITrial extends Application {
         Player player = new Player("mewmew", "mew", Color.BLUE);
         game.addPlayer(player);
         nickname = player.getNickname();
-//        ShipGrid shipGrid = new ShipGrid(Color.BLUE);
+//        UserShipGrid shipGrid = new UserShipGrid(Color.BLUE);
 //
 //        Pane root = new Pane();
 //        root.getChildren().add(shipGrid);  // shipGrid handles its own internal layout

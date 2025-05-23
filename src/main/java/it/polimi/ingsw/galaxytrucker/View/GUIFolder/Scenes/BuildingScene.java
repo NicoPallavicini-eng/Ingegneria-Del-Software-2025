@@ -4,7 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.ShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
@@ -23,9 +23,9 @@ public class BuildingScene {
         Ship userShip = user.getShip();
 
         Background background = new Background();
-        ShipGrid userShipGrid = new ShipGrid(userShip.getColor());
+        UserShipGrid userShipGrid = new UserShipGrid(userShip.getColor());
         StackPane root = new StackPane();
-        root.getChildren().add(background);
+        root.getChildren().addAll(background, userShipGrid);
 
         scene = new Scene(root, 1024, 750); // default sizing for now
     }
