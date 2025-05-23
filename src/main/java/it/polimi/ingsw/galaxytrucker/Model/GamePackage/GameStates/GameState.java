@@ -20,7 +20,7 @@ public abstract class GameState implements Serializable {
         //todo check if we have to do checks
     }
 
-    public void handleEvent(DisconnectEvent event) throws IllegalEventException {
+    public void handleEvent(DisconnectEvent event,Game game) throws IllegalEventException {
         EventHandler.handleEvent(event, game);
     }
 

@@ -46,7 +46,7 @@ public class BuildingState extends GameState implements Serializable {
             placedAliens.put(player, new Boolean[] {false, false});
         }
         game.setHourglass(new Hourglass(this));
-        game.getHourglass().flip();
+        //game.getHourglass().flip();
     }
 
 
@@ -194,7 +194,7 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
-    public void handleEvent(FlipHourglassEvent event) {
+    public void handleEvent(FlipHourglassEvent event,Game game) {
         if (timeIsUp) {
             throw new IllegalEventException("Hourglass flipping phase is over");
         }

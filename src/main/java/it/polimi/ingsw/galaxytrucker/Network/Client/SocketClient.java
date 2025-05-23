@@ -19,6 +19,7 @@ public class SocketClient implements VirtualClientSocket {
     private Game game;
     private TUI tui;
     private String nickname = null;
+    private boolean flag = true;
 
     //private final ObjectOutputStream objOut;
 
@@ -62,6 +63,7 @@ public class SocketClient implements VirtualClientSocket {
 
     private void runCli() throws RemoteException,IOException, ClassNotFoundException {
         Scanner scan = new Scanner(System.in);
+        //esiste flag implementato
         while (true) {
             try{
                 //serve per ritardare la stampa
@@ -103,6 +105,8 @@ public void referMethod(Message msg) throws RemoteException {
 
             }case "PING"->{
 
+            }case "disconnect" ->{
+                flag = false;
             }
             default -> {
                 System.out.println(line);

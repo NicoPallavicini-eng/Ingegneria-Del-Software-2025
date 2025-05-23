@@ -300,6 +300,7 @@ public class EventHandler implements Serializable {
     public static void handleEvent(FlipHourglassEvent event, Game game) {
         synchronized (game.getHourglass()) {
             game.getHourglass().flip();
+
         }
     }
 

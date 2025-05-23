@@ -31,7 +31,7 @@ public class Hourglass implements Serializable {
             if(flipNumber == 3){
                 state.timeUp();
             }
-        }, 60, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);
     }
 
     public int getFlipNumber() {
