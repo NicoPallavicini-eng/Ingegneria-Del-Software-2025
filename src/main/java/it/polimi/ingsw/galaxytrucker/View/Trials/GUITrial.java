@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.View.Trials;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -64,12 +65,13 @@ public class GUITrial extends Application {
 //        root.getChildren().add(res3);
 //        root.getChildren().add(res4);
 
-        Scene scene = new Scene(root);
+        Scene scene = new BuildingScene().getScene(); // tmp to test
 
         primaryStage.setScene(scene);
+        //primaryStage.setFullScreen(true);
         primaryStage.setTitle("Galaxy Trucker - JavaFX");
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/icon/window_simple_icon.png").toExternalForm()));
+        primaryStage.setResizable(true);
+        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
     }
 

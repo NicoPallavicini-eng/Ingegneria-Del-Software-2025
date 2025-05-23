@@ -1,23 +1,18 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
-import it.polimi.ingsw.galaxytrucker.Model.Color;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.ShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class BuildingScene {
-    private final Scene scene;
+    private Scene scene;
 
     public BuildingScene() {
-        Pane pane = new Pane();
+        Background background = new Background();
+        StackPane root = new StackPane();
+        root.getChildren().add(background);
 
-        pane.getChildren();
-
-
-        scene = new Scene(pane);
+        scene = new Scene(root, 1300, 750); // default sizing for now
     }
 
     public Scene getScene() {
