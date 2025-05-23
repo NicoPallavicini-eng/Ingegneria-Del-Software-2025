@@ -27,14 +27,15 @@ import java.util.*;
 
 public class ServerController {
     private static final Game game = new Game();
-    private RMIServer rmiServer = null;
-    private SocketServer socketServer = null;
+    private static RMIServer rmiServer = null;
+    private static SocketServer socketServer = null;
     private final List<String> finalCommands = List.of("help", "viewcard", "viewleaderboard", "viewmyship", "viewtilepile", "viewships",
             "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
             "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
             "removecargo", "addcargo", "switchcargo", "ejectpeople", "giveup", "viewinventory", "claimreward", "choosesubship", "nochoice",
             "done", "placeorangealien", "placepurplealien", "removetile", "chooseplanet","riconnect","flipall");
     private Map<String,Game> gameMapper;
+    private int hourglassCounter = 1;
 
     public ServerController(RMIServer rmiServer) {
         this.rmiServer = rmiServer;
@@ -267,9 +268,17 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         try{
                             DisconnectEvent event = new DisconnectEvent(player);
-                            game.getGameState().handleEvent(event);
+                            game.getGameState().handleEvent(event,game);
+                            newMessage = new Message("String", null, "setNickname");
+                            newMessage.setNickname(null);
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            newMessage = new Message("String",null,"disconnect");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
                         }catch(IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
+                            newMessage.setNickname(msg.getNickname());
                             objOut.writeObject(newMessage);
                             objOut.flush();
                         }
@@ -524,6 +533,7 @@ public class ServerController {
                             PutDownTileEvent event = new PutDownTileEvent(player);
                             game.getGameState().handleEvent(event);
                             newMessage = new Message("Game",game,"defaultView");
+                            newMessage.setNickname(msg.getNickname());
                             objOut.writeObject(newMessage);
                             objOut.flush();
                             objOut.reset();
@@ -570,6 +580,7 @@ public class ServerController {
                                     PlaceTileEvent event = new PlaceTileEvent(player, rowInt-5, columnInt-4);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"defaultView");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
@@ -615,6 +626,7 @@ public class ServerController {
                                     ReserveTileEvent event = new ReserveTileEvent(player, index-1);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"defaultView");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
@@ -642,7 +654,22 @@ public class ServerController {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         try{
                             FlipHourglassEvent event = new FlipHourglassEvent();
-                            game.getGameState().handleEvent(event);
+                            game.getGameState().handleEvent(event,game);
+                            newMessage = new Message("String",null,"You flipped "+ hourglassCounter+" hourglass");
+                            objOut.writeObject(newMessage);
+                            objOut.flush();
+                            for(SocketClientHandler client:socketServer.getClientsList()){
+                                ObjectOutputStream objOut1 = client.getObjOut();
+                                if(objOut1 != objOut){
+                                    newMessage = new Message("String",null,msg.getNickname()+ " flipped "+ hourglassCounter+" hourglass");
+                                    objOut1.writeObject(newMessage);
+                                    objOut1.flush();
+                                }
+                            }
+                            for(VirtualClient client1: rmiServer.getClients()){
+                                    client1.printMessage(msg.getNickname()+ " flipped "+ hourglassCounter+" hourglass");
+                            }
+                            hourglassCounter++;
                         }catch (IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
                             objOut.writeObject(newMessage);
@@ -690,6 +717,7 @@ public class ServerController {
                                     SetPositionEvent event = new SetPositionEvent(player, position);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"viewLeaderboard");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
@@ -704,18 +732,24 @@ public class ServerController {
                                             objOutHandler.flush();
                                             //virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
                                         }
-                                        newMessage = new Message("String",null,game.getGameState().toString());
-                                        objOut.writeObject(newMessage);
-                                        objOut.flush();
+//                                        newMessage = new Message("String",null,game.getGameState().toString());
+//                                        objOut.writeObject(newMessage);
+//                                        objOut.flush();
                                         //client.printMessage(game.getGameState().toString());
 
                                         if (game.getGameState() instanceof TravellingState) {
                                             newMessage = new Message("Game",game,"viewCard");
+                                            newMessage.setNickname(msg.getNickname());
                                             objOutHandler = client.getObjOut();
                                             objOutHandler.writeObject(newMessage);
                                             objOutHandler.flush();
                                             objOut.reset();
                                             //virtualClient.viewCard(game);
+                                        }
+                                    }
+                                    if(game.getGameState() instanceof TravellingState){
+                                        for(VirtualClient client1: rmiServer.getClients()){
+                                            client1.viewCard(game);
                                         }
                                     }
                                 } catch (IllegalArgumentException e) {
@@ -756,6 +790,7 @@ public class ServerController {
                             game.getGameState().handleEvent(event);
                             Tile currentTile = player.getShip().getLastPlacedTile();
                             newMessage = new Message("Game",game,"viewTile");
+                            newMessage.setNickname(msg.getNickname());
                             newMessage.setTile(currentTile);
                             objOut.writeObject(newMessage);
                             objOut.flush();
@@ -802,6 +837,7 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                     Tile reservedTile = player.getShip().getReservedTiles().get(index-1);
                                     newMessage = new Message("Game",game,"viewTile");
+                                    newMessage.setNickname(msg.getNickname());
                                     newMessage.setTile(reservedTile);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
@@ -1677,6 +1713,7 @@ public class ServerController {
                                     RemoveTileEvent event = new RemoveTileEvent(player, row-5, col-4);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"viewMyShip");
+                                    newMessage.setNickname(msg.getNickname());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
@@ -1771,7 +1808,7 @@ public class ServerController {
             if (playerOptional.isPresent()) {
                 Player player1 = playerOptional.get();
                 DisconnectEvent event = new DisconnectEvent(player1);
-                game.getGameState().handleEvent(event);
+                game.getGameState().handleEvent(event,game);
                 //player.setOnlineStatus(false);
             }
 
@@ -1997,7 +2034,7 @@ public class ServerController {
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         DisconnectEvent event = new DisconnectEvent(player);
-                        game.getGameState().handleEvent(event);
+                        game.getGameState().handleEvent(event,game);
                     } else {
                         client.invalidCommand("/disconnect doesn't support parameters!");
                     }
@@ -2150,7 +2187,24 @@ public class ServerController {
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
                         FlipHourglassEvent event = new FlipHourglassEvent();
-                        game.getGameState().handleEvent(event);
+                        game.getGameState().handleEvent(event,game);
+                        client.printMessage("You flipped "+ hourglassCounter+" hourglass");
+                        for(VirtualClient client1: rmiServer.getClients()){
+                            if(!client1.getNickname().equals(client.getNickname())){
+                                client1.printMessage(client.getNickname()+ " flipped "+ hourglassCounter+" hourglass");
+                            }
+                        }
+                        for(SocketClientHandler client1: socketServer.getClientsList()){
+                            ObjectOutputStream objOut1 = client1.getObjOut();
+                                Message newMessage = new Message("String",null,client.getNickname()+ " flipped "+ hourglassCounter+" hourglass");
+                                try{
+                                    objOut1.writeObject(newMessage);
+                                    objOut1.flush();
+                                }catch(IOException e){
+                                    e.printStackTrace();
+                                }
+                        }
+                        hourglassCounter++;
                     } else {
                         client.invalidCommand("/fliphourglass doesn't support parameters!");
                     }
@@ -2183,8 +2237,20 @@ public class ServerController {
                                         client.printMessage(game.getGameState().toString());
 
                                         if (game.getGameState() instanceof TravellingState) {
-
                                             virtualClient.viewCard(game);
+                                        }
+                                    }
+                                    for(SocketClientHandler client1: socketServer.getClientsList()){
+                                        if (game.getGameState() instanceof TravellingState) {
+                                            ObjectOutputStream objOut1 = client1.getObjOut();
+                                            Message newMessage = new Message("Game",game,"viewCard");
+                                            try{
+                                                objOut1.writeObject(newMessage);
+                                                objOut1.flush();
+                                                objOut1.reset();
+                                            }catch(IOException e){
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
                                 } catch (IllegalArgumentException e) {
