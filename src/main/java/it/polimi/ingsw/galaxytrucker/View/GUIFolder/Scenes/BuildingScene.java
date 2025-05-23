@@ -2,10 +2,13 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.ShipGrid;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+
+import java.util.Optional;
 
 public class BuildingScene {
     private Scene scene;
@@ -16,14 +19,22 @@ public class BuildingScene {
         this.game = game;
         this.nickname = nickname;
 
+        Player user = checkPlayer(nickname);
+        Ship userShip = user.getShip();
+
         Background background = new Background();
-        ShipGrid shipGrid = new ShipGrid();
+        ShipGrid userShipGrid = new ShipGrid(userShip.getColor());
         StackPane root = new StackPane();
         root.getChildren().add(background);
 
-        scene = new Scene(root, 1300, 750); // default sizing for now
+        scene = new Scene(root, 1024, 750); // default sizing for now
+    }
 
-
+    public Player checkPlayer(String nickname) {
+        Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+        return playerOptional.orElse(null);
     }
 
     public Scene getScene() {

@@ -17,7 +17,7 @@ public class FinalScene {
         StackPane root = new StackPane();
         root.getChildren().add(background);
 
-        scene = new Scene(root, 1300, 750); // default sizing for now
+        scene = new Scene(root, 1024, 750); // default sizing for now
     }
 
     public Scene getScene() {
