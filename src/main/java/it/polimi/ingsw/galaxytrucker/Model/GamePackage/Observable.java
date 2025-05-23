@@ -5,5 +5,5 @@ import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 public interface Observable {
     void addObserver(Observer observer);
     void removeObserver(Observer observer);
-    void notifyObservers(Game game);
+    void notifyObservers(Game game, String message);
 }
