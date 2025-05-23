@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -7,14 +8,21 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 
 public class SceneManager extends Application {
     private static Stage primaryStage;
+    private final Game game;
+    WaitingScene waitingScene;
+
+    public SceneManager(Game game, Stage stage) {
+        this.game = game;
+        primaryStage = stage;
+        start(primaryStage); // stage comes from instantiation of SceneManager
+    }
 
     @Override
     public void start(Stage stage) {
-        primaryStage = stage;
-        WaitingScene waitingScene = new WaitingScene();
-        stage.setTitle("Waiting State");
-        stage.setScene(waitingScene.getScene());
-        stage.show();
+        waitingScene = new WaitingScene();
+        primaryStage.setTitle("Waiting State");
+        primaryStage.setScene(waitingScene.getScene());
+        primaryStage.show();
     }
 
     public static void setScene(Scene scene) {
