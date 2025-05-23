@@ -10,6 +10,9 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import java.io.Serializable;
 import java.util.List;
 
+/*Superclass to all card states, handles all the turns logic
+ */
+
 
 public abstract class TravellingState extends GameState implements Serializable {
     protected final Card currentCard;
@@ -77,5 +80,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     public void handleEvent(GiveUpEvent event) throws IllegalEventException {
         EventHandler.handleEvent(event);
     }
+
+
 
 }

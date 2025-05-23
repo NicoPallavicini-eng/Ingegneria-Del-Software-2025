@@ -12,6 +12,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
+// all is done indipendently
 
 public class EpidemicState extends TravellingState implements Serializable {
     private EpidemicCard currentCard;

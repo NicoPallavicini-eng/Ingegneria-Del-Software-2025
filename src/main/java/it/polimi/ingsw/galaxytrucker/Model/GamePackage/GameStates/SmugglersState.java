@@ -9,16 +9,29 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.BatteryTile;
 import java.io.Serializable;
 import java.util.*;
 
+/*Following turns all player decide whether to activate cannons or not
+when the smugglers have been defeated and a smugglerSlayer has been crowned
+or all players have lost the reckoning phase starts.
+
+in this phase the defeated players have to remove their most valuable cargo and then batteries
+to match the smugglers' greed,
+the smugglersSlayer has to decide whether they want to commit and claim the reward,
+if they commit they enter a phase analogous to the planets' cargoLoadingPhase.
+
+Once all defeated players have removed enough cargo/batteries
+and the slayer has signaled done/not committed next() is called
+
+ */
+
 public class SmugglersState extends TravellingState implements Serializable {
 
     private Map<Player, Integer> cargoToLose;
-    private Map<Player, Integer> batteriesToLose;
     protected SmugglersCard currentCard;
     private Player smugglersSlayer;
     private Boolean slayerCommits;
     private boolean reckoningPhase;
     private List<Integer> availableResources;
-    private List<Player> cargoless;
+    private List<Player> cargoless; //used for players that have <= cargo than asked from smugglers
 
 
     public SmugglersState(Game game, SmugglersCard card) {
@@ -151,7 +164,7 @@ public class SmugglersState extends TravellingState implements Serializable {
                 checkNext();
             }
         }
-        else if(!event.player().equals(smugglersSlayer) && slayerCommits){
+        else if(!event.player().equals(smugglersSlayer) || !slayerCommits){
             throw new IllegalEventException("you have not landed");
         }
         else {
@@ -227,4 +240,27 @@ public class SmugglersState extends TravellingState implements Serializable {
 
     }
 
+    public Map<Player, Integer> getCargoToLose() {
+        return cargoToLose;
+    }
+
+    public Player getSmugglersSlayer() {
+        return smugglersSlayer;
+    }
+
+    public Boolean getSlayerCommits() {
+        return slayerCommits;
+    }
+
+    public boolean isReckoningPhase() {
+        return reckoningPhase;
+    }
+
+    public List<Integer> getAvailableResources() {
+        return availableResources;
+    }
+
+    public List<Player> getCargoless() {
+        return cargoless;
+    }
 }

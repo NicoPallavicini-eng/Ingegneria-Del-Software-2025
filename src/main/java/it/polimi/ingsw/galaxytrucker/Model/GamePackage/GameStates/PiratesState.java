@@ -42,7 +42,7 @@ public class PiratesState extends TravellingState implements Serializable {
         defendedPlayers = new ArrayList<>();
     }
 
-    public void handleInput(ActivateCannonsEvent event){
+    public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }
@@ -188,5 +188,23 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
+    public Player getPiratesSlayer() {
+        return piratesSlayer;
+    }
 
+    public List<Player> getDefeatedPlayers() {
+        return defeatedPlayers;
+    }
+
+    public boolean isReckoningPhase() {
+        return reckoningPhase;
+    }
+
+    public boolean isClaimingPhase() {
+        return claimingPhase;
+    }
+
+    public List<Player> getDefendedPlayers() {
+        return defendedPlayers;
+    }
 }

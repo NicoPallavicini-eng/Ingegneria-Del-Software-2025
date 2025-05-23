@@ -11,6 +11,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/* This phase starts when the desired number of players has connected to the game:
+At first the players can build their ship by picking up tiles and placing them on their ship,
+then they finish this phase by setting their position,
+if the hourglass expires setting their position is the only available option.
+After all positions have been set (all players in finishedBuildingPlayers) the legality check starts
+the check populates the playerWithLegalShips list,
+the players with illegal ships can join the list by removing tiles from their ship.
+When the list is full the players enter the population phase,
+in which they can place aliens and signal "done".
+Once all players have placed their aliens next() is called.
+ */
 public class BuildingState extends GameState implements Serializable {
     private final Game game;
     private ArrayList<Player> finishedBuildingPlayers;
@@ -46,7 +58,7 @@ public class BuildingState extends GameState implements Serializable {
             placedAliens.put(player, new Boolean[] {false, false});
         }
         game.setHourglass(new Hourglass(this));
-        //game.getHourglass().flip();
+        game.getHourglass().flip();
     }
 
 
@@ -57,18 +69,12 @@ public class BuildingState extends GameState implements Serializable {
         else{
             EventHandler.handleEvent(event,this.game);
             finishedBuildingPlayers.add(event.player());
-            if(event.player().getShip().checkFloorPlanConnection()) {
-                playersWithLegalShips.add(event.player());
-            }
             if(finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
                 timeIsUp = true;
                 for(Player player : game.getListOfActivePlayers()) {
                     if(player.getShip().checkFloorPlanConnection()){
                         playersWithLegalShips.add(player);
                     }
-                }
-                if(playersWithLegalShips.containsAll(game.getListOfActivePlayers())) {
-                    checkNext();
                 }
             }
 
@@ -84,8 +90,9 @@ public class BuildingState extends GameState implements Serializable {
         }
         else{
             EventHandler.handleEvent(event);
-            // se la nave è legale
-            playersWithLegalShips.add(event.player());
+            if(event.player().getShip().checkFloorPlanConnection()){
+                playersWithLegalShips.add(event.player());
+            }
         }
     }
 
@@ -229,5 +236,19 @@ public class BuildingState extends GameState implements Serializable {
         timeIsUp = true;
     }
 
+    public ArrayList<Player> getFinishedBuildingPlayers() {
+        return finishedBuildingPlayers;
+    }
 
+    public ArrayList<Player> getPlayersWithLegalShips() {
+        return playersWithLegalShips;
+    }
+
+    public boolean isTimeIsUp() {
+        return timeIsUp;
+    }
+
+    public Map<Player, Boolean[]> getPlacedAliens() {
+        return placedAliens;
+    }
 }

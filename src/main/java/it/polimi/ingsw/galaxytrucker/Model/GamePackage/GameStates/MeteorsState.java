@@ -16,6 +16,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+/*The metheors are cycled and for every one of them all players have to defend or nochoice
+then the players undergo the hit if they are not defended.
+A check is made to ensure that an action made from the player actually defends them
+ */
 
 public class MeteorsState extends TravellingState implements Serializable {
     private MeteorsCard currentCard;
@@ -133,5 +137,14 @@ public class MeteorsState extends TravellingState implements Serializable {
                 player.getShip().disactivateEverything();
             }
         }
+    }
+
+    @Override
+    public ArrayList<Player> getHandledPlayers() {
+        return handledPlayers;
+    }
+
+    public Meteor getCurrentMeteor() {
+        return currentMeteor;
     }
 }

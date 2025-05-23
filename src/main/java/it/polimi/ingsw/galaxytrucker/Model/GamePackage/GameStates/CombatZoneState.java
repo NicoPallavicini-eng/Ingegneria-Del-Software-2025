@@ -16,17 +16,24 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
+/*This Class handles the 2 subclasses CombatZoneLState and CombatZoneNotLState.
+it uses the attributes current penalty and current challenge for every phase of the card,
+when the challenge is completed a currentLoser is set and they have to endure the penalty
+ */
+
 public abstract class CombatZoneState extends TravellingState implements Serializable {
+
+    protected Player currentLoser;
+    protected CombatZoneChallenge currentChallenge;
+    protected CombatZonePenalty currentPenalty;
+    protected CombatZoneCard currentCard;
+    protected Cannonball currentCannonball;
+
 
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
         currentCard = card;
     }
-        protected Player currentLoser;
-        protected CombatZoneChallenge currentChallenge;
-        protected CombatZonePenalty currentPenalty;
-        protected CombatZoneCard currentCard;
-        protected Cannonball currentCannonball;
 
 
 
@@ -184,4 +191,24 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    public Player getCurrentLoser() {
+        return currentLoser;
+    }
+
+    public CombatZoneChallenge getCurrentChallenge() {
+        return currentChallenge;
+    }
+
+    public CombatZonePenalty getCurrentPenalty() {
+        return currentPenalty;
+    }
+
+    @Override
+    public CombatZoneCard getCurrentCard() {
+        return currentCard;
+    }
+
+    public Cannonball getCurrentCannonball() {
+        return currentCannonball;
+    }
 }

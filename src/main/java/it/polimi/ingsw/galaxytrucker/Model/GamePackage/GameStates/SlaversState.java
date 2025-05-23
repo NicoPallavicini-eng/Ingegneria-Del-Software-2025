@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/*Following the turns all player decide whether to activate cannons or noaction,
+their firepower then is confronted with the pirates' one to decide who wins
 when the slavers are defeated or all players are defeated the reckoningPhase starts
 it ends when all defeated players have ejected their people
 and the slayer has decided whether they want to claim the reward or not
@@ -148,4 +149,15 @@ public class SlaversState extends TravellingState implements Serializable {
        checkNext();
     }
 
+    public Player getSlaversSlayer() {
+        return slaversSlayer;
+    }
+
+    public List<Player> getDefeatedPlayers() {
+        return defeatedPlayers;
+    }
+
+    public boolean isReckoningPhase() {
+        return reckoningPhase;
+    }
 }

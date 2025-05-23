@@ -10,6 +10,10 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
 
+/*Each player in order has to choose the engines to activate.
+then the rockets are moved foward according to the engine power of their ship
+ */
+
 public class OpenSpaceState extends TravellingState implements Serializable {
     private OpenSpaceCard currentCard;
 

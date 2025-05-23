@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Following turns each player has to decide whether they want to claim the reward
+once a player lands they start a phase analogous to planets' cargoLoadingPhase
+ */
+
 public class StationState extends TravellingState implements Serializable {
 
     private Player rewardClaimer;
@@ -95,5 +99,13 @@ public class StationState extends TravellingState implements Serializable {
         else {
             next();
         }
+    }
+
+    public Player getRewardClaimer() {
+        return rewardClaimer;
+    }
+
+    public List<Integer> getAvailableResources() {
+        return availableResources;
     }
 }

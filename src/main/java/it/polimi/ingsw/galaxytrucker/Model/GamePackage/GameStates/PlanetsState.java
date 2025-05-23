@@ -9,9 +9,14 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import java.io.Serializable;
 import java.util.*;
 
+/*Each player chooses a planet or noaction.
+once everyone has made a choice the cargoLoadingPhase starts
+in this phase players can add, remove, switch cargo until they signal done
+The satisfied players list hold the players that have signaled noAction or Done
+ */
+
 public class PlanetsState extends TravellingState implements Serializable {
     private PlanetsCard currentCard;
-    private Player currentPlayer;
     private List<Planet> planets;
     private Map<Player, Planet> chosenPlanets;
     private List<Player> satisfiedPlayers;
@@ -63,8 +68,9 @@ public class PlanetsState extends TravellingState implements Serializable {
                 satisfiedPlayers.add(event.player());
                 if (satisfiedPlayers.containsAll(game.getListOfActivePlayers())) {
                     next();
+                } else {
+                    nextPlayer();
                 }
-                nextPlayer();
             }
         }
     }
@@ -143,5 +149,15 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
+    public Map<Player, Planet> getChosenPlanets() {
+        return chosenPlanets;
+    }
 
+    public List<Player> getSatisfiedPlayers() {
+        return satisfiedPlayers;
+    }
+
+    public boolean isCargoLoadingPhase() {
+        return cargoLoadingPhase;
+    }
 }

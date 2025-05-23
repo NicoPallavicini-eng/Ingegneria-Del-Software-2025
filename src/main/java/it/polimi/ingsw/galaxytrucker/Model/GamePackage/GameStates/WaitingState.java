@@ -8,6 +8,10 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.SetNumberOfPla
 
 import java.io.Serializable;
 
+/*first state at game creation waits for the first player to connect, set the number of players
+and then for all the numberofplayers - 1 remaining players to connect
+ */
+
 public class WaitingState extends GameState implements Serializable {
     private final Game game;
     public WaitingState(Game game ) {

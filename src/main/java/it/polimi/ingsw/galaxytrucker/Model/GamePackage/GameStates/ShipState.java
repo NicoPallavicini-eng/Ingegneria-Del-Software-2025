@@ -10,6 +10,9 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
 
+/*each player in order has to choose whether to eject people if they have enough or noaction
+ */
+
 public class ShipState extends TravellingState implements Serializable {
 
     private ShipCard currentCard;
