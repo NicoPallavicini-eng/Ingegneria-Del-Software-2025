@@ -9,17 +9,19 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 public class SceneManager extends Application {
     private static Stage primaryStage;
     private final Game game;
-    WaitingScene waitingScene;
+    private WaitingScene waitingScene;
+    private String nickname;
 
-    public SceneManager(Game game, Stage stage) {
+    public SceneManager(Game game, Stage stage, String nickname) {
         this.game = game;
+        this.nickname = nickname;
         primaryStage = stage;
         start(primaryStage); // stage comes from instantiation of SceneManager
     }
 
     @Override
     public void start(Stage stage) {
-        waitingScene = new WaitingScene();
+        waitingScene = new WaitingScene(game, nickname);
         primaryStage.setTitle("Waiting State");
         primaryStage.setScene(waitingScene.getScene());
         primaryStage.show();
@@ -38,21 +40,21 @@ public class SceneManager extends Application {
     }
 
     public void next(WaitingScene waitingScene) {
-        BuildingScene buildingScene = new BuildingScene();
+        BuildingScene buildingScene = new BuildingScene(game, nickname);
         primaryStage.setTitle("Building State");
         primaryStage.setScene(buildingScene.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingScene buildingScene) {
-        TravellingScene travellingScene = new TravellingScene();
+        TravellingScene travellingScene = new TravellingScene(game, nickname);
         primaryStage.setTitle("Travelling State");
         primaryStage.setScene(travellingScene.getScene());
         primaryStage.show();
     }
 
     public void next(TravellingScene travellingScene) {
-        FinalScene finalScene = new FinalScene();
+        FinalScene finalScene = new FinalScene(game, nickname);
         primaryStage.setTitle("Final State");
         primaryStage.setScene(finalScene.getScene());
         primaryStage.show();

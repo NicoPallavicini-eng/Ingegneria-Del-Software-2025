@@ -65,14 +65,13 @@ public class GUITrial extends Application {
 //        root.getChildren().add(res3);
 //        root.getChildren().add(res4);
 
-        Scene scene = new BuildingScene().getScene(); // tmp to test
-
-        primaryStage.setScene(scene);
-        //primaryStage.setFullScreen(true);
-        primaryStage.setTitle("Galaxy Trucker - JavaFX");
-        primaryStage.setResizable(true);
-        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
-        primaryStage.show();
+//        Scene scene = new BuildingScene(game).getScene(); // tmp to test
+//
+//        primaryStage.setScene(scene);
+//        primaryStage.setTitle("Galaxy Trucker - JavaFX");
+//        primaryStage.setResizable(true);
+//        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
+//        primaryStage.show();
     }
 
     public static void main(String[] args) {

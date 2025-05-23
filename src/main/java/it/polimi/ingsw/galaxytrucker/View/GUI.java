@@ -14,6 +14,6 @@ public class GUI extends UI{
         this.game = game;
         this.nickname = nickname;
         this.stage = new Stage();
-        this.sceneManager = new SceneManager(this.game, this.stage);
+        this.sceneManager = new SceneManager(this.game, this.stage, this.nickname);
     }
 }
