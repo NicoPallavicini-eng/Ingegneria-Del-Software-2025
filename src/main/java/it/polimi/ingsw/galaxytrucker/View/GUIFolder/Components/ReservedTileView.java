@@ -4,13 +4,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-// used for user ship tiles
-public class TileView extends StackPane {
-    private static final int TILE_SIZE = 124;
+// used for reserved tiles and hand
+public class ReservedTileView extends StackPane {
+    private static final int TILE_SIZE = 110;
     private ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
 
-    public TileView(String backgroundPath) {
+    public ReservedTileView(String backgroundPath) {
         if (backgroundPath != null) {
             // Load and set background
             backgroundImage = new ImageView(new Image(getClass().getResource(backgroundPath).toExternalForm()));
