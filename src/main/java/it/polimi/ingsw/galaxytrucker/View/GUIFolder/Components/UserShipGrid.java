@@ -56,7 +56,7 @@ public class UserShipGrid extends Pane {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                TileView tile = new TileView(null);
+                TileView tile = new TileView();
                 tile.setPrefSize(TILE_SIZE, TILE_SIZE);
                 cells[row][col] = tile;
                 grid.add(tile, col, row);
@@ -64,13 +64,13 @@ public class UserShipGrid extends Pane {
         }
 
         for (int slot = 0; slot < RES_SLOTS; slot++) {
-            ReservedTileView tile = new ReservedTileView(null);
+            ReservedTileView tile = new ReservedTileView();
             tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
             resCells[slot] = tile;
             resGrid.add(tile, slot, 0);
         }
 
-        ReservedTileView tile = new ReservedTileView(null);
+        ReservedTileView tile = new ReservedTileView();
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         handCell[0] = tile;
         handGrid.add(tile, 0, 0);

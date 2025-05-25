@@ -10,14 +10,7 @@ public class ReservedTileView extends StackPane {
     private ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
 
-    public ReservedTileView(String backgroundPath) {
-        if (backgroundPath != null) {
-            // Load and set background
-            backgroundImage = new ImageView(new Image(getClass().getResource(backgroundPath).toExternalForm()));
-            backgroundImage.setFitWidth(TILE_SIZE);
-            backgroundImage.setFitHeight(TILE_SIZE);
-        }
-
+    public ReservedTileView() {
         // Set up the top tile image (initially empty)
         tileImage = new ImageView();
         tileImage.setFitWidth(TILE_SIZE);
