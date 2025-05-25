@@ -24,12 +24,12 @@ public class BuildingScene {
 
         Background background = new Background();
 
-        // see userShip
+        // see userShip (uncomment)
 //        UserShipGrid userShipGrid = new UserShipGrid(userShip.getColor());
 //        StackPane root = new StackPane();
 //        root.getChildren().addAll(background, userShipGrid);
 
-        // see TilePile
+        // see TilePile (uncomment)
         TilePileGrid tilePileGrid = new TilePileGrid();
         StackPane root = new StackPane();
         root.getChildren().addAll(background, tilePileGrid);
