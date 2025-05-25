@@ -1,15 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCardL;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EjectPeopleEvent;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
 public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected CombatZoneCardL currentCard;

@@ -3,11 +3,9 @@ package it.polimi.ingsw.galaxytrucker.View.Trials;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUITrial extends Application {

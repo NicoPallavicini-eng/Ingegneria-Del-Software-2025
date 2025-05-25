@@ -2,15 +2,11 @@ package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClientSocket;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.Network.Server.SocketServer;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SocketClientHandler implements VirtualClientSocket {
     private boolean connect = true;

@@ -1,10 +1,13 @@
 package it.polimi.ingsw.galaxytrucker;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingScene;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.FinalScene;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingScene;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.WaitingScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 
 public class SceneManager extends Application {
     private static Stage primaryStage;

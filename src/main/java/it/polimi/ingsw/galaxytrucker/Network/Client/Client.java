@@ -1,6 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Network.Client;
 
-import it.polimi.ingsw.galaxytrucker.Network.Server.SocketServer;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
 
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

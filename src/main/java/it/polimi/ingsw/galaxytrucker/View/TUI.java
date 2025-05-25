@@ -3,13 +3,11 @@ package it.polimi.ingsw.galaxytrucker.View;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
-import javafx.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.List;

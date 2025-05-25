@@ -1,10 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-
 import java.io.Serializable;
 import java.util.List;
 

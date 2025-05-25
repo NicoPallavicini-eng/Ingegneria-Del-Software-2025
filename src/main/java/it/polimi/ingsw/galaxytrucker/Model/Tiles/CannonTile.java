@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
 import java.io.Serializable;

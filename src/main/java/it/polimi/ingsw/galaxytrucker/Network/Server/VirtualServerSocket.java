@@ -1,12 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 
 public class VirtualServerSocket implements VirtualServerSocketInterface {
     //final PrintWriter output;

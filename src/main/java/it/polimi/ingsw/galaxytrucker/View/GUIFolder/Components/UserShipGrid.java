@@ -13,16 +13,12 @@ public class UserShipGrid extends Pane {
     private static final int TILE_SIZE = 124;
     private static final int RESERVED_TILE_SIZE = 110;
     private static final int TOP_BORDER = 29;
-    private static final int BOTTOM_BORDER = 25;
     private static final int LEFT_BORDER = 35;
-    private static final int RIGHT_BORDER = 27;
     private static final int TOT_WIDTH = 937;
     private static final int TOT_HEIGHT = 679;
     private static final int RESERVED_TOP_BORDER = 28;
     private static final int RESERVED_LEFT_BORDER = 677;
     private static final int RESERVED_RIGHT_BORDER = 28;
-    private static final int GRID_WIDTH = COLS * TILE_SIZE; // 868
-    private static final int GRID_HEIGHT = ROWS * TILE_SIZE; // 620
 
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
@@ -93,7 +89,7 @@ public class UserShipGrid extends Pane {
         // Absolute positioning
         getChildren().addAll(bgView, grid, resGrid, handGrid);
 
-        this.setPrefSize(GRID_WIDTH + LEFT_BORDER + RIGHT_BORDER, GRID_HEIGHT + TOP_BORDER + BOTTOM_BORDER);
+        this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
     }
 

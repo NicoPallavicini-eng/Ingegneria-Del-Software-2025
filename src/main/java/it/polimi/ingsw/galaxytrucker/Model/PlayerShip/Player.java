@@ -9,7 +9,6 @@ public class Player implements Serializable {
     private Ship ship;
     private int input;
     private boolean engages;
-
     private String playerIp;
     private boolean onlineStatus;
 

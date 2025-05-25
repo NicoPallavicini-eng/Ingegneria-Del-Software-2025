@@ -2,7 +2,6 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Network.Server.Server;
 
 import java.io.Serializable;
 
