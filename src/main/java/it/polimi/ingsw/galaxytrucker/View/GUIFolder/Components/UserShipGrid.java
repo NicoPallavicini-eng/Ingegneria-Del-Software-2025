@@ -18,7 +18,7 @@ public class UserShipGrid extends Pane {
     private static final int TOT_HEIGHT = 679;
     private static final int RESERVED_TOP_BORDER = 28;
     private static final int RESERVED_LEFT_BORDER = 677;
-    private static final int RESERVED_RIGHT_BORDER = 28;
+    private static final int HAND_LEFT_BORDER = 28;
 
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
@@ -47,7 +47,7 @@ public class UserShipGrid extends Pane {
         resGrid.setLayoutY(RESERVED_TOP_BORDER);
 
         GridPane handGrid = new GridPane();
-        handGrid.setLayoutX(RESERVED_RIGHT_BORDER);
+        handGrid.setLayoutX(HAND_LEFT_BORDER);
         handGrid.setLayoutY(RESERVED_TOP_BORDER);
 
         for (int row = 0; row < ROWS; row++) {
@@ -79,10 +79,6 @@ public class UserShipGrid extends Pane {
             case RED -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm());
             default -> null;
         };
-
-        handCell[0].setTileImage(mainCabinIcon); // tmp test
-        resCells[0].setTileImage(mainCabinIcon); // tmp test
-        resCells[1].setTileImage(mainCabinIcon);
 
         cells[2][3].setTileImage(mainCabinIcon);
 
