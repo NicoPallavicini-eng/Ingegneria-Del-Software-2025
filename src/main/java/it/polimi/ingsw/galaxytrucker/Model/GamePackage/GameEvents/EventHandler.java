@@ -366,13 +366,6 @@ public class EventHandler implements Serializable {
         }
     }
 
-    public static void handleEvent(ViewDeckEvent event) { // TODO do
-    }
-
-    /*
-    public record ChoosePlanetEvent(Player player, int planetIndex) implements GameEvent TODO se non serve brasare questo
-    //il riferimento a Game
-     */
     /*
     public record ActivateEnginesEvent(Player player, List<List<Integer>> engines, List<List<Integer>> batteries) implements GameEvent
      */

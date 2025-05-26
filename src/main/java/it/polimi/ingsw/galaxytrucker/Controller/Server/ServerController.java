@@ -2286,27 +2286,31 @@ public class ServerController {
                                     SetPositionEvent event = new SetPositionEvent(player, position);
                                     game.getGameState().handleEvent(event);
                                     client.viewLeaderboard(game);
-                                    List<VirtualClient> clientsRMI = rmiServer.getClients();
-                                    for (VirtualClient virtualClient : clientsRMI) {
-                                        if (!virtualClient.getNickname().equals(client.getNickname())) {
-                                            virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
-                                        }
-                                        client.printMessage(game.getGameState().toString());
+                                    if(rmiServer != null) {
+                                        List<VirtualClient> clientsRMI = rmiServer.getClients();
+                                        for (VirtualClient virtualClient : clientsRMI) {
+                                            if (!virtualClient.getNickname().equals(client.getNickname())) {
+                                                virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
+                                            }
+                                            client.printMessage(game.getGameState().toString());
 
-                                        if (game.getGameState() instanceof TravellingState) {
-                                            virtualClient.viewCard(game);
+                                            if (game.getGameState() instanceof TravellingState) {
+                                                virtualClient.viewCard(game);
+                                            }
                                         }
                                     }
-                                    for(SocketClientHandler client1: socketServer.getClientsList()){
-                                        if (game.getGameState() instanceof TravellingState) {
-                                            ObjectOutputStream objOut1 = client1.getObjOut();
-                                            Message newMessage = new Message("Game",game,"viewCard");
-                                            try{
-                                                objOut1.writeObject(newMessage);
-                                                objOut1.flush();
-                                                objOut1.reset();
-                                            }catch(IOException e){
-                                                e.printStackTrace();
+                                    else {
+                                        for (SocketClientHandler client1 : socketServer.getClientsList()) {
+                                            if (game.getGameState() instanceof TravellingState) {
+                                                ObjectOutputStream objOut1 = client1.getObjOut();
+                                                Message newMessage = new Message("Game", game, "viewCard");
+                                                try {
+                                                    objOut1.writeObject(newMessage);
+                                                    objOut1.flush();
+                                                    objOut1.reset();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
                                     }

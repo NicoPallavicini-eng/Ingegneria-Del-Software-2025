@@ -215,7 +215,7 @@ public class BuildingState extends GameState implements Serializable {
             throw new IllegalEventException("You can no longer view deck");
         }
         else{
-            EventHandler.handleEvent(event);
+            //todo lock for gui, the event shall be handled in the controller
         }
     }
 
