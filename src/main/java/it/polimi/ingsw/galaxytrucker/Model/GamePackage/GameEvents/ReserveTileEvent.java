@@ -4,5 +4,5 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
 
-public record ReserveTileEvent(Player player, int index) implements GameEvent, Serializable {
+public record ReserveTileEvent(Player player) implements GameEvent, Serializable {
 }
