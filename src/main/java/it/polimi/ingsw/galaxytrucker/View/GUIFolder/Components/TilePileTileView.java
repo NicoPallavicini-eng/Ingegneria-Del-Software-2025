@@ -4,13 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-// used for user ship tiles
-public class TileView extends StackPane {
-    private static final int TILE_SIZE = 124;
+public class TilePileTileView extends StackPane {
+    private static final int TILE_SIZE = 54;
     private ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
 
-    public TileView() {
+    public TilePileTileView() {
         // Set up the top tile image (initially empty)
         tileImage = new ImageView();
         tileImage.setFitWidth(TILE_SIZE);

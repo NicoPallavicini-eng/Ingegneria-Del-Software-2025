@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import java.io.Serializable;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

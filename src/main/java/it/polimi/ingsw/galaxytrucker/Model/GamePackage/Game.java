@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
+import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 import it.polimi.ingsw.galaxytrucker.JsonCardParsing;
 import it.polimi.ingsw.galaxytrucker.JsonParsing;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
@@ -8,7 +9,6 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinTile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
-import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 
 import java.io.Serializable;
 import java.util.ArrayList;

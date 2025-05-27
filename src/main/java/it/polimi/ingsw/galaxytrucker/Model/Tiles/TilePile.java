@@ -1,5 +1,4 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 
 import java.io.Serializable;
 import java.util.Collections;

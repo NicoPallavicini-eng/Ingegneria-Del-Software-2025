@@ -1,23 +1,65 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
-import it.polimi.ingsw.galaxytrucker.Model.Color;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.ShipGrid;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.util.Optional;
+
 public class BuildingScene {
-    private final Scene scene;
+    private Scene scene;
+    private Game game;
+    private String nickname;
+    private StackPane root;
+    private UserShipGrid userShipGrid;
+    private TilePileGrid tilePileGrid;
+    private Background background;
 
-    public BuildingScene() {
-        Pane pane = new Pane();
 
-        pane.getChildren();
+    public BuildingScene(Game game, String nickname) {
+        this.game = game;
+        this.nickname = nickname;
 
+        Player user = checkPlayer(nickname);
+        Ship userShip = user.getShip();
 
-        scene = new Scene(pane);
+        this.background = new Background();
+        this.root = new StackPane();
+
+        // see userShip
+        this.userShipGrid = new UserShipGrid(userShip.getColor());
+        // see TilePile (uncomment)
+        this.tilePileGrid = new TilePileGrid();
+
+        // default view
+        root.getChildren().addAll(background, userShipGrid);
+
+        // other view, choose which one is default
+        // root.getChildren().addAll(background, tilePileGrid);
+
+        scene = new Scene(root, 1024, 750); // default sizing for now
+    }
+
+    public void viewTilePile() {
+        root.getChildren().remove(userShipGrid);
+        root.getChildren().add(tilePileGrid);
+    }
+
+    public void viewShip () {
+        root.getChildren().remove(tilePileGrid);
+        root.getChildren().add(userShipGrid);
+    }
+
+    public Player checkPlayer(String nickname) {
+        Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+        return playerOptional.orElse(null);
     }
 
     public Scene getScene() {

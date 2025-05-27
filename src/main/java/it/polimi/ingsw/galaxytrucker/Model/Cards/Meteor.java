@@ -2,7 +2,9 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldTile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.CannonTileVisitor;
 
 import java.io.Serializable;

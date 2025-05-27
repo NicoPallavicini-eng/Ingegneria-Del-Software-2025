@@ -1,13 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.StationCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /*Following turns each player has to decide whether they want to claim the reward

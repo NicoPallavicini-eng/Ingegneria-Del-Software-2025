@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 
 import java.lang.reflect.Type;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

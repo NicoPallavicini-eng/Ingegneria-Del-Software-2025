@@ -1,21 +1,23 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 
 public class TravellingScene {
     private Scene scene;
+    private Game game;
+    private String nickname;
 
-    public TravellingScene() {
-        VBox root = new VBox(20);
-        Button startButton = new Button("Start Game");
-        startButton.setOnAction(e -> {
-            // Switch to ship build scene
-        });
+    public TravellingScene(Game game, String nickname) {
+        this.game = game;
+        this.nickname = nickname;
+        Background background = new Background();
+        StackPane root = new StackPane();
+        root.getChildren().add(background);
 
-        root.getChildren().add(startButton);
-        this.scene = new Scene(root, 800, 600);
+        scene = new Scene(root, 1024, 750); // default sizing for now
     }
 
     public Scene getScene() {

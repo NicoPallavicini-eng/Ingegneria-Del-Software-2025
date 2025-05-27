@@ -1,5 +1,5 @@
 package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
-import it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn;
+
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;

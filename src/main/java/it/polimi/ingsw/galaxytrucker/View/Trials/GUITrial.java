@@ -1,10 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.View.Trials;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUITrial extends Application {
@@ -21,13 +22,19 @@ public class GUITrial extends Application {
     private static final int GRID_HEIGHT = ROWS * TILE_SIZE; // 620
     private static final int TOT_WIDTH = 937;
     private static final int TOT_HEIGHT = 679;
+    private Game game;
+    private String nickname;
 
     @Override
     public void start(Stage primaryStage) {
-        ShipGrid shipGrid = new ShipGrid(Color.BLUE);
-
-        Pane root = new Pane();
-        root.getChildren().add(shipGrid);  // shipGrid handles its own internal layout
+        game = new Game();
+        Player player = new Player("mewmew", "mew", Color.BLUE);
+        game.addPlayer(player);
+        nickname = player.getNickname();
+//        UserShipGrid shipGrid = new UserShipGrid(Color.BLUE);
+//
+//        Pane root = new Pane();
+//        root.getChildren().add(shipGrid);  // shipGrid handles its own internal layout
 
         // uncomment to see the border of the main grid (red) and of the reserved grid (green)
 //        Rectangle marker = new Rectangle(GRID_WIDTH, 1, javafx.scene.paint.Color.RED);
@@ -64,12 +71,12 @@ public class GUITrial extends Application {
 //        root.getChildren().add(res3);
 //        root.getChildren().add(res4);
 
-        Scene scene = new Scene(root);
+        Scene scene = new BuildingScene(game, nickname).getScene(); // tmp to test
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Galaxy Trucker - JavaFX");
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/icon/window_simple_icon.png").toExternalForm()));
+        primaryStage.setResizable(true);
+        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
     }
 
