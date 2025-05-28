@@ -102,6 +102,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             }
             else{
                 slayerCommits = false;
+                handledPlayers.add(smugglersSlayer);
                 checkNext();
             }
         }
@@ -127,7 +128,7 @@ public class SmugglersState extends TravellingState implements Serializable {
     }
 
     private void checkNext(){
-        if(reckoningPhase && cargoToLose.isEmpty() && !slayerCommits){
+        if(reckoningPhase && handledPlayers.containsAll(game.getListOfActivePlayers())){
             next();
         }
     }
@@ -161,6 +162,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             cargoToLose.put(p, cargoToLose.get(p) - 1);
             if(cargoToLose.get(p) == 0){
                 cargoToLose.remove(p);
+                handledPlayers.add(p);
                 checkNext();
             }
         }
@@ -188,6 +190,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             cargoToLose.put(p, cargoToLose.get(p) - event.batteries().get(2));
             if(cargoToLose.get(p) == 0){
                 cargoToLose.remove(p);
+                handledPlayers.add(p);
                 checkNext();
             }
         }
@@ -208,6 +211,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         }
         else {
             slayerCommits = false;
+            handledPlayers.add(smugglersSlayer);
             checkNext();
         }
     }
@@ -225,6 +229,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             }
             if(cargoToLose.get(p) == 0){
                 cargoToLose.remove(p);
+                handledPlayers.add(p);
             }
             else{
                 available = p.getShip().getListOfBattery().stream()
@@ -233,11 +238,27 @@ public class SmugglersState extends TravellingState implements Serializable {
                 if(available <= cargoToLose.get(p)) {
                     p.getShip().removeAllBatteries();
                     cargoToLose.remove(p);
+                    handledPlayers.add(p);
                 }
 
             }
         }
 
+    }
+
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        if(p.equals(smugglersSlayer)){
+            smugglersSlayer = null;
+        }
+        cargoToLose.remove(p);
+        handledPlayers.remove(p);
+        if(reckoningPhase){
+            checkNext();
+        }
+        else{
+            super.disconnectionConsequences(p);
+        }
     }
 
     public Map<Player, Integer> getCargoToLose() {

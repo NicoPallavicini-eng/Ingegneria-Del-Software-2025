@@ -27,10 +27,7 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected void peoplePenalty(){
         super.peoplePenalty();
         EventHandler.moveBackward(currentLoser.getShip(), currentCard.getDaysLost(), game);
-        currentLoser = null;
-        currentChallenge = CombatZoneChallenge.ENGINES;
-        currentPenalty = CombatZonePenalty.PEOPLE;
-        super.init();
+        nextChallenge();
     }
 
     protected void enginesPenalty(){
@@ -38,10 +35,7 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         Player p = currentLoser;
         if(p.getShip().getNumberOfInhabitants() <= currentCard.getCrewLost()){
             p.getShip().ejectAll();
-            currentChallenge = CombatZoneChallenge.CANNONS;
-            currentPenalty = CombatZonePenalty.CANNONBALLS;
-            currentLoser = null;
-            super.init();
+            nextChallenge();
         }
 
     }
@@ -69,6 +63,22 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected void cannonsPenalty() {
         super.cannonsPenalty();
         cannonballStorm();
+    }
+
+    protected void nextChallenge(){
+        super.init();
+        currentLoser = null;
+        switch(currentChallenge){
+            case PEOPLE -> {
+                currentChallenge = CombatZoneChallenge.ENGINES;
+                currentPenalty = CombatZonePenalty.PEOPLE;
+            }
+            case ENGINES -> {
+                currentChallenge = CombatZoneChallenge.CANNONS;
+                currentPenalty = CombatZonePenalty.CANNONBALLS;
+            }
+            case CANNONS -> {next();}
+        }
     }
 
 }
