@@ -36,46 +36,12 @@ public class GUITrial extends Application {
 //        Pane root = new Pane();
 //        root.getChildren().add(shipGrid);  // shipGrid handles its own internal layout
 
-        // uncomment to see the border of the main grid (red) and of the reserved grid (green)
-//        Rectangle marker = new Rectangle(GRID_WIDTH, 1, javafx.scene.paint.Color.RED);
-//        Rectangle marker2 = new Rectangle(1, GRID_HEIGHT, javafx.scene.paint.Color.RED);
-//        Rectangle marker3 = new Rectangle(GRID_WIDTH, 1, javafx.scene.paint.Color.RED);
-//        Rectangle marker4 = new Rectangle(1, GRID_HEIGHT, javafx.scene.paint.Color.RED);
-//        marker.setLayoutX(LEFT_BORDER);
-//        marker.setLayoutY(TOP_BORDER);
-//        marker2.setLayoutX(LEFT_BORDER);
-//        marker2.setLayoutY(TOP_BORDER);
-//        marker3.setLayoutX(LEFT_BORDER);
-//        marker3.setLayoutY(TOP_BORDER + GRID_HEIGHT);
-//        marker4.setLayoutX(LEFT_BORDER + GRID_WIDTH);
-//        marker4.setLayoutY(TOP_BORDER);
-//        root.getChildren().add(marker);
-//        root.getChildren().add(marker2);
-//        root.getChildren().add(marker3);
-//        root.getChildren().add(marker4);
-//
-//        Rectangle res1 = new Rectangle(TILE_SIZE * 2, 1, javafx.scene.paint.Color.GREEN);
-//        Rectangle res2 = new Rectangle(1, TILE_SIZE, javafx.scene.paint.Color.GREEN);
-//        Rectangle res3 = new Rectangle(TILE_SIZE * 2, 1, javafx.scene.paint.Color.GREEN);
-//        Rectangle res4 = new Rectangle(1, TILE_SIZE, javafx.scene.paint.Color.GREEN);
-//        res1.setLayoutX(RESERVED_LEFT_BORDER);
-//        res1.setLayoutY(RESERVED_TOP_BORDER);
-//        res2.setLayoutX(RESERVED_LEFT_BORDER);
-//        res2.setLayoutY(RESERVED_TOP_BORDER);
-//        res3.setLayoutX(RESERVED_LEFT_BORDER);
-//        res3.setLayoutY(RESERVED_TOP_BORDER + TILE_SIZE);
-//        res4.setLayoutX(RESERVED_LEFT_BORDER + TILE_SIZE * 2);
-//        res4.setLayoutY(RESERVED_TOP_BORDER);
-//        root.getChildren().add(res1);
-//        root.getChildren().add(res2);
-//        root.getChildren().add(res3);
-//        root.getChildren().add(res4);
 
         Scene scene = new BuildingScene(game, nickname).getScene(); // tmp to test
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Galaxy Trucker - JavaFX");
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
     }

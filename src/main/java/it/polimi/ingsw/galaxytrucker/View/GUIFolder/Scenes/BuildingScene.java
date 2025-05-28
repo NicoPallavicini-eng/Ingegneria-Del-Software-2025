@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class BuildingScene {
     private UserShipGrid userShipGrid;
     private TilePileGrid tilePileGrid;
     private Background background;
-
+    private OthersShipGrid othersShipGrid;
 
     public BuildingScene(Game game, String nickname) {
         this.game = game;
@@ -33,14 +34,17 @@ public class BuildingScene {
 
         // see userShip
         this.userShipGrid = new UserShipGrid(userShip.getColor());
-        // see TilePile (uncomment)
+        // see TilePile
         this.tilePileGrid = new TilePileGrid();
+        // see others' ships
+        this.othersShipGrid = new OthersShipGrid(userShip.getColor());
 
-        // default view
-        root.getChildren().addAll(background, userShipGrid);
-
-        // other view, choose which one is default
+        // userShip view (default)
+        // root.getChildren().addAll(background, userShipGrid);
+        // tilePile view
         // root.getChildren().addAll(background, tilePileGrid);
+        // others' ships view
+        root.getChildren().addAll(background, othersShipGrid);
 
         scene = new Scene(root, 1024, 750); // default sizing for now
     }
