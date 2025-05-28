@@ -31,7 +31,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void run(){
         try {
-            this.server.connect(this);
+            synchronized (this.server) {
+                this.server.connect(this);
+            }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -51,8 +53,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
             //System.out.println("Server command: " + input);
             server.showMessage(this + input);
             server.handleUserInput(this,input);
-            server.showMessage(input);
-
             }catch(RemoteException e){
                 e.printStackTrace();
             }

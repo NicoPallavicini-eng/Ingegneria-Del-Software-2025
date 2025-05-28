@@ -160,6 +160,7 @@ public class EventHandler implements Serializable {
                 ship.setLastPlacedTile(null);
                 tile.setFacingUp(true);
                 tile.setChoosable(false);
+                game.notifyObservers(game, "test");
             }
             pile.set(event.index(), null);
         }
@@ -300,6 +301,7 @@ public class EventHandler implements Serializable {
     public static void handleEvent(FlipHourglassEvent event, Game game) {
         synchronized (game.getHourglass()) {
             game.getHourglass().flip();
+            game.notifyObservers(game, "time");
 
         }
     }

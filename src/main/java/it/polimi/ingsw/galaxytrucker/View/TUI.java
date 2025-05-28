@@ -56,7 +56,7 @@ public class TUI {
     }
 
     public void printMessage(String message){
-        System.out.println(message);
+        System.out.print(message);
     }
 
     public void viewTilePile(Game game){
