@@ -3,10 +3,13 @@ package it.polimi.ingsw.galaxytrucker.View.Trials;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingScene;
+import it.polimi.ingsw.galaxytrucker.SceneManager;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.concurrent.TimeUnit;
 
 public class GUITrial extends Application {
     private static final int ROWS = 5;
@@ -24,26 +27,39 @@ public class GUITrial extends Application {
     private static final int TOT_HEIGHT = 679;
     private Game game;
     private String nickname;
+    private static Stage stage;
+    private SceneManager sceneManager;
+    private MyScene currentScene;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws InterruptedException {
         game = new Game();
+        stage = new Stage();
+        currentScene = null;
         Player player = new Player("mewmew", "mew", Color.BLUE);
         game.addPlayer(player);
         nickname = player.getNickname();
-//        UserShipGrid shipGrid = new UserShipGrid(Color.BLUE);
-//
-//        Pane root = new Pane();
-//        root.getChildren().add(shipGrid);  // shipGrid handles its own internal layout
+        sceneManager = new SceneManager(game, stage, nickname);
 
+        sceneManager.start(stage);
+        currentScene = sceneManager.getScene();
 
-        Scene scene = new BuildingScene(game, nickname).getScene(); // tmp to test
+        // up until here it should all be definitive, except player, all next is testing
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Galaxy Trucker - JavaFX");
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
-        primaryStage.show();
+        TimeUnit.SECONDS.sleep(2);
+        sceneManager.next((WaitingScene) sceneManager.getScene());
+
+        TimeUnit.SECONDS.sleep(2);
+        sceneManager.switchBuilding((BuildingSceneUserShip) sceneManager.getScene());
+
+        TimeUnit.SECONDS.sleep(2);
+        sceneManager.switchBuilding((BuildingSceneTilePile) sceneManager.getScene());
+
+        TimeUnit.SECONDS.sleep(2);
+        sceneManager.switchBuilding((BuildingSceneOthersShip) sceneManager.getScene());
+
+        TimeUnit.SECONDS.sleep(2);
+        sceneManager.next((BuildingSceneUserShip) sceneManager.getScene());
     }
 
     public static void main(String[] args) {

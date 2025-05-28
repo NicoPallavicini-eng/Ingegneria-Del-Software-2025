@@ -5,20 +5,14 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
-public class FinalScene extends MyScene{
+public class MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
 
-    public FinalScene(Game game, String nickname) {
-        super(game, nickname);
+    public MyScene(Game game, String nickname) {
         this.game = game;
         this.nickname = nickname;
-        Background background = new Background();
-        StackPane root = new StackPane();
-        root.getChildren().add(background);
-
-        scene = new Scene(root, 1024, 750); // default sizing for now
     }
 
     public Scene getScene() {

@@ -12,17 +12,18 @@ import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
 
-public class BuildingScene {
+public class BuildingSceneUserShip extends MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
     private StackPane root;
     private UserShipGrid userShipGrid;
-    private TilePileGrid tilePileGrid;
     private Background background;
-    private OthersShipGrid othersShipGrid;
+    private final int SCENE_WIDTH = 1024;
+    private final int SCENE_HEIGHT = 750;
 
-    public BuildingScene(Game game, String nickname) {
+    public BuildingSceneUserShip(Game game, String nickname) {
+        super(game, nickname);
         this.game = game;
         this.nickname = nickname;
 
@@ -34,29 +35,11 @@ public class BuildingScene {
 
         // see userShip
         this.userShipGrid = new UserShipGrid(userShip.getColor());
-        // see TilePile
-        this.tilePileGrid = new TilePileGrid();
-        // see others' ships
-        this.othersShipGrid = new OthersShipGrid(userShip.getColor());
 
         // userShip view (default)
-        // root.getChildren().addAll(background, userShipGrid);
-        // tilePile view
-        // root.getChildren().addAll(background, tilePileGrid);
-        // others' ships view
-        root.getChildren().addAll(background, othersShipGrid);
+        root.getChildren().addAll(background, userShipGrid);
 
-        scene = new Scene(root, 1024, 750); // default sizing for now
-    }
-
-    public void viewTilePile() {
-        root.getChildren().remove(userShipGrid);
-        root.getChildren().add(tilePileGrid);
-    }
-
-    public void viewShip () {
-        root.getChildren().remove(tilePileGrid);
-        root.getChildren().add(userShipGrid);
+        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
     }
 
     public Player checkPlayer(String nickname) {

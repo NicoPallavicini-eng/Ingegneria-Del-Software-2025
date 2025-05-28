@@ -73,17 +73,17 @@ public class OthersShipGrid extends Pane {
         grid3.setLayoutY(TOP_BORDER + bgView3.getY());
 
         GridPane resGrid1 = new GridPane();
-        resGrid1.setHgap(13);
+        resGrid1.setHgap(3);
         resGrid1.setVgap(0);
         resGrid1.setLayoutX(RESERVED_LEFT_BORDER + bgView1.getX());
         resGrid1.setLayoutY(RESERVED_TOP_BORDER + bgView1.getY());
         GridPane resGrid2 = new GridPane();
-        resGrid2.setHgap(13);
+        resGrid2.setHgap(3);
         resGrid2.setVgap(0);
         resGrid2.setLayoutX(RESERVED_LEFT_BORDER + bgView2.getX());
         resGrid2.setLayoutY(RESERVED_TOP_BORDER + bgView2.getY());
         GridPane resGrid3 = new GridPane();
-        resGrid3.setHgap(13);
+        resGrid3.setHgap(3);
         resGrid3.setVgap(0);
         resGrid3.setLayoutX(RESERVED_LEFT_BORDER + bgView3.getX());
         resGrid3.setLayoutY(RESERVED_TOP_BORDER + bgView3.getY());

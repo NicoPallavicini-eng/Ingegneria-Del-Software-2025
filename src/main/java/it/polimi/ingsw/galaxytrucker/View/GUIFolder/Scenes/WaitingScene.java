@@ -5,12 +5,13 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
-public class WaitingScene {
+public class WaitingScene extends MyScene{
     private Scene scene;
     private Game game;
     private String nickname;
 
     public WaitingScene(Game game, String nickname) {
+        super(game, nickname);
         this.game = game;
         this.nickname = nickname;
         Background background = new Background();
