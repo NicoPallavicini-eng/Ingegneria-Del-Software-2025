@@ -2,9 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Controller.Server;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.BuildingState;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
-import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -29,7 +27,8 @@ public class ServerController {
     private static final Game game = new Game();
     private static RMIServer rmiServer = null;
     private static SocketServer socketServer = null;
-    private RemoteObserver remoteObserver = null;
+    private final RemoteObserver remoteObserver = new RemoteObserver(this, game);
+    private List<VirtualClient> rmiClients = new ArrayList<>();
     private final List<String> finalCommands = List.of("help", "viewcard", "viewleaderboard", "viewmyship", "viewtilepile", "viewships",
             "connect", "disconnect", "setnumberofplayers", "pickuptile", "rotate", "putdowntile",
             "placetile", "reservetile", "fliphourglass", "setposition", "pickupfromship", "pickupreservedtile", "activateengines", "activatecannons", "activateshields",
@@ -39,67 +38,99 @@ public class ServerController {
     private int hourglassCounter = 1;
 
     public ServerController(RMIServer rmiServer) {
-        this.rmiServer = rmiServer;
-        remoteObserver = new RemoteObserver(this, game);
+        ServerController.rmiServer = rmiServer;
+//        remoteObserver = new RemoteObserver(this, game);
     }
 
     public ServerController(SocketServer socketServer) {
-        this.socketServer = socketServer;
-        remoteObserver = new RemoteObserver(this, game);
+        ServerController.socketServer = socketServer;
+//        remoteObserver = new RemoteObserver(this, game);
     }
 
     public static Game getGame() {
         return game;
     }
 
+    public void setRmiPlayers(List<VirtualClient> rmiClients){
+        this.rmiClients = rmiClients;
+    }
+
     public void updateView(Game game, String message){
         GameState gameState = game.getGameState();
-        try {
-            List<VirtualClient> rmiClients = this.rmiServer.getClients();
-            if (gameState instanceof BuildingState) {
-                if (Objects.equals(message, "gamestate")) {
-                    if (rmiClients == null || rmiClients.isEmpty()) {
+        synchronized (this.rmiClients) {
+            switch (message) {
+                case "gamestate" -> {
+                    if (gameState instanceof WaitingState) {
                         return;
                     }
-                    for (VirtualClient rmiClient : rmiClients) {
-                        if (rmiClient != null) {
-                            try {
-                                rmiClient.printMessage("Started Building State");
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
+                    else if (gameState instanceof BuildingState) {
+                        return;
+                    }
+                    else if  (gameState instanceof TravellingState){
+                        if (rmiClients == null || rmiClients.isEmpty()) {
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nStarted Travelling State");
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
-                } else if (Objects.equals(message, "time")) {
-                    if (rmiClients == null || rmiClients.isEmpty()) {
-                        return;
-                    }
-                    for (VirtualClient rmiClient : rmiClients) {
-                        if (rmiClient != null) {
-                            try {
-                                rmiClient.printMessage("Time is up, building phase is now over. You can place your alien in the ship and when you are done, type /done");
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
+                    else if (gameState instanceof FinalState){
+                        if (rmiClients == null || rmiClients.isEmpty()){
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nGame is over, the final state has been reached");
+                                    //TODO: print the final score for each player
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
-                } else if (Objects.equals(message, "finish")) {
-                    if (rmiClients == null || rmiClients.isEmpty()) {
-                        return;
+                }
+                case "time" -> {
+                    if (gameState instanceof BuildingState){
+                        if (rmiClients == null || rmiClients.isEmpty()) {
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nHourglass flipped for the: " + game.getHourglass().getFlipNumber() + " time");
+                                    rmiClient.printMessage("\nTime left: " + game.getHourglass().getElapsedTime() + " seconds");
+                                    rmiClient.printMessage("\n");
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
                     }
-                    for (VirtualClient rmiClient : rmiClients) {
-                        if (rmiClient != null) {
-                            try {
-                                rmiClient.viewShips(game);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
+                }
+                case "timeisup" -> {
+                    if (gameState instanceof BuildingState){
+                        if (rmiClients == null || rmiClients.isEmpty()) {
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nTime is up! You have to place your ship now!");
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
                 }
             }
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -2953,4 +2984,5 @@ public class ServerController {
         }
         return checkPosition;
     }
+
 }

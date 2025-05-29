@@ -59,6 +59,7 @@ public class BuildingState extends GameState implements Serializable {
         }
         game.setHourglass(new Hourglass(this));
         game.getHourglass().flip();
+        game.notifyObservers(game, "time");
     }
 
 
@@ -234,6 +235,7 @@ public class BuildingState extends GameState implements Serializable {
 
     public void timeUp(){
         timeIsUp = true;
+        game.notifyObservers(game, "timeisup");
     }
 
     protected void disconnectionConsequences(Player p){

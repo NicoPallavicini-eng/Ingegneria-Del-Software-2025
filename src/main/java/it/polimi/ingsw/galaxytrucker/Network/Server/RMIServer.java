@@ -23,12 +23,13 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void connect(VirtualClient virtualClient) throws RemoteException {
+    public synchronized void connect(VirtualClient virtualClient) throws RemoteException {
         this.clients.add(virtualClient);
+        serverController.setRmiPlayers(this.clients);
     }
 
     @Override
-    public List<VirtualClient> getClients() throws RemoteException{
+    public synchronized List<VirtualClient> getClients() throws RemoteException{
         return clients;
     }
     @Override
