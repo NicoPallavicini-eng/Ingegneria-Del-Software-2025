@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /*superclass of all the gamestates,
 it defines the handleEvent methods that are overloaded.
@@ -23,8 +24,19 @@ public abstract class GameState implements Serializable {
     public void init(){};
 
     public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {
-        EventHandler.handleEvent(event, game);
-        //todo check if we have to do checks
+        Optional<Player> playerOptional = game.getListOfPlayers().stream().filter(p -> p.getNickname().equals(event.nickname())).findAny();
+        if(playerOptional.isPresent()) {
+            Player player = playerOptional.get();
+            if(player.getOnlineStatus()){
+                throw new IllegalEventException("The player is already online");
+            }
+            else{
+                player.setOnlineStatus(true);
+            }
+        }
+        else{
+            throw new IllegalEventException("no player is present with this nickname");
+        }
     }
 
     public void handleEvent(DisconnectEvent event,Game game) throws IllegalEventException {

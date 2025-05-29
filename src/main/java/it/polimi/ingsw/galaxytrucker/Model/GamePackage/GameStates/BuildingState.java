@@ -251,6 +251,11 @@ public class BuildingState extends GameState implements Serializable {
         checkNext();
     }
 
+    public void handleEvent(ConnectEvent event, Game game) {
+        super.handleEvent(event, game);
+        game.updateListOfActivePlayers();
+    }
+
     public ArrayList<Player> getFinishedBuildingPlayers() {
         return finishedBuildingPlayers;
     }
