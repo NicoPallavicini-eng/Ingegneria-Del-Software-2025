@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ActivateEngine
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.NoChoiceEvent;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
@@ -60,6 +61,14 @@ public class OpenSpaceState extends TravellingState implements Serializable {
             if (currentPlayer == null) {
                 next();
             }
+        }
+    }
+
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        super.disconnectionConsequences(p);
+        if (currentPlayer == null) {
+            next();
         }
     }
 }

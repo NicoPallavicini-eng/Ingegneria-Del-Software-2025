@@ -211,4 +211,25 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     public Cannonball getCurrentCannonball() {
         return currentCannonball;
     }
+
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        super.disconnectionConsequences(p);
+        if(currentPlayer == null){
+            penalty();
+        }
+        if(currentLoser.equals(p)){
+            nextChallenge();
+        }
+    }
+
+    protected void penalty(){
+        switch(currentChallenge){
+            case PEOPLE -> peoplePenalty();
+            case CANNONS -> cannonsPenalty();
+            case ENGINES -> enginesPenalty();
+        }
+    }
+
+    protected void nextChallenge(){}
 }

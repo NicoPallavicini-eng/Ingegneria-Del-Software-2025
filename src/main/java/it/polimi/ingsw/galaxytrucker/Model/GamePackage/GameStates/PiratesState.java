@@ -128,7 +128,7 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     private void consequences(){
-        if(currentCard.getCannonballList().isEmpty()){
+        if(currentCard.getCannonballList().isEmpty() || defeatedPlayers.isEmpty()){
             reckoningPhase = false;
             claimingPhase = true;
             if(piratesSlayer == null){
@@ -206,5 +206,26 @@ public class PiratesState extends TravellingState implements Serializable {
 
     public List<Player> getDefendedPlayers() {
         return defendedPlayers;
+    }
+
+    protected void disconnectionConsequences(Player p){
+        defeatedPlayers.remove(p);
+        defendedPlayers.remove(p);
+        if(piratesSlayer.equals(p)){
+            piratesSlayer = null;
+        }
+        if(reckoningPhase) {
+            if(defendedPlayers.containsAll(defeatedPlayers)){
+                consequences();
+            }
+        }
+        else if (claimingPhase) {
+            if(piratesSlayer == null){
+                next();
+            }
+        }
+        else{
+            super.disconnectionConsequences(p);
+        }
     }
 }

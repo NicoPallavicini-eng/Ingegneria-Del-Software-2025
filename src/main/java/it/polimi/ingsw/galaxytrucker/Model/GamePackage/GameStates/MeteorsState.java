@@ -33,6 +33,7 @@ public class MeteorsState extends TravellingState implements Serializable {
     }
 
     public void init(){
+        super.init();
         handledPlayers = new ArrayList<>();
         meteors = currentCard.getMeteorsList();
         currentMeteor = meteors.get(0);
@@ -131,12 +132,20 @@ public class MeteorsState extends TravellingState implements Serializable {
             if (meteors.isEmpty()) {
                 next();
             }
-            currentMeteor = meteors.get(0);
-            meteors.remove(0);
-            for (Player player : game.getListOfActivePlayers()) {
-                player.getShip().disactivateEverything();
+            else {
+                currentMeteor = meteors.get(0);
+                meteors.remove(0);
+                for (Player player : game.getListOfActivePlayers()) {
+                    player.getShip().disactivateEverything();
+                }
             }
         }
+    }
+
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        super.disconnectionConsequences(p);
+        checkNext();
     }
 
     @Override

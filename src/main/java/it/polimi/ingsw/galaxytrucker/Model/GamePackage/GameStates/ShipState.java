@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EjectPeopleEve
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.NoChoiceEvent;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
@@ -56,4 +57,8 @@ public class ShipState extends TravellingState implements Serializable {
         }
     }
 
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        super.disconnectionConsequences(p);
+    }
 }

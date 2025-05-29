@@ -677,7 +677,7 @@ public class ServerController {
                             }
                             else{
                                 try{
-                                    ReserveTileEvent event = new ReserveTileEvent(player, index-1);
+                                    ReserveTileEvent event = new ReserveTileEvent(player);
                                     game.getGameState().handleEvent(event);
                                     newMessage = new Message("Game",game,"defaultView");
                                     newMessage.setNickname(msg.getNickname());
@@ -2219,18 +2219,10 @@ public class ServerController {
             case "reservetile" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
-                    if (secondParameters.isEmpty()) {
-                        if (firstParameters.size() == 1) {
-                            String indexStr = firstParameters.get(0);
-                            int index = Integer.parseInt(indexStr);
-                            if (index < 1 || index > 2) {
-                                client.invalidCommand("Index not valid. It must be either 1 or 2");
-                            } else {
-                                ReserveTileEvent event = new ReserveTileEvent(player, index - 1);
-                                game.getGameState().handleEvent(event);
-                                client.connectView(game);
-                            }
-                        }
+                    if (secondParameters.isEmpty() && firstParameters.isEmpty()) {
+                        ReserveTileEvent event = new ReserveTileEvent(player);
+                        game.getGameState().handleEvent(event);
+                        client.connectView(game);
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");
@@ -2901,7 +2893,9 @@ public class ServerController {
             case "flipall" -> {
                 TilePile tilePile = game.getTilePile();
                 for (Tile tile : tilePile.getTilePile()){
-                    tile.flip();
+                    if(tile != null) {
+                        tile.flip();
+                    }
                 }
                 client.viewTilepile(game);
             }

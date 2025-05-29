@@ -149,6 +149,21 @@ public class SlaversState extends TravellingState implements Serializable {
        checkNext();
     }
 
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        if(p.equals(slaversSlayer)){
+            slaversSlayer = null;
+        }
+        defeatedPlayers.remove(p);
+        handledPlayers.remove(p);
+        if(reckoningPhase){
+            checkNext();
+        }
+        else{
+            super.disconnectionConsequences(p);
+        }
+    }
+
     public Player getSlaversSlayer() {
         return slaversSlayer;
     }

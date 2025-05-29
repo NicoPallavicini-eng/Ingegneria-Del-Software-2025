@@ -69,7 +69,7 @@ public class BuildingState extends GameState implements Serializable {
         else{
             EventHandler.handleEvent(event,this.game);
             finishedBuildingPlayers.add(event.player());
-            if(finishedBuildingPlayers.containsAll(game.getListOfPlayers())) {
+            if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
                 timeIsUp = true;
                 for(Player player : game.getListOfActivePlayers()) {
                     if(player.getShip().checkFloorPlanConnection()){
@@ -234,6 +234,19 @@ public class BuildingState extends GameState implements Serializable {
 
     public void timeUp(){
         timeIsUp = true;
+    }
+
+    protected void disconnectionConsequences(Player p){
+        if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
+            timeIsUp = true;
+            for(Player player : game.getListOfActivePlayers()) {
+                if(player.getShip().checkFloorPlanConnection()){
+                    playersWithLegalShips.add(player);
+                }
+            }
+        }
+        placedAliens.remove(p);
+        checkNext();
     }
 
     public ArrayList<Player> getFinishedBuildingPlayers() {

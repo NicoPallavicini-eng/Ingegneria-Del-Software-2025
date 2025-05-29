@@ -35,7 +35,11 @@ public class StationState extends TravellingState implements Serializable {
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
         }
+        else if(event.player().getShip().getNumberOfInhabitants() < currentCard.getCrewNumberNeeded()){
+            throw new IllegalEventException("not enough crew");
+        }
         else{
+            EventHandler.moveBackward(event.player().getShip(), currentCard.getDaysToLose(), game);
             rewardClaimer = event.player();
             currentPlayer = null;
         }
@@ -95,6 +99,16 @@ public class StationState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not landed on station");
         }
         else {
+            next();
+        }
+    }
+
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        if(rewardClaimer == null){
+            super.disconnectionConsequences(p);
+        }
+        else if(p.equals(rewardClaimer)){
             next();
         }
     }

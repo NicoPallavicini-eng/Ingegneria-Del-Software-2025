@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
 
@@ -28,6 +29,7 @@ public abstract class GameState implements Serializable {
 
     public void handleEvent(DisconnectEvent event,Game game) throws IllegalEventException {
         EventHandler.handleEvent(event, game);
+        disconnectionConsequences(event.player());
     }
 
     public void handleEvent(PickUpTileEvent event) throws IllegalEventException {
@@ -132,5 +134,12 @@ public abstract class GameState implements Serializable {
     public void handleEvent(RemoveBatteriesEvent event) throws IllegalEventException {
         throw new IllegalEventException("The player used a command not available in this phase of the game.");
 
+    }
+
+    public void handleEvent(RemoveTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
+    protected void disconnectionConsequences(Player p){
     }
 }

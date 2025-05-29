@@ -149,6 +149,19 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
+    protected void disconnectionConsequences(Player p){
+        if(cargoLoadingPhase){
+            chosenPlanets.remove(p);
+        }
+        else{
+            super.disconnectionConsequences(p);
+        }
+
+        if(satisfiedPlayers.containsAll(game.getListOfActivePlayers())){
+            next();
+        }
+    }
+
     public Map<Player, Planet> getChosenPlanets() {
         return chosenPlanets;
     }

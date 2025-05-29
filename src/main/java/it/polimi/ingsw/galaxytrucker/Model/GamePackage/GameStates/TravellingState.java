@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.DisconnectEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EventHandler;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.GiveUpEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
@@ -79,6 +80,12 @@ public abstract class TravellingState extends GameState implements Serializable 
 
     public void handleEvent(GiveUpEvent event) throws IllegalEventException {
         EventHandler.handleEvent(event);
+    }
+
+    protected void disconnectionConsequences(Player p){
+        if(currentPlayer.equals(p)){
+            nextPlayer();
+        }
     }
 
 
