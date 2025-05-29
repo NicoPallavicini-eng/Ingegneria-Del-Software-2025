@@ -131,6 +131,9 @@ public abstract class GameState implements Serializable {
 
     public void handleEvent(RemoveBatteriesEvent event) throws IllegalEventException {
         throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
 
+    public void handleEvent(RemoveTileEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
 }

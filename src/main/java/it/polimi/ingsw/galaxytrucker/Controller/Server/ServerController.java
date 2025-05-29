@@ -130,6 +130,59 @@ public class ServerController {
                         }
                     }
                 }
+                case "legalship" -> {
+                    if (gameState instanceof BuildingState){
+                        if (rmiClients == null || rmiClients.isEmpty()){
+                            return;
+                        }
+                        synchronized (((BuildingState) gameState).getPlayersWithLegalShips()) {
+                            for (VirtualClient rmiClient : this.rmiClients) {
+                                try {
+                                    rmiClient.printMessage("\nYour ship is legal! You can now place your aliens.");
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                }
+                case "illegalship" -> {
+                    if (gameState instanceof BuildingState){
+                        if (rmiClients == null || rmiClients.isEmpty()){
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients){
+                            for (Player player : ((BuildingState) gameState).getFinishedBuildingPlayers()){
+                                try{
+                                    if (!((BuildingState) gameState).getPlayersWithLegalShips().contains(player)){
+                                        if (Objects.equals(rmiClient.getNickname(), player.getNickname())) {
+                                            rmiClient.printMessage("\nYour ship is illegal! You have to fix it by removing one tile at a time.\n");
+                                        }
+                                    }
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                }
+                case "newcard" -> {
+                    if (gameState instanceof TravellingState) {
+                        if (rmiClients == null || rmiClients.isEmpty()) {
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nNew card drawn");
+                                    rmiClient.viewCard(game);
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -2320,8 +2373,6 @@ public class ServerController {
                                             if (!virtualClient.getNickname().equals(client.getNickname())) {
                                                 virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
                                             }
-                                            client.printMessage(game.getGameState().toString());
-
                                             if (game.getGameState() instanceof TravellingState) {
                                                 virtualClient.viewCard(game);
                                             }
