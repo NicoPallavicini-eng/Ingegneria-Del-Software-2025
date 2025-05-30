@@ -39,27 +39,13 @@ public class GUITrial extends Application {
         Player player = new Player("mewmew", "mew", Color.BLUE);
         game.addPlayer(player);
         nickname = player.getNickname();
-        sceneManager = new SceneManager(game, stage, nickname);
+        boolean isFirstPlayer = game.getListOfActivePlayers().size() == 1;
+        sceneManager = new SceneManager(game, stage, nickname, isFirstPlayer);
 
         sceneManager.start(stage);
         currentScene = sceneManager.getScene();
 
         // up until here it should all be definitive, except player, all next is testing
-
-        TimeUnit.SECONDS.sleep(2);
-        sceneManager.next((WaitingScene) sceneManager.getScene());
-
-        TimeUnit.SECONDS.sleep(2);
-        sceneManager.switchBuilding((BuildingSceneUserShip) sceneManager.getScene());
-
-        TimeUnit.SECONDS.sleep(2);
-        sceneManager.switchBuilding((BuildingSceneTilePile) sceneManager.getScene());
-
-        TimeUnit.SECONDS.sleep(2);
-        sceneManager.switchBuilding((BuildingSceneOthersShip) sceneManager.getScene());
-
-        TimeUnit.SECONDS.sleep(2);
-        sceneManager.next((BuildingSceneUserShip) sceneManager.getScene());
     }
 
     public static void main(String[] args) {

@@ -12,17 +12,19 @@ public class SceneManager extends Application {
     private WaitingScene waitingScene;
     private String nickname;
     private MyScene currentScene;
+    private boolean isFirtsPlayer;
 
-    public SceneManager(Game game, Stage stage, String nickname) {
+    public SceneManager(Game game, Stage stage, String nickname, boolean isFirstPlayer) {
         this.game = game;
         this.nickname = nickname;
+        this.isFirtsPlayer = isFirstPlayer;
         primaryStage = stage;
         start(primaryStage); // stage comes from instantiation of SceneManager
     }
 
     @Override
     public void start(Stage stage) {
-        waitingScene = new WaitingScene(game, nickname);
+        waitingScene = new WaitingScene(game, nickname, isFirtsPlayer);
         primaryStage = stage;
         primaryStage.setScene(waitingScene.getScene());
         primaryStage.setResizable(false);

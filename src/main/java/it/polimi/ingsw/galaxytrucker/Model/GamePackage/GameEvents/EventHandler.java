@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class EventHandler implements Serializable {
 
-    //ez skip
+    // ez skip
     public static void handleEvent(ChooseSubShipEvent event) {
         Ship ship = event.player().getShip();
         Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
