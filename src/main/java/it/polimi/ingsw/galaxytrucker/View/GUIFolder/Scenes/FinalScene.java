@@ -9,16 +9,19 @@ public class FinalScene extends MyScene{
     private Scene scene;
     private Game game;
     private String nickname;
+    private StackPane root;
+    private Background background;
+    private final int SCENE_WIDTH = 1024;
+    private final int SCENE_HEIGHT = 750;
 
     public FinalScene(Game game, String nickname) {
-        super(game, nickname);
         this.game = game;
         this.nickname = nickname;
-        Background background = new Background();
-        StackPane root = new StackPane();
+        this.background = new Background();
+        this.root = new StackPane();
         root.getChildren().add(background);
 
-        scene = new Scene(root, 1024, 750); // default sizing for now
+        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
     }
 
     public Scene getScene() {

@@ -23,7 +23,6 @@ public class BuildingSceneTilePile extends MyScene {
     private final int SCENE_HEIGHT = 750;
 
     public BuildingSceneTilePile(Game game, String nickname) {
-        super(game, nickname);
         this.game = game;
         this.nickname = nickname;
 

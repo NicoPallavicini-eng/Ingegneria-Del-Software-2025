@@ -23,7 +23,6 @@ public class BuildingSceneUserShip extends MyScene {
     private final int SCENE_HEIGHT = 750;
 
     public BuildingSceneUserShip(Game game, String nickname) {
-        super(game, nickname);
         this.game = game;
         this.nickname = nickname;
 

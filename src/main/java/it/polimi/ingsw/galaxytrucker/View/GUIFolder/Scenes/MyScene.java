@@ -6,16 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
 public class MyScene {
-    private Scene scene;
-    private Game game;
-    private String nickname;
-
-    public MyScene(Game game, String nickname) {
-        this.game = game;
-        this.nickname = nickname;
-    }
-
-    public Scene getScene() {
-        return scene;
+    public MyScene() {
     }
 }
