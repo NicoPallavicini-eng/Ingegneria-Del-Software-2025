@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -13,10 +14,12 @@ public class FinalScene extends MyScene{
     private Background background;
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 750;
+    private SceneManager sceneManager;
 
-    public FinalScene(Game game, String nickname) {
+    public FinalScene(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
+        this.sceneManager = sceneManager;
         this.background = new Background();
         this.root = new StackPane();
         root.getChildren().add(background);

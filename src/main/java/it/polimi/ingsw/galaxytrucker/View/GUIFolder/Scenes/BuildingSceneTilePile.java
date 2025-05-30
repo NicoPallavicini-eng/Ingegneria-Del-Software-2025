@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
@@ -21,10 +22,12 @@ public class BuildingSceneTilePile extends MyScene {
     private Background background;
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 750;
+    private SceneManager sceneManager;
 
-    public BuildingSceneTilePile(Game game, String nickname) {
+    public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
+        this.sceneManager = sceneManager;
 
         this.background = new Background();
         this.root = new StackPane();

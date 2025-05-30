@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.geometry.Pos;
@@ -29,14 +30,34 @@ public class WaitingScene extends MyScene{
     private Button setPlayersButton;
     private Label nicknameFeedbackLabel;
     private Label playersFeedbackLabel;
+    private boolean nicknameSet = false;
+    private boolean playersSet = false;
+    private Button nextButton;
+    private SceneManager sceneManager;  // Add this to call next()
+    private boolean ownerProceeded = false; // Add this field in your class
 
-    public WaitingScene(Game game, String nickname, boolean isFirstPlayer) {
+    public WaitingScene(Game game, String nickname, boolean isFirstPlayer, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
         this.isFirstPlayer = isFirstPlayer;
         this.background = new Background();
         this.root = new StackPane();
+        this.sceneManager = sceneManager;
         root.getChildren().add(background);
+
+        nextButton = new Button("Next");
+        styleButton(nextButton, "#cc5555");  // Red
+        nextButton.setDisable(true);          // Disabled until conditions met
+        nextButton.setOnAction(e -> {
+            if (isFirstPlayer) {
+                onOwnerClickNext();
+                // Then proceed to the next scene, or whatever else you want to do
+                sceneManager.next(this);
+            } else {
+                // For other players, just go to next scene normally
+                sceneManager.next(this);
+            }
+        });
 
         VBox menuBox = new VBox(20);
         menuBox.setAlignment(Pos.CENTER);
@@ -56,7 +77,7 @@ public class WaitingScene extends MyScene{
         playersFeedbackLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 500;");
 
         menuBox.getChildren().addAll(connectButton, nicknameFeedbackLabel,
-                setPlayersButton, playersFeedbackLabel);
+                setPlayersButton, playersFeedbackLabel, nextButton);
 
         root.getChildren().add(menuBox);
 
@@ -95,6 +116,8 @@ public class WaitingScene extends MyScene{
             this.nickname = name;
             connectButton.setDisable(true);  // Disable after success
             nicknameFeedbackLabel.setText("Nickname set: " + nickname);
+            nicknameSet = true;
+            checkIfReadyToProceed();
         });
     }
 
@@ -116,10 +139,37 @@ public class WaitingScene extends MyScene{
                 int number = Integer.parseInt(numberStr);
                 setPlayersButton.setDisable(true);  // Disable after success
                 playersFeedbackLabel.setText("Number of players: " + number);
+                playersSet = true;
+                checkIfReadyToProceed();
             } catch (NumberFormatException e) {
                 playersFeedbackLabel.setText("Invalid number, try again");
             }
         });
+    }
+
+    private void checkIfReadyToProceed() {
+        if (isFirstPlayer) {
+            // Owner can click Next only if both nickname and players count set
+            if (nicknameSet && playersSet) {
+                nextButton.setDisable(false);
+            } else {
+                nextButton.setDisable(true);
+            }
+        } else {
+            // Other players can click Next only after owner clicked Next and nickname set
+            if (nicknameSet && ownerProceeded) {
+                nextButton.setDisable(false);
+            } else {
+                nextButton.setDisable(true);
+            }
+        }
+    }
+
+    // Call this when the owner clicks Next:
+    private void onOwnerClickNext() {
+        ownerProceeded = true;
+        nextButton.setDisable(true); // disable after clicking for owner if needed
+        // notify others or update state as needed
     }
 
     public Scene getScene() {

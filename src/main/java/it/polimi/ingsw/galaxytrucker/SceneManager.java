@@ -24,7 +24,7 @@ public class SceneManager extends Application {
 
     @Override
     public void start(Stage stage) {
-        waitingScene = new WaitingScene(game, nickname, isFirtsPlayer);
+        waitingScene = new WaitingScene(game, nickname, isFirtsPlayer, this);
         primaryStage = stage;
         primaryStage.setScene(waitingScene.getScene());
         primaryStage.setResizable(false);
@@ -51,56 +51,56 @@ public class SceneManager extends Application {
     }
 
     public void next(WaitingScene waitingScene) {
-        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname);
+        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
         primaryStage.setTitle("Building State - User Ship");
         primaryStage.setScene(buildingSceneUserShip.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingSceneUserShip buildingSceneUserShip) {
-        TravellingScene travellingScene = new TravellingScene(game, nickname);
+        TravellingScene travellingScene = new TravellingScene(game, nickname, this);
         primaryStage.setTitle("Travelling State");
         primaryStage.setScene(travellingScene.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingSceneTilePile buildingSceneTilePile) {
-        TravellingScene travellingScene = new TravellingScene(game, nickname);
+        TravellingScene travellingScene = new TravellingScene(game, nickname, this);
         primaryStage.setTitle("Travelling State");
         primaryStage.setScene(travellingScene.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingSceneOthersShip buildingSceneOthersShip) {
-        TravellingScene travellingScene = new TravellingScene(game, nickname);
+        TravellingScene travellingScene = new TravellingScene(game, nickname, this);
         primaryStage.setTitle("Travelling State");
         primaryStage.setScene(travellingScene.getScene());
         primaryStage.show();
     }
 
     public void next(TravellingScene travellingScene) {
-        FinalScene finalScene = new FinalScene(game, nickname);
+        FinalScene finalScene = new FinalScene(game, nickname, this);
         primaryStage.setTitle("Final State");
         primaryStage.setScene(finalScene.getScene());
         primaryStage.show();
     }
 
     public void switchBuilding(BuildingSceneUserShip buildingSceneUserShip) {
-        BuildingSceneTilePile buildingSceneTilePile = new BuildingSceneTilePile(game, nickname);
+        BuildingSceneTilePile buildingSceneTilePile = new BuildingSceneTilePile(game, nickname, this);
         primaryStage.setTitle("Building State - Tile Pile");
         primaryStage.setScene(buildingSceneTilePile.getScene());
         primaryStage.show();
     }
 
     public void switchBuilding(BuildingSceneTilePile buildingSceneTilePile) {
-        BuildingSceneOthersShip buildingSceneOthersShip = new BuildingSceneOthersShip(game, nickname);
+        BuildingSceneOthersShip buildingSceneOthersShip = new BuildingSceneOthersShip(game, nickname, this);
         primaryStage.setTitle("Building State - Others' Ship");
         primaryStage.setScene(buildingSceneOthersShip.getScene());
         primaryStage.show();
     }
 
     public void switchBuilding(BuildingSceneOthersShip buildingSceneOthersShip) {
-        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname);
+        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
         primaryStage.setTitle("Building State - User Ship");
         primaryStage.setScene(buildingSceneUserShip.getScene());
         primaryStage.show();

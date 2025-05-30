@@ -44,8 +44,6 @@ public class GUITrial extends Application {
 
         sceneManager.start(stage);
         currentScene = sceneManager.getScene();
-
-        // up until here it should all be definitive, except player, all next is testing
     }
 
     public static void main(String[] args) {
