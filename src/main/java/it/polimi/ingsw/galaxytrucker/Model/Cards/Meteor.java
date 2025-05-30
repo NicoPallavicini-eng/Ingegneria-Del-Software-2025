@@ -124,7 +124,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             ConnectorType c;
             if (this.direction == NORTH) {
                 c = firstTile.getConnectors().get(0);
-            } else {//south
+            } else { //south
                 c = firstTile.getConnectors().get(2);
             }
             if (c != ConnectorType.NONE

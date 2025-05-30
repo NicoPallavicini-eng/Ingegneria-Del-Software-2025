@@ -20,6 +20,7 @@ public class CabinTile extends Tile implements Serializable {
         super(north, south, east, west);
         this.inhabitants = inhabitants;
         this.mainCapsule = mainCapsule;
+
         if (mainCapsule) {
             this.facingUp = true;
             this.choosable = false;
@@ -27,6 +28,7 @@ public class CabinTile extends Tile implements Serializable {
             this.facingUp = false;
             this.choosable = true;
         }
+
         this.color = color;
         this.attached = false;
         this.reserved = false;

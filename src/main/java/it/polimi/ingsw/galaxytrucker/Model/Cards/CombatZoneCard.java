@@ -32,10 +32,4 @@ public abstract class CombatZoneCard extends Card implements Serializable {
     public List <Cannonball> getCannonballList() {
         return cannonballList;
     }
-
-//    public void lessCrewProcess(Ship ship) {}
-//
-//    public void lessEngineProcess(Ship ship) {}
-//
-//    public void lessFirepowerProcess(Ship ship) {}
 }

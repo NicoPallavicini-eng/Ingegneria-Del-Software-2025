@@ -48,7 +48,6 @@ public class Game implements Serializable, Observable {
     }
 
     public void updateListOfActivePlayers() {
-
         List<Player> list = listOfPlayers.stream().filter(p -> p.getShip().getTravelDays() != null && p.getOnlineStatus()).collect(Collectors.toList());
         listOfActivePlayers.clear();
         listOfActivePlayers.addAll(list);

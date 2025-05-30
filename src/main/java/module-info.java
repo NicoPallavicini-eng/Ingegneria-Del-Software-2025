@@ -8,6 +8,7 @@ module it.polimi.ingsw.galaxytrucker {
     requires org.controlsfx.controls;
     requires java.rmi;
     requires jdk.jfr;
+
     requires jackson.core;
     requires jackson.databind;
     requires jackson.annotations;

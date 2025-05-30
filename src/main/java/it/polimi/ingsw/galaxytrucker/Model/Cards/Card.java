@@ -32,6 +32,4 @@ public abstract class Card implements Serializable {
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }
-
-
 }

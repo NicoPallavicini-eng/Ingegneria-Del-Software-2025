@@ -1548,7 +1548,6 @@ public class JsonParsing{
         ArrayList<CabinTile> mainCabins = new ArrayList<>();
 
         Type typeCabin = new TypeToken<Map<String,CabinTileParse>>(){}.getType();
-
         Map<String,CabinTileParse> cabinsMap = gson.fromJson(jsonTiles.cabin, typeCabin);
 
         for (String connectorKey : cabinsMap.keySet()) {
