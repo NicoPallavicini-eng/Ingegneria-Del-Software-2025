@@ -91,7 +91,7 @@ public class Ship implements Serializable {
         for(ArrayList<Tile> row:floorplanArrayList){
             for(int j=0;j<col_max;j++){
                 if(row.get(j)!=null && row.get(j).equals(tile)){
-                    return index;
+                    return j;
                 }
             }
             index++;
@@ -214,7 +214,9 @@ public class Ship implements Serializable {
                         ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
                         if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
-
+                    else if (adiacentTile.get(0)==null && adiacentTile.get(1)==null && adiacentTile.get(2)==null && adiacentTile.get(3)==null) {
+                        return findTileOnFloorplanRow(tile) == 2 && findTileOnFloorPlanColumn(tile) == 3;
+                    }
                 }
             }
         }
