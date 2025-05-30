@@ -12,12 +12,11 @@ import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TUI {
+public class TUI implements UIInterface {
     private Game game;
     private String nickname;
 
     public void start(){
-
     }
 
     public void setNickname(String nickname){

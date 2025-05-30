@@ -33,8 +33,8 @@ public class WaitingScene extends MyScene{
     private boolean nicknameSet = false;
     private boolean playersSet = false;
     private Button nextButton;
-    private SceneManager sceneManager;  // Add this to call next()
-    private boolean ownerProceeded = false; // Add this field in your class
+    private SceneManager sceneManager;
+    private boolean ownerProceeded = false;
 
     public WaitingScene(Game game, String nickname, boolean isFirstPlayer, SceneManager sceneManager) {
         this.game = game;

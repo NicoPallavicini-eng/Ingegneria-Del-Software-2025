@@ -6,9 +6,17 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 public class UI {
     public static void main(String[] args){
         Game game = ServerController.getGame();
-        // new ParsingJSON();
-        TUI tui = new TUI();
-        // tui.viewTilePile(game);
-        tui.printTitle();
+
+        UIInterface ui;
+        boolean useGui = false; // or read from args/config
+
+        if (useGui) {
+            ui = new GUI(game, "playerNickname"); // TODO get properly
+        } else {
+            ui = new TUI();
+        }
+
+        ui.printTitle();
+        ui.start();
     }
 }
