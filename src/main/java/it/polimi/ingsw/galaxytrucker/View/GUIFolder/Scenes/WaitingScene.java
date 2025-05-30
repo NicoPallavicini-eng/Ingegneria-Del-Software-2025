@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -39,17 +42,18 @@ public class WaitingScene extends MyScene{
         menuBox.setAlignment(Pos.CENTER);
 
         connectButton = new Button("Connect");
+        styleButton(connectButton, "#3399cc");  // Blue
         connectButton.setOnAction(e -> handleConnect());
 
         setPlayersButton = new Button("Set Players");
+        styleButton(setPlayersButton, "#875f87");  // Purple
         setPlayersButton.setOnAction(e -> handleSetPlayers());
-        setPlayersButton.setDisable(!isFirstPlayer);
         setPlayersButton.setVisible(isFirstPlayer);
 
         nicknameFeedbackLabel = new Label();
-        nicknameFeedbackLabel.setStyle("-fx-text-fill: white;");
+        nicknameFeedbackLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 500;");
         playersFeedbackLabel = new Label();
-        playersFeedbackLabel.setStyle("-fx-text-fill: white;");
+        playersFeedbackLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 500;");
 
         menuBox.getChildren().addAll(connectButton, nicknameFeedbackLabel,
                 setPlayersButton, playersFeedbackLabel);
@@ -59,11 +63,32 @@ public class WaitingScene extends MyScene{
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
     }
 
+    // Styling helper method with hover effect
+    private void styleButton(Button button, String colorHex) {
+        String baseStyle = "-fx-background-color: " + colorHex + "; -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
+        String hoverStyle = "-fx-background-color: derive(" + colorHex + ", 20%); -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
+        button.setStyle(baseStyle);
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
+    }
+
+    private void styleDialog(TextInputDialog dialog) {
+        dialog.getDialogPane().getStylesheets().clear();
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/dialog-theme.css").toExternalForm());
+    }
+
     private void handleConnect() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Connect");
         dialog.setHeaderText("Enter your nickname:");
         dialog.setContentText("Nickname:");
+
+        styleDialog(dialog);
+
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().clear();
+        dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
@@ -79,6 +104,12 @@ public class WaitingScene extends MyScene{
         dialog.setHeaderText("Set number of players:");
         dialog.setContentText("Players:");
 
+        styleDialog(dialog);
+
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().clear();
+        dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(numberStr -> {
             try {
@@ -86,7 +117,7 @@ public class WaitingScene extends MyScene{
                 setPlayersButton.setDisable(true);  // Disable after success
                 playersFeedbackLabel.setText("Number of players: " + number);
             } catch (NumberFormatException e) {
-                playersFeedbackLabel.setText("❌ Invalid number.");
+                playersFeedbackLabel.setText("Invalid number, try again");
             }
         });
     }
