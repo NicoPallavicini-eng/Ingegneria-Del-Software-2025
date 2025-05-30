@@ -29,7 +29,7 @@ public class BuildingSceneOthersShip extends MyScene {
 
         Player user = checkPlayer(nickname);
         Ship userShip = user.getShip();
-
+        ///
         this.background = new Background();
         this.root = new StackPane();
 
