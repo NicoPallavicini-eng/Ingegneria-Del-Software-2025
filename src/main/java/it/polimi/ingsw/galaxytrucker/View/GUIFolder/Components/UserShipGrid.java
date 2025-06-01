@@ -52,22 +52,38 @@ public class UserShipGrid extends Pane {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                TileView tile = new TileView();
-                tile.setPrefSize(TILE_SIZE, TILE_SIZE);
-                cells[row][col] = tile;
-                grid.add(tile, col, row);
+                if (!((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
+                        (row == 1 && (col == 0 || col == 6)) ||
+                        (row == 4 && col == 3))) {
+                    TileView tile = new TileView();
+                    tile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                    int finalRow = row;
+                    int finalCol = col;
+                    tile.getOverlayButton().setOnAction(e -> {
+                        System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
+                    });
+                    cells[row][col] = tile;
+                    grid.add(tile, col, row);
+                }
             }
         }
 
         for (int slot = 0; slot < RES_SLOTS; slot++) {
             ReservedTileView tile = new ReservedTileView();
             tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
+            int finalCol = slot;
+            tile.getOverlayButton().setOnAction(e -> {
+                System.out.println("Clicked Res tile at: " + finalCol);
+            });
             resCells[slot] = tile;
             resGrid.add(tile, slot, 0);
         }
 
         ReservedTileView tile = new ReservedTileView();
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
+        tile.getOverlayButton().setOnAction(e -> {
+            System.out.println("Clicked Hand tile");
+        });
         handCell[0] = tile;
         handGrid.add(tile, 0, 0);
 

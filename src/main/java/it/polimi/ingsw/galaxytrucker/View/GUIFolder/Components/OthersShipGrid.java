@@ -100,18 +100,33 @@ public class OthersShipGrid extends Pane {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                OthersShipTileView tile1 = new OthersShipTileView();
-                OthersShipTileView tile2 = new OthersShipTileView();
-                OthersShipTileView tile3 = new OthersShipTileView();
-                tile1.setPrefSize(TILE_SIZE, TILE_SIZE);
-                tile2.setPrefSize(TILE_SIZE, TILE_SIZE);
-                tile3.setPrefSize(TILE_SIZE, TILE_SIZE);
-                cells1[row][col] = tile1;
-                cells2[row][col] = tile2;
-                cells3[row][col] = tile3;
-                grid1.add(tile1, col, row);
-                grid2.add(tile2, col, row);
-                grid3.add(tile3, col, row);
+                if (!((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
+                        (row == 1 && (col == 0 || col == 6)) ||
+                        (row == 4 && col == 3))) {
+                    OthersShipTileView tile1 = new OthersShipTileView();
+                    OthersShipTileView tile2 = new OthersShipTileView();
+                    OthersShipTileView tile3 = new OthersShipTileView();
+                    tile1.setPrefSize(TILE_SIZE, TILE_SIZE);
+                    tile2.setPrefSize(TILE_SIZE, TILE_SIZE);
+                    tile3.setPrefSize(TILE_SIZE, TILE_SIZE);
+                    int finalRow = row;
+                    int finalCol = col;
+                    tile1.getOverlayButton().setOnAction(e -> {
+                        System.out.println("Clicked tile1 at: " + finalRow + ", " + finalCol);
+                    });
+                    tile2.getOverlayButton().setOnAction(e -> {
+                        System.out.println("Clicked tile2 at: " + finalRow + ", " + finalCol);
+                    });
+                    tile3.getOverlayButton().setOnAction(e -> {
+                        System.out.println("Clicked tile3 at: " + finalRow + ", " + finalCol);
+                    });
+                    cells1[row][col] = tile1;
+                    cells2[row][col] = tile2;
+                    cells3[row][col] = tile3;
+                    grid1.add(tile1, col, row);
+                    grid2.add(tile2, col, row);
+                    grid3.add(tile3, col, row);
+                }
             }
         }
 
@@ -122,6 +137,16 @@ public class OthersShipGrid extends Pane {
             tile1.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
             tile2.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
             tile3.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
+            int finalCol = slot;
+            tile1.getOverlayButton().setOnAction(e -> {
+                System.out.println("Clicked Res tile1 at: " + finalCol);
+            });
+            tile2.getOverlayButton().setOnAction(e -> {
+                System.out.println("Clicked Res tile2 at: " + finalCol);
+            });
+            tile3.getOverlayButton().setOnAction(e -> {
+                System.out.println("Clicked Res tile3 at: " + finalCol);
+            });
             resCells1[slot] = tile1;
             resCells2[slot] = tile2;
             resCells3[slot] = tile3;
@@ -136,6 +161,15 @@ public class OthersShipGrid extends Pane {
         tile1.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile2.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile3.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
+        tile1.getOverlayButton().setOnAction(e -> {
+            System.out.println("Clicked Hand tile1");
+        });
+        tile2.getOverlayButton().setOnAction(e -> {
+            System.out.println("Clicked Hand tile2");
+        });
+        tile3.getOverlayButton().setOnAction(e -> {
+            System.out.println("Clicked Hand tile3");
+        });
         handCell1[0] = tile1;
         handCell2[0] = tile2;
         handCell3[0] = tile3;

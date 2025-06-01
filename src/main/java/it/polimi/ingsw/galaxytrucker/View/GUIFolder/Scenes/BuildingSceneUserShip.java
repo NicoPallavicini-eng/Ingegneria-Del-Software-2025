@@ -42,6 +42,7 @@ public class BuildingSceneUserShip extends MyScene {
         root.getChildren().addAll(background, userShipGrid);
 
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
     }
 
     public Player checkPlayer(String nickname) {

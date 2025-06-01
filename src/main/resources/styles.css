@@ -1,0 +1,13 @@
+.tile-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 1; /* Full opacity, but still transparent */
+    -fx-cursor: hand;
+    -fx-effect: null; /* No effect by default */
+    -fx-border-color: transparent; /* Just in case */
+    -fx-border-width: 0;
+}
+
+.tile-button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.08); /* Optional soft glow */
+}

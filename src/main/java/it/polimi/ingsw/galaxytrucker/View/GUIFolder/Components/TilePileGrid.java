@@ -28,6 +28,11 @@ public class TilePileGrid extends Pane {
             for (int col = 0; col < COLS; col++) {
                 TilePileTileView tile = new TilePileTileView();
                 tile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                int finalRow = row;
+                int finalCol = col;
+                tile.getOverlayButton().setOnAction(e -> {
+                    System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
+                });
                 cells[row][col] = tile;
                 // cells[row][col].setTileImage(mainCabinIcon);
                 // ^ tmp, uncomment to see the grid filled
