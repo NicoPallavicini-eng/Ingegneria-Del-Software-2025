@@ -71,6 +71,7 @@ public class BuildingSceneTilePile extends MyScene {
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        sceneManager.setTilePileScene(this);
     }
 
     public Scene getScene() {
