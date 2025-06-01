@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class SceneManager extends Application {
     private static Stage primaryStage;
     private final Game game;
@@ -85,24 +87,45 @@ public class SceneManager extends Application {
         primaryStage.show();
     }
 
-    public void switchBuilding(BuildingSceneUserShip buildingSceneUserShip) {
-        BuildingSceneTilePile buildingSceneTilePile = new BuildingSceneTilePile(game, nickname, this);
-        primaryStage.setTitle("Building State - Tile Pile");
-        primaryStage.setScene(buildingSceneTilePile.getScene());
-        primaryStage.show();
+    public void switchBuilding(BuildingSceneUserShip buildingSceneUserShip, String choice) {
+        if (Objects.equals(choice, "TilePile")) {
+            BuildingSceneTilePile buildingSceneTilePile = new BuildingSceneTilePile(game, nickname, this);
+            primaryStage.setTitle("Building State - Tile Pile");
+            primaryStage.setScene(buildingSceneTilePile.getScene());
+            primaryStage.show();
+        } else if (Objects.equals(choice, "OthersShip")) {
+            BuildingSceneOthersShip buildingSceneOthersShip = new BuildingSceneOthersShip(game, nickname, this);
+            primaryStage.setTitle("Building State - Others' Ship");
+            primaryStage.setScene(buildingSceneOthersShip.getScene());
+            primaryStage.show();
+        }
     }
 
-    public void switchBuilding(BuildingSceneTilePile buildingSceneTilePile) {
-        BuildingSceneOthersShip buildingSceneOthersShip = new BuildingSceneOthersShip(game, nickname, this);
-        primaryStage.setTitle("Building State - Others' Ship");
-        primaryStage.setScene(buildingSceneOthersShip.getScene());
-        primaryStage.show();
+    public void switchBuilding(BuildingSceneTilePile buildingSceneTilePile, String choice) {
+        if (Objects.equals(choice, "OthersShip")) {
+            BuildingSceneOthersShip buildingSceneOthersShip = new BuildingSceneOthersShip(game, nickname, this);
+            primaryStage.setTitle("Building State - Others' Ship");
+            primaryStage.setScene(buildingSceneOthersShip.getScene());
+            primaryStage.show();
+        } else if (Objects.equals(choice, "UserShip")) {
+            BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
+            primaryStage.setTitle("Building State - User Ship");
+            primaryStage.setScene(buildingSceneUserShip.getScene());
+            primaryStage.show();
+        }
     }
 
-    public void switchBuilding(BuildingSceneOthersShip buildingSceneOthersShip) {
-        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
-        primaryStage.setTitle("Building State - User Ship");
-        primaryStage.setScene(buildingSceneUserShip.getScene());
-        primaryStage.show();
+    public void switchBuilding(BuildingSceneOthersShip buildingSceneOthersShip, String choice) {
+        if (Objects.equals(choice, "UserShip")) {
+            BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
+            primaryStage.setTitle("Building State - User Ship");
+            primaryStage.setScene(buildingSceneUserShip.getScene());
+            primaryStage.show();
+        } else if (Objects.equals(choice, "TilePile")) {
+            BuildingSceneTilePile buildingSceneTilePile = new BuildingSceneTilePile(game, nickname, this);
+            primaryStage.setTitle("Building State - Tile Pile");
+            primaryStage.setScene(buildingSceneTilePile.getScene());
+            primaryStage.show();
+        }
     }
 }

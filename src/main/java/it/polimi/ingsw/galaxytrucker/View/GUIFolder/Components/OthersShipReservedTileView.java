@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 // used for reserved others' tiles and hand
 public class OthersShipReservedTileView extends StackPane {
-    private static final int TILE_SIZE = 37;
+    private static final int TILE_SIZE = 55; // 110/2
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();

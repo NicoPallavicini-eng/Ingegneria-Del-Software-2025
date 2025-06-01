@@ -24,7 +24,7 @@ public class WaitingScene extends MyScene{
     private StackPane root;
     private Background background;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 750;
+    private final int SCENE_HEIGHT = 800;
     private boolean isFirstPlayer;
     private Button connectButton;
     private Button setPlayersButton;

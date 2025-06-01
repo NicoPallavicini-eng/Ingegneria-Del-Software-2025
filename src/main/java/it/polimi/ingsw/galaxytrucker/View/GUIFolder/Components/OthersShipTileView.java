@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 // used for others' ship tiles
 public class OthersShipTileView extends StackPane {
-    private static final int TILE_SIZE = 41;
+    private static final int TILE_SIZE = 62; // 124/2
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();

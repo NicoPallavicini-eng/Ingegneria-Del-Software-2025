@@ -8,7 +8,12 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
@@ -17,11 +22,11 @@ public class BuildingSceneTilePile extends MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
-    private StackPane root;
+    private BorderPane root;
     private TilePileGrid tilePileGrid;
     private Background background;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 750;
+    private final int SCENE_HEIGHT = 800;
     private SceneManager sceneManager;
 
     public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
@@ -30,15 +35,42 @@ public class BuildingSceneTilePile extends MyScene {
         this.sceneManager = sceneManager;
 
         this.background = new Background();
-        this.root = new StackPane();
+        BorderPane layout = new BorderPane();
+        this.root = new BorderPane();
 
         // see TilePile
         this.tilePileGrid = new TilePileGrid();
+        StackPane centerContent = new StackPane(tilePileGrid);
 
-        // tilePile view
-        root.getChildren().addAll(background, tilePileGrid);
+        // --- Bottom Buttons ---
+        Button viewOthersButton = new Button("View Others' Ships");
+        Button viewTilePileButton = new Button("View User Ship");
+        viewOthersButton.getStyleClass().add("bottom-button");
+        viewTilePileButton.getStyleClass().add("bottom-button");
 
-        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        viewOthersButton.setOnAction(e -> {
+            System.out.println("View Others' Ships clicked");
+            sceneManager.switchBuilding(this, "OthersShip");
+        });
+
+        viewTilePileButton.setOnAction(e -> {
+            System.out.println("View User Ship clicked");
+            sceneManager.switchBuilding(this, "UserShip");
+        });
+
+        HBox buttonBox = new HBox(600, viewOthersButton, viewTilePileButton);
+        buttonBox.setPadding(new Insets(20));
+        buttonBox.setAlignment(Pos.CENTER);
+
+        layout.setCenter(centerContent);
+        layout.setBottom(buttonBox);
+
+        // Now wrap layout with background in a StackPane
+        StackPane rootWithBackground = new StackPane();
+        rootWithBackground.getChildren().addAll(background, layout);
+
+        scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
     }
 
     public Scene getScene() {

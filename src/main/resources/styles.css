@@ -9,5 +9,18 @@
 
 .tile-button:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
-    -fx-background-color: rgba(255, 255, 255, 0.08); /* Optional soft glow */
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Optional soft glow */
+}
+
+.bottom-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 12;
+    -fx-background-color: #3399cc;
+    -fx-text-fill: white;
+}
+
+.bottom-button:hover {
+    -fx-background-color: derive(#3399cc, 20%);
+    -fx-cursor: hand;
 }

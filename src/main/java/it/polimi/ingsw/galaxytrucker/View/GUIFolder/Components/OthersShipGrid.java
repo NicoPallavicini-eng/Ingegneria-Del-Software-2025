@@ -12,15 +12,15 @@ public class OthersShipGrid extends Pane {
     private static final int ROWS = 5;
     private static final int COLS = 7;
     private static final int RES_SLOTS = 2;
-    private static final int TILE_SIZE = 41; // 124/3
-    private static final int RESERVED_TILE_SIZE = 37; // 110/3
-    private static final int TOP_BORDER = 10; // 29/3
-    private static final int LEFT_BORDER = 12; // 35/3
-    private static final int TOT_WIDTH = 312; // 937/3
-    private static final int TOT_HEIGHT = 226; // 679/3
-    private static final int RESERVED_TOP_BORDER = 9; // 28/3
-    private static final int RESERVED_LEFT_BORDER = 226; // 677/3
-    private static final int HAND_LEFT_BORDER = 9; // 28/3
+    private static final int TILE_SIZE = 62; // 124/2
+    private static final int RESERVED_TILE_SIZE = 55; // 110/2
+    private static final int TOP_BORDER = 15; // 29/2
+    private static final int LEFT_BORDER = 18; // 35/2
+    private static final int TOT_WIDTH = 469; // 937/2
+    private static final int TOT_HEIGHT = 340; // 679/2
+    private static final int RESERVED_TOP_BORDER = 14; // 28/2
+    private static final int RESERVED_LEFT_BORDER = 339; // 677/2
+    private static final int HAND_LEFT_BORDER = 14; // 28/2
 
     private final OthersShipTileView[][] cells1 = new OthersShipTileView[ROWS][COLS];
     private final OthersShipTileView[][] cells2 = new OthersShipTileView[ROWS][COLS];
@@ -49,12 +49,12 @@ public class OthersShipGrid extends Pane {
         bgView1.setPreserveRatio(true);
         bgView2.setPreserveRatio(true);
         bgView3.setPreserveRatio(true);
-        bgView1.setX(-300);
-        bgView2.setX(-300);
-        bgView3.setX(-300);
-        bgView1.setY(-235);
-        bgView2.setY(0);
-        bgView3.setY(235);
+        bgView1.setX(0); // up center
+        bgView2.setX(-245); // low left
+        bgView3.setX(245); // low right
+        bgView1.setY(-175);
+        bgView2.setY(175);
+        bgView3.setY(175);
 
         GridPane grid1 = new GridPane();
         grid1.setHgap(0);
@@ -73,17 +73,17 @@ public class OthersShipGrid extends Pane {
         grid3.setLayoutY(TOP_BORDER + bgView3.getY());
 
         GridPane resGrid1 = new GridPane();
-        resGrid1.setHgap(3);
+        resGrid1.setHgap(6);
         resGrid1.setVgap(0);
         resGrid1.setLayoutX(RESERVED_LEFT_BORDER + bgView1.getX());
         resGrid1.setLayoutY(RESERVED_TOP_BORDER + bgView1.getY());
         GridPane resGrid2 = new GridPane();
-        resGrid2.setHgap(3);
+        resGrid2.setHgap(6);
         resGrid2.setVgap(0);
         resGrid2.setLayoutX(RESERVED_LEFT_BORDER + bgView2.getX());
         resGrid2.setLayoutY(RESERVED_TOP_BORDER + bgView2.getY());
         GridPane resGrid3 = new GridPane();
-        resGrid3.setHgap(3);
+        resGrid3.setHgap(6);
         resGrid3.setVgap(0);
         resGrid3.setLayoutX(RESERVED_LEFT_BORDER + bgView3.getX());
         resGrid3.setLayoutY(RESERVED_TOP_BORDER + bgView3.getY());
