@@ -113,7 +113,7 @@ public class UserShipGrid extends Pane {
             !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
             (row == 1 && (col == 0 || col == 6)) ||
             (row == 4 && col == 3)) &&
-            cells[row][col].getTileImage() == null) {
+            cells[row][col].getTileImage().getImage() == null) {
             cells[row][col].setTileImage(image.getImage());
         } else {
             // TODO print error: "hand already filled" or other errors
@@ -122,7 +122,7 @@ public class UserShipGrid extends Pane {
     }
 
     public void setResTile (int slot, ImageView image) {
-        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage() == null) {
+        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage().getImage() == null) {
             resCells[slot].setTileImage(image.getImage());
         } else {
             // TODO print error: "slot already filled" or other errors
@@ -131,7 +131,7 @@ public class UserShipGrid extends Pane {
     }
 
     public void setHandTile (Image image) {
-        if (true /* handCell[0].getTileImage() == null TODO understand how to do this check right */) {
+        if (handCell[0].getTileImage().getImage() == null) {
             handCell[0].setTileImage(image);
         } else {
             // TODO print error: "hand already filled"
