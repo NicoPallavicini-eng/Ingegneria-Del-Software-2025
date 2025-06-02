@@ -11,7 +11,8 @@ public class ReservedTileView extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();
-    private boolean isClickable = false;
+    private boolean isClickable = true;
+    private boolean isFull = false;
 
     public ReservedTileView() {
         // Set up the top tile image (initially empty)
@@ -55,5 +56,13 @@ public class ReservedTileView extends StackPane {
 
     public void setClickable(boolean clickable) {
         isClickable = clickable;
+    }
+
+    public boolean isFull() {
+        return isFull;
+    }
+
+    public void setFull(boolean full) {
+        isFull = full;
     }
 }

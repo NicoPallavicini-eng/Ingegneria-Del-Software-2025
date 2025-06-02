@@ -74,9 +74,17 @@ public class UserShipGrid extends Pane {
         for (int slot = 0; slot < RES_SLOTS; slot++) {
             ReservedTileView tile = new ReservedTileView();
             tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
-            int finalCol = slot;
+            int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
-                System.out.println("Clicked Res tile at: " + finalCol);
+                if (tile.isClickable() && !tile.isFull()) {
+                    setResTile(finalSlot, handCell[0].getTileImage());
+                    handCell[0].clearTileImage();
+                    tile.setFull(true);
+                } else if (tile.isClickable() && tile.isFull()) {
+                    setHandTile(tile.getTileImage());
+                    resCells[finalSlot].clearTileImage();
+                    tile.setFull(false);
+                }
             });
             resCells[slot] = tile;
             resGrid.add(tile, slot, 0);
@@ -85,7 +93,6 @@ public class UserShipGrid extends Pane {
         ReservedTileView tile = new ReservedTileView();
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
-            System.out.println("Clicked Hand tile");
             if (tile.isClickable()) {
                 buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
             }
@@ -123,6 +130,7 @@ public class UserShipGrid extends Pane {
             (row == 4 && col == 3)) &&
             cells[row][col].getTileImage().getImage() == null) {
             cells[row][col].setTileImage(image);
+            cells[row][col].setFull(true);
             cells[row][col].setClickable(true); // TODO setupb logic of last picked up cell
         } else {
             // TODO print error: "hand already filled" or other errors
@@ -133,6 +141,7 @@ public class UserShipGrid extends Pane {
     public void setResTile (int slot, ImageView image) {
         if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage().getImage() == null) {
             resCells[slot].setTileImage(image);
+            resCells[slot].setFull(true);
             resCells[slot].setClickable(true); // TODO setup the putdown n all
         } else {
             // TODO print error: "slot already filled" or other errors
@@ -144,8 +153,9 @@ public class UserShipGrid extends Pane {
         if (handCell[0].getTileImage().getImage() == null) {
             handCell[0].setTileImage(image);
             handCell[0].setClickable(true);
+            handCell[0].setFull(true);
         } else {
-            // TODO print error: "hand already filled"
+            // TODO print error: "hand already full"
         }
         // TODO add conformity checks
     }
