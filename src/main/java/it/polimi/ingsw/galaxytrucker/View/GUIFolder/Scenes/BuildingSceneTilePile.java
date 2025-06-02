@@ -98,5 +98,12 @@ public class BuildingSceneTilePile extends MyScene {
         ImageView img = tile.getTileImage();
         buildingSceneUserShip.setInHand(img);
         tile.setOpacity(0.2); // faintly visible
+        tile.setClickable(false);
+    }
+
+    public void putDownTile(ReservedTileView tile) {
+        ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
+        tilePileGrid.setDefault(img);
+        buildingSceneUserShip.emptyHand();
     }
 }

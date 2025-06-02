@@ -10,6 +10,7 @@ public class TilePileTileView extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();
+    private boolean isClickable = true;
 
     public TilePileTileView() {
         // Set up the top tile image (initially empty)
@@ -45,5 +46,13 @@ public class TilePileTileView extends StackPane {
 
     public Button getOverlayButton() {
         return overlayButton;
+    }
+
+    public boolean isClickable() {
+        return isClickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
     }
 }

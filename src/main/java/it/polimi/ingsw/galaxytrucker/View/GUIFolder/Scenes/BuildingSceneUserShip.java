@@ -46,7 +46,7 @@ public class BuildingSceneUserShip extends MyScene {
         this.root = new BorderPane();
 
         // see userShip
-        this.userShipGrid = new UserShipGrid(userShip.getColor());
+        this.userShipGrid = new UserShipGrid(userShip.getColor(), this);
         StackPane centerContent = new StackPane(userShipGrid);
 
         // --- Bottom Buttons ---
@@ -90,6 +90,15 @@ public class BuildingSceneUserShip extends MyScene {
 
     public void setInHand(ImageView img) {
         userShipGrid.setHandTile(img.getImage());
+    }
+
+    public void emptyHand() {
+        userShipGrid.getHandTile().clearTileImage();
+        userShipGrid.getHandTile().setClickable(false);
+    }
+
+    public UserShipGrid getUserShipGrid() {
+        return userShipGrid;
     }
 
     public void setBuildingSceneOthersShip(BuildingSceneOthersShip buildingSceneOthersShip) {

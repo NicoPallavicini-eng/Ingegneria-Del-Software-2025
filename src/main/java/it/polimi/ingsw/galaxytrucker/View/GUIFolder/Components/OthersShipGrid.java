@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneOthersShip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -20,7 +21,8 @@ public class OthersShipGrid extends Pane {
     private static final int TOT_HEIGHT = 340; // 679/2
     private static final int RESERVED_TOP_BORDER = 14; // 28/2
     private static final int RESERVED_LEFT_BORDER = 339; // 677/2
-    private static final int HAND_LEFT_BORDER = 14; // 28/2
+    private static final int HAND_LEFT_BORDER = 14; // 28/
+    private final BuildingSceneOthersShip buildingSceneOthersShip;
 
     private final OthersShipTileView[][] cells1 = new OthersShipTileView[ROWS][COLS];
     private final OthersShipTileView[][] cells2 = new OthersShipTileView[ROWS][COLS];
@@ -34,7 +36,8 @@ public class OthersShipGrid extends Pane {
     private final OthersShipReservedTileView[] handCell2 = new OthersShipReservedTileView[1];
     private final OthersShipReservedTileView[] handCell3 = new OthersShipReservedTileView[1];
 
-    public OthersShipGrid(Color color) {
+    public OthersShipGrid(Color color, BuildingSceneOthersShip buildingSceneOthersShip) {
+        this.buildingSceneOthersShip = buildingSceneOthersShip;
         // --- BACKGROUND ---
         Image bgImage = new Image(getClass().getResource("/Images/cardboard/cardboard-1c.png").toExternalForm());
         ImageView bgView1 = new ImageView(bgImage);

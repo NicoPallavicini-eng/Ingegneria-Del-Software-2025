@@ -62,7 +62,11 @@ public class TilePileGrid extends Pane {
                 int finalCol = col;
                 tile.getOverlayButton().setOnAction(e -> {
                     System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
-                    buildingSceneTilePile.pickUpTile(tile);
+                    if (tile.isClickable()) {
+                        buildingSceneTilePile.pickUpTile(tile);
+                    } else {
+                        // TODO print error: not clickable
+                    }
                 });
 
                 cells[row][col] = tile;
@@ -80,14 +84,59 @@ public class TilePileGrid extends Pane {
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
     }
 
-    public ImageView getTileImageView (TilePileTileView tile) { // TODO understand if useful
+    public ImageView getTileImageView (TilePileTileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (cells[i][j] == tile) {
-                    return tile.getTileImage();
+                if (cells[i][j].getTileImage().getImage() == tile.getTileImage().getImage()) {
+                    return cells[i][j].getTileImage();
+                }
+                if (i == ROWS - 1 && j == 1) {
+                    break;
                 }
             }
         }
         return null;
+    }
+
+    public ImageView getTileImageView (ReservedTileView tile) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j].getTileImage().getImage() == tile.getTileImage().getImage()) {
+                    return cells[i][j].getTileImage();
+                }
+                if (i == ROWS - 1 && j == 1) {
+                    break;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ImageView getTileImageView (TileView tile) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j].getTileImage().getImage() == tile.getTileImage().getImage()) {
+                    return cells[i][j].getTileImage();
+                }
+                if (i == ROWS - 1 && j == 1) {
+                    break;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void setDefault(ImageView img) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j].getTileImage().getImage() == img.getImage()) {
+                    cells[i][j].setOpacity(1);
+                    cells[i][j].setClickable(true);
+                }
+                if (i == ROWS - 1 && j == 1) {
+                    break;
+                }
+            }
+        }
     }
 }

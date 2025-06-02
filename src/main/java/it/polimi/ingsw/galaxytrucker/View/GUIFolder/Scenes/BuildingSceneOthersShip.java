@@ -44,7 +44,7 @@ public class BuildingSceneOthersShip extends MyScene {
         this.root = new BorderPane();
 
         // see others' ships
-        this.othersShipGrid = new OthersShipGrid(userShip.getColor());
+        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this);
         StackPane centerContent = new StackPane(othersShipGrid);
 
         // --- Bottom Buttons ---

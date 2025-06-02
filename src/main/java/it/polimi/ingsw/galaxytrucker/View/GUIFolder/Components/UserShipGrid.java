@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -19,12 +20,14 @@ public class UserShipGrid extends Pane {
     private static final int RESERVED_TOP_BORDER = 28;
     private static final int RESERVED_LEFT_BORDER = 677;
     private static final int HAND_LEFT_BORDER = 28;
+    private final BuildingSceneUserShip buildingSceneUserShip;
 
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
     private final ReservedTileView[] handCell = new ReservedTileView[1];
 
-    public UserShipGrid(Color color) {
+    public UserShipGrid(Color color, BuildingSceneUserShip buildingSceneUserShip) {
+        this.buildingSceneUserShip = buildingSceneUserShip;
         // --- BACKGROUND ---
         Image bgImage = new Image(getClass().getResource("/Images/cardboard/cardboard-1c.png").toExternalForm());
         ImageView bgView = new ImageView(bgImage);
@@ -83,6 +86,9 @@ public class UserShipGrid extends Pane {
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
             System.out.println("Clicked Hand tile");
+            if (tile.isClickable()) {
+                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
+            }
         });
         handCell[0] = tile;
         handGrid.add(tile, 0, 0);
@@ -133,10 +139,15 @@ public class UserShipGrid extends Pane {
     public void setHandTile (Image image) {
         if (handCell[0].getTileImage().getImage() == null) {
             handCell[0].setTileImage(image);
+            handCell[0].setClickable(true);
         } else {
             // TODO print error: "hand already filled"
         }
         // TODO add conformity checks
+    }
+
+    public ReservedTileView getHandTile () {
+        return handCell[0];
     }
 
     public ImageView pickUpFromShip(TileView tile) {
