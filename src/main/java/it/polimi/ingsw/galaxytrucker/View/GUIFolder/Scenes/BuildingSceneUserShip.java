@@ -29,7 +29,6 @@ public class BuildingSceneUserShip extends MyScene {
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 800;
     private SceneManager sceneManager;
-    private ImageView img;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
 
@@ -88,8 +87,12 @@ public class BuildingSceneUserShip extends MyScene {
         return playerOptional.orElse(null);
     }
 
+    public void setReserved(ImageView img, int slot) {
+        userShipGrid.setResTile(slot, img);
+    }
+
     public void setInHand(ImageView img) {
-        userShipGrid.setHandTile(img.getImage());
+        userShipGrid.setHandTile(img);
     }
 
     public void emptyHand() {

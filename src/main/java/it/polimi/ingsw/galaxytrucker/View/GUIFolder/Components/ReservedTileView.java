@@ -33,8 +33,8 @@ public class ReservedTileView extends StackPane {
         getChildren().addAll(backgroundImage, tileImage, overlayButton);
     }
 
-    public void setTileImage(Image img) {
-        tileImage.setImage(img);
+    public void setTileImage(ImageView img) {
+        tileImage.setImage(img.getImage());
     }
 
     public ImageView getTileImage() {

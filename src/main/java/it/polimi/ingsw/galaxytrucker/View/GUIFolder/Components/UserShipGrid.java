@@ -94,13 +94,15 @@ public class UserShipGrid extends Pane {
         handGrid.add(tile, 0, 0);
 
         // --- MAIN CABIN ---
-        Image mainCabinIcon = switch (color) {
+        Image mainCabinIconImage = switch (color) {
             case BLUE -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm());
             case GREEN -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web34.jpg").toExternalForm());
             case YELLOW -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web61.jpg").toExternalForm());
             case RED -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm());
             default -> null;
         };
+
+        ImageView mainCabinIcon = new ImageView(mainCabinIconImage);
 
         cells[2][3].setTileImage(mainCabinIcon);
 
@@ -120,7 +122,8 @@ public class UserShipGrid extends Pane {
             (row == 1 && (col == 0 || col == 6)) ||
             (row == 4 && col == 3)) &&
             cells[row][col].getTileImage().getImage() == null) {
-            cells[row][col].setTileImage(image.getImage());
+            cells[row][col].setTileImage(image);
+            cells[row][col].setClickable(true); // TODO setupb logic of last picked up cell
         } else {
             // TODO print error: "hand already filled" or other errors
         }
@@ -129,14 +132,15 @@ public class UserShipGrid extends Pane {
 
     public void setResTile (int slot, ImageView image) {
         if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage().getImage() == null) {
-            resCells[slot].setTileImage(image.getImage());
+            resCells[slot].setTileImage(image);
+            resCells[slot].setClickable(true); // TODO setup the putdown n all
         } else {
             // TODO print error: "slot already filled" or other errors
         }
         // TODO add conformity checks
     }
 
-    public void setHandTile (Image image) {
+    public void setHandTile (ImageView image) {
         if (handCell[0].getTileImage().getImage() == null) {
             handCell[0].setTileImage(image);
             handCell[0].setClickable(true);
