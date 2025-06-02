@@ -63,7 +63,15 @@ public class UserShipGrid extends Pane {
                     int finalRow = row;
                     int finalCol = col;
                     tile.getOverlayButton().setOnAction(e -> {
-                        System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
+                        if (tile.isClickable() && !tile.isFull()) {
+                            setTile(finalRow, finalCol, handCell[0].getTileImage());
+                            handCell[0].clearTileImage();
+                            tile.setFull(true);
+                        } else if (tile.isClickable() && tile.isFull()) {
+                            setHandTile(tile.getTileImage());
+                            cells[finalRow][finalCol].clearTileImage();
+                            tile.setFull(false);
+                        }
                     });
                     cells[row][col] = tile;
                     grid.add(tile, col, row);
@@ -112,6 +120,8 @@ public class UserShipGrid extends Pane {
         ImageView mainCabinIcon = new ImageView(mainCabinIconImage);
 
         cells[2][3].setTileImage(mainCabinIcon);
+        cells[2][3].setFull(true);
+        cells[2][3].setClickable(false);
 
         // Absolute positioning
         getChildren().addAll(bgView, grid, resGrid, handGrid);
@@ -123,15 +133,15 @@ public class UserShipGrid extends Pane {
     /**
      * Sets a tile image at the specified logical row and column.
      */
-    public void setTile(int row, int col, ImageView image) {
+    public void setTile (int row, int col, ImageView image) {
         if (row >= 0 && row < ROWS && col >= 0 && col < COLS &&
             !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
             (row == 1 && (col == 0 || col == 6)) ||
-            (row == 4 && col == 3)) &&
+            (row == 4 && col == 3) || (row == 2 && col == 3)) &&
             cells[row][col].getTileImage().getImage() == null) {
             cells[row][col].setTileImage(image);
             cells[row][col].setFull(true);
-            cells[row][col].setClickable(true); // TODO setupb logic of last picked up cell
+            cells[row][col].setClickable(true); // TODO setup logic of last picked up cell
         } else {
             // TODO print error: "hand already filled" or other errors
         }

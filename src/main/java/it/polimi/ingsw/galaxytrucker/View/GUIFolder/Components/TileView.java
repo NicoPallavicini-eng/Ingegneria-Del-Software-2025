@@ -11,7 +11,7 @@ public class TileView extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();
-    private boolean isClickable = false;
+    private boolean isClickable = true;
     private boolean isFull = false;
 
     public TileView() {

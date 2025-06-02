@@ -129,12 +129,16 @@ public class TilePileGrid extends Pane {
     public void setDefault(ImageView img) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (cells[i][j].getTileImage().getImage() == img.getImage()) {
-                    cells[i][j].setOpacity(1);
-                    cells[i][j].setClickable(true);
-                }
-                if (i == ROWS - 1 && j == 1) {
-                    break;
+                if (img != null) {
+                    if (cells[i][j].getTileImage().getImage() == img.getImage()) {
+                        cells[i][j].setOpacity(1);
+                        cells[i][j].setClickable(true);
+                    }
+                    if (i == ROWS - 1 && j == 1) {
+                        break;
+                    }
+                } else {
+                    // TODO proper exception
                 }
             }
         }

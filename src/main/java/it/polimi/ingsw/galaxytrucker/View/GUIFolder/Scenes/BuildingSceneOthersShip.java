@@ -54,12 +54,10 @@ public class BuildingSceneOthersShip extends MyScene {
         viewTilePileButton.getStyleClass().add("bottom-button");
 
         viewOthersButton.setOnAction(e -> {
-            System.out.println("View User Ship clicked");
             sceneManager.switchBuilding(this, "UserShip");
         });
 
         viewTilePileButton.setOnAction(e -> {
-            System.out.println("View Tile Pile clicked");
             sceneManager.switchBuilding(this, "TilePile");
         });
 

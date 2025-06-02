@@ -55,12 +55,10 @@ public class BuildingSceneUserShip extends MyScene {
         viewTilePileButton.getStyleClass().add("bottom-button");
 
         viewOthersButton.setOnAction(e -> {
-            System.out.println("View Others' Ships clicked");
             sceneManager.switchBuilding(this, "OthersShip");
         });
 
         viewTilePileButton.setOnAction(e -> {
-            System.out.println("View Tile Pile clicked");
             sceneManager.switchBuilding(this, "TilePile");
         });
 
@@ -87,7 +85,7 @@ public class BuildingSceneUserShip extends MyScene {
         return playerOptional.orElse(null);
     }
 
-    public void setReserved(ImageView img, int slot) {
+    public void setReserved(ImageView img, int slot) { // TODO check if useful
         userShipGrid.setResTile(slot, img);
     }
 
