@@ -108,13 +108,72 @@ public class UserShipGrid extends Pane {
     /**
      * Sets a tile image at the specified logical row and column.
      */
-    public void setTile(int row, int col, Image image) {
-        if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-            cells[row][col].setTileImage(image);
+    public void setTile(int row, int col, ImageView image) {
+        if (row >= 0 && row < ROWS && col >= 0 && col < COLS &&
+            !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
+            (row == 1 && (col == 0 || col == 6)) ||
+            (row == 4 && col == 3)) &&
+            cells[row][col].getTileImage() == null) {
+            cells[row][col].setTileImage(image.getImage());
+        } else {
+            // TODO print error: "hand already filled" or other errors
         }
+        // TODO add conformity checks
     }
 
-    public TileView getTileView(int row, int col) {
-        return (row >= 0 && row < ROWS && col >= 0 && col < COLS) ? cells[row][col] : null;
+    public void setResTile (int slot, ImageView image) {
+        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage() == null) {
+            resCells[slot].setTileImage(image.getImage());
+        } else {
+            // TODO print error: "slot already filled" or other errors
+        }
+        // TODO add conformity checks
+    }
+
+    public void setHandTile (Image image) {
+        if (true /* handCell[0].getTileImage() == null TODO understand how to do this check right */) {
+            handCell[0].setTileImage(image);
+        } else {
+            // TODO print error: "hand already filled"
+        }
+        // TODO add conformity checks
+    }
+
+    public ImageView pickUpFromShip(TileView tile) {
+        ImageView img;
+        if (tile.getTileImage() != null) {
+            img = tile.getTileImage();
+            img.setImage(null);
+        } else {
+            img = null;
+            // TODO print error: "no tile present"
+        }
+        return img;
+        // TODO add conformity checks
+    }
+
+    public ImageView pickUpReserved(ReservedTileView tile) {
+        ImageView img;
+        if (tile.getTileImage() != null) {
+            img = tile.getTileImage();
+            img.setImage(null);
+        } else {
+            img = null;
+            // TODO print error: "no tile present"
+        }
+        return img;
+        // TODO add conformity checks
+    }
+
+    public void reserveTile(int slot, ReservedTileView tile) {
+        resCells[slot] = tile;
+        handCell[0] = null;
+        // TODO add conformity checks
+    }
+
+    public void placeTileOnShip(int row, int column, TileView tile) {
+        cells[row][column] = tile;
+        handCell[0] = null;
+        // TODO add conformity checks
     }
 }

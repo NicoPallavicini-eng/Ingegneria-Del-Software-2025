@@ -122,28 +122,12 @@ public class SceneManager extends Application {
         }
     }
 
-    private void checkExistingTilePile() {
-        BuildingSceneTilePile buildingSceneTilePile;
-        buildingSceneTilePile = Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this));
-        primaryStage.setTitle("Building State - Tile Pile");
-        primaryStage.setScene(buildingSceneTilePile.getScene());
-        primaryStage.show();
-    }
-
     public void switchBuilding(BuildingSceneTilePile buildingSceneTilePile, String choice) {
         if (Objects.equals(choice, "OthersShip")) {
             checkExistingOthersShip();
         } else if (Objects.equals(choice, "UserShip")) {
             checkExistingUserShip();
         }
-    }
-
-    private void checkExistingOthersShip() {
-        BuildingSceneOthersShip buildingSceneOthersShip;
-        buildingSceneOthersShip = Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this));
-        primaryStage.setTitle("Building State - Others' Ship");
-        primaryStage.setScene(buildingSceneOthersShip.getScene());
-        primaryStage.show();
     }
 
     public void switchBuilding(BuildingSceneOthersShip buildingSceneOthersShip, String choice) {
@@ -154,11 +138,37 @@ public class SceneManager extends Application {
         }
     }
 
+    private void checkExistingOthersShip() {
+        BuildingSceneOthersShip buildingSceneOthersShip;
+        buildingSceneOthersShip = Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this));
+        buildingSceneOthersShip.setBuildingSceneUserShip(Objects.requireNonNullElseGet(buildingSceneOthersShip.getBuildingSceneUserShip(), () -> userShipScene));
+        buildingSceneOthersShip.setBuildingSceneTilePile(Objects.requireNonNullElseGet(buildingSceneOthersShip.getBuildingSceneTilePile(),
+                () -> Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this))));
+        primaryStage.setTitle("Building State - Others' Ship");
+        primaryStage.setScene(buildingSceneOthersShip.getScene());
+        primaryStage.show();
+    }
+
     private void checkExistingUserShip() {
         BuildingSceneUserShip buildingSceneUserShip;
         buildingSceneUserShip = Objects.requireNonNullElseGet(userShipScene, () -> new BuildingSceneUserShip(game, nickname, this));
+        buildingSceneUserShip.setBuildingSceneOthersShip(Objects.requireNonNullElseGet(buildingSceneUserShip.getBuildingSceneOthersShip(),
+                () -> Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this))));
+        buildingSceneUserShip.setBuildingSceneTilePile(Objects.requireNonNullElseGet(buildingSceneUserShip.getBuildingSceneTilePile(),
+                () -> Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this))));
         primaryStage.setTitle("Building State - User Ship");
         primaryStage.setScene(buildingSceneUserShip.getScene());
+        primaryStage.show();
+    }
+
+    private void checkExistingTilePile() {
+        BuildingSceneTilePile buildingSceneTilePile;
+        buildingSceneTilePile = Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this));
+        buildingSceneTilePile.setBuildingSceneUserShip(Objects.requireNonNullElseGet(buildingSceneTilePile.getBuildingSceneUserShip(), () -> userShipScene));
+        buildingSceneTilePile.setBuildingSceneOthersShip(Objects.requireNonNullElseGet(buildingSceneTilePile.getBuildingSceneOthersShip(),
+                () -> Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this))));
+        primaryStage.setTitle("Building State - Tile Pile");
+        primaryStage.setScene(buildingSceneTilePile.getScene());
         primaryStage.show();
     }
 }

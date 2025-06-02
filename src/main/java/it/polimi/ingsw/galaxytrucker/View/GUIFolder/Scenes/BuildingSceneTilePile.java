@@ -4,14 +4,12 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,6 +26,8 @@ public class BuildingSceneTilePile extends MyScene {
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 800;
     private SceneManager sceneManager;
+    private BuildingSceneUserShip buildingSceneUserShip = null;
+    private BuildingSceneOthersShip buildingSceneOthersShip = null;
 
     public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -39,7 +39,7 @@ public class BuildingSceneTilePile extends MyScene {
         this.root = new BorderPane();
 
         // see TilePile
-        this.tilePileGrid = new TilePileGrid();
+        this.tilePileGrid = new TilePileGrid(this);
         StackPane centerContent = new StackPane(tilePileGrid);
 
         // --- Bottom Buttons ---
@@ -74,7 +74,29 @@ public class BuildingSceneTilePile extends MyScene {
         sceneManager.setTilePileScene(this);
     }
 
+    public void setBuildingSceneUserShip (BuildingSceneUserShip buildingSceneUserShip) {
+        this.buildingSceneUserShip = buildingSceneUserShip;
+    }
+
+    public BuildingSceneUserShip getBuildingSceneUserShip() {
+        return buildingSceneUserShip;
+    }
+
+    public void setBuildingSceneOthersShip (BuildingSceneOthersShip buildingSceneOthersShip) {
+        this.buildingSceneOthersShip = buildingSceneOthersShip;
+    }
+
+    public BuildingSceneOthersShip getBuildingSceneOthersShip() {
+        return buildingSceneOthersShip;
+    }
+
     public Scene getScene() {
         return scene;
+    }
+
+    public void pickUpTile(TilePileTileView tile) {
+        ImageView img = tile.getTileImage();
+        buildingSceneUserShip.setInHand(img);
+        tile.setOpacity(0.2); // faintly visible
     }
 }

@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,6 +29,9 @@ public class BuildingSceneUserShip extends MyScene {
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 800;
     private SceneManager sceneManager;
+    private ImageView img;
+    private BuildingSceneOthersShip buildingSceneOthersShip = null;
+    private BuildingSceneTilePile buildingSceneTilePile = null;
 
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -82,6 +86,26 @@ public class BuildingSceneUserShip extends MyScene {
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
+    }
+
+    public void setInHand(ImageView img) {
+        userShipGrid.setHandTile(img.getImage());
+    }
+
+    public void setBuildingSceneOthersShip(BuildingSceneOthersShip buildingSceneOthersShip) {
+        this.buildingSceneOthersShip = buildingSceneOthersShip;
+    }
+
+    public BuildingSceneOthersShip getBuildingSceneOthersShip() {
+        return buildingSceneOthersShip;
+    }
+
+    public void setBuildingSceneTilePile(BuildingSceneTilePile buildingSceneTilePile) {
+        this.buildingSceneTilePile = buildingSceneTilePile;
+    }
+
+    public BuildingSceneTilePile getBuildingSceneTilePile() {
+        return buildingSceneTilePile;
     }
 
     public Scene getScene() {

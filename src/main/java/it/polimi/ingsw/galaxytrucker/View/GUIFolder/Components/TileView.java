@@ -36,6 +36,10 @@ public class TileView extends StackPane {
         tileImage.setImage(img);
     }
 
+    public ImageView getTileImage() {
+        return this.tileImage;
+    }
+
     public void clearTileImage() {
         tileImage.setImage(null);
     }

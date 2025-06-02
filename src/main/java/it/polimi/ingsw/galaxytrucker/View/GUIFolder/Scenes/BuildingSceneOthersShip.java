@@ -28,6 +28,8 @@ public class BuildingSceneOthersShip extends MyScene {
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 800;
     private SceneManager sceneManager;
+    private BuildingSceneUserShip buildingSceneUserShip = null;
+    private BuildingSceneTilePile buildingSceneTilePile = null;
 
     public BuildingSceneOthersShip(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -82,6 +84,22 @@ public class BuildingSceneOthersShip extends MyScene {
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
+    }
+
+    public void setBuildingSceneTilePile(BuildingSceneTilePile buildingSceneTilePile) {
+        this.buildingSceneTilePile = buildingSceneTilePile;
+    }
+
+    public BuildingSceneTilePile getBuildingSceneTilePile() {
+        return buildingSceneTilePile;
+    }
+
+    public void setBuildingSceneUserShip(BuildingSceneUserShip buildingSceneUserShip) {
+        this.buildingSceneUserShip = buildingSceneUserShip;
+    }
+
+    public BuildingSceneUserShip getBuildingSceneUserShip() {
+        return buildingSceneUserShip;
     }
 
     public Scene getScene() {

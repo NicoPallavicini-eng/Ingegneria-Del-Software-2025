@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneTilePile;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -16,11 +18,13 @@ public class TilePileGrid extends Pane {
     private static final int LEFT_BORDER = 0;
     private static final int TOT_WIDTH = 937;
     private static final int TOT_HEIGHT = 679;
+    private final BuildingSceneTilePile buildingSceneTilePile;
 
     private final TilePileTileView[][] cells = new TilePileTileView[ROWS][COLS];
 
-    public TilePileGrid() {
+    public TilePileGrid(BuildingSceneTilePile buildingSceneTilePile) {
         GridPane pile = new GridPane();
+        this.buildingSceneTilePile = buildingSceneTilePile;
         pile.setHgap(5);
         pile.setVgap(5);
         pile.setLayoutX(LEFT_BORDER);
@@ -58,6 +62,7 @@ public class TilePileGrid extends Pane {
                 int finalCol = col;
                 tile.getOverlayButton().setOnAction(e -> {
                     System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
+                    buildingSceneTilePile.pickUpTile(tile);
                 });
 
                 cells[row][col] = tile;
@@ -73,5 +78,16 @@ public class TilePileGrid extends Pane {
         getChildren().add(pile);
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
+    }
+
+    public ImageView getTileImageView (TilePileTileView tile) { // TODO understand if useful
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j] == tile) {
+                    return tile.getTileImage();
+                }
+            }
+        }
+        return null;
     }
 }
