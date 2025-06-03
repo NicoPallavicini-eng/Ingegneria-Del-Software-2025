@@ -272,37 +272,37 @@ class JsonTiles{
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage2\":{\n" +
-                "    \"north\":\"NONE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
                 "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage3\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage4\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage5\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
@@ -317,9 +317,9 @@ class JsonTiles{
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage7\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":false,\n" +
@@ -335,8 +335,8 @@ class JsonTiles{
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage9\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
@@ -363,16 +363,16 @@ class JsonTiles{
                 "    },\n" +
                 "    \"normalStorage12\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage13\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
@@ -380,44 +380,44 @@ class JsonTiles{
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage14\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"normalStorage15\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"fitsRed\":false,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"redStorage1\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":1,\n" +
                 "    \"fitsRed\":true,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"redStorage2\":{\n" +
                 "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":1,\n" +
                 "    \"fitsRed\":true,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"redStorage3\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":1,\n" +
@@ -434,17 +434,17 @@ class JsonTiles{
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"redStorage5\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":1,\n" +
                 "    \"fitsRed\":true,\n" +
                 "    \"tileContent\":[]\n" +
                 "    },\n" +
                 "    \"redStorage6\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":1,\n" +
@@ -471,9 +471,9 @@ class JsonTiles{
                 "    },\n" +
                 "    \"redStorage9\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"fitsRed\":true,\n" +
                 "    \"tileContent\":[]\n" +
@@ -771,39 +771,39 @@ class JsonTiles{
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield2\":{\n" +
-                "    \"north\":\"NONE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"east\":\"NONE\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield3\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield4\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield5\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield6\":{\n" +
@@ -811,23 +811,23 @@ class JsonTiles{
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield7\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    },\n" +
                 "    \"shield8\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
-                "    \"orientation\":\"NORTHWEST\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
+                "    \"orientation\":\"NORTHEAST\",\n" +
                 "    \"activeState\":false\n" +
                 "    }}";
         cabin ="{\"centralCabin1\":{\n" +
@@ -875,9 +875,9 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin1\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
@@ -886,9 +886,9 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin2\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
@@ -897,10 +897,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin3\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -908,9 +908,9 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin4\":{\n" +
-                "    \"north\":\"NONE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
@@ -919,10 +919,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin5\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -952,10 +952,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin8\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -963,10 +963,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin9\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -974,10 +974,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin10\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -985,10 +985,10 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    },\n" +
                 "    \"cabin11\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -997,9 +997,9 @@ class JsonTiles{
                 "    },\n" +
                 "    \"cabin12\":{\n" +
                 "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -1019,9 +1019,9 @@ class JsonTiles{
                 "    },\n" +
                 "    \"cabin14\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -1031,8 +1031,8 @@ class JsonTiles{
                 "    \"cabin15\":{\n" +
                 "    \"north\":\"SINGLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -1041,9 +1041,9 @@ class JsonTiles{
                 "    },\n" +
                 "    \"cabin16\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
+                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"inhabitants\":\"NONE\",\n" +
                 "    \"mainCapsule\":false,\n" +
                 "    \"color\":\"NONE\",\n" +
@@ -1062,50 +1062,50 @@ class JsonTiles{
                 "    \"orangeAdaptors\":0\n" +
                 "    }}";
         battery ="{\"battery1\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery2\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery3\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery4\":{\n" +
                 "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery5\":{\n" +
-                "    \"north\":\"SINGLE\",\n" +
-                "    \"west\":\"UNIVERSAL\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery6\":{\n" +
-                "    \"north\":\"NONE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
                 "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
@@ -1126,17 +1126,17 @@ class JsonTiles{
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery9\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"battery10\":{\n" +
-                "    \"north\":\"DOUBLE\",\n" +
+                "    \"north\":\"UNIVERSAL\",\n" +
                 "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":2,\n" +
                 "    \"slotsFilled\":2\n" +
@@ -1150,32 +1150,32 @@ class JsonTiles{
                 "    \"slotsFilled\":2\n" +
                 "    },\n" +
                 "    \"batteryTriple1\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
-                "    \"slotsNumber\":3,\n" +
-                "    \"slotsFilled\":3\n" +
-                "    },\n" +
-                "    \"batteryTriple2\":{\n" +
                 "    \"north\":\"SINGLE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
-                "    \"slotsNumber\":3,\n" +
-                "    \"slotsFilled\":3\n" +
-                "    },\n" +
-                "    \"batteryTriple3\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"DOUBLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"slotsFilled\":3\n" +
                 "    },\n" +
+                "    \"batteryTriple2\":{\n" +
+                "    \"north\":\"SINGLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"DOUBLE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
+                "    \"slotsNumber\":3,\n" +
+                "    \"slotsFilled\":3\n" +
+                "    },\n" +
+                "    \"batteryTriple3\":{\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
+                "    \"slotsNumber\":3,\n" +
+                "    \"slotsFilled\":3\n" +
+                "    },\n" +
                 "    \"batteryTriple4\":{\n" +
-                "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
@@ -1183,49 +1183,49 @@ class JsonTiles{
                 "    },\n" +
                 "    \"batteryTriple5\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"west\":\"SINGLE\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"slotsFilled\":3\n" +
                 "    },\n" +
                 "    \"batteryTriple6\":{\n" +
                 "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"DOUBLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"SINGLE\",\n" +
+                "    \"west\":\"NONE\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
+                "    \"east\":\"DOUBLE\",\n" +
                 "    \"slotsNumber\":3,\n" +
                 "    \"slotsFilled\":3\n" +
                 "    }}";
         connector ="{\"connector1\":{\n" +
-                "\t\"northConnector\":\"DOUBLE\",\n" +
+                "    \"northConnector\":\"DOUBLE\",\n" +
                 "    \"westConnector\":\"UNIVERSAL\",\n" +
                 "    \"southConnector\":\"NONE\",\n" +
                 "    \"eastConnector\":\"UNIVERSAL\"\n" +
-                "\t},\n" +
-                "\t\"connector2\":{\n" +
-                "\t\"northConnector\":\"UNIVERSAL\",\n" +
-                "    \"westConnector\":\"SINGLE\",\n" +
-                "    \"southConnector\":\"UNIVERSAL\",\n" +
-                "    \"eastConnector\":\"SINGLE\"\n" +
-                "\t},\n" +
-                "    \"connector3\":{\n" +
-                "    \"northConnector\":\"DOUBLE\",\n" +
-                "    \"westConnector\":\"UNIVERSAL\",\n" +
-                "    \"southConnector\":\"UNIVERSAL\",\n" +
-                "    \"eastConnector\":\"DOUBLE\"\n" +
                 "    },\n" +
-                "    \"connector4\":{\n" +
-                "    \"northConnector\":\"NONE\",\n" +
+                "    \"connector2\":{\n" +
+                "    \"northConnector\":\"SINGLE\",\n" +
                 "    \"westConnector\":\"UNIVERSAL\",\n" +
                 "    \"southConnector\":\"SINGLE\",\n" +
                 "    \"eastConnector\":\"UNIVERSAL\"\n" +
                 "    },\n" +
-                "    \"connector5\":{\n" +
-                "    \"northConnector\":\"NONE\",\n" +
+                "    \"connector3\":{\n" +
+                "    \"northConnector\":\"UNIVERSAL\",\n" +
                 "    \"westConnector\":\"UNIVERSAL\",\n" +
-                "    \"southConnector\":\"UNIVERSAL\",\n" +
-                "    \"eastConnector\":\"SINGLE\"\n" +
+                "    \"southConnector\":\"DOUBLE\",\n" +
+                "    \"eastConnector\":\"DOUBLE\"\n" +
+                "    },\n" +
+                "    \"connector4\":{\n" +
+                "    \"northConnector\":\"SINGLE\",\n" +
+                "    \"westConnector\":\"UNIVERSAL\",\n" +
+                "    \"southConnector\":\"NONE\",\n" +
+                "    \"eastConnector\":\"UNIVERSAL\"\n" +
+                "    },\n" +
+                "    \"connector5\":{\n" +
+                "    \"northConnector\":\"UNIVERSAL\",\n" +
+                "    \"westConnector\":\"SINGLE\",\n" +
+                "    \"southConnector\":\"NONE\",\n" +
+                "    \"eastConnector\":\"UNIVERSAL\"\n" +
                 "    },\n" +
                 "    \"connector6\":{\n" +
                 "    \"northConnector\":\"UNIVERSAL\",\n" +
@@ -1234,16 +1234,16 @@ class JsonTiles{
                 "    \"eastConnector\":\"SINGLE\"\n" +
                 "    },\n" +
                 "    \"connector7\":{\n" +
-                "    \"northConnector\":\"DOUBLE\",\n" +
+                "    \"northConnector\":\"SINGLE\",\n" +
                 "    \"westConnector\":\"UNIVERSAL\",\n" +
-                "    \"southConnector\":\"SINGLE\",\n" +
+                "    \"southConnector\":\"DOUBLE\",\n" +
                 "    \"eastConnector\":\"UNIVERSAL\"\n" +
                 "    },\n" +
                 "    \"connector8\":{\n" +
                 "    \"northConnector\":\"UNIVERSAL\",\n" +
-                "    \"westConnector\":\"NONE\",\n" +
-                "    \"southConnector\":\"DOUBLE\",\n" +
-                "    \"eastConnector\":\"UNIVERSAL\"\n" +
+                "    \"westConnector\":\"UNIVERSAL\",\n" +
+                "    \"southConnector\":\"NONE\",\n" +
+                "    \"eastConnector\":\"DOUBLE\"\n" +
                 "    }}";
         bioadaptor="{\"orangeBioadaptor1\":{\n" +
                 "    \"north\":\"NONE\",\n" +
@@ -1253,16 +1253,16 @@ class JsonTiles{
                 "    \"color\":\"ORANGE\"\n" +
                 "    },\n" +
                 "    \"orangeBioadaptor2\":{\n" +
-                "    \"north\":\"NONE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
                 "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"SINGLE\",\n" +
                 "    \"color\":\"ORANGE\"\n" +
                 "    },\n" +
                 "    \"orangeBioadaptor3\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"SINGLE\",\n" +
-                "    \"south\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"SINGLE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"color\":\"ORANGE\"\n" +
                 "    },\n" +
@@ -1274,8 +1274,8 @@ class JsonTiles{
                 "    \"color\":\"ORANGE\"\n" +
                 "    },\n" +
                 "    \"orangeBioadaptor5\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"NONE\",\n" +
                 "    \"color\":\"ORANGE\"\n" +
@@ -1288,24 +1288,24 @@ class JsonTiles{
                 "    \"color\":\"ORANGE\"\n" +
                 "    },\n" +
                 "    \"purpleBioadaptor1\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"SINGLE\",\n" +
-                "    \"east\":\"NONE\",\n" +
+                "    \"north\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
+                "    \"south\":\"NONE\",\n" +
+                "    \"east\":\"SINGLE\",\n" +
                 "    \"color\":\"PURPLE\"\n" +
                 "    },\n" +
                 "    \"purpleBioadaptor2\":{\n" +
                 "    \"north\":\"DOUBLE\",\n" +
-                "    \"west\":\"NONE\",\n" +
-                "    \"south\":\"DOUBLE\",\n" +
+                "    \"west\":\"DOUBLE\",\n" +
+                "    \"south\":\"NONE\",\n" +
                 "    \"east\":\"DOUBLE\",\n" +
                 "    \"color\":\"PURPLE\"\n" +
                 "    },\n" +
                 "    \"purpleBioadaptor3\":{\n" +
-                "    \"north\":\"UNIVERSAL\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"north\":\"DOUBLE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"DOUBLE\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"color\":\"PURPLE\"\n" +
                 "    },\n" +
                 "    \"purpleBioadaptor4\":{\n" +
@@ -1317,9 +1317,9 @@ class JsonTiles{
                 "    },\n" +
                 "    \"purpleBioadaptor5\":{\n" +
                 "    \"north\":\"NONE\",\n" +
-                "    \"west\":\"NONE\",\n" +
+                "    \"west\":\"UNIVERSAL\",\n" +
                 "    \"south\":\"NONE\",\n" +
-                "    \"east\":\"UNIVERSAL\",\n" +
+                "    \"east\":\"NONE\",\n" +
                 "    \"color\":\"PURPLE\"\n" +
                 "    },\n" +
                 "    \"purpleBioadaptor6\":{\n" +

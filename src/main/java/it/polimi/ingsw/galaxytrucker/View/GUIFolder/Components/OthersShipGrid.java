@@ -185,21 +185,21 @@ public class OthersShipGrid extends Pane {
         Image mainCabinIcon2 = null;
         Image mainCabinIcon3 = null;
         if (color == BLUE) {
-            mainCabinIcon1 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web34.jpg").toExternalForm()); // GREEN
-            mainCabinIcon2 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web61.jpg").toExternalForm()); // YELLOW
-            mainCabinIcon3 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm()); // RED
+            mainCabinIcon1 = TileImage.centralCabin3.getImage(); // GREEN
+            mainCabinIcon2 = TileImage.centralCabin2.getImage(); // YELLOW
+            mainCabinIcon3 = TileImage.centralCabin1.getImage(); // RED
         } else if (color == Color.GREEN) {
-            mainCabinIcon1 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm()); // BLUE
-            mainCabinIcon2 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web61.jpg").toExternalForm()); // YELLOW
-            mainCabinIcon3 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm()); // RED
+            mainCabinIcon1 = TileImage.centralCabin4.getImage(); // BLUE
+            mainCabinIcon2 = TileImage.centralCabin2.getImage(); // YELLOW
+            mainCabinIcon3 = TileImage.centralCabin1.getImage(); // RED
         } else if (color == Color.YELLOW) {
-            mainCabinIcon1 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm()); // BLUE
-            mainCabinIcon2 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web34.jpg").toExternalForm()); // GREEN
-            mainCabinIcon3 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm()); // RED
+            mainCabinIcon1 = TileImage.centralCabin4.getImage(); // BLUE
+            mainCabinIcon2 = TileImage.centralCabin3.getImage(); // GREEN
+            mainCabinIcon3 = TileImage.centralCabin1.getImage(); // RED
         } else if (color == Color.RED) {
-            mainCabinIcon1 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm()); // BLUE
-            mainCabinIcon2 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web34.jpg").toExternalForm()); // GREEN
-            mainCabinIcon3 = new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web61.jpg").toExternalForm()); // YELLOW
+            mainCabinIcon1 = TileImage.centralCabin4.getImage(); // BLUE
+            mainCabinIcon2 = TileImage.centralCabin3.getImage(); // GREEN
+            mainCabinIcon3 = TileImage.centralCabin2.getImage(); // YELLOW
         }
 
         cells1[2][3].setTileImage(mainCabinIcon1);

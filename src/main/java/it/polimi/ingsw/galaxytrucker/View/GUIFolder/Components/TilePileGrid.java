@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneTilePile;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,8 +8,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TilePileGrid extends Pane {
     private static final int ROWS = 10;
@@ -30,29 +33,22 @@ public class TilePileGrid extends Pane {
         pile.setLayoutX(LEFT_BORDER);
         pile.setLayoutY(TOP_BORDER);
 
-        // Step 1: Create list of image paths
-        List<String> imagePaths = new ArrayList<>();
-        for (int i = 0; i < 152; i++) {
-            String path = String.format("/Images/tiles/TilePile/GT-new_tiles_16_for web%d.jpg", i);
-            imagePaths.add(path);
-        }
+        List<TileImage> shuffledTiles = Arrays.stream(TileImage.values())
+                .filter(tile -> !tile.name().startsWith("centralCabin"))
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        // Step 2: Shuffle the image paths
-        Collections.shuffle(imagePaths);
+        Collections.shuffle(shuffledTiles);
 
-        Image mainCabinIcon =  new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm());
-
-        // Step 3: Assign images to grid cells from shuffled list
         int imageIndex = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
+
                 TilePileTileView tile = new TilePileTileView();
                 tile.setPrefSize(TILE_SIZE, TILE_SIZE);
 
                 try {
-                    String imagePath = imagePaths.get(imageIndex);
-                    Image img = new Image(getClass().getResource(imagePath).toExternalForm());
-                    tile.setTileImage(img); // Assuming TilePileTileView has a setTileImage method
+                    TileImage tileImage = shuffledTiles.get(imageIndex);
+                    tile.setTileImage(tileImage.getImage());
                 } catch (Exception e) {
                     System.err.println("Failed to load image at: " + (imageIndex));
                     e.printStackTrace();

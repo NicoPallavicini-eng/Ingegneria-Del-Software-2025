@@ -110,10 +110,10 @@ public class UserShipGrid extends Pane {
 
         // --- MAIN CABIN ---
         Image mainCabinIconImage = switch (color) {
-            case BLUE -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web33.jpg").toExternalForm());
-            case GREEN -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web34.jpg").toExternalForm());
-            case YELLOW -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web61.jpg").toExternalForm());
-            case RED -> new Image(getClass().getResource("/Images/tiles/GT-new_tiles_16_for web52.jpg").toExternalForm());
+            case BLUE -> TileImage.centralCabin4.getImage();
+            case GREEN -> TileImage.centralCabin3.getImage();
+            case YELLOW -> TileImage.centralCabin2.getImage();
+            case RED -> TileImage.centralCabin1.getImage();
             default -> null;
         };
 

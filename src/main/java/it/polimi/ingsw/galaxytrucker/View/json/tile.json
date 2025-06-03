@@ -6,28 +6,28 @@
     "eastConnector":"UNIVERSAL"
 	},
 	"structural2":{
-	"northConnector":"UNIVERSAL",
-    "westConnector":"SINGLE",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"SINGLE"
-	},
-    "structural3":{
-    "northConnector":"DOUBLE",
-    "westConnector":"UNIVERSAL",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"DOUBLE"
-    },
-    "structural4":{
-    "northConnector":"NONE",
+	"northConnector":"SINGLE",
     "westConnector":"UNIVERSAL",
     "southConnector":"SINGLE",
     "eastConnector":"UNIVERSAL"
+	},
+    "structural3":{
+    "northConnector":"UNIVERSAL",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"DOUBLE",
+    "eastConnector":"DOUBLE"
+    },
+    "structural4":{
+    "northConnector":"SINGLE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"UNIVERSAL"
     },
     "structural5":{
-    "northConnector":"NONE",
-    "westConnector":"UNIVERSAL",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"SINGLE"
+    "northConnector":"UNIVERSAL",
+    "westConnector":"SINGLE",
+    "southConnector":"NONE",
+    "eastConnector":"UNIVERSAL"
     },
     "structural6":{
     "northConnector":"UNIVERSAL",
@@ -36,16 +36,16 @@
     "eastConnector":"SINGLE"
     },
     "structural7":{
-    "northConnector":"DOUBLE",
+    "northConnector":"SINGLE",
     "westConnector":"UNIVERSAL",
-    "southConnector":"SINGLE",
+    "southConnector":"DOUBLE",
     "eastConnector":"UNIVERSAL"
     },
     "structural8":{
     "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"UNIVERSAL"
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"DOUBLE"
     },
     "singleCannon1":{
     "northConnector":"CANNON_SINGLE",
@@ -340,39 +340,39 @@
     "westConnector":"SINGLE",
     "southConnector":"DOUBLE",
     "eastConnector":"SINGLE",
-    "orientation":"NORTHWEST",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield2":{
-    "northConnector":"NONE",
+    "northConnector":"SINGLE",
     "westConnector":"SINGLE",
     "southConnector":"SINGLE",
-    "eastConnector":"SINGLE",
-    "orientation":"NORTHWEST",
+    "eastConnector":"NONE",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield3":{
-    "northConnector":"SINGLE",
-    "westConnector":"NONE",
-    "southConnector":"SINGLE",
-    "eastConnector":"UNIVERSAL",
-    "orientation":"NORTHWEST",
+    "northConnector":"NONE",
+    "westConnector":"SINGLE",
+    "southConnector":"UNIVERSAL",
+    "eastConnector":"SINGLE",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield4":{
-    "northConnector":"DOUBLE",
-    "westConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"DOUBLE",
     "southConnector":"DOUBLE",
     "eastConnector":"DOUBLE",
-    "orientation":"NORTHWEST",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield5":{
-    "northConnector":"DOUBLE",
-    "westConnector":"NONE",
-    "southConnector":"UNIVERSAL",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"DOUBLE",
     "eastConnector":"DOUBLE",
-    "orientation":"NORTHWEST",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield6":{
@@ -380,23 +380,23 @@
     "westConnector":"DOUBLE",
     "southConnector":"SINGLE",
     "eastConnector":"DOUBLE",
-    "orientation":"NORTHWEST",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield7":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"SINGLE",
-    "orientation":"NORTHWEST",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"SINGLE",
+    "eastConnector":"NONE",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "shield8":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"UNIVERSAL",
-    "orientation":"NORTHWEST",
+    "westConnector":"DOUBLE",
+    "southConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
+    "orientation":"NORTHEAST",
     "activeState":false
     },
     "centralCabin1":{
@@ -444,9 +444,9 @@
     "orangeAdaptors":0
     },
     "cabin1":{
-    "northConnector":"NONE",
-    "westConnector":"DOUBLE",
-    "southConnector":"SINGLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"SINGLE",
+    "southConnector":"NONE",
     "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
@@ -455,9 +455,9 @@
     "orangeAdaptors":0
     },
     "cabin2":{
-    "northConnector":"DOUBLE",
+    "northConnector":"SINGLE",
     "westConnector":"SINGLE",
-    "southConnector":"SINGLE",
+    "southConnector":"DOUBLE",
     "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
@@ -466,10 +466,10 @@
     "orangeAdaptors":0
     },
     "cabin3":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"SINGLE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"SINGLE",
-    "eastConnector":"NONE",
+    "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -477,9 +477,9 @@
     "orangeAdaptors":0
     },
     "cabin4":{
-    "northConnector":"NONE",
+    "northConnector":"DOUBLE",
     "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
+    "southConnector":"NONE",
     "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
@@ -488,10 +488,10 @@
     "orangeAdaptors":0
     },
     "cabin5":{
-    "northConnector":"DOUBLE",
-    "westConnector":"UNIVERSAL",
-    "southConnector":"SINGLE",
-    "eastConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"DOUBLE",
+    "southConnector":"UNIVERSAL",
+    "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -521,10 +521,10 @@
     "orangeAdaptors":0
     },
     "cabin8":{
-    "northConnector":"SINGLE",
+    "northConnector":"DOUBLE",
     "westConnector":"DOUBLE",
     "southConnector":"DOUBLE",
-    "eastConnector":"DOUBLE",
+    "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -532,10 +532,10 @@
     "orangeAdaptors":0
     },
     "cabin9":{
-    "northConnector":"NONE",
-    "westConnector":"SINGLE",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"DOUBLE",
+    "northConnector":"SINGLE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"DOUBLE",
+    "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -543,10 +543,10 @@
     "orangeAdaptors":0
     },
     "cabin10":{
-    "northConnector":"DOUBLE",
-    "westConnector":"NONE",
+    "northConnector":"UNIVERSAL",
+    "westConnector":"DOUBLE",
     "southConnector":"NONE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -554,10 +554,10 @@
     "orangeAdaptors":0
     },
     "cabin11":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -565,10 +565,10 @@
     "orangeAdaptors":0
     },
     "cabin12":{
-    "northConnector":"DOUBLE",
-    "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"NONE",
+    "northConnector":"SINGLE",
+    "westConnector":"DOUBLE",
+    "southConnector":"NONE",
+    "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -588,9 +588,9 @@
     },
     "cabin14":{
     "northConnector":"NONE",
-    "westConnector":"SINGLE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"SINGLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -600,8 +600,8 @@
     "cabin15":{
     "northConnector":"SINGLE",
     "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"SINGLE",
+    "southConnector":"SINGLE",
+    "eastConnector":"DOUBLE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -610,9 +610,9 @@
     },
     "cabin16":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
-    "southConnector":"SINGLE",
-    "eastConnector":"UNIVERSAL",
+    "westConnector":"SINGLE",
+    "southConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
     "inhabitants":"NONE",
     "mainCapsule":false,
     "Color":"NONE",
@@ -878,16 +878,16 @@
     "color":"ORANGE"
     },
     "orangeBioadaptor2":{
-    "northConnector":"NONE",
+    "northConnector":"DOUBLE",
     "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
+    "southConnector":"NONE",
     "eastConnector":"SINGLE",
     "color":"ORANGE"
     },
     "orangeBioadaptor3":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"SINGLE",
-    "southConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"SINGLE",
     "eastConnector":"NONE",
     "color":"ORANGE"
     },
@@ -899,8 +899,8 @@
     "color":"ORANGE"
     },
     "orangeBioadaptor5":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
     "eastConnector":"NONE",
     "color":"ORANGE"
@@ -913,24 +913,24 @@
     "color":"ORANGE"
     },
     "purpleBioadaptor1":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
-    "southConnector":"SINGLE",
-    "eastConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"SINGLE",
     "color":"PURPLE"
     },
     "purpleBioadaptor2":{
     "northConnector":"DOUBLE",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
+    "westConnector":"DOUBLE",
+    "southConnector":"NONE",
     "eastConnector":"DOUBLE",
     "color":"PURPLE"
     },
     "purpleBioadaptor3":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "northConnector":"DOUBLE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
+    "eastConnector":"NONE",
     "color":"PURPLE"
     },
     "purpleBioadaptor4":{
@@ -942,9 +942,9 @@
     },
     "purpleBioadaptor5":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
     "color":"PURPLE"
     },
     "purpleBioadaptor6":{
@@ -964,37 +964,37 @@
     "tileContent":[]
     },
     "normalStorage2":{
-    "northConnector":"NONE",
+    "northConnector":"UNIVERSAL",
     "westConnector":"UNIVERSAL",
-    "southConnector":"UNIVERSAL",
+    "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":2,
     "fitsRed":false,
     "tileContent":[]
     },
     "normalStorage3":{
-    "northConnector":"NONE",
-    "westConnector":"UNIVERSAL",
-    "southConnector":"SINGLE",
-    "eastConnector":"DOUBLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"NONE",
+    "southConnector":"UNIVERSAL",
+    "eastConnector":"SINGLE",
     "slotsNumber":2,
     "fitsRed":false,
     "tileContent":[]
     },
     "normalStorage4":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"DOUBLE",
-    "southConnector":"SINGLE",
-    "eastConnector":"DOUBLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"DOUBLE",
+    "eastConnector":"SINGLE",
     "slotsNumber":2,
     "fitsRed":false,
     "tileContent":[]
     },
     "normalStorage5":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"DOUBLE",
     "slotsNumber":2,
     "fitsRed":false,
     "tileContent":[]
@@ -1009,9 +1009,9 @@
     "tileContent":[]
     },
     "normalStorage7":{
-    "northConnector":"UNIVERSAL",
+    "northConnector":"DOUBLE",
     "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
+    "southConnector":"UNIVERSAL",
     "eastConnector":"SINGLE",
     "slotsNumber":2,
     "fitsRed":false,
@@ -1027,8 +1027,8 @@
     "tileContent":[]
     },
     "normalStorage9":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":2,
@@ -1055,16 +1055,16 @@
     },
     "normalStorage12":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
-    "southConnector":"DOUBLE",
+    "westConnector":"DOUBLE",
+    "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":3,
     "fitsRed":false,
     "tileContent":[]
     },
     "normalStorage13":{
-    "northConnector":"SINGLE",
-    "westConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"SINGLE",
     "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":3,
@@ -1072,44 +1072,44 @@
     "tileContent":[]
     },
     "normalStorage14":{
-    "northConnector":"NONE",
-    "westConnector":"DOUBLE",
-    "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"NONE",
+    "southConnector":"DOUBLE",
+    "eastConnector":"NONE",
     "slotsNumber":3,
     "fitsRed":false,
     "tileContent":[]
     },
     "normalStorage15":{
-    "northConnector":"DOUBLE",
-    "westConnector":"NONE",
-    "southConnector":"SINGLE",
-    "eastConnector":"SINGLE",
+    "northConnector":"SINGLE",
+    "westConnector":"SINGLE",
+    "southConnector":"DOUBLE",
+    "eastConnector":"NONE",
     "slotsNumber":3,
     "fitsRed":false,
     "tileContent":[]
     },
     "redStorage1":{
-    "northConnector":"DOUBLE",
-    "westConnector":"NONE",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"SINGLE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"SINGLE",
+    "eastConnector":"DOUBLE",
     "slotsNumber":1,
     "fitsRed":true,
     "tileContent":[]
     },
     "redStorage2":{
     "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
     "slotsNumber":1,
     "fitsRed":true,
     "tileContent":[]
     },
     "redStorage3":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"DOUBLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"DOUBLE",
     "eastConnector":"DOUBLE",
     "slotsNumber":1,
@@ -1126,17 +1126,17 @@
     "tileContent":[]
     },
     "redStorage5":{
-    "northConnector":"SINGLE",
-    "westConnector":"DOUBLE",
-    "southConnector":"UNIVERSAL",
-    "eastConnector":"NONE",
+    "northConnector":"DOUBLE",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"SINGLE",
     "slotsNumber":1,
     "fitsRed":true,
     "tileContent":[]
     },
     "redStorage6":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"SINGLE",
+    "northConnector":"SINGLE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"SINGLE",
     "eastConnector":"SINGLE",
     "slotsNumber":1,
@@ -1163,58 +1163,58 @@
     },
     "redStorage9":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
+    "westConnector":"DOUBLE",
     "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
+    "eastConnector":"NONE",
     "slotsNumber":2,
     "fitsRed":true,
     "tileContent":[]
     },
     "battery1":{
-    "northConnector":"NONE",
-    "westConnector":"SINGLE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"UNIVERSAL",
+    "northConnector":"UNIVERSAL",
+    "westConnector":"NONE",
+    "southConnector":"SINGLE",
+    "eastConnector":"DOUBLE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery2":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
-    "southConnector":"UNIVERSAL",
+    "westConnector":"UNIVERSAL",
+    "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery3":{
-    "northConnector":"SINGLE",
+    "northConnector":"UNIVERSAL",
     "westConnector":"SINGLE",
     "southConnector":"SINGLE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"SINGLE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery4":{
     "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
-    "eastConnector":"UNIVERSAL",
+    "eastConnector":"NONE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery5":{
-    "northConnector":"SINGLE",
-    "westConnector":"UNIVERSAL",
-    "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
+    "northConnector":"UNIVERSAL",
+    "westConnector":"NONE",
+    "southConnector":"DOUBLE",
+    "eastConnector":"SINGLE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery6":{
-    "northConnector":"NONE",
+    "northConnector":"UNIVERSAL",
     "westConnector":"NONE",
-    "southConnector":"DOUBLE",
-    "eastConnector":"UNIVERSAL",
+    "southConnector":"NONE",
+    "eastConnector":"DOUBLE",
     "slotsNumber":2,
     "slotsFilled":2
     },
@@ -1235,17 +1235,17 @@
     "slotsFilled":2
     },
     "battery9":{
-    "northConnector":"UNIVERSAL",
-    "westConnector":"NONE",
+    "northConnector":"NONE",
+    "westConnector":"UNIVERSAL",
     "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":2,
     "slotsFilled":2
     },
     "battery10":{
-    "northConnector":"DOUBLE",
+    "northConnector":"UNIVERSAL",
     "westConnector":"DOUBLE",
-    "southConnector":"UNIVERSAL",
+    "southConnector":"DOUBLE",
     "eastConnector":"DOUBLE",
     "slotsNumber":2,
     "slotsFilled":2
@@ -1259,32 +1259,32 @@
     "slotsFilled":2
     },
     "batteryTriple1":{
-    "northConnector":"NONE",
-    "westConnector":"SINGLE",
-    "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
-    "slotsNumber":3,
-    "slotsFilled":3
-    },
-    "batteryTriple2":{
     "northConnector":"SINGLE",
-    "westConnector":"SINGLE",
-    "southConnector":"NONE",
-    "eastConnector":"DOUBLE",
-    "slotsNumber":3,
-    "slotsFilled":3
-    },
-    "batteryTriple3":{
-    "northConnector":"NONE",
-    "westConnector":"SINGLE",
+    "westConnector":"NONE",
     "southConnector":"DOUBLE",
     "eastConnector":"NONE",
     "slotsNumber":3,
     "slotsFilled":3
     },
+    "batteryTriple2":{
+    "northConnector":"SINGLE",
+    "westConnector":"NONE",
+    "southConnector":"DOUBLE",
+    "eastConnector":"SINGLE",
+    "slotsNumber":3,
+    "slotsFilled":3
+    },
+    "batteryTriple3":{
+    "northConnector":"DOUBLE",
+    "westConnector":"NONE",
+    "southConnector":"NONE",
+    "eastConnector":"SINGLE",
+    "slotsNumber":3,
+    "slotsFilled":3
+    },
     "batteryTriple4":{
-    "northConnector":"NONE",
-    "westConnector":"DOUBLE",
+    "northConnector":"DOUBLE",
+    "westConnector":"NONE",
     "southConnector":"NONE",
     "eastConnector":"NONE",
     "slotsNumber":3,
@@ -1292,17 +1292,17 @@
     },
     "batteryTriple5":{
     "northConnector":"NONE",
-    "westConnector":"NONE",
+    "westConnector":"SINGLE",
     "southConnector":"NONE",
-    "eastConnector":"SINGLE",
+    "eastConnector":"NONE",
     "slotsNumber":3,
     "slotsFilled":3
     },
     "batteryTriple6":{
     "northConnector":"DOUBLE",
-    "westConnector":"DOUBLE",
-    "southConnector":"NONE",
-    "eastConnector":"SINGLE",
+    "westConnector":"NONE",
+    "southConnector":"SINGLE",
+    "eastConnector":"DOUBLE",
     "slotsNumber":3,
     "slotsFilled":3
     }
