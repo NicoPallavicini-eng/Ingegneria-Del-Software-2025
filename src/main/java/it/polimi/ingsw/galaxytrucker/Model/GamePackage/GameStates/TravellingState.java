@@ -57,8 +57,10 @@ public abstract class TravellingState extends GameState implements Serializable 
         Card nextCard = getGame().getDeck().drawCard();
         if (nextCard == null) {
             getGame().setGameState(new FinalState(game));
+            game.notifyObservers(game, "final");
         } else {
             getGame().setGameState(nextCard.createGameState(game));
+            game.notifyObservers(game, "newcard");
         }
         game.getGameState().init();
     }
