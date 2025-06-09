@@ -39,12 +39,10 @@ public class ServerController {
 
     public ServerController(RMIServer rmiServer) {
         ServerController.rmiServer = rmiServer;
-//        remoteObserver = new RemoteObserver(this, game);
     }
 
     public ServerController(SocketServer socketServer) {
         ServerController.socketServer = socketServer;
-//        remoteObserver = new RemoteObserver(this, game);
     }
 
     public static Game getGame() {
@@ -136,12 +134,15 @@ public class ServerController {
                             return;
                         }
                         synchronized (((BuildingState) gameState).getPlayersWithLegalShips()) {
-                            for (VirtualClient rmiClient : this.rmiClients) {
-                                try {
-                                    rmiClient.printMessage("\nYour ship is legal! You can now place your aliens.");
-                                } catch (RemoteException e) {
-                                    throw new RuntimeException(e);
+                            try{
+                                for (VirtualClient rmiClient : this.rmiClients){
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if ((((BuildingState) gameState).getPlayersWithLegalShips().contains(player))){
+                                        rmiClient.printMessage("\nYour ship is legal! You can now place your aliens.");
+                                    }
                                 }
+                            } catch(RemoteException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                     }
@@ -174,8 +175,25 @@ public class ServerController {
                         for (VirtualClient rmiClient : rmiClients) {
                             if (rmiClient != null) {
                                 try {
-                                    rmiClient.printMessage("\nNew card drawn");
+                                    rmiClient.printMessage("\nNew card drawn\n");
                                     rmiClient.viewCard(game);
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                }
+                case "final" -> {
+                    if (gameState instanceof FinalState) {
+                        if (rmiClients == null || rmiClients.isEmpty()) {
+                            return;
+                        }
+                        for (VirtualClient rmiClient : rmiClients) {
+                            if (rmiClient != null) {
+                                try {
+                                    rmiClient.printMessage("\nGame is over, the final state has been reached");
+                                    rmiClient.viewLeaderboard(game);
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
                                 }
