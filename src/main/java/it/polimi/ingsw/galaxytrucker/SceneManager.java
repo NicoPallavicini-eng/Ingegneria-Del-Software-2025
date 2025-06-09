@@ -32,7 +32,7 @@ public class SceneManager extends Application {
         waitingScene = new WaitingScene(game, nickname, isFirtsPlayer, this);
         primaryStage = stage;
         primaryStage.setScene(waitingScene.getScene());
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true); // TODO choose if keep
         primaryStage.setTitle("Waiting State");
         primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();

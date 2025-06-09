@@ -26,7 +26,7 @@ public class BuildingSceneOthersShip extends MyScene {
     private Background background;
     private OthersShipGrid othersShipGrid;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 800;
+    private final int SCENE_HEIGHT = 750;
     private SceneManager sceneManager;
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;

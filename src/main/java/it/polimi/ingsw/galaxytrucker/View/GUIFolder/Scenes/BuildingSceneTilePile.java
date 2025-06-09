@@ -24,7 +24,7 @@ public class BuildingSceneTilePile extends MyScene {
     private TilePileGrid tilePileGrid;
     private Background background;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 800;
+    private final int SCENE_HEIGHT = 750;
     private SceneManager sceneManager;
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
