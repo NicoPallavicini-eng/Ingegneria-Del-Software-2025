@@ -1,7 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -25,6 +27,8 @@ public class UserShipGrid extends Pane {
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
     private final ReservedTileView[] handCell = new ReservedTileView[1];
+    private Button rotateLeft;
+    private Button rotateRight;
 
     public UserShipGrid(Color color, BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
@@ -64,11 +68,11 @@ public class UserShipGrid extends Pane {
                     int finalCol = col;
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
-                            setTile(finalRow, finalCol, handCell[0].getTileImage());
+                            setTile(finalRow, finalCol, handCell[0].getTileImage(), handCell[0].getRotation());
                             handCell[0].clearTileImage();
                             tile.setFull(true);
                         } else if (tile.isClickable() && tile.isFull()) {
-                            setHandTile(tile.getTileImage());
+                            setHandTile(tile.getTileImage(), tile.getRotation());
                             cells[finalRow][finalCol].clearTileImage();
                             tile.setFull(false);
                         }
@@ -85,11 +89,11 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    setResTile(finalSlot, handCell[0].getTileImage());
+                    setResTile(finalSlot, handCell[0].getTileImage(), handCell[0].getRotation());
                     handCell[0].clearTileImage();
                     tile.setFull(true);
                 } else if (tile.isClickable() && tile.isFull()) {
-                    setHandTile(tile.getTileImage());
+                    setHandTile(tile.getTileImage(), tile.getRotation());
                     resCells[finalSlot].clearTileImage();
                     tile.setFull(false);
                 }
@@ -123,8 +127,27 @@ public class UserShipGrid extends Pane {
         cells[2][3].setFull(true);
         cells[2][3].setClickable(false);
 
+        rotateLeft = new Button("↺");
+        rotateRight = new Button("↻");
+        rotateLeft.getStyleClass().add("rotate-button");
+        rotateRight.getStyleClass().add("rotate-button");
+
+        rotateLeft.setLayoutX(HAND_LEFT_BORDER + TILE_SIZE + 10);
+        rotateLeft.setLayoutY(RESERVED_TOP_BORDER + 10);
+        rotateRight.setLayoutX(HAND_LEFT_BORDER + TILE_SIZE + 10);
+        rotateRight.setLayoutY(RESERVED_TOP_BORDER + 70);
+        rotateLeft.setVisible(false);
+        rotateRight.setVisible(false);
+
+        rotateLeft.setOnAction(e -> {
+            handCell[0].rotate(Side.LEFT);
+        });
+        rotateRight.setOnAction(e -> {
+            handCell[0].rotate(Side.RIGHT);
+        });
+
         // Absolute positioning
-        getChildren().addAll(bgView, grid, resGrid, handGrid);
+        getChildren().addAll(bgView, grid, resGrid, handGrid, rotateLeft, rotateRight);
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
@@ -133,7 +156,7 @@ public class UserShipGrid extends Pane {
     /**
      * Sets a tile image at the specified logical row and column.
      */
-    public void setTile (int row, int col, ImageView image) {
+    public void setTile (int row, int col, ImageView image, int rotation) {
         if (row >= 0 && row < ROWS && col >= 0 && col < COLS &&
             !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
             (row == 1 && (col == 0 || col == 6)) ||
@@ -141,6 +164,7 @@ public class UserShipGrid extends Pane {
             cells[row][col].getTileImage().getImage() == null) {
             cells[row][col].setTileImage(image);
             cells[row][col].setFull(true);
+            cells[row][col].setRotation(rotation);
             cells[row][col].setClickable(true); // TODO setup logic of last picked up cell
         } else {
             // TODO print error: "hand already filled" or other errors
@@ -148,10 +172,11 @@ public class UserShipGrid extends Pane {
         // TODO add conformity checks
     }
 
-    public void setResTile (int slot, ImageView image) {
+    public void setResTile (int slot, ImageView image, int rotation) {
         if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage().getImage() == null) {
             resCells[slot].setTileImage(image);
             resCells[slot].setFull(true);
+            resCells[slot].setRotation(rotation);
             resCells[slot].setClickable(true); // TODO setup the putdown n all
         } else {
             // TODO print error: "slot already filled" or other errors
@@ -159,15 +184,26 @@ public class UserShipGrid extends Pane {
         // TODO add conformity checks
     }
 
-    public void setHandTile (ImageView image) {
+    public void setHandTile (ImageView image, int rotation) {
         if (handCell[0].getTileImage().getImage() == null) {
             handCell[0].setTileImage(image);
             handCell[0].setClickable(true);
+            handCell[0].setRotation(rotation);
             handCell[0].setFull(true);
         } else {
             // TODO print error: "hand already full"
         }
         // TODO add conformity checks
+    }
+
+    public void updateRotateVisible(boolean rotateVisible) {
+        if (rotateVisible) {
+            rotateLeft.setVisible(true);
+            rotateRight.setVisible(true);
+        } else {
+            rotateLeft.setVisible(false);
+            rotateRight.setVisible(false);
+        }
     }
 
     public ReservedTileView getHandTile () {

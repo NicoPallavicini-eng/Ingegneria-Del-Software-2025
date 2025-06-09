@@ -31,6 +31,7 @@ public class BuildingSceneUserShip extends MyScene {
     private SceneManager sceneManager;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
+    private boolean rotateVisible = false;
 
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -57,7 +58,6 @@ public class BuildingSceneUserShip extends MyScene {
         viewOthersButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "OthersShip");
         });
-
         viewTilePileButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "TilePile");
         });
@@ -85,17 +85,29 @@ public class BuildingSceneUserShip extends MyScene {
         return playerOptional.orElse(null);
     }
 
-    public void setReserved(ImageView img, int slot) { // TODO check if useful
-        userShipGrid.setResTile(slot, img);
+    public void setReserved(ImageView img, int slot, int rotation) { // TODO check if useful
+        userShipGrid.setResTile(slot, img, rotation);
     }
 
-    public void setInHand(ImageView img) {
-        userShipGrid.setHandTile(img);
+    public void setInHand(ImageView img, int rotation) {
+        userShipGrid.setHandTile(img, rotation);
+        rotateVisible = true;
+        userShipGrid.updateRotateVisible(rotateVisible);
+    }
+
+    public boolean getRotateVisible() {
+        return rotateVisible;
+    }
+
+    public void setRotateVisible(boolean rotateVisible) {
+        this.rotateVisible = rotateVisible;
     }
 
     public void emptyHand() {
         userShipGrid.getHandTile().clearTileImage();
         userShipGrid.getHandTile().setClickable(false);
+        rotateVisible = false;
+        userShipGrid.updateRotateVisible(rotateVisible);
     }
 
     public UserShipGrid getUserShipGrid() {

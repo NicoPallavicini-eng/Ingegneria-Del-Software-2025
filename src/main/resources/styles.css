@@ -15,12 +15,26 @@
 .bottom-button {
     -fx-font-size: 14px;
     -fx-padding: 8 16;
-    -fx-background-radius: 12;
+    -fx-background-radius: 5;
     -fx-background-color: #3399cc;
     -fx-text-fill: white;
 }
 
 .bottom-button:hover {
     -fx-background-color: derive(#3399cc, 20%);
+    -fx-cursor: hand;
+}
+
+.rotate-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 14;
+    -fx-background-radius: 5;
+    -fx-background-color: #875f87;
+    -fx-text-fill: white;
+}
+
+.rotate-button:hover {
+    -fx-background-color: derive(#875f87, 20%);
     -fx-cursor: hand;
 }

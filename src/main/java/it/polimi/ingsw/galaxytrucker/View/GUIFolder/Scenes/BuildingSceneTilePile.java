@@ -93,15 +93,15 @@ public class BuildingSceneTilePile extends MyScene {
     }
 
     public void pickUpTile(TilePileTileView tile) {
-        ImageView img = tile.getTileImage();
-        buildingSceneUserShip.setInHand(img);
+        buildingSceneUserShip.setInHand(tile.getTileImage(), tile.getRotation());
         tile.setOpacity(0.2); // faintly visible
         tile.setClickable(false);
     }
 
     public void putDownTile(ReservedTileView tile) {
         ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
-        tilePileGrid.setDefault(img);
+        int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
+        tilePileGrid.setDefault(img, rotation);
         buildingSceneUserShip.emptyHand();
     }
 }
