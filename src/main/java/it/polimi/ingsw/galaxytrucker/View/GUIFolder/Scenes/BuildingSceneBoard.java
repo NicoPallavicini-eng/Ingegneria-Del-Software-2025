@@ -4,10 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,6 +24,7 @@ public class BuildingSceneBoard extends MyScene {
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
+    private BoardGrid boardGrid;
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
@@ -42,6 +40,10 @@ public class BuildingSceneBoard extends MyScene {
         this.background = new Background();
         BorderPane layout = new BorderPane();
         this.root = new BorderPane();
+
+        // see board
+        this.boardGrid = new BoardGrid(userShip.getColor(), this);
+        StackPane centerContent = new StackPane(boardGrid);
 
         // --- Bottom Buttons ---
         Button viewUserButton = new Button("View User Ship");
@@ -65,7 +67,7 @@ public class BuildingSceneBoard extends MyScene {
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
-        // layout.setCenter(centerContent); TODO set center
+        layout.setCenter(centerContent);
         layout.setBottom(buttonBox);
 
         // Now wrap layout with background in a StackPane
