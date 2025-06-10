@@ -105,7 +105,7 @@ public class UserShipGrid extends Pane {
         ReservedTileView tile = new ReservedTileView();
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
-            if (tile.isClickable()) {
+            if (tile.isClickable() && tile.isFull()) {
                 buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
             }
         });
@@ -165,6 +165,7 @@ public class UserShipGrid extends Pane {
             cells[row][col].setTileImage(image);
             cells[row][col].setFull(true);
             cells[row][col].setRotation(rotation);
+            updateRotateVisible(false);
             cells[row][col].setClickable(true); // TODO setup logic of last picked up cell
         } else {
             // TODO print error: "hand already filled" or other errors
@@ -177,6 +178,7 @@ public class UserShipGrid extends Pane {
             resCells[slot].setTileImage(image);
             resCells[slot].setFull(true);
             resCells[slot].setRotation(rotation);
+            updateRotateVisible(false);
             resCells[slot].setClickable(true); // TODO setup the putdown n all
         } else {
             // TODO print error: "slot already filled" or other errors
@@ -190,6 +192,7 @@ public class UserShipGrid extends Pane {
             handCell[0].setClickable(true);
             handCell[0].setRotation(rotation);
             handCell[0].setFull(true);
+            updateRotateVisible(true);
         } else {
             // TODO print error: "hand already full"
         }
