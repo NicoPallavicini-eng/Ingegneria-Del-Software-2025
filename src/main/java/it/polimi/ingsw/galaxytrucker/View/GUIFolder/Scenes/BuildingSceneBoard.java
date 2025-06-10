@@ -44,6 +44,7 @@ public class BuildingSceneBoard extends MyScene {
         // see board
         this.boardGrid = new BoardGrid(userShip.getColor(), this);
         StackPane centerContent = new StackPane(boardGrid);
+        // TODO add sub decks
 
         // --- Bottom Buttons ---
         Button viewUserButton = new Button("View User Ship");

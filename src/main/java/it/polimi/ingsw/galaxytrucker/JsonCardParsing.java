@@ -251,15 +251,6 @@ class JsonCards{
                 "\t\t\"cargoLost\":0,\n" +
                 "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
                 "\n" +
-                "\t},\n" +
-                "\t\"combatZoneCard2\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"daysLost\":4,\n" +
-                "\t\t\"crewLost\":0,\n" +
-                "\t\t\"cargoLost\":3,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\n" +
                 "\t}}";
         combatZoneCardsNotL ="{\"combatZoneCardNotL\":{\n" +
                 "\t\t\"levelTwo\":false,\n" +
@@ -278,7 +269,7 @@ class JsonCards{
     }
 }
 
-class PirateCardParse {
+class PiratesCardParse {
     public boolean levelTwo;
     public boolean used;
     public int firepower;
@@ -291,18 +282,18 @@ class CannonballParse {
     public String direction;
     public String rowOrColumn;
 }
-class SpaceCardParse{
+class SpaceCardParse {
     public boolean levelTwo;
     public boolean used;
 }
-class StationCardParse{
+class StationCardParse {
     public boolean levelTwo;
     public boolean used;
     public int crewNumberNeeded;
     public int daysToLose;
     public List<Integer> blocks;
 }
-class AbbandonShipCardParse{
+class ShipCardParse {
     public boolean levelTwo;
     public boolean used;
     public int crewNumberLost;
@@ -317,7 +308,7 @@ class SlaversCardParse{
     public int credits;
     public int daysToLose;
 }
-class SmuglersCardParse{
+class SmugglersCardParse {
     public boolean levelTwo;
     public boolean used;
     public int firepower;
@@ -348,7 +339,7 @@ class MeteorParse {
     public String rowOrColumn;
 }
 
-class MeteorCardParse {
+class MeteorsCardParse {
     public boolean levelTwo;
     public boolean used;
     public List<MeteorParse> meteors;
@@ -370,7 +361,6 @@ class BattleZoneCardNotLParse {
     public int cargoLost;
     public List<CannonballParse> cannonballList;
 }
-
 
 public class JsonCardParsing {
 
@@ -535,10 +525,10 @@ public class JsonCardParsing {
         setStationCards(stationCardList);
 
         ArrayList<ShipCard> shipCardList = new ArrayList<>();
-        Type shipCardType = new TypeToken<Map<String,AbbandonShipCardParse>>(){}.getType();
-        Map<String,AbbandonShipCardParse> shipCards = gson.fromJson(jsonCards.ShipCards, shipCardType);
+        Type shipCardType = new TypeToken<Map<String, ShipCardParse>>(){}.getType();
+        Map<String, ShipCardParse> shipCards = gson.fromJson(jsonCards.ShipCards, shipCardType);
         for (String connectorKey : shipCards.keySet()) {
-            AbbandonShipCardParse ShipCardParse = shipCards.get(connectorKey);
+            ShipCardParse ShipCardParse = shipCards.get(connectorKey);
             ShipCard ship = new ShipCard(ShipCardParse.levelTwo,ShipCardParse.used,ShipCardParse.crewNumberLost,ShipCardParse.credits,ShipCardParse.daysToLose);
             shipCardList.add(ship);
         }
@@ -555,10 +545,10 @@ public class JsonCardParsing {
         setSlaversCards(slaversCardList);
 
         ArrayList<SmugglersCard> smugglersCardList = new ArrayList<>();
-        Type smugglersCardType = new TypeToken<Map<String,SmuglersCardParse>>(){}.getType();
-        Map<String,SmuglersCardParse> smuglersCards = gson.fromJson(jsonCards.smugglersCards, smugglersCardType);
+        Type smugglersCardType = new TypeToken<Map<String, SmugglersCardParse>>(){}.getType();
+        Map<String, SmugglersCardParse> smuglersCards = gson.fromJson(jsonCards.smugglersCards, smugglersCardType);
         for (String connectorKey : smuglersCards.keySet()) {
-            SmuglersCardParse smugglersCardParse = smuglersCards.get(connectorKey);
+            SmugglersCardParse smugglersCardParse = smuglersCards.get(connectorKey);
             SmugglersCard smuggler = new SmugglersCard(smugglersCardParse.levelTwo,smugglersCardParse.used,smugglersCardParse.firepower,smugglersCardParse.blocks,smugglersCardParse.lostBlocksNumber,smugglersCardParse.daysToLose);
             smugglersCardList.add(smuggler);
         }
@@ -604,11 +594,11 @@ public class JsonCardParsing {
 
         ArrayList<MeteorsCard> meteorsCardList = new ArrayList<>();
 
-        Type meteorsCardType = new TypeToken<Map<String, MeteorCardParse>>() {}.getType();
-        Map<String, MeteorCardParse> meteorsCards = gson.fromJson(jsonCards.meteorsCards, meteorsCardType);
+        Type meteorsCardType = new TypeToken<Map<String, MeteorsCardParse>>() {}.getType();
+        Map<String, MeteorsCardParse> meteorsCards = gson.fromJson(jsonCards.meteorsCards, meteorsCardType);
 
         for (String key : meteorsCards.keySet()) {
-            MeteorCardParse meteorParseCard = meteorsCards.get(key);
+            MeteorsCardParse meteorParseCard = meteorsCards.get(key);
 
             List<Meteor> meteorList = new ArrayList<>();
             for (MeteorParse meteorParse : meteorParseCard.meteors) {
@@ -623,10 +613,10 @@ public class JsonCardParsing {
 
         ArrayList<PiratesCard> piratesCardList = new ArrayList<>();
 
-        Type piratesCardType = new TypeToken<Map<String, PirateCardParse>>() {}.getType();
-        Map<String,PirateCardParse> piratesCards = gson.fromJson(jsonCards.piratesCards, piratesCardType);
+        Type piratesCardType = new TypeToken<Map<String, PiratesCardParse>>() {}.getType();
+        Map<String, PiratesCardParse> piratesCards = gson.fromJson(jsonCards.piratesCards, piratesCardType);
         for (String key : piratesCards.keySet()) {
-            PirateCardParse pirateParseCard = piratesCards.get(key);
+            PiratesCardParse pirateParseCard = piratesCards.get(key);
 
             List<Cannonball> cannonball = new ArrayList<>();
             for(CannonballParse cannonballParse: pirateParseCard.cannonballList){
