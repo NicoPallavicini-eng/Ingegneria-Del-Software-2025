@@ -3,8 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     Player player = new Player("UYUBUBUHU","JONNY", Color.RED);
@@ -25,7 +24,7 @@ class PlayerTest {
     }
 
     @Test
-    void setInputEngine() {
+    void setInput() {
         // player.setInputEngine(2);
         assertEquals(2,player.getInput());
     }
@@ -55,7 +54,7 @@ class PlayerTest {
 
     @Test
     void getPlayerIp() {
-        assertEquals(player.getPlayerIp(),"UYUBUBUHU");
+        assertEquals(player.getPlayerIp(),"UYUBUBUHU");assertEquals(player.getPlayerIp(),"UYUBUBUHU");
     }
 
     @Test

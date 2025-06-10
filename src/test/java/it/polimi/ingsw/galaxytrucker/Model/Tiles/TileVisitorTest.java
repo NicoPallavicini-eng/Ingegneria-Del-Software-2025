@@ -1,14 +1,14 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TileVisitorTest {
-
     @Test
     void testBatteryTileVisitor() {
         BatteryTileVisitor visitor = new BatteryTileVisitor();
@@ -34,14 +34,13 @@ class TileVisitorTest {
     @Test
     void testCabinTileVisitor() {
         CabinTileVisitor visitor = new CabinTileVisitor();
-        CabinTile cabinTile = new CabinTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, CabinInhabitants.NONE, true, 2, 1);
+        CabinTile cabinTile = new CabinTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, CabinInhabitants.NONE, true, Color.RED,2, 1);
         cabinTile.accept(visitor);
 
         List<CabinTile> collectedTiles = visitor.getList();
         assertEquals(1, collectedTiles.size());
         assertEquals(cabinTile, collectedTiles.get(0));
     }
-
     @Test
     void testCannonTileVisitor() {
         CannonTileVisitor visitor = new CannonTileVisitor();
@@ -74,7 +73,6 @@ class TileVisitorTest {
         assertEquals(1, collectedTiles.size());
         assertEquals(engineTile, collectedTiles.get(0));
     }
-
     @Test
     void testShieldTileVisitor() {
         ShieldTileVisitor visitor = new ShieldTileVisitor();
@@ -85,4 +83,5 @@ class TileVisitorTest {
         assertEquals(1, collectedTiles.size());
         assertEquals(shieldTile, collectedTiles.get(0));
     }
+
 }

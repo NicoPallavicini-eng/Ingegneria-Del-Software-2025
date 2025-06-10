@@ -2,15 +2,15 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BatteryTileTest {
 
     @Test
     void testRemoveBattery() {
         BatteryTile batteryTile = new BatteryTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, 5, 3);
-        int remaining = batteryTile.removeBattery(2);
-        assertEquals(1, remaining);
+        batteryTile.removeBattery(2);
+        assertEquals(1,batteryTile.getSlotsFilled());
     }
 
     @Test

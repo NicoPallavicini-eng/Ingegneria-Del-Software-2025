@@ -9,7 +9,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TilePileTest {
-
     private TilePile tilePile;
     private Tile tile1;
     private Tile tile2;
@@ -41,6 +40,7 @@ class TilePileTest {
         tile1.setChoosable(false);
         tilePile.putDownTile(tile1);
         assertTrue(tile1.isChoosable());
-        assertFalse(tile1.getUpsideDown());
+        assertTrue(tile1.getFacingUp());
     }
+
 }

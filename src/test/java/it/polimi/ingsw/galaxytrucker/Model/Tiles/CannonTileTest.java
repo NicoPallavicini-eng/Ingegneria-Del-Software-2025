@@ -2,10 +2,9 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CannonTileTest {
-
     @Test
     void testGetDoublePower() {
         CannonTile cannonTile = new CannonTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, true, false);
@@ -18,4 +17,5 @@ class CannonTileTest {
         cannonTile.setActiveState(true);
         assertTrue(cannonTile.getActiveState());
     }
+
 }

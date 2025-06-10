@@ -2,11 +2,9 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ShieldTileTest {
-
     @Test
     void testSetAndGetActiveState() {
         ShieldTile shieldTile = new ShieldTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, ShieldOrientation.NORTHWEST, false);
@@ -33,4 +31,5 @@ class ShieldTileTest {
         shieldTile.rotate(Side.LEFT);
         assertEquals(ShieldOrientation.SOUTHWEST, shieldTile.getOrientation());
     }
+
 }

@@ -5,16 +5,15 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CargoTileTest {
-
     @Test
     void testSetAndGetTileContent() {
         List<Integer> content = new ArrayList<>();
         CargoTile cargoTile = new CargoTile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE, 3, true, content);
-        cargoTile.setTileContent(1);
+        cargoTile.addBlock(1);
+        //cargoTile.setTileContent(1);
         assertEquals(1, cargoTile.getTileContent().size());
     }
 

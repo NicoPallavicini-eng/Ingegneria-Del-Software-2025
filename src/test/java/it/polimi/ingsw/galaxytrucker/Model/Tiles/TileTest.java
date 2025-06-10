@@ -7,7 +7,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileTest {
-
     @Test
     void testRotateRight() {
         Tile tile = new Tile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE);
@@ -37,12 +36,11 @@ class TileTest {
         tile.setAttached(true);
         assertTrue(tile.isAttached());
     }
-
     @Test
     void testFlip() {
         Tile tile = new Tile(ConnectorType.SINGLE, ConnectorType.DOUBLE, ConnectorType.UNIVERSAL, ConnectorType.NONE);
         tile.flip();
-        assertFalse(tile.getUpsideDown());
+        assertTrue(tile.getFacingUp());
     }
 
     @Test
@@ -63,4 +61,6 @@ class TileTest {
         assertEquals(ConnectorType.UNIVERSAL, connectors.get(2));
         assertEquals(ConnectorType.NONE, connectors.get(3));
     }
+
+
 }

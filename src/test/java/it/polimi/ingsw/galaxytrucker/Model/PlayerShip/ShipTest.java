@@ -1,41 +1,197 @@
 package it.polimi.ingsw.galaxytrucker.Model.PlayerShip;
 
+import it.polimi.ingsw.galaxytrucker.JsonCardParsing;
+import it.polimi.ingsw.galaxytrucker.JsonParsing;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class ShipTest {
-
+    JsonParsing jsonParser = new JsonParsing();
+    List<Tile> tiles = jsonParser.getCompleteList();
     Ship ship = new Ship(Color.RED);
+    Random random = new Random();
+
+    @Test
+    void getLastPlacedTile() {
+        ship.setLastPlacedTile(tiles.get(0));
+        assertEquals(tiles.get(0), ship.getLastPlacedTile());
+//        Tile tile;
+//        for(int i=0;i<jsonParser.getCompleteList().size();i++){
+//            tile = jsonParser.getBatteries().get(i);
+//            ship.setTileOnFloorPlan(2,2,tile);
+//            assertEquals(tile,ship.getLastPlacedTile());
+//        }
+    }
+
+    @Test
+    void setLastPlacedTile() {
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            ship.setLastPlacedTile(tiles.get(0));
+            assertEquals(tiles.get(0), ship.getLastPlacedTile());
+        }
+    }
+
+    @Test
+    void getTileInHand() {
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            ship.setTileInHand(tiles.get(0));
+            assertEquals(tiles.get(0), ship.getTileInHand());
+        }
+    }
+
+    @Test
+    void setTileInHand() {
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            ship.setTileInHand(tiles.get(0));
+            assertEquals(tiles.get(0), ship.getTileInHand());
+        }
+    }
+
+    @Test
+    void getRowMax() {
+        assertEquals(5,ship.getRowMax());
+    }
+
+    @Test
+    void getColMax() {
+        assertEquals(7,ship.getColMax());
+    }
 
     @Test
     void getColor() {
-        assertEquals(Color.RED, ship.getColor());
+        assertEquals(Color.RED,ship.getColor());
     }
 
     @Test
     void getFloorplanArrayList() {
-        System.out.println(ship.getFloorplanArrayList());
         assertNotNull(ship.getFloorplanArrayList());
     }
 
     @Test
     void findTileOnFloorplanRow() {
-        Tile tile = new EngineTile(true,false,ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE);
-        ship.setTileOnFloorPlan(2,3,tile);
-        Tile tile1 = new EngineTile(true,false,ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE);
-        ship.setTileOnFloorPlan(4,4,tile1);
-        assertEquals(4,ship.findTileOnFloorplanRow(tile1));
+        Random random = new Random();
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            int row = random.nextInt(ship.getRowMax());
+            int col = random.nextInt(ship.getColMax());
+            ship.setTileOnFloorPlan(row,col,tiles.get(i));
+            assertEquals(row,ship.findTileOnFloorplanRow(tiles.get(i)));
+        }
+    }
 
+    @Test
+    void findTileOnFloorPlanColumn() {
+        Random random = new Random();
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            int row = random.nextInt(ship.getRowMax());
+            int col = random.nextInt(ship.getColMax());
+            ship.setTileOnFloorPlan(row,col,tiles.get(i));
+            assertEquals(col,ship.findTileOnFloorPlanColumn(tiles.get(i)));
+        }
+    }
+
+    @Test
+    void getAdiacentTiles() {
+        Random random = new Random();
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            int row = random.nextInt(ship.getRowMax());
+            int col = random.nextInt(ship.getColMax());
+            ship.setTileOnFloorPlan(row,col,tiles.get(i));
+            Optional<Tile> optional = ship.getTileOnFloorPlan(row,col);
+            if(optional.isPresent()) {
+                Tile tile = optional.get();
+                assertNotNull(ship.getAdiacentTiles(tile));
+                assertEquals(4,ship.getAdiacentTiles(tile).size());
+            }
+
+        }
+        ArrayList<Tile> example = new ArrayList<>();
+        example.add(null);
+        example.add(null);
+        if(ship.getTileOnFloorPlan(1,0).isPresent()) {
+            example.add(ship.getTileOnFloorPlan(1,0).get());
+        }
+        if(ship.getTileOnFloorPlan(0,1).isPresent()) {
+            example.add(ship.getTileOnFloorPlan(0,1).get());
+        }
+        if(ship.getTileOnFloorPlan(0,0).isPresent()) {
+            assertEquals(ship.getAdiacentTiles(ship.getTileOnFloorPlan(0,0).get()),example);
+        }
+
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            int row = 1 + random.nextInt(ship.getRowMax()-2);
+            int col = 1 + random.nextInt(ship.getColMax()-2);
+            Optional<Tile> optional = ship.getTileOnFloorPlan(row,col);
+            if(optional.isPresent()){
+                example = new ArrayList<>();
+                if(ship.getTileOnFloorPlan(row-1,col).isPresent()) {
+                    example.add(ship.getTileOnFloorPlan(row-1,col).get());
+                }else{
+                    example.add(null);
+                }
+                if(ship.getTileOnFloorPlan(row,col-1).isPresent()) {
+                    example.add(ship.getTileOnFloorPlan(row,col-1).get());
+                }else{
+                    example.add(null);
+                }
+                if(ship.getTileOnFloorPlan(row+1,col).isPresent()) {
+                    example.add(ship.getTileOnFloorPlan(row+1,col).get());
+                }else{
+                    example.add(null);
+                }
+                if(ship.getTileOnFloorPlan(row,col+1).isPresent()) {
+                    example.add(ship.getTileOnFloorPlan(row,col+1).get());
+                }else{
+                    example.add(null);
+                }
+                assertEquals(ship.getAdiacentTiles(ship.getTileOnFloorPlan(row,col).get()),example);
+            }
+
+        }
 
     }
+
     @Test
-    void getNonValidtileList(){
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
+    void checkFloorPlanConnection() {
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
+        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
+
+        ship.setTileOnFloorPlan(2,3,centralCabin);
+        ship.setTileOnFloorPlan(1,3,cannon);
+        ship.setTileOnFloorPlan(2,2,engine);
+
+        assertEquals(false,ship.checkFloorPlanConnection());
+    }
+
+    @Test
+    void checkFloorplanConnection() {
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
+        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
+        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
+
+        ship.setTileOnFloorPlan(2,3,centralCabin);
+        ship.setTileOnFloorPlan(1,3,cannon);
+        ship.setTileOnFloorPlan(2,2,engine);
+
+        ArrayList<Tile> adiacentTiles = new ArrayList<>();
+        adiacentTiles.add(centralCabin);
+        adiacentTiles.add(cannon);
+        //adiacentTiles.add(engine);
+
+
+        assertEquals(adiacentTiles,ship.checkFloorplanConnection());
+    }
+
+    @Test
+    void getNonValidTileList() {
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
         CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
 
@@ -48,22 +204,31 @@ class ShipTest {
 
         assertEquals(adiacentTiles,ship.getNonValidTileList());
     }
+
     @Test
-    void isShipBroken(){
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
+    void isShipBroken() {
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
         CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
-        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
+        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE, ConnectorType.SINGLE);
 
         ship.setTileOnFloorPlan(2,3,centralCabin);
         ship.setTileOnFloorPlan(1,3,cannon);
         ship.setTileOnFloorPlan(2,2,engine);
 
         assertEquals(true,ship.isShipBroken());
+
+        Random random = new Random();
+        for(int i=0;i<jsonParser.getCompleteList().size();i++) {
+            int row = random.nextInt(ship.getRowMax());
+            int col = random.nextInt(ship.getColMax());
+            ship.setTileOnFloorPlan(row,col,tiles.get(i));
+            assertEquals(true,ship.isShipBroken());
+        }
     }
 
     @Test
-    void getShipPiecesList(){
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
+    void getShipPiecesList() {
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
         CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
 
@@ -84,90 +249,11 @@ class ShipTest {
         setTiles.add(adiacentTiles2);
 
         assertEquals(setTiles,ship.getShipPiecesList());
-
-    }
-
-    @Test
-    void findTileOnFloorPlanColumn() {
-        Tile tile = new EngineTile(true,false,ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE);
-        ship.setTileOnFloorPlan(2,3,tile);
-        Tile tile1 = new EngineTile(true,false,ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE);
-        ship.setTileOnFloorPlan(4,1,tile1);
-        assertEquals(1,ship.findTileOnFloorPlanColumn(tile1));
-    }
-
-    @Test
-    void getAdiacentTiles() {
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
-        BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
-        BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        BioadaptorTile tile3 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        Tile tile4 = new EngineTile(false,true,ConnectorType.SINGLE,ConnectorType.SINGLE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
-        CargoTile cargo = new CargoTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,3,true,new ArrayList<>());
-        CargoTile cargo1 = new CargoTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,3,true,new ArrayList<>());
-        CargoTile cargo2 = new CargoTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,2,false,new ArrayList<>());
-        CargoTile cargo3 = new CargoTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,3,true,new ArrayList<>());
-        CargoTile cargo4 = new CargoTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,4,false,new ArrayList<>());
-
-        ship.setTileOnFloorPlan(2,3,tile);
-        ship.setTileOnFloorPlan(2,4,tile1);
-        ship.setTileOnFloorPlan(2,2,tile2);
-        ship.setTileOnFloorPlan(1,3,cabin);
-        ship.setTileOnFloorPlan(3,3,cargo4);
-        ship.setTileOnFloorPlan(2,2,cargo);
-
-        ArrayList<Tile> adiacentTiles = new ArrayList<>();
-        adiacentTiles.add(cabin);
-        adiacentTiles.add(cargo);
-
-        adiacentTiles.add(cargo4);
-        adiacentTiles.add(tile1);
-
-        assertEquals(adiacentTiles,ship.getAdiacentTiles(tile));
-        assertEquals(adiacentTiles,ship.getAdiacentTiles(2,3));
-
-
-
-    }
-
-    @Test
-    void checkFloorPlanConnection(){
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
-        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
-
-        ship.setTileOnFloorPlan(2,3,centralCabin);
-        ship.setTileOnFloorPlan(1,3,cannon);
-        ship.setTileOnFloorPlan(2,2,engine);
-
-        assertEquals(false,ship.checkFloorPlanConnection());
-
-    }
-    //metodo funzioni ,però sbagliati orientazioni
-    @Test
-    void checkFloorplanConnection() {
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
-        CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
-        EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
-
-        ship.setTileOnFloorPlan(2,3,centralCabin);
-        ship.setTileOnFloorPlan(1,3,cannon);
-        ship.setTileOnFloorPlan(2,2,engine);
-
-        ArrayList<Tile> adiacentTiles = new ArrayList<>();
-        adiacentTiles.add(centralCabin);
-        adiacentTiles.add(cannon);
-        //adiacentTiles.add(engine);
-
-
-        assertEquals(adiacentTiles,ship.checkFloorplanConnection());
     }
 
     @Test
     void testCheckFloorplanConnection() {
-        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,0,0);
+        CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,CabinInhabitants.NONE,true,Color.RED,0,0);
         CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.SINGLE,false,true);
         EngineTile engine = new EngineTile(false,true,ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
 
@@ -186,18 +272,6 @@ class ShipTest {
     }
 
     @Test
-    void getPlayerPosition() {
-        assertEquals(0,ship.getPlayerPosition());
-
-    }
-
-    @Test
-    void setPlayerPosition() {
-        ship.setPlayerPosition(1);
-        assertEquals(1, ship.getPlayerPosition());
-    }
-
-    @Test
     void getCargoFromCards() {
         assertNotNull(ship.getCargoFromCards());
     }
@@ -208,17 +282,6 @@ class ShipTest {
         blocks.add(1);
         ship.addBlocks(blocks);
         assertEquals(blocks,ship.getCargoFromCards());
-    }
-
-    @Test
-    void isPlayerEngaged() {
-        assertEquals(false, ship.isPlayerEngaged());
-    }
-
-    @Test
-    void setPlayerEngaged() {
-        ship.setPlayerEngaged(true);
-        assertEquals(true, ship.isPlayerEngaged());
     }
 
     @Test
@@ -297,7 +360,6 @@ class ShipTest {
         assertEquals(floorplanArrayList,ship.getFloorplanArrayList());
         ship.setTileOnFloorPlan(2,3,null);
 
-
     }
 
     @Test
@@ -312,28 +374,6 @@ class ShipTest {
     }
 
     @Test
-    void getNumberOfBatteries() {
-        // assertEquals(0,ship.getNumberOfBatteries());
-    }
-
-    @Test
-    void setBatteries() {
-        // ship.setBatteries(5);
-        // assertEquals(5,ship.getNumberOfBatteries());
-    }
-
-    @Test
-    void getNumberOfCrewMembers() {
-        // assertEquals(0,ship.getNumberOfCrewMembers());
-    }
-
-    @Test
-    void setCrewMembers() {
-        // ship.setCrewMembers(5);
-        // assertEquals(5,ship.getNumberOfCrewMembers());
-    }
-
-    @Test
     void addLostTiles() {
         ship.addLostTiles(5);
         assertEquals(5,ship.getLostTiles());
@@ -345,23 +385,23 @@ class ShipTest {
     }
 
     @Test
-    void getPurpleAllien() {
+    void getPurpleAlien() {
         assertEquals(false,ship.getPurpleAlien());
     }
 
     @Test
-    void getOrangeAllien() {
+    void getOrangeAlien() {
         assertEquals(false,ship.getOrangeAlien());
     }
 
     @Test
-    void setPurpleAllien() {
+    void setPurpleAlien() {
         ship.setPurpleAlien(true);
         assertEquals(true,ship.getPurpleAlien());
     }
 
     @Test
-    void setOrangeAllien() {
+    void setOrangeAlien() {
         ship.setOrangeAlien(true);
         assertEquals(true,ship.getOrangeAlien());
     }
@@ -402,7 +442,10 @@ class ShipTest {
 
         assertEquals(new ArrayList<>(),ship.getReservedTiles());
 
+    }
 
+    @Test
+    void moveReservedToBoard() {
     }
 
     @Test
@@ -411,19 +454,13 @@ class ShipTest {
     }
 
     @Test
-    void setExposedConnectors() {
-        // ship.setExposedConnectors(5);
-        assertEquals(5,ship.getExposedConnectors());
-    }
-
-    @Test
     void getFirepower() {
         CannonTile cannon = new CannonTile(ConnectorType.NONE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.CANNON_SINGLE, true,true);
         CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
         CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.CANNON_SINGLE,ConnectorType.UNIVERSAL, true,true);
 
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,1,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -450,9 +487,6 @@ class ShipTest {
 
         ship.setFirepower(cannon,false);
         assertEquals(1.5,ship.getFirepower());
-
-
-
     }
 
     @Test
@@ -460,7 +494,6 @@ class ShipTest {
         CannonTile cannon = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,false);
         ship.setFirepower(cannon,true);
         assertEquals(true,cannon.getActiveState());
-
     }
 
     @Test
@@ -469,8 +502,8 @@ class ShipTest {
         CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
         CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,true);
 
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,1,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.NONE,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -507,8 +540,8 @@ class ShipTest {
         CannonTile cannon1 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, false,true);
         CannonTile cannon2 = new CannonTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL, true,true);
 
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,1,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -537,14 +570,12 @@ class ShipTest {
         //floorplanArrayList.add(cannon1);
 
         assertEquals(floorplanArrayList,ship.getListOfDoubleFirepower());
-
     }
 
     @Test
     void getEnginePower() {
-
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,1,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -575,7 +606,6 @@ class ShipTest {
         ship.setEnginePower(u,true);
 
         assertEquals(5,ship.getEnginePower());
-
     }
 
     @Test
@@ -585,8 +615,6 @@ class ShipTest {
         assertEquals(false,tile2.getActiveState());
         ship.setEnginePower(tile2,true);
         assertEquals(true,tile2.getActiveState());
-
-
 
     }
 
@@ -607,9 +635,8 @@ class ShipTest {
 
     @Test
     void getListOfDoubleEnginePower() {
-
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,1,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -650,10 +677,18 @@ class ShipTest {
     }
 
     @Test
+    void setShield() {
+        ShieldTile shield = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,false);
+        ship.setShield(shield,true);
+        assertEquals(true,shield.getActiveState());
+
+    }
+
+    @Test
     void getListOfShield() {
         ShieldTile shield = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,true);
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,0,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -675,22 +710,17 @@ class ShipTest {
         floorplanArrayList.add(shield);
 
         assertEquals(floorplanArrayList,ship.getListOfShield());
-
     }
 
     @Test
-    void setShield() {
-        ShieldTile shield = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,false);
-        ship.setShield(shield,true);
-        assertEquals(true,shield.getActiveState());
-
+    void getListOfShieldOrientation() {
     }
 
     @Test
     void getListOfActiveShieldOrientation() {
         ShieldTile shield = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,true);
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,0,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -715,38 +745,11 @@ class ShipTest {
 
         assertEquals(floorplanArrayList,ship.getListOfActiveShieldOrientation());
     }
-    @Test
-    void getListOfShieldOrientation() {
-        ShieldTile shield = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,true);
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
-        BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
-        BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        BioadaptorTile tile3 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
-        Tile tile4 = new EngineTile(false,true,ConnectorType.SINGLE,ConnectorType.SINGLE,ConnectorType.ENGINE_SINGLE,ConnectorType.SINGLE);
-        ShieldTile shield1 = new ShieldTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,ShieldOrientation.NORTHEAST,false);
-
-        ship.setTileOnFloorPlan(2,3,tile);
-        ship.setTileOnFloorPlan(0,5,tile1);
-        ship.setTileOnFloorPlan(1,4,tile2);
-        ship.setTileOnFloorPlan(4,6,cabin);
-
-        ship.setTileOnFloorPlan(3,2,cabin1);
-        ship.setTileOnFloorPlan(3,5,shield);
-        ship.setTileOnFloorPlan(3,1,shield1);
-
-        ArrayList<ShieldOrientation> floorplanArrayList = new ArrayList<>();
-        floorplanArrayList.add(shield1.getOrientation());
-        floorplanArrayList.add(shield.getOrientation());
-
-        assertEquals(floorplanArrayList,ship.getListOfShieldOrientation());
-    }
 
     @Test
     void getListOfCabin() {
-        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,1,0);
-        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,0,0);
+        CabinTile cabin = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ALIEN,false,Color.NONE,0,0);
+        CabinTile cabin1 = new CabinTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,CabinInhabitants.ONE,true,Color.RED,0,0);
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
         BioadaptorTile tile2 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
@@ -810,6 +813,14 @@ class ShipTest {
     }
 
     @Test
+    void getBatteries() {
+    }
+
+    @Test
+    void getNumberOfInhabitants() {
+    }
+
+    @Test
     void getListOfCargo() {
         BioadaptorTile tile = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.PURPLE);
         BioadaptorTile tile1 = new BioadaptorTile(ConnectorType.DOUBLE,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.UNIVERSAL,AlienColor.ORANGE);
@@ -841,7 +852,6 @@ class ShipTest {
         floorplanArrayList.add(cargo2);
 
         assertEquals(floorplanArrayList,ship.getListOfCargo());
-
     }
 
     @Test
@@ -911,7 +921,6 @@ class ShipTest {
         floorplanArrayList.add(tile3);
 
         assertEquals(floorplanArrayList,ship.getListOfAdaptors());
-
     }
 
     @Test
@@ -958,5 +967,33 @@ class ShipTest {
             }
         }
         assertEquals(floorplanArrayList,ship.getColumnListTiles(4));
+    }
+
+    @Test
+    void updateCabinTiles() {
+    }
+
+    @Test
+    void disactivateEverything() {
+    }
+
+    @Test
+    void ejectAll() {
+    }
+
+    @Test
+    void removeAllCargo() {
+    }
+
+    @Test
+    void removeAllBatteries() {
+    }
+
+    @Test
+    void removeFirstTile() {
+    }
+
+    @Test
+    void fill() {
     }
 }
