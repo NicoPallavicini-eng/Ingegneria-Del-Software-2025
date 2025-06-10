@@ -37,6 +37,7 @@ public class MeteorsState extends TravellingState implements Serializable {
         meteors = currentCard.getMeteorsList();
         currentMeteor = meteors.get(0);
         meteors.remove(0);
+        game.notifyObservers(game, "meteors");
     }
 
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
@@ -68,7 +69,7 @@ public class MeteorsState extends TravellingState implements Serializable {
         ShieldTileVisitor stv = new ShieldTileVisitor();
         tile.ifPresent(t -> t.accept(stv));
         if(stv.getList().isEmpty() || !shieldDefends(stv.getList().getFirst().getOrientation(), currentMeteor.direction())){
-            throw new IllegalEventException("You didn't select a shield able to defent you");
+            throw new IllegalEventException("You didn't select a shield able to defend you");
         }
         else{
             EventHandler.handleEvent(event);
@@ -128,6 +129,7 @@ public class MeteorsState extends TravellingState implements Serializable {
             for (Player player : game.getListOfActivePlayers()) {
                 currentMeteor.getHit(player.getShip());
             }
+            game.notifyObservers(game,"finalMeteors");
             if (meteors.isEmpty()) {
                 next();
             }

@@ -66,6 +66,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     }
 
     protected void nextPlayer(){
+        game.notifyObservers(game, "nextplayer");
         int index = game.getListOfActivePlayers().indexOf(currentPlayer) + 1;
         if(index == game.getListOfActivePlayers().size()){
             currentPlayer = null;

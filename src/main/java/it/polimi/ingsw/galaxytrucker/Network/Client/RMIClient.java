@@ -135,4 +135,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     public void pong() throws RemoteException {
 
     }
+
+    @Override
+    public void viewDeck(Game game, int index) throws RemoteException {
+        //tui.viewDeck(game, index);
+        //TODO implements viewDeck in TUI
+    }
 }
