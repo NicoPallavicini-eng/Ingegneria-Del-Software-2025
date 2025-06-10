@@ -13,7 +13,7 @@ public class FinalScene extends MyScene{
     private StackPane root;
     private Background background;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 750;
+    private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
 
     public FinalScene(Game game, String nickname, SceneManager sceneManager) {

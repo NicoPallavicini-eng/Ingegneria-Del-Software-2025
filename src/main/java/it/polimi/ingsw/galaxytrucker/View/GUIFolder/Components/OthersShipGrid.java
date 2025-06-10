@@ -55,9 +55,9 @@ public class OthersShipGrid extends Pane {
         bgView1.setX(0); // up center
         bgView2.setX(-245); // low left
         bgView3.setX(245); // low right
-        bgView1.setY(-175);
-        bgView2.setY(175);
-        bgView3.setY(175);
+        bgView1.setY(-170);
+        bgView2.setY(180);
+        bgView3.setY(180);
 
         GridPane grid1 = new GridPane();
         grid1.setHgap(0);

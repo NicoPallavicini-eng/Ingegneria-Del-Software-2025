@@ -4,68 +4,68 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
 
-public class BuildingSceneTilePile extends MyScene {
+public class BuildingSceneBoard extends MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
     private BorderPane root;
-    private TilePileGrid tilePileGrid;
     private Background background;
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
     private BuildingSceneUserShip buildingSceneUserShip = null;
+    private BuildingSceneTilePile buildingSceneTilePile = null;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
-    private BuildingSceneBoard buildingSceneBoard = null;
 
-    public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
+    public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
+
+        Player user = checkPlayer(nickname);
+        Ship userShip = user.getShip();
 
         this.background = new Background();
         BorderPane layout = new BorderPane();
         this.root = new BorderPane();
 
-        // see TilePile
-        this.tilePileGrid = new TilePileGrid(this);
-        StackPane centerContent = new StackPane(tilePileGrid);
-
         // --- Bottom Buttons ---
-        Button viewOthersButton = new Button("View Others' Ships");
         Button viewUserButton = new Button("View User Ship");
-        Button viewBoardButton = new Button("View Board");
-        viewOthersButton.getStyleClass().add("bottom-button");
+        Button viewTilePileButton = new Button("View Tile Pile");
+        Button viewOthersButton = new Button("View Others' Ships");
         viewUserButton.getStyleClass().add("bottom-button");
-        viewBoardButton.getStyleClass().add("bottom-button");
+        viewTilePileButton.getStyleClass().add("bottom-button");
+        viewOthersButton.getStyleClass().add("bottom-button");
 
-        viewOthersButton.setOnAction(e -> {
-            sceneManager.switchBuilding(this, "OthersShip");
-        });
         viewUserButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "UserShip");
         });
-        viewBoardButton.setOnAction(e -> {
-            sceneManager.switchBuilding(this, "Board");
+        viewTilePileButton.setOnAction(e -> {
+            sceneManager.switchBuilding(this, "TilePile");
+        });
+        viewOthersButton.setOnAction(e -> {
+            sceneManager.switchBuilding(this, "OthersShip");
         });
 
-        HBox buttonBox = new HBox(200, viewOthersButton, viewUserButton, viewBoardButton);
+        HBox buttonBox = new HBox(200, viewUserButton, viewTilePileButton, viewOthersButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
-        layout.setCenter(centerContent);
+        // layout.setCenter(centerContent); TODO set center
         layout.setBottom(buttonBox);
 
         // Now wrap layout with background in a StackPane
@@ -74,10 +74,25 @@ public class BuildingSceneTilePile extends MyScene {
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        sceneManager.setTilePileScene(this);
+        sceneManager.setBoardScene(this);
     }
 
-    public void setBuildingSceneUserShip (BuildingSceneUserShip buildingSceneUserShip) {
+    public Player checkPlayer(String nickname) {
+        Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+        return playerOptional.orElse(null);
+    }
+
+    public void setBuildingSceneTilePile(BuildingSceneTilePile buildingSceneTilePile) {
+        this.buildingSceneTilePile = buildingSceneTilePile;
+    }
+
+    public BuildingSceneTilePile getBuildingSceneTilePile() {
+        return buildingSceneTilePile;
+    }
+
+    public void setBuildingSceneUserShip(BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
     }
 
@@ -85,7 +100,7 @@ public class BuildingSceneTilePile extends MyScene {
         return buildingSceneUserShip;
     }
 
-    public void setBuildingSceneOthersShip (BuildingSceneOthersShip buildingSceneOthersShip) {
+    public void setBuildingSceneOthersShip(BuildingSceneOthersShip buildingSceneOthersShip) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
     }
 
@@ -93,28 +108,7 @@ public class BuildingSceneTilePile extends MyScene {
         return buildingSceneOthersShip;
     }
 
-    public void setBuildingSceneBoard(BuildingSceneBoard buildingSceneBoard) {
-        this.buildingSceneBoard = buildingSceneBoard;
-    }
-
-    public BuildingSceneBoard getBuildingSceneBoard() {
-        return buildingSceneBoard;
-    }
-
     public Scene getScene() {
         return scene;
-    }
-
-    public void pickUpTile(TilePileTileView tile) {
-        buildingSceneUserShip.setInHand(tile.getTileImage(), tile.getRotation());
-        tile.setOpacity(0.2); // faintly visible
-        tile.setClickable(false);
-    }
-
-    public void putDownTile(ReservedTileView tile) {
-        ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
-        int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
-        tilePileGrid.setDefault(img, rotation);
-        buildingSceneUserShip.emptyHand();
     }
 }

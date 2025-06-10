@@ -27,10 +27,11 @@ public class BuildingSceneUserShip extends MyScene {
     private UserShipGrid userShipGrid;
     private Background background;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 750;
+    private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
+    private BuildingSceneBoard buildingSceneBoard = null;
     private boolean rotateVisible = false;
 
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
@@ -52,8 +53,10 @@ public class BuildingSceneUserShip extends MyScene {
         // --- Bottom Buttons ---
         Button viewOthersButton = new Button("View Others' Ships");
         Button viewTilePileButton = new Button("View Tile Pile");
+        Button viewBoardButton = new Button("View Board");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
+        viewBoardButton.getStyleClass().add("bottom-button");
 
         viewOthersButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "OthersShip");
@@ -61,8 +64,11 @@ public class BuildingSceneUserShip extends MyScene {
         viewTilePileButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "TilePile");
         });
+        viewBoardButton.setOnAction(e -> {
+            sceneManager.switchBuilding(this, "Board");
+        });
 
-        HBox buttonBox = new HBox(600, viewOthersButton, viewTilePileButton);
+        HBox buttonBox = new HBox(200, viewOthersButton, viewTilePileButton, viewBoardButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -128,6 +134,14 @@ public class BuildingSceneUserShip extends MyScene {
 
     public BuildingSceneTilePile getBuildingSceneTilePile() {
         return buildingSceneTilePile;
+    }
+
+    public void setBuildingSceneBoard(BuildingSceneBoard buildingSceneBoard) {
+        this.buildingSceneBoard = buildingSceneBoard;
+    }
+
+    public BuildingSceneBoard getBuildingSceneBoard() {
+        return buildingSceneBoard;
     }
 
     public Scene getScene() {

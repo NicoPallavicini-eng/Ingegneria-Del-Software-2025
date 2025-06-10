@@ -18,6 +18,7 @@ public class SceneManager extends Application {
     private BuildingSceneUserShip userShipScene = null;
     private BuildingSceneTilePile tilePileScene = null;
     private BuildingSceneOthersShip othersShipScene = null;
+    private BuildingSceneBoard boardScene = null;
 
     public SceneManager(Game game, Stage stage, String nickname, boolean isFirstPlayer) {
         this.game = game;
@@ -50,6 +51,10 @@ public class SceneManager extends Application {
         return userShipScene;
     }
 
+    public BuildingSceneBoard getBoardScene() {
+        return boardScene;
+    }
+
     public void setUserShipScene(BuildingSceneUserShip userShipScene) {
         this.userShipScene = userShipScene;
     }
@@ -60,6 +65,10 @@ public class SceneManager extends Application {
 
     public void setOthersShipScene(BuildingSceneOthersShip othersShipScene) {
         this.othersShipScene = othersShipScene;
+    }
+
+    public void setBoardScene(BuildingSceneBoard boardScene) {
+        this.boardScene = boardScene;
     }
 
     public void setScene(Scene scene, MyScene currentScene) {
@@ -119,6 +128,18 @@ public class SceneManager extends Application {
             checkExistingTilePile();
         } else if (Objects.equals(choice, "OthersShip")) {
             checkExistingOthersShip();
+        } else if (Objects.equals(choice, "Board")) {
+            checkExistingBoard();
+        }
+    }
+
+    public void switchBuilding(BuildingSceneBoard buildingSceneBoard, String choice) {
+        if (Objects.equals(choice, "TilePile")) {
+            checkExistingTilePile();
+        } else if (Objects.equals(choice, "OthersShip")) {
+            checkExistingOthersShip();
+        } else if (Objects.equals(choice, "UserShip")) {
+            checkExistingUserShip();
         }
     }
 
@@ -127,6 +148,8 @@ public class SceneManager extends Application {
             checkExistingOthersShip();
         } else if (Objects.equals(choice, "UserShip")) {
             checkExistingUserShip();
+        } else if (Objects.equals(choice, "Board")) {
+            checkExistingBoard();
         }
     }
 
@@ -135,6 +158,8 @@ public class SceneManager extends Application {
             checkExistingUserShip();
         } else if (Objects.equals(choice, "TilePile")) {
             checkExistingTilePile();
+        } else if (Objects.equals(choice, "Board")) {
+            checkExistingBoard();
         }
     }
 
@@ -144,8 +169,23 @@ public class SceneManager extends Application {
         buildingSceneOthersShip.setBuildingSceneUserShip(Objects.requireNonNullElseGet(buildingSceneOthersShip.getBuildingSceneUserShip(), () -> userShipScene));
         buildingSceneOthersShip.setBuildingSceneTilePile(Objects.requireNonNullElseGet(buildingSceneOthersShip.getBuildingSceneTilePile(),
                 () -> Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this))));
+        buildingSceneOthersShip.setBuildingSceneBoard(Objects.requireNonNullElseGet(buildingSceneOthersShip.getBuildingSceneBoard(),
+                () -> Objects.requireNonNullElseGet(boardScene, () -> new BuildingSceneBoard(game, nickname, this))));
         primaryStage.setTitle("Building State - Others' Ship");
         primaryStage.setScene(buildingSceneOthersShip.getScene());
+        primaryStage.show();
+    }
+
+    private void checkExistingBoard() {
+        BuildingSceneBoard buildingSceneBoard;
+        buildingSceneBoard = Objects.requireNonNullElseGet(boardScene, () -> new BuildingSceneBoard(game, nickname, this));
+        buildingSceneBoard.setBuildingSceneUserShip(Objects.requireNonNullElseGet(buildingSceneBoard.getBuildingSceneUserShip(), () -> userShipScene));
+        buildingSceneBoard.setBuildingSceneTilePile(Objects.requireNonNullElseGet(buildingSceneBoard.getBuildingSceneTilePile(),
+                () -> Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this))));
+        buildingSceneBoard.setBuildingSceneOthersShip(Objects.requireNonNullElseGet(buildingSceneBoard.getBuildingSceneOthersShip(),
+                () -> Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this))));
+        primaryStage.setTitle("Building State - Board");
+        primaryStage.setScene(buildingSceneBoard.getScene());
         primaryStage.show();
     }
 
@@ -156,6 +196,8 @@ public class SceneManager extends Application {
                 () -> Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this))));
         buildingSceneUserShip.setBuildingSceneTilePile(Objects.requireNonNullElseGet(buildingSceneUserShip.getBuildingSceneTilePile(),
                 () -> Objects.requireNonNullElseGet(tilePileScene, () -> new BuildingSceneTilePile(game, nickname, this))));
+        buildingSceneUserShip.setBuildingSceneBoard(Objects.requireNonNullElseGet(buildingSceneUserShip.getBuildingSceneBoard(),
+                () -> Objects.requireNonNullElseGet(boardScene, () -> new BuildingSceneBoard(game, nickname, this))));
         primaryStage.setTitle("Building State - User Ship");
         primaryStage.setScene(buildingSceneUserShip.getScene());
         primaryStage.show();
@@ -167,6 +209,8 @@ public class SceneManager extends Application {
         buildingSceneTilePile.setBuildingSceneUserShip(Objects.requireNonNullElseGet(buildingSceneTilePile.getBuildingSceneUserShip(), () -> userShipScene));
         buildingSceneTilePile.setBuildingSceneOthersShip(Objects.requireNonNullElseGet(buildingSceneTilePile.getBuildingSceneOthersShip(),
                 () -> Objects.requireNonNullElseGet(othersShipScene, () -> new BuildingSceneOthersShip(game, nickname, this))));
+        buildingSceneTilePile.setBuildingSceneBoard(Objects.requireNonNullElseGet(buildingSceneTilePile.getBuildingSceneBoard(),
+                () -> Objects.requireNonNullElseGet(boardScene, () -> new BuildingSceneBoard(game, nickname, this))));
         primaryStage.setTitle("Building State - Tile Pile");
         primaryStage.setScene(buildingSceneTilePile.getScene());
         primaryStage.show();

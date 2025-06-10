@@ -26,10 +26,11 @@ public class BuildingSceneOthersShip extends MyScene {
     private Background background;
     private OthersShipGrid othersShipGrid;
     private final int SCENE_WIDTH = 1024;
-    private final int SCENE_HEIGHT = 750;
+    private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
+    private BuildingSceneBoard buildingSceneBoard = null;
 
     public BuildingSceneOthersShip(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -48,20 +49,24 @@ public class BuildingSceneOthersShip extends MyScene {
         StackPane centerContent = new StackPane(othersShipGrid);
 
         // --- Bottom Buttons ---
-        Button viewOthersButton = new Button("View User Ship");
+        Button viewUserButton = new Button("View User Ship");
         Button viewTilePileButton = new Button("View Tile Pile");
-        viewOthersButton.getStyleClass().add("bottom-button");
+        Button viewBoardButton = new Button("View Board");
+        viewUserButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
+        viewBoardButton.getStyleClass().add("bottom-button");
 
-        viewOthersButton.setOnAction(e -> {
+        viewUserButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "UserShip");
         });
-
         viewTilePileButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "TilePile");
         });
+        viewBoardButton.setOnAction(e -> {
+            sceneManager.switchBuilding(this, "Board");
+        });
 
-        HBox buttonBox = new HBox(600, viewOthersButton, viewTilePileButton);
+        HBox buttonBox = new HBox(200, viewUserButton, viewTilePileButton, viewBoardButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -98,6 +103,14 @@ public class BuildingSceneOthersShip extends MyScene {
 
     public BuildingSceneUserShip getBuildingSceneUserShip() {
         return buildingSceneUserShip;
+    }
+
+    public void setBuildingSceneBoard(BuildingSceneBoard buildingSceneBoard) {
+        this.buildingSceneBoard = buildingSceneBoard;
+    }
+
+    public BuildingSceneBoard getBuildingSceneBoard() {
+        return buildingSceneBoard;
     }
 
     public Scene getScene() {
