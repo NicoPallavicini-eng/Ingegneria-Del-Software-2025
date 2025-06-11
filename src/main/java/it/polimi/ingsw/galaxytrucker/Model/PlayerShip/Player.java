@@ -11,6 +11,15 @@ public class Player implements Serializable {
     private boolean engages;
     private String playerIp;
     private boolean onlineStatus;
+    private boolean checked = false;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public Player(String playerIp, String nickname, Color color){
         this.playerIp = playerIp;

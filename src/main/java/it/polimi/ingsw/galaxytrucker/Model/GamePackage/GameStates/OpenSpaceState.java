@@ -10,6 +10,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*Each player in order has to choose the engines to activate.
 then the rockets are moved foward according to the engine power of their ship
@@ -17,15 +18,17 @@ then the rockets are moved foward according to the engine power of their ship
 
 public class OpenSpaceState extends TravellingState implements Serializable {
     private OpenSpaceCard currentCard;
+    private ArrayList<Player> handledPlayers;
 
     public OpenSpaceState(Game game, OpenSpaceCard card) {
         super(game, card);
         currentCard = card;
-
     }
 
     public void init(){
         super.init();
+        handledPlayers = new ArrayList<>();
+        game.notifyObservers(game, "openSpace");
     }
 
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
@@ -39,6 +42,8 @@ public class OpenSpaceState extends TravellingState implements Serializable {
             }
             else {
                 EventHandler.moveForward(ship, ship.getEnginePower(), game);
+                handledPlayers.add(event.player());
+                game.notifyObservers(game, "openSpaceAction");
                 nextPlayer();
                 if (currentPlayer == null) {
                     next();
@@ -57,6 +62,8 @@ public class OpenSpaceState extends TravellingState implements Serializable {
         }
         else {
             EventHandler.moveForward(ship, ship.getEnginePower(), game);
+            handledPlayers.add(event.player());
+            game.notifyObservers(game, "openSpaceAction");
             nextPlayer();
             if (currentPlayer == null) {
                 next();

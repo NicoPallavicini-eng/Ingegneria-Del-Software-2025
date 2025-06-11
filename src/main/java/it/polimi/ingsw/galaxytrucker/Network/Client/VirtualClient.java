@@ -21,4 +21,5 @@ public interface VirtualClient extends Remote {
     void printMessage(String message) throws RemoteException;
     void viewCard(Game game) throws RemoteException;
     void pong()throws RemoteException;
+    void viewDeck(Game game, int index) throws RemoteException;
 }

@@ -27,6 +27,7 @@ public class BuildingState extends GameState implements Serializable {
     private final Game game;
     private ArrayList<Player> finishedBuildingPlayers;
     private ArrayList<Player> playersWithLegalShips;
+    private ArrayList<Player> playersWithIllegalShips;
     private boolean timeIsUp = false;
     // first for orange and second for purple
     private Map<Player, Boolean[]> placedAliens;
@@ -54,6 +55,7 @@ public class BuildingState extends GameState implements Serializable {
     public void init(){
         finishedBuildingPlayers = new ArrayList<>();
         playersWithLegalShips = new ArrayList<>();
+        playersWithIllegalShips = new ArrayList<>();
         placedAliens = new HashMap<>();
         for(Player player : game.getListOfActivePlayers()){
             placedAliens.put(player, new Boolean[] {false, false});
@@ -70,6 +72,7 @@ public class BuildingState extends GameState implements Serializable {
         }
         else{
             EventHandler.handleEvent(event,this.game);
+            game.notifyObservers(game, "leaderboard");
             finishedBuildingPlayers.add(event.player());
             if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
                 timeIsUp = true;
@@ -78,10 +81,16 @@ public class BuildingState extends GameState implements Serializable {
                         synchronized(playersWithLegalShips) {
                             playersWithLegalShips.add(player);
                             game.notifyObservers(game, "legalship");
+                            if (playersWithIllegalShips.contains(player)) {
+                                playersWithIllegalShips.remove(player);
+                            }
                         }
                     }
                     else {
-                        game.notifyObservers(game, "illegalship");
+                        synchronized (playersWithLegalShips) {
+                            playersWithIllegalShips.add(player);
+                            game.notifyObservers(game, "illegalship");
+                        }
                     }
                 }
             }
@@ -102,6 +111,7 @@ public class BuildingState extends GameState implements Serializable {
                 synchronized (playersWithLegalShips) {
                     playersWithLegalShips.add(event.player());
                     game.notifyObservers(game, "legalship");
+                    playersWithIllegalShips.remove(event.player());
                 }
             }
             else{
@@ -275,6 +285,10 @@ public class BuildingState extends GameState implements Serializable {
 
     public ArrayList<Player> getPlayersWithLegalShips() {
         return playersWithLegalShips;
+    }
+
+    public ArrayList<Player> getPlayersWithIllegalShips() {
+        return playersWithIllegalShips;
     }
 
     public boolean isTimeIsUp() {
