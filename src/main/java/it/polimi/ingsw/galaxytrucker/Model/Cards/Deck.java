@@ -8,7 +8,11 @@ import java.util.List;
 public class Deck implements Serializable {
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
-    private List <Card> gameDeck;
+    private final List <Card> subDeck1 = new ArrayList <>();
+    private final List <Card> subDeck2 = new ArrayList <>();
+    private final List <Card> subDeck3 = new ArrayList <>();
+    private final List <Card> subDeck4 = new ArrayList <>();
+    private List <Card> gameDeck = new ArrayList <>();
 
     public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2) {
         this.allCardsLev1 = allCardsLev1;
@@ -31,22 +35,53 @@ public class Deck implements Serializable {
         Collections.shuffle(cards);
     }
 
-    public void assembleGameDeck() {
-        // TODO implement CardNumber logic for also tut
-        int cardsNumberLev1 = 4;
-        gameDeck = new ArrayList<>(allCardsLev1.subList(0, cardsNumberLev1));
+    public void assembleGameDeck() { // TODO implement CardNumber logic for also tut
+        Collections.shuffle(allCardsLev1);
+        Collections.shuffle(allCardsLev2);
 
-        int cardsNumberLev2 = 8;
-        List<Card> secondPart = new ArrayList<>(allCardsLev2.subList(0, cardsNumberLev2));
+        subDeck1.add(allCardsLev1.get(0));
+        subDeck1.add(allCardsLev2.get(0));
+        subDeck1.add(allCardsLev2.get(1));
+
+        subDeck2.add(allCardsLev1.get(1));
+        subDeck2.add(allCardsLev2.get(2));
+        subDeck2.add(allCardsLev2.get(3));
+
+        subDeck3.add(allCardsLev1.get(2));
+        subDeck3.add(allCardsLev2.get(4));
+        subDeck3.add(allCardsLev2.get(5));
+
+        subDeck4.add(allCardsLev1.get(3));
+        subDeck4.add(allCardsLev2.get(6));
+        subDeck4.add(allCardsLev2.get(7));
 
         // Concatenate the two parts
-        gameDeck.addAll(secondPart);
+        gameDeck.addAll(subDeck1);
+        gameDeck.addAll(subDeck2);
+        gameDeck.addAll(subDeck3);
+        gameDeck.addAll(subDeck4);
 
         // Shuffle created gameDeck
-        shuffle(this.gameDeck);
+        shuffle(gameDeck);
 
         for (Card card : gameDeck) {
             card.updateUsed(true);
         }
+    }
+
+    public List<Card> getSubDeck1() {
+        return subDeck1;
+    }
+
+    public List<Card> getSubDeck2() {
+        return subDeck2;
+    }
+
+    public List<Card> getSubDeck3() {
+        return subDeck3;
+    }
+
+    public List<Card> getSubDeck4() {
+        return subDeck4;
     }
 }
