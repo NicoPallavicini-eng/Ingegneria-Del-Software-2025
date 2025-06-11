@@ -22,12 +22,13 @@ public class StationState extends TravellingState implements Serializable {
     public StationState(Game game, StationCard card) {
         super(game, card);
         currentCard = card;
-
+        init();
     }
 
     public void init(){
         super.init();
         availableResources = currentCard.getBlockList();
+        game.notifyObservers(game, "station");
     }
 
 
@@ -42,6 +43,7 @@ public class StationState extends TravellingState implements Serializable {
             EventHandler.moveBackward(event.player().getShip(), currentCard.getDaysToLose(), game);
             rewardClaimer = event.player();
             currentPlayer = null;
+            game.notifyObservers(game, "stationAction");
         }
     }
 

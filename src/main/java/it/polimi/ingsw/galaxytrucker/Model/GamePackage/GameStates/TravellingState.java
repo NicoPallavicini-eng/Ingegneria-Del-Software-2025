@@ -90,7 +90,4 @@ public abstract class TravellingState extends GameState implements Serializable 
             nextPlayer();
         }
     }
-
-
-
 }

@@ -18,7 +18,7 @@ public class StardustState extends TravellingState implements Serializable {
     public StardustState(Game game, StardustCard card) {
         super(game, card);
         currentCard = card;
-
+        init();
     }
     private List<Player> turns;
 
@@ -32,6 +32,7 @@ public class StardustState extends TravellingState implements Serializable {
         for (Player player : turns) {
             EventHandler.moveBackward(player.getShip(), player.getShip().getExposedConnectors(), game);
         }
+        game.notifyObservers(game, "stardustEnd");
         next();
     }
 }

@@ -58,20 +58,14 @@ public class ServerController {
         synchronized (this.rmiClients) {
             switch (message) {
                 case "gamestate" -> {
-                    if (gameState instanceof WaitingState) {
-                        return;
-                    }
-                    else if (gameState instanceof BuildingState) {
-                        return;
-                    }
-                    else if  (gameState instanceof TravellingState){
+                    if  (gameState instanceof TravellingState){
                         if (rmiClients == null || rmiClients.isEmpty()) {
                             return;
                         }
                         for (VirtualClient rmiClient : rmiClients) {
                             if (rmiClient != null) {
                                 try {
-                                    rmiClient.printMessage("\nStarted Travelling State");
+                                    rmiClient.printMessage("\nStarted Travelling State\n");
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -85,7 +79,7 @@ public class ServerController {
                         for (VirtualClient rmiClient : rmiClients) {
                             if (rmiClient != null) {
                                 try {
-                                    rmiClient.printMessage("\nGame is over, the final state has been reached");
+                                    rmiClient.printMessage("\nGame is over, the final state has been reached.\n");
                                     //TODO: print the final score for each player
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
@@ -292,11 +286,13 @@ public class ServerController {
                 case "nextplayer" -> {
                     if (gameState instanceof TravellingState) {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
-                                if (player != null) {
-                                    rmiClient.printMessage("\nNow playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
-                                    rmiClient.viewCard(game);
+                            synchronized (((TravellingState) gameState).getCurrentPlayer()){
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if (player != null) {
+                                        rmiClient.printMessage("\nNow playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                        rmiClient.viewCard(game);
+                                    }
                                 }
                             }
                         } catch (RemoteException e) {
@@ -336,9 +332,10 @@ public class ServerController {
                         throw new RuntimeException(e);
                     }
                 }
-                case "planetsNoSelectin" -> {
+                case "planetsNoSelection" -> {
                     try{
-                        Player targetNick = ((PlanetsState)gameState).getSatisfiedPlayers().getLast();
+                        Player target = ((PlanetsState)gameState).getSatisfiedPlayers().getLast();
+                        String targetNick = target.getNickname();
                         for (VirtualClient rmiClient : rmiClients){
                             Player player = checkPlayer(rmiClient.getNickname());
                             if (player != null){
@@ -348,6 +345,78 @@ public class ServerController {
                             }
                         }
                     } catch (RemoteException e){
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "loseDays" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                try {
+                                    rmiClient.viewLeaderboard(game);
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    } catch(RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "station" -> {
+                    try{
+                        for (VirtualClient rmiClient : rmiClients){
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null){
+                                rmiClient.printMessage("\n" + "You are now in the abbondend station state.\n" +
+                                        "If you have enough crew, you can decide to land on the station (/claimreward).\n" +
+                                        "Once you landed you can decide to add, remove or switch cargo from your ship. If you don't want to do anything, type /nochoice.\n" +
+                                        "Once you are done with the cargo phase, you have to signal it with the /done command.\n");
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "stationAction" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients){
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                if (!player.getNickname().equals(((StationState) gameState).getRewardClaimer().getNickname())) {
+                                    rmiClient.printMessage("\n" + ((StationState) gameState).getCurrentPlayer().getNickname() + " has landed on the station.\n");
+                                }
+                                rmiClient.viewLeaderboard(game);
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "stardust" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                rmiClient.printMessage("\nYou are now in the stardust state.\n You will lose 1 travel day for each exposed cnnectors.");
+                                rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                rmiClient.printMessage("\n You will lose: " + player.getShip().getExposedConnectors() + " travel days.\n");
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "stardustEnd" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                rmiClient.viewLeaderboard(game);
+                            }
+                        }
+                    } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
                 }

@@ -74,9 +74,9 @@ public class Game implements Serializable, Observable {
         return gameState;
     }
 
-    public void setGameState( GameState gameState) {
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        notifyObservers(this, "gamestate");
+//        notifyObservers(this, "gamestate");
     }
 
     public Hourglass getHourglass() {
