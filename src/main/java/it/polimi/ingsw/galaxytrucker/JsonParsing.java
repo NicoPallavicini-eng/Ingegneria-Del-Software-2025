@@ -1490,66 +1490,50 @@ public class JsonParsing{
         this.bioadaptors = bioadaptors;
     }
 
-
     public JsonParsing(){
         JsonTiles jsonTiles = new JsonTiles();
-
         Gson gson = new Gson();
 
         ArrayList<Tile> connectorTiles = new ArrayList<>();
-
         Type type = new TypeToken<Map<String,TileParse>>(){}.getType();
-
         Map<String, TileParse> connectors = gson.fromJson(jsonTiles.connector, type);
-
         for (String connectorKey : connectors.keySet()) {
             TileParse connectorParse = connectors.get(connectorKey);
-
-            // Crea un oggetto Tile per ogni connettore
+            // create an object for any new connector
             Tile connector = new Tile(
                     connectorParse.northConnector,
                     connectorParse.westConnector,
                     connectorParse.southConnector,
                     connectorParse.eastConnector
             );
-
             connectorTiles.add(connector);
+            connector.setName(connectorKey);
         }
 
         ArrayList<CannonTile> cannonTiles = new ArrayList<>();
-
         Type typeCannon = new TypeToken<Map<String,CannonTileParse>>(){}.getType();
-
         Map<String, CannonTileParse> cannonsMap = gson.fromJson(jsonTiles.cannon, typeCannon);
-
         for (String connectorKey : cannonsMap.keySet()) {
-
             CannonTileParse cannonParse = cannonsMap.get(connectorKey);
-            // Crea un oggetto Tile per ogni connettore
             CannonTile cannon = new CannonTile(cannonParse.north,cannonParse.south,cannonParse.east,cannonParse.west,cannonParse.doublePower,cannonParse.activeState);
-
             cannonTiles.add(cannon);
+            cannon.setName(connectorKey);
         }
 
         ArrayList<ShieldTile> shieldTiles = new ArrayList<>();
-
         Type typeShield = new TypeToken<Map<String,ShieldTileParse>>(){}.getType();
-
         Map<String,ShieldTileParse> shieldsMap = gson.fromJson(jsonTiles.shield, typeShield);
-
         for (String connectorKey : shieldsMap.keySet()) {
             ShieldTileParse shieldParse = shieldsMap.get(connectorKey);
             ShieldTile shield = new ShieldTile(shieldParse.north,shieldParse.south,shieldParse.east,shieldParse.west,shieldParse.orientation,shieldParse.activeState);
             shieldTiles.add(shield);
+            shield.setName(connectorKey);
         }
 
-        setShields(shieldTiles);
         ArrayList<CabinTile> cabinTiles = new ArrayList<>();
         ArrayList<CabinTile> mainCabins = new ArrayList<>();
-
         Type typeCabin = new TypeToken<Map<String,CabinTileParse>>(){}.getType();
         Map<String,CabinTileParse> cabinsMap = gson.fromJson(jsonTiles.cabin, typeCabin);
-
         for (String connectorKey : cabinsMap.keySet()) {
             CabinTileParse cabinParse = cabinsMap.get(connectorKey);
             CabinTile cabin = new CabinTile(cabinParse.north,cabinParse.south,cabinParse.east,cabinParse.west,cabinParse.inhabitants,cabinParse.mainCapsule,cabinParse.color,cabinParse.pinkAdaptors,cabinParse.orangeAdaptors);
@@ -1558,6 +1542,7 @@ public class JsonParsing{
             } else {
                 mainCabins.add(cabin);
             }
+            cabin.setName(connectorKey);
         }
 
         ArrayList<BioadaptorTile> bioadaptorTiles = new ArrayList<>();
@@ -1567,6 +1552,7 @@ public class JsonParsing{
             BioadaptorTileParse bioadaptorParse = bioadaptorsMap.get(connectorKey);
             BioadaptorTile bioadaptor = new BioadaptorTile(bioadaptorParse.north,bioadaptorParse.south,bioadaptorParse.east,bioadaptorParse.west,bioadaptorParse.color);
             bioadaptorTiles.add(bioadaptor);
+            bioadaptor.setName(connectorKey);
         }
 
         ArrayList<CargoTile> cargoTiles = new ArrayList<>();
@@ -1576,6 +1562,7 @@ public class JsonParsing{
             CargoTileParse cargoParse = cargosMap.get(connectorKey);
             CargoTile cargo = new CargoTile(cargoParse.north,cargoParse.south,cargoParse.east,cargoParse.west,cargoParse.slotsNumber,cargoParse.fitsRed,cargoParse.tileContent);
             cargoTiles.add(cargo);
+            cargo.setName(connectorKey);
         }
 
         ArrayList<BatteryTile> batteryTiles = new ArrayList<>();
@@ -1585,17 +1572,21 @@ public class JsonParsing{
             BatteryTileParse batteryParse = batteryMap.get(connectorKey);
             BatteryTile battery = new BatteryTile(batteryParse.north,batteryParse.south,batteryParse.east,batteryParse.west,batteryParse.slotsNumber,batteryParse.slotsFilled);
             batteryTiles.add(battery);
+            battery.setName(connectorKey);
         }
+
         ArrayList<EngineTile> engineTiles = new ArrayList<>();
         Type typeEngine = new TypeToken<Map<String,EngineTileParse>>(){}.getType();
         Map<String,EngineTileParse> engineMap = gson.fromJson(jsonTiles.engine, typeEngine);
         for (String connectorKey : engineMap.keySet()) {
             EngineTileParse engineParse = engineMap.get(connectorKey);
-            EngineTile engineTile = new EngineTile(engineParse.doublePower,engineParse.activeState,engineParse.north,engineParse.south,engineParse.east,engineParse.west);
-            engineTiles.add(engineTile);
+            EngineTile engine = new EngineTile(engineParse.doublePower,engineParse.activeState,engineParse.north,engineParse.south,engineParse.east,engineParse.west);
+            engineTiles.add(engine);
+            engine.setName(connectorKey);
         }
 
         setConnectors(connectorTiles);
+        setShields(shieldTiles);
         setCabins(cabinTiles);
         setMainCabins(mainCabins);
         setBioadaptors(bioadaptorTiles);

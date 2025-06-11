@@ -26,246 +26,245 @@ class JsonCards{
 
     public JsonCards(){
         openSpaceCards = "{\"openSpaceCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard2\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard3\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard4\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard5\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard6\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"openSpaceCard7\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard2\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard3\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard4\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard5\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard6\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"openSpaceCard7\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false\n" +
+            "\t}}";
         planetsCards = "{\"planetsCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [4,4] },{ \"blocks\": [4,1,1] },{ \"blocks\": [3] }],\n" +
-                "\t\t\"daysToLose\":2\n" +
-                "\t},\n" +
-                "\t\"planetsCard2\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [3,2,1,1] },{ \"blocks\": [3,3] }],\n" +
-                "\t\t\"daysToLose\":3\n" +
-                "\t},\n" +
-                "\t\"planetsCard3\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [4,2,1,1,1] },{ \"blocks\": [4,3,1] },{ \"blocks\": [4,1,1,1] },{ \"blocks\": [4,2] }],\n" +
-                "\t\t\"daysToLose\":3\n" +
-                "\t},\n" +
-                "\t\"planetsCard4\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [2,2] },{ \"blocks\": [3] },{ \"blocks\": [1,1,1]}],\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t},\n" +
-                "\t\"planetsCard5\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [4,3] },{ \"blocks\": [3,2,1] },{ \"blocks\": [2,2]},{ \"blocks\": [3]}],\n" +
-                "\t\t\"daysToLose\":2\n" +
-                "\t},\n" +
-                "\t\"planetsCard6\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [4,4] },{ \"blocks\": [2,2,2,2] }],\n" +
-                "\t\t\"daysToLose\":3\n" +
-                "\t},\n" +
-                "\t\"planetsCard7\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [2,2,2,2] },{ \"blocks\": [3,3] },{ \"blocks\": [1,1,1,1]}],\n" +
-                "\t\t\"daysToLose\":3\n" +
-                "\t},\n" +
-                "\t\"planetsCard8\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"planets\":[{ \"blocks\": [4,4,4,3] },{ \"blocks\": [4,4,2,2] },{ \"blocks\": [4,1,1,1,1]}],\n" +
-                "\t\t\"daysToLose\":4\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [4,4] },{ \"blocks\": [4,1,1] },{ \"blocks\": [3] }],\n" +
+            "\t\t\"daysToLose\":2\n" +
+            "\t},\n" +
+            "\t\"planetsCard2\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [3,2,1,1] },{ \"blocks\": [3,3] }],\n" +
+            "\t\t\"daysToLose\":3\n" +
+            "\t},\n" +
+            "\t\"planetsCard3\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [4,2,1,1,1] },{ \"blocks\": [4,3,1] },{ \"blocks\": [4,1,1,1] },{ \"blocks\": [4,2] }],\n" +
+            "\t\t\"daysToLose\":3\n" +
+            "\t},\n" +
+            "\t\"planetsCard4\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [2,2] },{ \"blocks\": [3] },{ \"blocks\": [1,1,1]}],\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t},\n" +
+            "\t\"planetsCard5\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [4,3] },{ \"blocks\": [3,2,1] },{ \"blocks\": [2,2]},{ \"blocks\": [3]}],\n" +
+            "\t\t\"daysToLose\":2\n" +
+            "\t},\n" +
+            "\t\"planetsCard6\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [4,4] },{ \"blocks\": [2,2,2,2] }],\n" +
+            "\t\t\"daysToLose\":3\n" +
+            "\t},\n" +
+            "\t\"planetsCard7\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [2,2,2,2] },{ \"blocks\": [3,3] },{ \"blocks\": [1,1,1,1]}],\n" +
+            "\t\t\"daysToLose\":3\n" +
+            "\t},\n" +
+            "\t\"planetsCard8\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"planets\":[{ \"blocks\": [4,4,4,3] },{ \"blocks\": [4,4,2,2] },{ \"blocks\": [4,1,1,1,1]}],\n" +
+            "\t\t\"daysToLose\":4\n" +
+            "\t}}";
         meteorsCards = "{\"meteorsCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\t},\n" +
-                "\t\"meteorsCard2\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
-                "\t},\n" +
-                "\t\"meteorsCard3\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\t},\n" +
-                "\t\"meteorsCard4\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\t},\n" +
-                "\t\"meteorsCard5\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"}]\n" +
-                "\t},\n" +
-                "\t\"meteorsCard6\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\t},\n" +
+            "\t\"meteorsCard2\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
+            "\t},\n" +
+            "\t\"meteorsCard3\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\t},\n" +
+            "\t\"meteorsCard4\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\t},\n" +
+            "\t\"meteorsCard5\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"}]\n" +
+            "\t},\n" +
+            "\t\"meteorsCard6\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"meteors\":[{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{ \"bigMeteor\": true,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{ \"bigMeteor\": false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"}]\n" +
+            "\t}}";
         stationCards = "{\"stationCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberNeeded\":5,\n" +
-                "\t\t\"daysToLose\":1,\n" +
-                "\t\t\"blocks\":[3,2]\n" +
-                "\t},\n" +
-                "\t\"stationCard2\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberNeeded\":6,\n" +
-                "\t\t\"daysToLose\":1,\n" +
-                "\t\t\"blocks\":[4,4]\n" +
-                "\t},\n" +
-                "\t\"stationCard3\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberNeeded\":7,\n" +
-                "\t\t\"daysToLose\":1,\n" +
-                "\t\t\"blocks\":[4,3]\n" +
-                "\t},\n" +
-                "\t\"stationCard4\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberNeeded\":8,\n" +
-                "\t\t\"daysToLose\":2,\n" +
-                "\t\t\"blocks\":[3,3,2]\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberNeeded\":5,\n" +
+            "\t\t\"daysToLose\":1,\n" +
+            "\t\t\"blocks\":[3,2]\n" +
+            "\t},\n" +
+            "\t\"stationCard2\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberNeeded\":6,\n" +
+            "\t\t\"daysToLose\":1,\n" +
+            "\t\t\"blocks\":[4,4]\n" +
+            "\t},\n" +
+            "\t\"stationCard3\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberNeeded\":7,\n" +
+            "\t\t\"daysToLose\":1,\n" +
+            "\t\t\"blocks\":[4,3]\n" +
+            "\t},\n" +
+            "\t\"stationCard4\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberNeeded\":8,\n" +
+            "\t\t\"daysToLose\":2,\n" +
+            "\t\t\"blocks\":[3,3,2]\n" +
+            "\t}}";
         ShipCards = "{\"ShipCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberLost\":3,\n" +
-                "\t\t\"credits\":4,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t},\n" +
-                "\t\"ShipCard2\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberLost\":2,\n" +
-                "\t\t\"credits\":3,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t},\n" +
-                "\t\"ShipCard3\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberLost\":5,\n" +
-                "\t\t\"credits\":8,\n" +
-                "\t\t\"daysToLose\":2\n" +
-                "\t},\n" +
-                "\t\"ShipCard4\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"crewNumberLost\":4,\n" +
-                "\t\t\"credits\":6,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberLost\":3,\n" +
+            "\t\t\"credits\":4,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t},\n" +
+            "\t\"ShipCard2\":{\n" +
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberLost\":2,\n" +
+            "\t\t\"credits\":3,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t},\n" +
+            "\t\"ShipCard3\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberLost\":5,\n" +
+            "\t\t\"credits\":8,\n" +
+            "\t\t\"daysToLose\":2\n" +
+            "\t},\n" +
+            "\t\"ShipCard4\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"crewNumberLost\":4,\n" +
+            "\t\t\"credits\":6,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t}}";
         slaversCards = "{\"slaversCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":6,\n" +
-                "\t\t\"crewLost\":3,\n" +
-                "\t\t\"credits\":5,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t},\n" +
-                "\t\"slaversCard2\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":7,\n" +
-                "\t\t\"crewLost\":4,\n" +
-                "\t\t\"credits\":8,\n" +
-                "\t\t\"daysToLose\":2\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":6,\n" +
+            "\t\t\"crewLost\":3,\n" +
+            "\t\t\"credits\":5,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t},\n" +
+            "\t\"slaversCard2\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":7,\n" +
+            "\t\t\"crewLost\":4,\n" +
+            "\t\t\"credits\":8,\n" +
+            "\t\t\"daysToLose\":2\n" +
+            "\t}}";
         smugglersCards = "{\"smugglersCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":4,\n" +
-                "\t\t\"blocks\":[3,2,1],\n" +
-                "\t\t\"lostBlocksNumber\":2,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t},\n" +
-                "\t\"smugglersCard2\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":8,\n" +
-                "\t\t\"blocks\":[4,3,3],\n" +
-                "\t\t\"lostBlocksNumber\":3,\n" +
-                "\t\t\"daysToLose\":1\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":4,\n" +
+            "\t\t\"blocks\":[3,2,1],\n" +
+            "\t\t\"lostBlocksNumber\":2,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t},\n" +
+            "\t\"smugglersCard2\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":8,\n" +
+            "\t\t\"blocks\":[4,3,3],\n" +
+            "\t\t\"lostBlocksNumber\":3,\n" +
+            "\t\t\"daysToLose\":1\n" +
+            "\t}}";
         piratesCards = "{\"piratesCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":5,\n" +
-                "\t\t\"credits\":4,\n" +
-                "\t\t\"daysToLose\":1,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\t},\n" +
-                "\t\"piratesCard2\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"firepower\":6,\n" +
-                "\t\t\"credits\":7,\n" +
-                "\t\t\"daysToLose\":2,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":5,\n" +
+            "\t\t\"credits\":4,\n" +
+            "\t\t\"daysToLose\":1,\n" +
+            "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\t},\n" +
+            "\t\"piratesCard2\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"firepower\":6,\n" +
+            "\t\t\"credits\":7,\n" +
+            "\t\t\"daysToLose\":2,\n" +
+            "\t\t\"cannonballList\":[{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\t}}";
         stardustCards = "{\"stardustCard1\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false\n" +
-                "\t},\n" +
-                "\t\"stardustCard2\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false\n" +
+            "\t},\n" +
+            "\t\"stardustCard2\":{\n" +
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false\n" +
+            "\t}}";
         combatZoneCardsL = "{\"combatZoneCardL\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"daysLost\":3,\n" +
-                "\t\t\"crewLost\":2,\n" +
-                "\t\t\"cargoLost\":0,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"daysLost\":3,\n" +
+            "\t\t\"crewLost\":2,\n" +
+            "\t\t\"cargoLost\":0,\n" +
+            "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\n" +
+            "\t}}";
         combatZoneCardsNotL ="{\"combatZoneCardNotL\":{\n" +
-                "\t\t\"levelTwo\":false,\n" +
-                "\t\t\"used\":false,\n" +
-                "\t\t\"daysLost\":4,\n" +
-                "\t\t\"crewLost\":0,\n" +
-                "\t\t\"cargoLost\":3,\n" +
-                "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
-                "\n" +
-                "\t}}";
+            "\t\t\"levelTwo\":false,\n" +
+            "\t\t\"used\":false,\n" +
+            "\t\t\"daysLost\":4,\n" +
+            "\t\t\"crewLost\":0,\n" +
+            "\t\t\"cargoLost\":3,\n" +
+            "\t\t\"cannonballList\":[{\"bigCannonball\":false,\"direction\":\"NORTH\",\"rowOrColumn\":\"COLUMN\"},{\"bigCannonball\":false,\"direction\":\"WEST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":false,\"direction\":\"EAST\",\"rowOrColumn\":\"ROW\"},{\"bigCannonball\":true,\"direction\":\"SOUTH\",\"rowOrColumn\":\"COLUMN\"}]\n" +
+            "\n" +
+            "\t}}";
         epidemicCards = "{\"epidemicCard1\":{\n" +
-                "\t\t\"levelTwo\":true,\n" +
-                "\t\t\"used\":false\n" +
-                "\t}}";
-
+            "\t\t\"levelTwo\":true,\n" +
+            "\t\t\"used\":false\n" +
+            "\t}}";
     }
 }
 
@@ -277,15 +276,18 @@ class PiratesCardParse {
     public int daysToLose;
     public List<CannonballParse> cannonballList;
 }
+
 class CannonballParse {
     public boolean bigCannonball;
     public String direction;
     public String rowOrColumn;
 }
+
 class SpaceCardParse {
     public boolean levelTwo;
     public boolean used;
 }
+
 class StationCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -293,6 +295,7 @@ class StationCardParse {
     public int daysToLose;
     public List<Integer> blocks;
 }
+
 class ShipCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -300,6 +303,7 @@ class ShipCardParse {
     public int daysToLose;
     public int credits;
 }
+
 class SlaversCardParse{
     public boolean levelTwo;
     public boolean used;
@@ -308,6 +312,7 @@ class SlaversCardParse{
     public int credits;
     public int daysToLose;
 }
+
 class SmugglersCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -316,23 +321,28 @@ class SmugglersCardParse {
     public int lostBlocksNumber;
     public int daysToLose;
 }
+
 class StardustCardParse{
     public boolean levelTwo;
     public boolean used;
 }
+
 class EpidemicCardParse{
     public boolean levelTwo;
     public boolean used;
 }
+
 class PlanetsCardParse{
     public boolean levelTwo;
     public boolean used;
     public List<PlanetParse> planets;
     public int daysToLose;
 }
+
 class PlanetParse{
     public List<Integer> blocks;
 }
+
 class MeteorParse {
     public boolean bigMeteor;
     public String direction;
@@ -344,6 +354,7 @@ class MeteorsCardParse {
     public boolean used;
     public List<MeteorParse> meteors;
 }
+
 class BattleZoneCardLParse {
     public boolean levelTwo;
     public boolean used;
@@ -383,7 +394,6 @@ public class JsonCardParsing {
     public ArrayList<CombatZoneCardNotL> getCombatZoneNotLCards() {
         return combatZoneNotLCards;
     }
-
     public ArrayList<StationCard> getStationCards() {
         return stationCards;
     }
@@ -418,15 +428,19 @@ public class JsonCardParsing {
     public void setCombatZoneLCards(ArrayList<CombatZoneCardL> combatZoneLCards) {
         this.combatZoneLCards = combatZoneLCards;
     }
+
     public void setCombatZoneNotLCards(ArrayList<CombatZoneCardNotL> combatZoneNotLCards) {
         this.combatZoneNotLCards = combatZoneNotLCards;
     }
+
     public void setStationCards(ArrayList<StationCard> stationCards) {
         this.stationCards = stationCards;
     }
+
     public void setSlaversCards(ArrayList<SlaversCard> slaversCards) {
         this.slaversCards = slaversCards;
     }
+
     public void setPlanetsCards(ArrayList<PlanetsCard> planetsCards) {
         this.planetsCards = planetsCards;
     }
@@ -485,6 +499,7 @@ public class JsonCardParsing {
         }
         return completeList;
     }
+
     public List<Card> getCompleteListLevel2(){
         List<Card> completeList = new ArrayList<>();
         for(Card card:getCompleteList()){

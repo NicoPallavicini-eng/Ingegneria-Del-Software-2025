@@ -19,6 +19,7 @@ public class Tile implements Serializable {
     private boolean facingUp;
     private boolean choosable;
     private boolean reserved;
+    private String name;
 
     /**
      * Constructs a Tile with specified connector types for each side
@@ -39,6 +40,10 @@ public class Tile implements Serializable {
         this.attached = false;
         this.reserved = false;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     /**
      * Rotates the tile in the specified direction.
