@@ -54,9 +54,11 @@ public class Ship implements Serializable {
         }
     }
     public Tile getLastPlacedTile(){
+
         return lastPlacedTile;
     }
     public void setLastPlacedTile(Tile lastPlacedTile){
+
         this.lastPlacedTile = lastPlacedTile;
     }
     public Tile getTileInHand() {
@@ -91,7 +93,7 @@ public class Ship implements Serializable {
         for(ArrayList<Tile> row:floorplanArrayList){
             for(int j=0;j<col_max;j++){
                 if(row.get(j)!=null && row.get(j).equals(tile)){
-                    return j;
+                    return index;
                 }
             }
             index++;
@@ -180,7 +182,7 @@ public class Ship implements Serializable {
     }
 
 
-    /**this function checks if ship was build correctly or not
+    /**this function checks if connectors of ship were build correctly or not
      * @return boolean
      */
     public boolean checkFloorPlanConnection() {
@@ -215,7 +217,7 @@ public class Ship implements Serializable {
                         if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
                     else if (adiacentTile.get(0)==null && adiacentTile.get(1)==null && adiacentTile.get(2)==null && adiacentTile.get(3)==null) {
-                        return findTileOnFloorplanRow(tile) == 2 && findTileOnFloorPlanColumn(tile) == 3;
+                        //return findTileOnFloorplanRow(tile) == 2 && findTileOnFloorPlanColumn(tile) == 3;
                     }
                 }
             }
@@ -226,6 +228,10 @@ public class Ship implements Serializable {
             if(tile.getConnectors().get(2)!=ConnectorType.ENGINE_SINGLE || tile.getConnectors().get(2)!=ConnectorType.ENGINE_DOUBLE){
                 return false;
             }
+        }
+
+        if(isShipBroken()){
+            return false;
         }
 
         return true;

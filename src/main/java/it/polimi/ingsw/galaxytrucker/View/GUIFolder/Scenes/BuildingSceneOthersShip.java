@@ -39,7 +39,7 @@ public class BuildingSceneOthersShip extends MyScene {
 
         Player user = checkPlayer(nickname);
         Ship userShip = user.getShip();
-
+        ///
         this.background = new Background();
         BorderPane layout = new BorderPane();
         this.root = new BorderPane();
