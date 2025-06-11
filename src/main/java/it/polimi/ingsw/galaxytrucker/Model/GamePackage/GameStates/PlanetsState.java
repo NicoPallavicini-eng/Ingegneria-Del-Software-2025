@@ -41,6 +41,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         planets = currentCard.getPlanetsList();
         chosenPlanets = new LinkedHashMap<>();
         satisfiedPlayers = new ArrayList<>();
+        game.notifyObservers(game, "planets");
     }
 
     public void handleEvent(ChoosePlanetEvent event){
@@ -48,13 +49,14 @@ public class PlanetsState extends TravellingState implements Serializable {
             throw new IllegalEventException("It is not your turn to land");
         }
         else if(event.planetIndex() >= planets.size() || event.planetIndex() < 0){
-            throw new IllegalEventException("you selecteded an illegal index");
+            throw new IllegalEventException("you selected an illegal index");
         }
         else if(chosenPlanets.containsValue(planets.get(event.planetIndex()))){
             throw new IllegalEventException("The planet has already been chosen");
         }
         else{
             chosenPlanets.put(event.player(), planets.get(event.planetIndex()));
+            game.notifyObservers(game, "planetsSelection");
             nextPlayer();
         }
     }
@@ -66,6 +68,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         else{
             synchronized (satisfiedPlayers) {
                 satisfiedPlayers.add(event.player());
+                game.notifyObservers(game, "planetsNoSelection");
                 if (satisfiedPlayers.containsAll(game.getListOfActivePlayers())) {
                     next();
                 } else {
@@ -80,6 +83,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         Collections.reverse(turns);
         for(Player player : turns){
             EventHandler.moveBackward(player.getShip(), currentCard.getDaysToLose(), game);
+            game.notifyObservers(game, "loseDays"); //TODO: DO it
         }
     }
 

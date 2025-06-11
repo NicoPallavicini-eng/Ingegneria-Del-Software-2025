@@ -187,6 +187,11 @@ public class ServerController {
                         if (rmiClients == null || rmiClients.isEmpty()) {
                             return;
                         }
+                        synchronized (game.getListOfActivePlayers()){
+                            for (Player player : game.getListOfActivePlayers()) {
+                                player.setChecked(false);
+                            }
+                        }
                         for (VirtualClient rmiClient : rmiClients) {
                             if (rmiClient != null) {
                                 try {
@@ -299,6 +304,54 @@ public class ServerController {
                         }
                     }
                 }
+                case "planets" -> {
+                    if (gameState instanceof PlanetsState){
+                        try{
+                            for (VirtualClient rmiClient : rmiClients) {
+                                Player player = checkPlayer(rmiClient.getNickname());
+                                if (player != null){
+                                    rmiClient.printMessage("\nYou are now in the planets state. \n You can choose a planet to land on (/chooseplanet <index>) or do nothing (/nochoice).\n Once everyone has chosen a planet, you can add cargo to your ship (/addcargo <index> <cargoType>), remove cargo (/removecargo <index>), switch cargo (/switchcarg <index1>; <index2> or do nothing (/nochoice).\n Once you are dne with the cargo phase you have to signal it with the /done command.\n Now playing: " + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                }
+                            }
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                case "planetsSelection" -> {
+                    try{
+                        for (VirtualClient rmiClient : rmiClients){
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null){
+                                if (((PlanetsState) gameState).getChosenPlanets().containsKey(player) && !player.isChecked()) {
+                                    rmiClient.printMessage("\nYou have chosen the planet: " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                                    player.setChecked(true);
+                                } else {
+                                    rmiClient.printMessage("\n" + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + " has chosen the planet " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                                }
+                                rmiClient.viewCard(game);
+                            }
+                        }
+                    } catch (RemoteException e){
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "planetsNoSelectin" -> {
+                    try{
+                        Player targetNick = ((PlanetsState)gameState).getSatisfiedPlayers().getLast();
+                        for (VirtualClient rmiClient : rmiClients){
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null){
+                                if (!targetNick.equals(player.getNickname())) {
+                                    rmiClient.printMessage("\n" + targetNick + "Has choosen to do nothing.\n");
+                                }
+                            }
+                        }
+                    } catch (RemoteException e){
+                        throw new RuntimeException(e);
+                    }
+                }
+
             }
         }
     }
