@@ -23,7 +23,7 @@ public class BatteryTile extends Tile implements Serializable {
     }
 
     public void removeBattery(int quantity){
-        if(slotsFilled <= quantity){
+        if(slotsFilled < quantity){
             throw new IllegalEventException("not enough batteries");
         }
         slotsFilled -= quantity;

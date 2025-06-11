@@ -216,16 +216,16 @@ public class Ship implements Serializable {
                         ConnectorType connectorAdiacent = adiacentTile.get(3).getConnectors().get(1);
                         if (checkEngineOrCannon(connector, connectorAdiacent)) return false;
                     }
-                    else if (adiacentTile.get(0)==null && adiacentTile.get(1)==null && adiacentTile.get(2)==null && adiacentTile.get(3)==null) {
-                        //return findTileOnFloorplanRow(tile) == 2 && findTileOnFloorPlanColumn(tile) == 3;
-                    }
+//                    else if (adiacentTile.get(0)==null && adiacentTile.get(1)==null && adiacentTile.get(2)==null && adiacentTile.get(3)==null) {
+//                        //return findTileOnFloorplanRow(tile) == 2 && findTileOnFloorPlanColumn(tile) == 3;
+//                    }
                 }
             }
         }
 
         ArrayList<EngineTile> listOfEngine = getListOfEngine();
         for(EngineTile tile : listOfEngine){
-            if(tile.getConnectors().get(2)!=ConnectorType.ENGINE_SINGLE || tile.getConnectors().get(2)!=ConnectorType.ENGINE_DOUBLE){
+            if(tile.getConnectors().get(2)!=ConnectorType.ENGINE_SINGLE && tile.getConnectors().get(2)!=ConnectorType.ENGINE_DOUBLE){
                 return false;
             }
         }
@@ -309,7 +309,38 @@ public class Ship implements Serializable {
      */
     public ArrayList<Tile> getNonValidTileList(){
         ArrayList<Tile> nonValidList = new ArrayList<>();
-        ArrayList<Tile> validList = checkFloorplanConnection();
+        ArrayList<Tile> validList = new ArrayList<>();
+        boolean shipNotEmpty = false;
+        if(getTileOnFloorPlan(2,3).isPresent()){
+            validList = checkFloorplanConnection();
+            shipNotEmpty = true;
+        }else{
+            for(ArrayList<Tile> list : floorplanArrayList){
+                for(Tile tile: list){
+                    if(tile!=null&&!shipNotEmpty){
+                        validList = checkFloorplanConnection(tile);
+                        shipNotEmpty = true;
+                    }
+                }
+            }
+        }
+
+        if(shipNotEmpty){
+            for(ArrayList<Tile> list : floorplanArrayList){
+                for(Tile tile: list){
+                    if(tile!=null&&!validList.contains(tile)){
+                        nonValidList.add(tile);
+                    }
+                }
+            }
+        }
+
+        return nonValidList;
+    }
+    public ArrayList<Tile> getNonValidTileList(Tile tile1){
+        ArrayList<Tile> nonValidList = new ArrayList<>();
+        ArrayList<Tile> validList = new ArrayList<>();
+        validList = checkFloorplanConnection(tile1);
 
         for(ArrayList<Tile> list : floorplanArrayList){
             for(Tile tile: list){
@@ -318,7 +349,6 @@ public class Ship implements Serializable {
                 }
             }
         }
-
         return nonValidList;
     }
 
@@ -341,9 +371,24 @@ public class Ship implements Serializable {
      */
     public ArrayList<ArrayList<Tile>> getShipPiecesList(){
         ArrayList<ArrayList<Tile>> piecesList = new ArrayList<>();
+        ArrayList<Tile> validList = new ArrayList<>();
+        ArrayList<Tile> nonValidList = new ArrayList<>();
+        boolean shipNotEmpty = false;
+        if(getTileOnFloorPlan(2,3).isPresent()){
+            validList = checkFloorplanConnection();
+            nonValidList = getNonValidTileList();
+        }else{
+            for(ArrayList<Tile> list : floorplanArrayList){
+                for(Tile tile: list){
+                    if(tile!=null&&!shipNotEmpty){
+                        validList = checkFloorplanConnection(tile);
+                        nonValidList = getNonValidTileList(tile);
+                    }
+                }
+            }
+        }
 
-        ArrayList<Tile> validList = checkFloorplanConnection();
-        ArrayList<Tile> nonValidList = getNonValidTileList();
+        //ArrayList<Tile> nonValidList = getNonValidTileList();
 
         piecesList.add(validList);
 
@@ -536,9 +581,18 @@ public class Ship implements Serializable {
                 multiplicator = 1;
             }
         }
-        if(getPurpleAlien()){
-            firepower+=2;
+        ArrayList<CabinTile> cabinList = getListOfCabin();
+        boolean visited = false;
+        for(CabinTile cabinTile : cabinList){
+            AlienColor alienColor = cabinTile.getAlienColor();
+            if(alienColor!=null&&alienColor.equals(AlienColor.PURPLE)&&!visited){
+                firepower+=2;
+                visited = true;
+            }
         }
+//        if(getPurpleAlien()){
+//            firepower+=2;
+//        }
         return firepower;
     }
 
@@ -606,9 +660,18 @@ public class Ship implements Serializable {
             }
             multiplicator=1;
         }
-        if(getOrangeAlien()){
-            enginePower+=2;
+        ArrayList<CabinTile> cabinList = getListOfCabin();
+        boolean visited = false;
+        for(CabinTile cabinTile : cabinList){
+            AlienColor alienColor = cabinTile.getAlienColor();
+            if(alienColor!=null&&alienColor.equals(AlienColor.ORANGE)&&!visited){
+                enginePower+=2;
+                visited = true;
+            }
         }
+//        if(getOrangeAlien()){
+//            enginePower+=2;
+//        }
         return enginePower;
     }
 
@@ -936,7 +999,7 @@ public class Ship implements Serializable {
 
     public void removeAllCargo(){
         for(CargoTile cargoTile : getListOfCargo()){
-            for(Integer i : cargoTile.getTileContent()){
+            for(Integer i : new ArrayList<>(cargoTile.getTileContent())){
                 cargoTile.removeBlock(i);
             }
         }
@@ -944,7 +1007,7 @@ public class Ship implements Serializable {
 
     public void removeAllBatteries(){
         for(BatteryTile batteryTile : getListOfBattery()){
-            batteryTile.removeBattery(getBatteries());
+            batteryTile.removeBattery(batteryTile.getSlotsFilled());
         }
     }
 
