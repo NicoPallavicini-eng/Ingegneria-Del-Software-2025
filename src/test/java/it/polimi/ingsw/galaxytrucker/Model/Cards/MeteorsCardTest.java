@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-class MeteorsCardTest { // passed
+import static org.junit.jupiter.api.Assertions.*;
+
+class MeteorsCardTest {
     List<Meteor> meteorList = new ArrayList<>();
 
     // MeteorsCardVisitor meteorsCardVisitor = new MeteorsCardVisitor();

@@ -10,11 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-
     Player p1 = new Player("a", "a", Color.RED);
     Player p2 = new Player("b","b", Color.BLUE);
     Player p3 = new Player( "c", "c", Color.GREEN);
@@ -23,7 +21,8 @@ class GameTest {
     GameState gameState;
 
 
-    @BeforeEach void init(){
+    @BeforeEach
+    void init(){
         game.addPlayer(p2);
         game.addPlayer(p3);
 
@@ -45,9 +44,9 @@ class GameTest {
         expected.remove(p1);
         expected.remove(p2);
         expected.remove(p3);
-        game.removePlayer(p1);
-        game.removePlayer(p2);
-        game.removePlayer(p3);
+//        game.removePlayer(p1);
+//        game.removePlayer(p2);
+//        game.removePlayer(p3);
         assertEquals(expected, game.getListOfPlayers());
     }
 

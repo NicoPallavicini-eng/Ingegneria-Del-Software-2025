@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-class EpidemicCardTest { // needs ship changes
+import static org.junit.jupiter.api.Assertions.*;
+
+class EpidemicCardTest {
     List<Cannonball> cannonballList = new ArrayList<>();
 
     // EpidemicCardVisitor epidemicCardVisitor = new EpidemicCardVisitor();

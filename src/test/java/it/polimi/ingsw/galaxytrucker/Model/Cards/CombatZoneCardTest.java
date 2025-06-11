@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class CombatZoneCardTest { // passed
-    List <Cannonball> cannonballList = new ArrayList<>();
+class CombatZoneCardTest {
+    List<Cannonball> cannonballList = new ArrayList<>();
 
-    CombatZoneCard combatZoneCard = new CombatZoneCard(true, true, 4, 2, cannonballList);
+    CombatZoneCard combatZoneCard = new CombatZoneCardL(true, true);
 
     @Test
     void lessCrewProcessTest() { // passed
@@ -27,7 +27,7 @@ class CombatZoneCardTest { // passed
 
         // combatZoneCard.lessCrewProcess(s);
 
-        assertEquals(s.getTravelDays(), 20 - combatZoneCard.getDaysLostLessCrew());
+        assertEquals(s.getTravelDays(), 20 - combatZoneCard.getDaysLost());
     }
 
     @Test
@@ -35,12 +35,12 @@ class CombatZoneCardTest { // passed
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
         // s.setCrewMembers(4);
-        Tile tile = new CabinTile(ConnectorType.CANNON_SINGLE,ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE, CabinInhabitants.TWO, false, 0, 0);
+        Tile tile = new CabinTile(ConnectorType.CANNON_SINGLE, ConnectorType.SINGLE,ConnectorType.DOUBLE,ConnectorType.SINGLE, CabinInhabitants.TWO, false, Color.NONE,0, 0);
         s.setTileOnFloorPlan(2,3,tile);
 
         // combatZoneCard.lessEngineProcess(s);
 
-        assertEquals(s.getNumberOfInhabitants(), 4 - combatZoneCard.getCrewLostLessEngine());
+        assertEquals(s.getNumberOfInhabitants(), 4 - combatZoneCard.getCrewLost());
     }
 
     @Test
