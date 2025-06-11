@@ -10,12 +10,17 @@ import java.util.List;
 public class PlanetsCard extends Card implements Serializable {
     private final List <Planet> planets;
     private final int daysToLose;
+    private String name;
 
     public PlanetsCard(boolean levelTwo, boolean used, List <Planet> planets, int daysToLose) {
         super(levelTwo, used);
         this.planets = planets;
         this.daysToLose = daysToLose;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public List <Planet> getPlanetsList() {
         return planets;

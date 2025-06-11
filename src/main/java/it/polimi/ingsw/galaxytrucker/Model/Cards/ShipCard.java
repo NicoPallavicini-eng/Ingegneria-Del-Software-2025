@@ -10,6 +10,7 @@ public class ShipCard extends Card implements Serializable {
     private final int crewNumberLost;
     private final int credits;
     private final int daysToLose;
+    private String name;
 
     public ShipCard(boolean levelTwo, boolean used, int crewNumberLost, int credits, int daysToLose) {
         super(levelTwo, used);
@@ -17,6 +18,10 @@ public class ShipCard extends Card implements Serializable {
         this.credits = credits;
         this.daysToLose = daysToLose;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public int getCredits() {
         return credits;

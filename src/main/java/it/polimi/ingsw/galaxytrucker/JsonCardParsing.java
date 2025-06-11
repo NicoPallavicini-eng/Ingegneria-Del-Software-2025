@@ -500,16 +500,13 @@ public class JsonCardParsing {
         Gson gson = new Gson();
 
         ArrayList<OpenSpaceCard> openSpaceList = new ArrayList<>();
-
         Type type = new TypeToken<Map<String,SpaceCardParse>>(){}.getType();
-
         Map<String,SpaceCardParse> openSpaceCards = gson.fromJson(jsonCards.openSpaceCards, type);
-
         for (String connectorKey : openSpaceCards.keySet()) {
             SpaceCardParse openSpaceCardParse = openSpaceCards.get(connectorKey);
-
             OpenSpaceCard space = new OpenSpaceCard(openSpaceCardParse.levelTwo, openSpaceCardParse.used);
             openSpaceList.add(space);
+            space.setName(connectorKey);
         }
         setSpaceCards(openSpaceList);
 
@@ -520,6 +517,7 @@ public class JsonCardParsing {
             StationCardParse stationCardParse = stationCards.get(connectorKey);
             StationCard station = new StationCard(stationCardParse.levelTwo,stationCardParse.used,stationCardParse.crewNumberNeeded,stationCardParse.blocks,stationCardParse.daysToLose);
             stationCardList.add(station);
+            station.setName(connectorKey);
         }
 
         setStationCards(stationCardList);
@@ -531,6 +529,7 @@ public class JsonCardParsing {
             ShipCardParse ShipCardParse = shipCards.get(connectorKey);
             ShipCard ship = new ShipCard(ShipCardParse.levelTwo,ShipCardParse.used,ShipCardParse.crewNumberLost,ShipCardParse.credits,ShipCardParse.daysToLose);
             shipCardList.add(ship);
+            ship.setName(connectorKey);
         }
         setShipCards(shipCardList);
 
@@ -541,6 +540,7 @@ public class JsonCardParsing {
             SlaversCardParse slaversCardParse = slaversCards.get(connectorKey);
             SlaversCard slaver = new SlaversCard(slaversCardParse.levelTwo,slaversCardParse.used,slaversCardParse.firepower,slaversCardParse.credits,slaversCardParse.crewLost,slaversCardParse.daysToLose);
             slaversCardList.add(slaver);
+            slaver.setName(connectorKey);
         }
         setSlaversCards(slaversCardList);
 
@@ -551,6 +551,7 @@ public class JsonCardParsing {
             SmugglersCardParse smugglersCardParse = smuglersCards.get(connectorKey);
             SmugglersCard smuggler = new SmugglersCard(smugglersCardParse.levelTwo,smugglersCardParse.used,smugglersCardParse.firepower,smugglersCardParse.blocks,smugglersCardParse.lostBlocksNumber,smugglersCardParse.daysToLose);
             smugglersCardList.add(smuggler);
+            smuggler.setName(connectorKey);
         }
         setSmugglersCards(smugglersCardList);
 
@@ -561,6 +562,7 @@ public class JsonCardParsing {
             StardustCardParse  stardustCardParse = stardustCards.get(connectorKey);
             StardustCard stardust = new StardustCard(stardustCardParse.levelTwo,stardustCardParse.used);
             stardustCardList.add(stardust);
+            stardust.setName(connectorKey);
         }
         setStardustCards(stardustCardList);
 
@@ -571,6 +573,7 @@ public class JsonCardParsing {
             EpidemicCardParse epidemicCardParse = epidemicCards.get(connectorKey);
             EpidemicCard epidemic = new EpidemicCard(epidemicCardParse.levelTwo,epidemicCardParse.used);
             epidemicCardList.add(epidemic);
+            epidemic.setName(connectorKey);
         }
         setEpidemicCards(epidemicCardList);
 
@@ -579,8 +582,8 @@ public class JsonCardParsing {
         Type planetsCardType = new TypeToken<Map<String, PlanetsCardParse>>() {}.getType();
         Map<String, PlanetsCardParse> planetsCards = gson.fromJson(jsonCards.planetsCards, planetsCardType);
 
-        for (String key : planetsCards.keySet()) {
-            PlanetsCardParse parseCard = planetsCards.get(key);
+        for (String connectorKey : planetsCards.keySet()) {
+            PlanetsCardParse parseCard = planetsCards.get(connectorKey);
 
             List<Planet> planetList = new ArrayList<>();
             for (PlanetParse planetParse : parseCard.planets) {
@@ -589,6 +592,7 @@ public class JsonCardParsing {
 
             PlanetsCard planet = new PlanetsCard(parseCard.levelTwo, parseCard.used, planetList, parseCard.daysToLose);
             planetsCardList.add(planet);
+            planet.setName(connectorKey);
         }
         setPlanetsCards(planetsCardList);
 
@@ -597,8 +601,8 @@ public class JsonCardParsing {
         Type meteorsCardType = new TypeToken<Map<String, MeteorsCardParse>>() {}.getType();
         Map<String, MeteorsCardParse> meteorsCards = gson.fromJson(jsonCards.meteorsCards, meteorsCardType);
 
-        for (String key : meteorsCards.keySet()) {
-            MeteorsCardParse meteorParseCard = meteorsCards.get(key);
+        for (String connectorKey : meteorsCards.keySet()) {
+            MeteorsCardParse meteorParseCard = meteorsCards.get(connectorKey);
 
             List<Meteor> meteorList = new ArrayList<>();
             for (MeteorParse meteorParse : meteorParseCard.meteors) {
@@ -607,6 +611,7 @@ public class JsonCardParsing {
 
             MeteorsCard meteor = new MeteorsCard(meteorParseCard.levelTwo, meteorParseCard.used, meteorList);
             meteorsCardList.add(meteor);
+            meteor.setName(connectorKey);
         }
 
         setMeteorsCards(meteorsCardList);
@@ -615,8 +620,8 @@ public class JsonCardParsing {
 
         Type piratesCardType = new TypeToken<Map<String, PiratesCardParse>>() {}.getType();
         Map<String, PiratesCardParse> piratesCards = gson.fromJson(jsonCards.piratesCards, piratesCardType);
-        for (String key : piratesCards.keySet()) {
-            PiratesCardParse pirateParseCard = piratesCards.get(key);
+        for (String connectorKey : piratesCards.keySet()) {
+            PiratesCardParse pirateParseCard = piratesCards.get(connectorKey);
 
             List<Cannonball> cannonball = new ArrayList<>();
             for(CannonballParse cannonballParse: pirateParseCard.cannonballList){
@@ -625,6 +630,7 @@ public class JsonCardParsing {
 
             PiratesCard pirate = new PiratesCard(pirateParseCard.levelTwo,pirateParseCard.used,pirateParseCard.firepower,pirateParseCard.credits,pirateParseCard.daysToLose,cannonball);
             piratesCardList.add(pirate);
+            pirate.setName(connectorKey);
         }
 
         setPiratesCards(piratesCardList);
@@ -633,14 +639,15 @@ public class JsonCardParsing {
         Type battleZoneCardLType = new TypeToken<Map<String, BattleZoneCardLParse>>(){}.getType();
         Map<String, BattleZoneCardLParse> combatZoneCards = gson.fromJson(jsonCards.combatZoneCardsL, battleZoneCardLType);
 
-        for(String key : combatZoneCards.keySet()){
-            BattleZoneCardLParse battleZoneCardLParse = combatZoneCards.get(key);
+        for(String connectorKey : combatZoneCards.keySet()){
+            BattleZoneCardLParse battleZoneCardLParse = combatZoneCards.get(connectorKey);
             List<Cannonball> cannonball2 = new ArrayList<>();
             for(CannonballParse cannonballParse: battleZoneCardLParse.cannonballList){
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball,Direction.valueOf(cannonballParse.direction),RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
             CombatZoneCardL combatZoneCard = new CombatZoneCardL(battleZoneCardLParse.levelTwo,battleZoneCardLParse.used);
             combatZoneLCardList.add(combatZoneCard);
+            combatZoneCard.setName(connectorKey);
         }
 
         setCombatZoneLCards(combatZoneLCardList);
@@ -649,17 +656,17 @@ public class JsonCardParsing {
         Type battleZoneCardNotLType = new TypeToken<Map<String, BattleZoneCardNotLParse>>(){}.getType();
         Map<String, BattleZoneCardNotLParse> combatZoneCardsNotL = gson.fromJson(jsonCards.combatZoneCardsNotL, battleZoneCardNotLType);
 
-        for (String key : combatZoneCardsNotL.keySet()) {
-            BattleZoneCardNotLParse battleZoneCardNotLParse = combatZoneCardsNotL.get(key);
+        for (String connectorKey : combatZoneCardsNotL.keySet()) {
+            BattleZoneCardNotLParse battleZoneCardNotLParse = combatZoneCardsNotL.get(connectorKey);
             List<Cannonball> cannonball2 = new ArrayList<>();
             for (CannonballParse cannonballParse : battleZoneCardNotLParse.cannonballList) {
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball, Direction.valueOf(cannonballParse.direction), RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
             CombatZoneCardNotL combatZoneCard = new CombatZoneCardNotL(battleZoneCardNotLParse.levelTwo, battleZoneCardNotLParse.used);
             combatZoneNotLCardList.add(combatZoneCard);
+            combatZoneCard.setName(connectorKey);
         }
 
         setCombatZoneNotLCards(combatZoneNotLCardList);
     }
-
 }

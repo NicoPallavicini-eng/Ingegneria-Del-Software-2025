@@ -12,6 +12,7 @@ public class SmugglersCard extends Card implements Serializable {
     private final List <Integer> blocks;
     private final int lostBlocksNumber;
     private final int daysToLose;
+    private String name;
 
     public SmugglersCard(boolean levelTwo, boolean used, int firepower, List <Integer> blocks, int lostBlocksNumber, int daysToLose) {
         super(levelTwo, used);
@@ -20,6 +21,10 @@ public class SmugglersCard extends Card implements Serializable {
         this.lostBlocksNumber = lostBlocksNumber;
         this.daysToLose = daysToLose;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public int getFirepower() {
         return firepower;

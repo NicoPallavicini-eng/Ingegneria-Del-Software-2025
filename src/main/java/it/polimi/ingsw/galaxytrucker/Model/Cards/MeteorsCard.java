@@ -9,11 +9,16 @@ import java.util.List;
 
 public class MeteorsCard extends Card implements Serializable {
     private final List <Meteor> meteors;
+    private String name;
 
     public MeteorsCard(boolean levelTwo, boolean used, List <Meteor> meteors) {
         super(levelTwo, used);
         this.meteors = meteors;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public List <Meteor> getMeteorsList() {
         return meteors;

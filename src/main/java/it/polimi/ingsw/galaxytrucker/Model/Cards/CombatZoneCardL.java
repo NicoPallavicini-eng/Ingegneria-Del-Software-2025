@@ -10,9 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CombatZoneCardL extends CombatZoneCard implements Serializable {
+    private String name;
+
     public CombatZoneCardL(boolean levelTwo, boolean used) {
         super(levelTwo, used, 3, 2, 0, createCannonballList());
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     private static List<Cannonball> createCannonballList() {
         List <Cannonball> cannonballList = new ArrayList<>();

@@ -7,9 +7,15 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import java.io.Serializable;
 
 public class OpenSpaceCard extends Card implements Serializable {
+    private String name;
+
     public OpenSpaceCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);

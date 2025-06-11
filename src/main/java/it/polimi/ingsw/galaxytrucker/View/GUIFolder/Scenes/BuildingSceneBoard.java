@@ -28,11 +28,20 @@ public class BuildingSceneBoard extends MyScene {
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
+    private Deck stackDeck1;
+    private Deck stackDeck2;
+    private Deck stackDeck3;
+    private Deck stackDeck4;
+    private Deck stackGameDeck;
+    private it.polimi.ingsw.galaxytrucker.Model.Cards.Deck gameDeck;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
+        this.gameDeck = game.getDeck();
+
+        stackGameDeck = new Deck(gameDeck);
 
         Player user = checkPlayer(nickname);
         Ship userShip = user.getShip();
@@ -43,6 +52,7 @@ public class BuildingSceneBoard extends MyScene {
 
         // see board
         this.boardGrid = new BoardGrid(userShip.getColor(), this);
+
         StackPane centerContent = new StackPane(boardGrid);
         // TODO add sub decks
 

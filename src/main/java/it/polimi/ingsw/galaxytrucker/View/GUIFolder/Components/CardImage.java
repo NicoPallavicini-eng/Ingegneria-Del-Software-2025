@@ -46,15 +46,22 @@ public enum CardImage {
 
     private final String fileName;
     private final Image image;
+    private final int level;
 
     CardImage(String fileName, int lev) {
         if (lev == 1) {
             this.fileName = fileName;
+            this.level = lev;
             this.image = new Image(getClass().getResource("/Images/cards/lev1/" + fileName).toExternalForm());
         } else {
             this.fileName = fileName;
+            this.level = lev;
             this.image = new Image(getClass().getResource("/Images/cards/lev2/" + fileName).toExternalForm());
         }
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public Image getImage() {

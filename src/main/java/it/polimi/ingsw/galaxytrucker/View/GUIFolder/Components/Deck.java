@@ -1,38 +1,82 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import javafx.scene.layout.StackPane;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Deck {
+public class Deck extends StackPane {
     private static final int CARD_HEIGHT = 361;
     private static final int CARD_WIDTH = 235;
+    private static final List<Card> deck1 = new ArrayList<>();
+    private static final List<Card> deck3 = new ArrayList<>();
+    private static final List<Card> deck2 = new ArrayList<>();
+    private static final List<Card> deck4 = new ArrayList<>();
+    private static final List<Card> gameDeck = new ArrayList<>();
 
-    public Deck() {
-        List<CardImage> shuffledCards = Arrays.stream(CardImage.values())
-                .collect(Collectors.toCollection(ArrayList::new));
-        Collections.shuffle(shuffledCards);
+    public Deck(it.polimi.ingsw.galaxytrucker.Model.Cards.Deck deckCards) {
+        List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> deck = deckCards.getGameDeck();
+        List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> subDeck1 = deckCards.getSubDeck1();
+        List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> subDeck2 = deckCards.getSubDeck2();
+        List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> subDeck3 = deckCards.getSubDeck3();
+        List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> subDeck4 = deckCards.getSubDeck4();
 
-        int imageIndex = 0;
+        // pairing of gameDeck's cards with images of gui cards, instantiating only the used ones
+        for (it.polimi.ingsw.galaxytrucker.Model.Cards.Card card : deck) {
+            Card guiCard = new Card(card);
+            guiCard.setPrefHeight(CARD_HEIGHT);
+            guiCard.setPrefWidth(CARD_WIDTH);
 
-        for (CardImage cardImage : shuffledCards) {
-            Card card = new Card();
-            card.setPrefHeight(CARD_HEIGHT);
-            card.setPrefWidth(CARD_WIDTH);
-
-            try {
-                CardImage cardImage1 = shuffledCards.get(imageIndex);
-                card.setCardImage(cardImage1.getImage());
-            } catch (Exception e) {
-                System.err.println("Failed to load image at: " + (imageIndex));
-                e.printStackTrace();
-            }
+            gameDeck.add(guiCard);
 
             // TODO set buttons
-
-            imageIndex++;
         }
+
+        // set subDecks for Building stage Board
+        for (Card card : gameDeck) {
+            for (it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard : subDeck1) {
+                if (card.getLogicCard().equals(logicCard)) {
+                    deck1.add(card);
+                }
+            }
+            for (it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard : subDeck2) {
+                if (card.getLogicCard().equals(logicCard)) {
+                    deck2.add(card);
+                }
+            }
+            for (it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard : subDeck3) {
+                if (card.getLogicCard().equals(logicCard)) {
+                    deck3.add(card);
+                }
+            }
+            for (it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard : subDeck4) {
+                if (card.getLogicCard().equals(logicCard)) {
+                    deck4.add(card);
+                }
+            }
+        }
+    }
+
+    public static List<Card> getGameDeck() {
+        return gameDeck;
+    }
+
+    public static List<Card> getDeck1() {
+        return deck1;
+    }
+
+    public static List<Card> getDeck2() {
+        return deck2;
+    }
+
+    public static List<Card> getDeck3() {
+        return deck3;
+    }
+
+    public static List<Card> getDeck4() {
+        return deck4;
     }
 }

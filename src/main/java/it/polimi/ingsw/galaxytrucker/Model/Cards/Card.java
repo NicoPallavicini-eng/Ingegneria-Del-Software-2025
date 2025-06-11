@@ -9,11 +9,16 @@ import java.io.Serializable;
 public abstract class Card implements Serializable {
     private final boolean levelTwo;
     private boolean used;
+    private String name;
 
     public Card(boolean levelTwo, boolean used) {
         this.levelTwo = levelTwo;
         this.used = false;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public boolean isUsed() {
         return used;
