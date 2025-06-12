@@ -67,7 +67,7 @@ public class Game implements Serializable, Observable {
     }
 
     public void sortListOfActivePlayers(){
-        listOfActivePlayers.sort((p1, p2) -> p1.getShip().getTravelDays() - p2.getShip().getTravelDays());
+        listOfActivePlayers.sort((p1, p2) -> p2.getShip().getTravelDays() - p1.getShip().getTravelDays());
     }
 
     public GameState getGameState() {
