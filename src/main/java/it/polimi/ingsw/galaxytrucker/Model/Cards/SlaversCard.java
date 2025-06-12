@@ -11,6 +11,7 @@ public class SlaversCard extends Card implements Serializable {
     private final int credits;
     private final int crewLost;
     private final int daysToLose;
+    private String name;
 
     public SlaversCard(boolean levelTwo, boolean used, int firepower, int credits, int crewLost, int daysToLose) {
         super(levelTwo, used);
@@ -19,6 +20,10 @@ public class SlaversCard extends Card implements Serializable {
         this.crewLost = crewLost;
         this.daysToLose = daysToLose;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public int getFirepower() {
         return firepower;
@@ -35,7 +40,6 @@ public class SlaversCard extends Card implements Serializable {
     public int getNumberOfDaysToLose() {
         return daysToLose;
     }
-
 
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);

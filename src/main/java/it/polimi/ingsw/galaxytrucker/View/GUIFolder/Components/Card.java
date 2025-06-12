@@ -12,9 +12,14 @@ public class Card extends StackPane {
     private final ImageView cardImage;
     private final Button overlayButton = new Button();
     private int rotation = 0; // deg, needed for Building orientation of sub-decks
+    private CardImage cardImageEnum;
+    private final it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard;
 
-    public Card() {
-        cardImage = new ImageView();
+    public Card(it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard) {
+        this.logicCard = logicCard;
+        this.cardImageEnum = CardImage.valueOf(logicCard.getName());
+
+        cardImage = new ImageView(cardImageEnum.getImage());
         cardImage.setFitHeight(CARD_HEIGHT);
         cardImage.setFitWidth(CARD_WIDTH);
         cardImage.setMouseTransparent(true);
@@ -35,8 +40,20 @@ public class Card extends StackPane {
         cardImage.setImage(image);
     }
 
-    public ImageView getCardImage() {
-        return cardImage;
+    public it.polimi.ingsw.galaxytrucker.Model.Cards.Card getLogicCard() {
+        return logicCard;
+    }
+
+    public CardImage getCardImageEnum() {
+        return cardImageEnum;
+    }
+
+//    public ImageView getCardImage() { TODO understand if rly needed
+//        return cardImage;
+//    }
+
+    public void setCardImageEnum(CardImage cardImageEnum) {
+        this.cardImageEnum = cardImageEnum;
     }
 
     public void clearCardImage() {

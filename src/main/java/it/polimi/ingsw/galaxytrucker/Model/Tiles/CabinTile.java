@@ -15,6 +15,7 @@ public class CabinTile extends Tile implements Serializable {
     private boolean facingUp;
     private boolean choosable;
     private boolean reserved;
+    private String name;
 
     public CabinTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, CabinInhabitants inhabitants, boolean mainCapsule, Color color, int pinkAdaptors, int orangeAdaptors) {
         super(north, south, east, west);
@@ -35,6 +36,7 @@ public class CabinTile extends Tile implements Serializable {
         this.pinkAdaptors = pinkAdaptors;
         this.orangeAdaptors = orangeAdaptors;
     }
+
     public Color getColor() {
         return color;
     }

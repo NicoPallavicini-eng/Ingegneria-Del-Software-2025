@@ -13,6 +13,7 @@ public class CannonTile extends Tile implements Serializable {
     private boolean facingUp;
     private boolean choosable;
     private boolean reserved;
+    private String name;
 
     @JsonCreator
     public CannonTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, boolean doublePower, boolean activeState) {

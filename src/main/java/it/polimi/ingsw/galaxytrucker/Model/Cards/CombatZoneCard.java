@@ -8,6 +8,7 @@ public abstract class CombatZoneCard extends Card implements Serializable {
     private final int crewLost;
     private final int cargoLost;
     private final List <Cannonball> cannonballList;
+    private String name;
 
     public CombatZoneCard(boolean levelTwo, boolean used, int daysLost, int crewLost, int cargoLost, List <Cannonball> cannonballList) {
         super(levelTwo, used);
@@ -16,6 +17,10 @@ public abstract class CombatZoneCard extends Card implements Serializable {
         this.cargoLost = cargoLost;
         this.cannonballList = cannonballList;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
 
     public int getDaysLost() {
         return daysLost;
