@@ -18,7 +18,6 @@ public class StardustState extends TravellingState implements Serializable {
     public StardustState(Game game, StardustCard card) {
         super(game, card);
         currentCard = card;
-        init();
     }
     private List<Player> turns;
 

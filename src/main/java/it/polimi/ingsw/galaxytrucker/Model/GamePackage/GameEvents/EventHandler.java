@@ -222,6 +222,25 @@ public class EventHandler implements Serializable {
                 throw new IllegalEventException("You chose not a CabinTile");
             }
             CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
+
+            ArrayList<Tile> adjacentTiles = ship.getAdiacentTiles(tile);
+            BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
+            boolean hasOrangeAdaptor = false;
+            for (Tile adjacentTile : adjacentTiles) {
+                if (adjacentTile != null) {
+                    adjacentTile.accept(bioadaptorTileVisitor);
+                    if (!bioadaptorTileVisitor.getList().isEmpty() &&
+                            bioadaptorTileVisitor.getList().getFirst().getColor() == AlienColor.ORANGE) {
+                        hasOrangeAdaptor = true;
+                        break;
+                    }
+                }
+            }
+            int adaptorsNumber = cabinTile.getOrange();
+            if (hasOrangeAdaptor) {
+                adaptorsNumber += 1;
+                cabinTile.setOrange(adaptorsNumber);
+            }
             if (cabinTile.getOrange() <= 0) {
                 throw new IllegalEventException("There is no Bioadaptors of OrangeType");
             }
@@ -251,6 +270,26 @@ public class EventHandler implements Serializable {
                 throw new IllegalEventException("You chose not a CabinTile");
             }
             CabinTile cabinTile = cabinTileVisitor.getList().getFirst();
+
+
+            ArrayList<Tile> adjacentTiles = ship.getAdiacentTiles(tile);
+            BioadaptorTileVisitor bioadaptorTileVisitor = new BioadaptorTileVisitor();
+            boolean hasPurpleAdaptor = false;
+            for (Tile adjacentTile : adjacentTiles) {
+                if (adjacentTile != null) {
+                    adjacentTile.accept(bioadaptorTileVisitor);
+                    if (!bioadaptorTileVisitor.getList().isEmpty() &&
+                            bioadaptorTileVisitor.getList().getFirst().getColor() == AlienColor.PURPLE) {
+                        hasPurpleAdaptor = true;
+                        break;
+                    }
+                }
+            }
+            int adaptorsNumber = cabinTile.getPurple();
+            if (hasPurpleAdaptor) {
+                adaptorsNumber += 1;
+                cabinTile.setOrange(adaptorsNumber);
+            }
             if (cabinTile.getPurple() <= 0) {
                 throw new IllegalEventException("There is no Bioadaptors of PurpleType");
             }

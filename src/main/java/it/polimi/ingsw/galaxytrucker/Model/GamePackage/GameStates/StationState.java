@@ -22,7 +22,6 @@ public class StationState extends TravellingState implements Serializable {
     public StationState(Game game, StationCard card) {
         super(game, card);
         currentCard = card;
-        init();
     }
 
     public void init(){

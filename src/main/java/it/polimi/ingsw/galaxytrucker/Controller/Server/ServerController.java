@@ -231,7 +231,6 @@ public class ServerController {
                     }
                 }
                 case "finalMeteors" -> {
-                    if (gameState instanceof TravellingState) {
                         if (rmiClients == null || rmiClients.isEmpty()) {
                             return;
                         }
@@ -245,7 +244,6 @@ public class ServerController {
                                 }
                             }
                         }
-                    }
                 }
                 case "openSpace" -> {
                     try {
@@ -261,7 +259,6 @@ public class ServerController {
                     }
                 }
                 case "openSpaceAction" -> {
-                    if (gameState instanceof OpenSpaceState) {
                         try {
                             for (VirtualClient rmiClient : rmiClients) {
                                 Player player = checkPlayer(rmiClient.getNickname());
@@ -281,7 +278,6 @@ public class ServerController {
                         }catch (RemoteException e) {
                             throw new RuntimeException(e);
                         }
-                    }
                 }
                 case "nextplayer" -> {
                     if (gameState instanceof TravellingState) {
@@ -301,7 +297,6 @@ public class ServerController {
                     }
                 }
                 case "planets" -> {
-                    if (gameState instanceof PlanetsState){
                         try{
                             for (VirtualClient rmiClient : rmiClients) {
                                 Player player = checkPlayer(rmiClient.getNickname());
@@ -312,7 +307,6 @@ public class ServerController {
                         } catch (RemoteException e) {
                             throw new RuntimeException(e);
                         }
-                    }
                 }
                 case "planetsSelection" -> {
                     try{
