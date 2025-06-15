@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CargoTile extends Tile implements Serializable {
@@ -16,11 +17,13 @@ public class CargoTile extends Tile implements Serializable {
         super(north, south, east, west);
         this.fitsRed = fitsRed;
         this.slotsNumber = slotsNumber;
-        this.tileContent = tileContent;
+        //this.tileContent = tileContent;
         this.facingUp = false;
         this.choosable = true;
         this.attached = false;
         this.reserved = false;
+        this.tileContent = new ArrayList<>();
+
     }
 
     public List<Integer> getTileContent() {

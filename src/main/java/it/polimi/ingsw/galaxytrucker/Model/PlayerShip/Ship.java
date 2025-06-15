@@ -467,6 +467,12 @@ public class Ship implements Serializable {
     public void addBlocks(List<Integer> cargoFromCards) {
         this.cargoFromCards.addAll(cargoFromCards);
     }
+    public void resetCargoFromCards() {
+        this.cargoFromCards.clear();
+    }
+    public void removeBlockCargoFromCards(Integer cargoF) {
+        this.cargoFromCards.remove(cargoF);
+    }
     public void setCredits(int credits) {
         this.credits = credits;
     }
@@ -549,7 +555,9 @@ public class Ship implements Serializable {
                         adjacentTile = adjacentTiles.get(j);
                         if (adjacentTile == null) {
                             if (connectors.get(j) != ConnectorType.NONE){
-                                exposedConnectors++;
+                                if(!(connectors.get(j).equals(ConnectorType.ENGINE_SINGLE)||connectors.get(j).equals(ConnectorType.ENGINE_DOUBLE)||connectors.get(j).equals(ConnectorType.CANNON_SINGLE)||connectors.get(j).equals(ConnectorType.CANNON_DOUBLE))){
+                                    exposedConnectors++;
+                                }
                             }
                         }
                         j += 1;
@@ -559,7 +567,6 @@ public class Ship implements Serializable {
         }
         return exposedConnectors;
     }
-
     /**
      * @return firepower of ship
      */

@@ -10,6 +10,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
+import java.util.List;
 
 /*each player in order has to choose whether to eject people if they have enough or noaction
  */
@@ -33,7 +34,15 @@ public class ShipState extends TravellingState implements Serializable {
             throw new IllegalEventException("It is not your turn");
         }
         else{
-            Ship s = event.player().getShip();;
+            int numberEject = 0;
+            for(List<Integer> list : event.people()){
+                numberEject=list.get(2)+numberEject;
+            }
+            if(numberEject!=currentCard.getCrewNumberLost()){
+                throw new IllegalEventException("You choose not correct number of people to eject");
+            }
+
+            Ship s = event.player().getShip();
             EventHandler.handleEvent(event);
             EventHandler.moveBackward(s, currentCard.getDaysToLose(), game);
             s.setCredits(s.getCredits() + currentCard.getCredits());

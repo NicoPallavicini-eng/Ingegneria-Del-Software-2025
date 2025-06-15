@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /*Following turns each player has to decide whether they want to claim the reward
@@ -42,6 +43,7 @@ public class StationState extends TravellingState implements Serializable {
             EventHandler.moveBackward(event.player().getShip(), currentCard.getDaysToLose(), game);
             rewardClaimer = event.player();
             currentPlayer = null;
+            event.player().getShip().addBlocks(new ArrayList<>(currentCard.getBlockList()));
         }
     }
 
@@ -99,6 +101,7 @@ public class StationState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not landed on station");
         }
         else {
+            event.player().getShip().resetCargoFromCards();
             next();
         }
     }
