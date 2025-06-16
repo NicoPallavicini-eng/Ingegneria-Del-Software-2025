@@ -27,6 +27,7 @@ public class EpidemicState extends TravellingState implements Serializable {
     public void init(){
         threads = new ArrayList<>();
         process();
+        game.notifyObservers(game, "epidemic");
     }
 
     public void process(){
