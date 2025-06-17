@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
+import it.polimi.ingsw.galaxytrucker.View.UI;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class ClientTMP {
     private static RMIClient rmi;
-    private static TUI tui;
+    private static UI ui;
 
 
     public static void main(String[] args) throws RemoteException, NotBoundException {

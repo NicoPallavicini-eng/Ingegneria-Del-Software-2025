@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
+import it.polimi.ingsw.galaxytrucker.View.UI;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,7 +17,7 @@ import java.util.Scanner;
 public class Client2 {
     private static RMIClient rmi;
     private static SocketClient socketClient;
-    private static TUI tui;
+    private static UI ui;
 
 
     public static void main(String[] args) throws RemoteException, NotBoundException, InterruptedException {
