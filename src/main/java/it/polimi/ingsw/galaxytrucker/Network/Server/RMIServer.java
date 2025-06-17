@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
 import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
 import java.rmi.RemoteException;
@@ -91,5 +92,10 @@ public class RMIServer implements VirtualServer {
     @Override
     public void mapNicknameClient(VirtualClient virtualClient, String nickname) {
         mapper.put(virtualClient,nickname);
+    }
+
+    @Override
+    public Game getGame() {
+        return serverController.getGame();
     }
 }

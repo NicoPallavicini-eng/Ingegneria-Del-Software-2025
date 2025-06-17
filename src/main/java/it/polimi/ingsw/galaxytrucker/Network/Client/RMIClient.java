@@ -4,7 +4,9 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
+import it.polimi.ingsw.galaxytrucker.View.GUI;
 import it.polimi.ingsw.galaxytrucker.View.TUI;
+import it.polimi.ingsw.galaxytrucker.View.UI;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -14,18 +16,19 @@ import java.util.Scanner;
 public class RMIClient extends UnicastRemoteObject implements VirtualClient, Runnable {
     final VirtualServer server;
     private String nickname;
-    private static TUI tui; // Later maybe UI???
+    private Game game;
+    private static UI ui; // Later maybe UI???
 
     public RMIClient(VirtualServer server, int choiceUI) throws RemoteException {
         this.server = server;
+        this.game = server.getGame();
         nickname = null;
-        if (choiceUI == 1) {
-            tui = new TUI();
-            tui.printTitle();
-            tui.printGuide();
-        }
-        else{
-            //GUI
+        if (choiceUI == 2) {
+            ui = new GUI (game, "test"); // TODO update
+        } else {
+            ui = new TUI();
+            ui.printTitle();
+            ui.printGuide();
         }
     }
     @Override
@@ -68,7 +71,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     public void setNickname(String nickname) throws RemoteException{
         this.nickname = nickname;
         server.mapNicknameClient(this, nickname);
-        tui.setNickname(nickname);
+        ui.setNickname(nickname);
     }
     @Override
     public String getNickname() throws RemoteException {
@@ -81,12 +84,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     @Override
     public void viewLeaderboard(Game game) throws RemoteException {
-        tui.viewLeaderboard(game);
+        ui.viewLeaderboard(game);
     }
 
     @Override
     public void viewTilepile(Game game) throws RemoteException{
-        tui.viewTilePile(game);
+        ui.viewTilePile(game);
     }
 
     @Override
@@ -96,39 +99,39 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     @Override
     public void helpMessage() throws RemoteException {
-        tui.printHelpMessage();
+        ui.printHelpMessage();
     }
 
     @Override
     public void viewMyShip(Game game, String nickname) throws RemoteException {
-        tui.printVoid();
-        tui.printMyShip(game, nickname);
+        ui.printVoid();
+        ui.printMyShip(game, nickname);
     }
 
     @Override
     public void viewShips(Game game) throws RemoteException {
-        tui.printShips(game);
+        ui.printShips(game);
     }
 
     @Override
     public void viewTile(Tile currentTile) throws RemoteException {
-        tui.printTile(currentTile);
+        ui.printTile(currentTile);
     }
 
     @Override
     public void connectView(Game game) throws RemoteException {
-         tui.viewTilePile(game);
-         tui.printMyShip(game, nickname);
+         ui.viewTilePile(game);
+         ui.printMyShip(game, nickname);
     }
 
     @Override
     public void printMessage(String message) throws RemoteException {
-        tui.printMessage(message);
+        ui.printMessage(message);
     }
 
     @Override
     public void viewCard(Game game) throws RemoteException{
-        tui.viewCard(game);
+        ui.viewCard(game);
     }
 
     @Override
@@ -138,7 +141,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     @Override
     public void viewDeck(Game game, int index) throws RemoteException {
-        //tui.viewDeck(game, index);
+        //ui.viewDeck(game, index);
         //TODO implements viewDeck in TUI
     }
 }

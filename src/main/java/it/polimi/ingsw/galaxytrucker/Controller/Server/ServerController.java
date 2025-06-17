@@ -431,6 +431,12 @@ public class ServerController {
 
     public void handleUserInput(Message msg, ObjectOutputStream objOut) throws IOException {
         String input = msg.getMessage();
+        if (Objects.equals(input, "GAME")) {
+            Message newMessage = new Message("String", this.game, "NewGame");
+            objOut.writeObject(newMessage);
+            objOut.flush();
+            return;
+        }
         if (input == null || !input.startsWith("/")) {
             Message newMessage = new Message("String", null, "Invalid command");
             objOut.writeObject(newMessage);

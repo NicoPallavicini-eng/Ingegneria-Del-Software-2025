@@ -13,5 +13,4 @@ public class Planet implements Serializable {
         return blocks;
     }
 
-
 }

@@ -8,11 +8,12 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
+import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.util.List;
 
-public class GUI implements UIInterface {
+public class GUI extends Application implements UI {
     private Game game;
     private String nickname;
     private Stage stage;
@@ -22,20 +23,20 @@ public class GUI implements UIInterface {
     public GUI(Game game, String nickname) {
         this.game = game;
         this.isFirstPlayer = game.getListOfActivePlayers().size() == 1;
-        this.nickname = nickname;
+        this.nickname = nickname; // TODO change without nickname
         this.stage = new Stage();
         this.sceneManager = new SceneManager(this.game, this.stage, this.nickname, this.isFirstPlayer);
-    }
-
-    @Override
-    public void start() {
-        // TODO: Implement start logic (launch GUI scene, show window)
     }
 
     @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
         // TODO: Update nickname field in GUI if applicable
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        // TODO: Implement start logic (launch GUI scene, show window)
     }
 
     @Override
@@ -148,7 +149,12 @@ public class GUI implements UIInterface {
 
     // Static helper (optional)
 
-    public static void printHelpMessage() {
+    public void printHelpMessage() {
         // TODO: Show help dialog/popup in GUI
+    }
+
+    @Override
+    public void updateGame(Game game) {
+        this.game = game;
     }
 }

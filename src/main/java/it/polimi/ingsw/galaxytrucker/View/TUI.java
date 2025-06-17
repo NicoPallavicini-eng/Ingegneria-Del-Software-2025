@@ -8,15 +8,17 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
 import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TUI implements UIInterface {
+public class TUI implements UI {
     private Game game;
     private String nickname;
 
-    public void start(){
+    public void start(Stage primaryStage) {
+        // not used
     }
 
     public void setNickname(String nickname){
@@ -745,7 +747,7 @@ public class TUI implements UIInterface {
         return allRow;
     }
 
-    public static void printHelpMessage(){
+    public void printHelpMessage(){
         System.out.println(
                 "Help message: \n" +
                         "Every command must be preceded by a slash (/) and could require parameters divided by a comma (,)\n" +
@@ -791,6 +793,11 @@ public class TUI implements UIInterface {
                         "\nEND GAME PHASE\n" +
                         "/claimreward - Claim the end of the game reward. No parameters needed.\n"
         );
+    }
+
+    @Override
+    public void updateGame(Game game) {
+        this.game = game;
     }
 
     private void printVoidTile(int i,int j){

@@ -50,14 +50,10 @@ public class Client {
                 }catch (IOException e){
                     e.printStackTrace();
                 }
-
-
             }
             default -> {
                 System.out.println("Invalid choice. Please select 1 or 2.");
             }
         }
     }
-
-
-    }
+}

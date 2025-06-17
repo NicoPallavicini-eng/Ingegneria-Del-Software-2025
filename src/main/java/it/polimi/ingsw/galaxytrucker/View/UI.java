@@ -1,22 +1,24 @@
 package it.polimi.ingsw.galaxytrucker.View;
 
-import it.polimi.ingsw.galaxytrucker.Controller.Server.ServerController;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import javafx.stage.Stage;
 
-public class UI {
-    public static void main(String[] args){
-        Game game = ServerController.getGame();
-
-        UIInterface ui;
-        boolean useGui = false; // or read from args/config
-
-        if (useGui) {
-            ui = new GUI(game, "playerNickname"); // TODO get properly
-        } else {
-            ui = new TUI();
-        }
-
-        ui.printTitle();
-        ui.start();
-    }
+public interface UI {
+    void start(Stage primaryStage);
+    void printTitle();
+    void setNickname(String nickname);
+    void viewLeaderboard(Game game);
+    void printMessage(String message);
+    void viewTilePile(Game game);
+    void printShips(Game game);
+    void printVoid();
+    void printMyShip(Game game, String nickname);
+    void printGuide();
+    void printActualShip(Ship ship);
+    void printTile(Tile tile);
+    void viewCard(Game game);
+    void printHelpMessage();
+    void updateGame(Game game);
 }
