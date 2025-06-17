@@ -8,6 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+
+import java.util.Optional;
 
 public class UserShipGrid extends Pane {
     private static final int ROWS = 5;
@@ -23,6 +28,8 @@ public class UserShipGrid extends Pane {
     private static final int RESERVED_LEFT_BORDER = 677;
     private static final int HAND_LEFT_BORDER = 28;
     private final BuildingSceneUserShip buildingSceneUserShip;
+    private Game game;
+    private Player user;
 
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
@@ -32,6 +39,8 @@ public class UserShipGrid extends Pane {
 
     public UserShipGrid(Color color, BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
+        this.game = buildingSceneUserShip.getGame();
+        this.user = buildingSceneUserShip.getUser();
         // --- BACKGROUND ---
         Image bgImage = new Image(getClass().getResource("/Images/cardboard/cardboard-1c.png").toExternalForm());
         ImageView bgView = new ImageView(bgImage);
@@ -68,11 +77,11 @@ public class UserShipGrid extends Pane {
                     int finalCol = col;
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
-                            setTile(finalRow, finalCol, handCell[0].getTileImage(), handCell[0].getRotation());
+                            setTile(finalRow, finalCol, handCell[0].getLogicTile(), handCell[0].getRotation());
                             handCell[0].clearTileImage();
                             tile.setFull(true);
                         } else if (tile.isClickable() && tile.isFull()) {
-                            setHandTile(tile.getTileImage(), tile.getRotation());
+                            setHandTile(tile.getLogicTile(), tile.getRotation());
                             cells[finalRow][finalCol].clearTileImage();
                             tile.setFull(false);
                         }
@@ -89,11 +98,11 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    setResTile(finalSlot, handCell[0].getTileImage(), handCell[0].getRotation());
+                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
                     handCell[0].clearTileImage();
                     tile.setFull(true);
                 } else if (tile.isClickable() && tile.isFull()) {
-                    setHandTile(tile.getTileImage(), tile.getRotation());
+                    setHandTile(tile.getLogicTile(), tile.getRotation());
                     resCells[finalSlot].clearTileImage();
                     tile.setFull(false);
                 }
@@ -113,17 +122,9 @@ public class UserShipGrid extends Pane {
         handGrid.add(tile, 0, 0);
 
         // --- MAIN CABIN ---
-        Image mainCabinIconImage = switch (color) {
-            case BLUE -> TileImage.centralCabin4.getImage();
-            case GREEN -> TileImage.centralCabin3.getImage();
-            case YELLOW -> TileImage.centralCabin2.getImage();
-            case RED -> TileImage.centralCabin1.getImage();
-            default -> null;
-        };
+        Optional<Tile> mainCabin = user.getShip().getTileOnFloorPlan(2, 3); // TODO check correctness
 
-        ImageView mainCabinIcon = new ImageView(mainCabinIconImage);
-
-        cells[2][3].setTileImage(mainCabinIcon);
+        cells[2][3].setLogicTile(mainCabin.orElse(null));
         cells[2][3].setFull(true);
         cells[2][3].setClickable(false);
 
@@ -156,13 +157,13 @@ public class UserShipGrid extends Pane {
     /**
      * Sets a tile image at the specified logical row and column.
      */
-    public void setTile (int row, int col, ImageView image, int rotation) {
+    public void setTile (int row, int col, Tile logicTile, int rotation) {
         if (row >= 0 && row < ROWS && col >= 0 && col < COLS &&
             !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
             (row == 1 && (col == 0 || col == 6)) ||
             (row == 4 && col == 3) || (row == 2 && col == 3)) &&
-            cells[row][col].getTileImage().getImage() == null) {
-            cells[row][col].setTileImage(image);
+            cells[row][col].getLogicTile() == null) {
+            cells[row][col].setLogicTile(logicTile);
             cells[row][col].setFull(true);
             cells[row][col].setRotation(rotation);
             updateRotateVisible(false);
@@ -173,9 +174,9 @@ public class UserShipGrid extends Pane {
         // TODO add conformity checks
     }
 
-    public void setResTile (int slot, ImageView image, int rotation) {
-        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getTileImage().getImage() == null) {
-            resCells[slot].setTileImage(image);
+    public void setResTile (int slot, Tile tile, int rotation) {
+        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getLogicTile() == null) {
+            resCells[slot].setLogicTile(tile);
             resCells[slot].setFull(true);
             resCells[slot].setRotation(rotation);
             updateRotateVisible(false);
@@ -186,9 +187,9 @@ public class UserShipGrid extends Pane {
         // TODO add conformity checks
     }
 
-    public void setHandTile (ImageView image, int rotation) {
+    public void setHandTile (Tile tile, int rotation) {
         if (handCell[0].getTileImage().getImage() == null) {
-            handCell[0].setTileImage(image);
+            handCell[0].setLogicTile(tile);
             handCell[0].setClickable(true);
             handCell[0].setRotation(rotation);
             handCell[0].setFull(true);
@@ -213,29 +214,29 @@ public class UserShipGrid extends Pane {
         return handCell[0];
     }
 
-    public ImageView pickUpFromShip(TileView tile) {
-        ImageView img;
-        if (tile.getTileImage() != null) {
-            img = tile.getTileImage();
-            img.setImage(null);
+    public Tile pickUpFromShip(TileView tile) {
+        Tile ret;
+        if (tile.getLogicTile() != null) {
+            ret = tile.getLogicTile();
+            tile.setLogicTile(null);
         } else {
-            img = null;
+            ret = null;
             // TODO print error: "no tile present"
         }
-        return img;
+        return ret;
         // TODO add conformity checks
     }
 
-    public ImageView pickUpReserved(ReservedTileView tile) {
-        ImageView img;
-        if (tile.getTileImage() != null) {
-            img = tile.getTileImage();
-            img.setImage(null);
+    public Tile pickUpReserved(ReservedTileView tile) {
+        Tile ret;
+        if (tile.getLogicTile() != null) {
+            ret = tile.getLogicTile();
+            tile.setLogicTile(null);
         } else {
-            img = null;
+            ret = null;
             // TODO print error: "no tile present"
         }
-        return img;
+        return ret;
         // TODO add conformity checks
     }
 

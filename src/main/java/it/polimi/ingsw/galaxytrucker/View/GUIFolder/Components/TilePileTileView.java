@@ -1,10 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
+import java.util.Optional;
 
 public class TilePileTileView extends StackPane {
     private static final int TILE_SIZE = 54;
@@ -14,10 +16,15 @@ public class TilePileTileView extends StackPane {
     private boolean isClickable = true;
     private boolean isFull = true;
     private int rotation = 0; // 0, 90, 180, 270 only
+    private TileImage tileImageEnum;
+    private Tile logicTile;
 
-    public TilePileTileView() {
+    public TilePileTileView(Tile logicTile) {
+        this.logicTile = logicTile;
+        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+
         // Set up the top tile image (initially empty)
-        tileImage = new ImageView();
+        tileImage = new ImageView(tileImageEnum.getImage());
         tileImage.setFitWidth(TILE_SIZE);
         tileImage.setFitHeight(TILE_SIZE);
         tileImage.setMouseTransparent(true);
@@ -35,8 +42,15 @@ public class TilePileTileView extends StackPane {
         getChildren().addAll(backgroundImage, tileImage, overlayButton);
     }
 
-    public void setTileImage(Image img) {
-        tileImage.setImage(img);
+    public Tile getLogicTile() {
+        return logicTile;
+    }
+
+    public void setLogicTile(Tile logicTile) {
+        this.logicTile = logicTile;
+        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+
+        tileImage.setImage(tileImageEnum.getImage());
     }
 
     public ImageView getTileImage() {

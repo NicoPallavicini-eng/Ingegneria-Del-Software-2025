@@ -36,10 +36,6 @@ public class Card extends StackPane {
         getChildren().addAll(backgroundImage, cardImage, overlayButton);
     }
 
-    public void setCardImage(Image image) {
-        cardImage.setImage(image);
-    }
-
     public it.polimi.ingsw.galaxytrucker.Model.Cards.Card getLogicCard() {
         return logicCard;
     }
@@ -47,10 +43,6 @@ public class Card extends StackPane {
     public CardImage getCardImageEnum() {
         return cardImageEnum;
     }
-
-//    public ImageView getCardImage() { TODO understand if rly needed
-//        return cardImage;
-//    }
 
     public void setCardImageEnum(CardImage cardImageEnum) {
         this.cardImageEnum = cardImageEnum;

@@ -1,9 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
+import java.util.Optional;
 
 // used for others' ship tiles
 public class OthersShipTileView extends StackPane {
@@ -11,6 +14,7 @@ public class OthersShipTileView extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();
+    private Optional<Tile> logicTile;
 
     public OthersShipTileView() {
         // Set up the top tile image (initially empty)

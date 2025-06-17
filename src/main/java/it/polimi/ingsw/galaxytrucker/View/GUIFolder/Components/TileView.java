@@ -1,10 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
+import java.util.Optional;
 
 // used for user ship tiles
 public class TileView extends StackPane {
@@ -15,6 +18,8 @@ public class TileView extends StackPane {
     private boolean isClickable = true;
     private boolean isFull = false;
     private int rotation = 0; // 0, 90, 180, 270 only
+    private TileImage tileImageEnum;
+    private Tile logicTile;
 
     public TileView() {
         // Set up the top tile image (initially empty)
@@ -36,12 +41,15 @@ public class TileView extends StackPane {
         getChildren().addAll(backgroundImage, tileImage, overlayButton);
     }
 
-    public void setTileImage(ImageView img) {
-        tileImage.setImage(img.getImage());
+    public void setLogicTile(Tile logicTile) {
+        this.logicTile = logicTile;
+        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+
+        tileImage.setImage(tileImageEnum.getImage());
     }
 
-    public ImageView getTileImage() {
-        return this.tileImage;
+    public Tile getLogicTile() {
+        return this.logicTile;
     }
 
     public void clearTileImage() {

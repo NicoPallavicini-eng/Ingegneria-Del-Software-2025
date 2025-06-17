@@ -3,6 +3,8 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import javafx.geometry.Insets;
@@ -14,11 +16,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BuildingSceneTilePile extends MyScene {
     private Scene scene;
     private Game game;
+    private List<Tile> tilePile;
     private String nickname;
     private BorderPane root;
     private TilePileGrid tilePileGrid;
@@ -34,13 +38,14 @@ public class BuildingSceneTilePile extends MyScene {
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
+        this.tilePile = game.getTilePile().getTilePile();
 
         this.background = new Background();
         BorderPane layout = new BorderPane();
         this.root = new BorderPane();
 
         // see TilePile
-        this.tilePileGrid = new TilePileGrid(this);
+        this.tilePileGrid = new TilePileGrid(this, tilePile);
         StackPane centerContent = new StackPane(tilePileGrid);
 
         // --- Bottom Buttons ---
@@ -106,7 +111,7 @@ public class BuildingSceneTilePile extends MyScene {
     }
 
     public void pickUpTile(TilePileTileView tile) {
-        buildingSceneUserShip.setInHand(tile.getTileImage(), tile.getRotation());
+        buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
         tile.setOpacity(0.2); // faintly visible
         tile.setClickable(false);
     }

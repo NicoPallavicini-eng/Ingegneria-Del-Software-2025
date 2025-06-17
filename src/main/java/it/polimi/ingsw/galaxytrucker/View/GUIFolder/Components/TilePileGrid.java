@@ -2,7 +2,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneTilePile;
-import javafx.scene.image.Image;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -25,39 +25,29 @@ public class TilePileGrid extends Pane {
 
     private final TilePileTileView[][] cells = new TilePileTileView[ROWS][COLS];
 
-    public TilePileGrid(BuildingSceneTilePile buildingSceneTilePile) {
-        GridPane pile = new GridPane();
+    public TilePileGrid(BuildingSceneTilePile buildingSceneTilePile, List<Tile> tilePile) {
         this.buildingSceneTilePile = buildingSceneTilePile;
+
+        GridPane pile = new GridPane();
         pile.setHgap(5);
         pile.setVgap(5);
         pile.setLayoutX(LEFT_BORDER);
         pile.setLayoutY(TOP_BORDER);
 
-        List<TileImage> shuffledTiles = Arrays.stream(TileImage.values())
-                .filter(tile -> !tile.name().startsWith("centralCabin"))
-                .collect(Collectors.toCollection(ArrayList::new));
+        List <TilePileTileView> tiles = new ArrayList<>();
+        for (Tile tile : tilePile) {
+            TilePileTileView guiTile = new TilePileTileView(tile);
+            guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
+            tiles.add(guiTile);
+        }
 
-        Collections.shuffle(shuffledTiles);
+        int i = 0;
 
-        int imageIndex = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
+                TilePileTileView tile = tiles.get(i);
 
-                TilePileTileView tile = new TilePileTileView();
-                tile.setPrefSize(TILE_SIZE, TILE_SIZE);
-
-                try {
-                    TileImage tileImage = shuffledTiles.get(imageIndex);
-                    tile.setTileImage(tileImage.getImage());
-                } catch (Exception e) {
-                    System.err.println("Failed to load image at: " + (imageIndex));
-                    e.printStackTrace();
-                }
-
-                int finalRow = row;
-                int finalCol = col;
                 tile.getOverlayButton().setOnAction(e -> {
-                    System.out.println("Clicked tile at: " + finalRow + ", " + finalCol);
                     if (tile.isClickable()) {
                         buildingSceneTilePile.pickUpTile(tile);
                     } else {
@@ -67,7 +57,7 @@ public class TilePileGrid extends Pane {
 
                 cells[row][col] = tile;
                 pile.add(tile, col, row);
-                imageIndex++;
+                i++;
 
                 if (row == ROWS - 1 && col == 1) {
                     break;
@@ -83,8 +73,7 @@ public class TilePileGrid extends Pane {
     public ImageView getTileImageView (TilePileTileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (cells[i][j].getTileImage().getImage() == tile.getTileImage().getImage()) {
-                    return cells[i][j].getTileImage();
+                if (cells[i][j].getLogicTile().equals(tile.getLogicTile())) {                    return cells[i][j].getTileImage();
                 }
                 if (i == ROWS - 1 && j == 1) {
                     break;
@@ -111,7 +100,7 @@ public class TilePileGrid extends Pane {
     public ImageView getTileImageView (TileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (cells[i][j].getTileImage().getImage() == tile.getTileImage().getImage()) {
+                if (cells[i][j].getLogicTile().equals(tile.getLogicTile())) {
                     return cells[i][j].getTileImage();
                 }
                 if (i == ROWS - 1 && j == 1) {

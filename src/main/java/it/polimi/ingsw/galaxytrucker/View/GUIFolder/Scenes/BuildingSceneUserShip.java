@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class BuildingSceneUserShip extends MyScene {
     private Scene scene;
     private Game game;
+    private Player user;
     private String nickname;
     private BorderPane root;
     private UserShipGrid userShipGrid;
@@ -39,7 +41,7 @@ public class BuildingSceneUserShip extends MyScene {
         this.nickname = nickname;
         this.sceneManager = sceneManager;
 
-        Player user = checkPlayer(nickname);
+        user = checkPlayer(nickname);
         Ship userShip = user.getShip();
 
         this.background = new Background();
@@ -84,6 +86,14 @@ public class BuildingSceneUserShip extends MyScene {
         sceneManager.setUserShipScene(this);
     }
 
+    public Game getGame(){
+        return game;
+    }
+
+    public Player getUser(){
+        return user;
+    }
+
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
                 .filter(player -> player.getNickname().equals(nickname))
@@ -91,12 +101,8 @@ public class BuildingSceneUserShip extends MyScene {
         return playerOptional.orElse(null);
     }
 
-    public void setReserved(ImageView img, int slot, int rotation) { // TODO check if useful
-        userShipGrid.setResTile(slot, img, rotation);
-    }
-
-    public void setInHand(ImageView img, int rotation) {
-        userShipGrid.setHandTile(img, rotation);
+    public void setInHand(Tile tile, int rotation) {
+        userShipGrid.setHandTile(tile, rotation);
         rotateVisible = true;
         userShipGrid.updateRotateVisible(rotateVisible);
     }
@@ -110,10 +116,9 @@ public class BuildingSceneUserShip extends MyScene {
     }
 
     public void emptyHand() {
-        userShipGrid.getHandTile().clearTileImage();
+        userShipGrid.getHandTile().setLogicTile(null);
         userShipGrid.getHandTile().setClickable(false);
-        rotateVisible = false;
-        userShipGrid.updateRotateVisible(rotateVisible);
+        userShipGrid.updateRotateVisible(false);
     }
 
     public UserShipGrid getUserShipGrid() {

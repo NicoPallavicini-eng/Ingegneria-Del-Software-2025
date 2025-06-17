@@ -1,10 +1,12 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
+import java.util.Optional;
 
 // used for reserved tiles and hand
 public class ReservedTileView extends StackPane {
@@ -15,6 +17,8 @@ public class ReservedTileView extends StackPane {
     private boolean isClickable = true;
     private boolean isFull = false;
     private int rotation = 0; // 0, 90, 180, 270 only
+    private TileImage tileImageEnum;
+    private Tile logicTile;
 
     public ReservedTileView() {
         // Set up the top tile image (initially empty)
@@ -36,8 +40,15 @@ public class ReservedTileView extends StackPane {
         getChildren().addAll(backgroundImage, tileImage, overlayButton);
     }
 
-    public void setTileImage(ImageView img) {
-        tileImage.setImage(img.getImage());
+    public Tile getLogicTile() {
+        return logicTile;
+    }
+
+    public void setLogicTile(Tile tile) {
+        this.logicTile = tile;
+        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+
+        tileImage.setImage(tileImageEnum.getImage());
     }
 
     public ImageView getTileImage() {
