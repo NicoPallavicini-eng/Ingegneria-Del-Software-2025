@@ -660,7 +660,7 @@ public class JsonCardParsing {
             for(CannonballParse cannonballParse: battleZoneCardLParse.cannonballList){
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball,Direction.valueOf(cannonballParse.direction),RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
-            CombatZoneCardL combatZoneCard = new CombatZoneCardL(battleZoneCardLParse.levelTwo,battleZoneCardLParse.used);
+            CombatZoneCardL combatZoneCard = new CombatZoneCardL(battleZoneCardLParse.levelTwo,battleZoneCardLParse.used, cannonball2);
             combatZoneLCardList.add(combatZoneCard);
             combatZoneCard.setName(connectorKey);
         }
@@ -677,7 +677,7 @@ public class JsonCardParsing {
             for (CannonballParse cannonballParse : battleZoneCardNotLParse.cannonballList) {
                 cannonball2.add(new Cannonball(cannonballParse.bigCannonball, Direction.valueOf(cannonballParse.direction), RowOrColumn.valueOf(cannonballParse.rowOrColumn)));
             }
-            CombatZoneCardNotL combatZoneCard = new CombatZoneCardNotL(battleZoneCardNotLParse.levelTwo, battleZoneCardNotLParse.used);
+            CombatZoneCardNotL combatZoneCard = new CombatZoneCardNotL(battleZoneCardNotLParse.levelTwo, battleZoneCardNotLParse.used, cannonball2);
             combatZoneNotLCardList.add(combatZoneCard);
             combatZoneCard.setName(connectorKey);
         }

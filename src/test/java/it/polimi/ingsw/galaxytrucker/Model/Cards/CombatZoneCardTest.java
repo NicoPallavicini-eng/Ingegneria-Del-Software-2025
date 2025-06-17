@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CombatZoneCardTest {
     List<Cannonball> cannonballList = new ArrayList<>();
 
-    CombatZoneCard combatZoneCard = new CombatZoneCardL(true, true);
+    CombatZoneCard combatZoneCard = new CombatZoneCardL(true, true, cannonballList);
 
     @Test
     void lessCrewProcessTest() { // passed
