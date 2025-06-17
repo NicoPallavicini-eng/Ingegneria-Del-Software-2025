@@ -741,6 +741,7 @@ public class EventHandler implements Serializable {
 
                 if ((cargoTile.getSlotsNumber() - listGoods.size()) > 0) {
                     cargoTile.addBlock(event.resource());
+                    ship.removeBlockCargoFromCards(event.resource());
                 } else {
                     throw new IllegalEventException("CargoTile is full");
                 }
@@ -822,6 +823,8 @@ public class EventHandler implements Serializable {
     //FATTO
     public static void handleEvent(EjectPeopleEvent event) throws IllegalEventException {
         int counter = 0;
+        int row = 0;
+        int column = 0;
         Ship ship = event.player().getShip();
         synchronized (ship) {
             CabinTileVisitor cabinTileVisitor = new CabinTileVisitor();
@@ -829,8 +832,6 @@ public class EventHandler implements Serializable {
             for (List<Integer> listOfParameters : event.people()) {
                 for (Integer parameter : listOfParameters) {
                     cabinTileVisitor = new CabinTileVisitor();
-                    int row = 0;
-                    int column = 0;
                     int peopleInCabin = 0;
                     int peopleToLoose = 0;
                     if (counter == 0) {
@@ -839,21 +840,23 @@ public class EventHandler implements Serializable {
                     if (counter == 1) {
                         column = parameter;
                     }
-                    Optional<Tile> optionalTile = ship.getTileOnFloorPlan(row, column);
+                    if(counter == 2){
+                        Optional<Tile> optionalTile = ship.getTileOnFloorPlan(row, column);
 
-                    if (optionalTile.isPresent()) {
-                        Tile tile = optionalTile.get();
-                        tile.accept(cabinTileVisitor);
-                    } else {
-                        throw new IllegalEventException("Selected Tile is not present");
-                    }
+                        if (optionalTile.isPresent()) {
+                            Tile tile = optionalTile.get();
+                            tile.accept(cabinTileVisitor);
+                        } else {
+                            throw new IllegalEventException("Selected Tile is not present");
+                        }
 
-                    //tile.accept(cabinTileVisitor);
-                    ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
-                    if (listCabin.size() != 0) {
-                        cabin = listCabin.getFirst();
-                    } else {
-                        throw new IllegalEventException("Selected Tile is not cabin");
+                        //tile.accept(cabinTileVisitor);
+                        ArrayList<CabinTile> listCabin = cabinTileVisitor.getList();
+                        if (listCabin.size() != 0) {
+                            cabin = listCabin.getFirst();
+                        } else {
+                            throw new IllegalEventException("Selected Tile is not cabin");
+                        }
                     }
 
                     //controllo che il tile è cabinTile
@@ -885,8 +888,8 @@ public class EventHandler implements Serializable {
             for (List<Integer> listOfParameters : event.people()) {
                 for (Integer parameter : listOfParameters) {
                     cabinTileVisitor = new CabinTileVisitor();
-                    int row = listOfParameters.get(0);
-                    int column = listOfParameters.get(1);
+                    row = listOfParameters.get(0);
+                    column = listOfParameters.get(1);
 
                     int peopleInCabin = 0;
                     int peopleToLoose = 0;
