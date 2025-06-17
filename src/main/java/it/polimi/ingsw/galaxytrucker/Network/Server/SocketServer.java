@@ -41,6 +41,7 @@ public class SocketServer {
             SocketClientHandler handler = new SocketClientHandler(clientSocket,this.serverController,this,objIn,objOut);
             synchronized (this.clients) {
                 clients.add(handler);
+                serverController.setSocketPlayers(this.clients);
             }
 
             new Thread(() -> {

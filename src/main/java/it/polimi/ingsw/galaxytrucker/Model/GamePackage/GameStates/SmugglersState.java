@@ -74,6 +74,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             }
             else{
                 smugglersSlayer = currentPlayer;
+                game.notifyObservers(game, "smugglersDefeated");
                 reckoning();
             }
         }
@@ -103,6 +104,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             else{
                 slayerCommits = false;
                 handledPlayers.add(smugglersSlayer);
+                game.notifyObservers(game, "smugglersNoChoice");
                 checkNext();
             }
         }

@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class SocketClient implements VirtualClientSocket {
+public class SocketClient {
     //final BufferedReader input;
     final VirtualServerSocket server;
     private final ObjectInputStream objIn;
