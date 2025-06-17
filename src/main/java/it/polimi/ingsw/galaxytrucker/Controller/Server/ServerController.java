@@ -556,6 +556,14 @@ public class ServerController {
 
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
         switch (command) {
+            case "GAME"->{
+                Message newMessage;
+                newMessage = new Message("Game",game,"NewGame");
+                newMessage.setNickname(msg.getNickname());
+                objOut.writeObject(newMessage);
+                objOut.flush();
+                objOut.reset();
+            }
             case "help" -> {
                 Message newMessage;
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
