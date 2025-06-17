@@ -43,7 +43,6 @@ public class Ship implements Serializable {
         orangeAlien=false;
         row_max=5;
         col_max=7;
-
         tileInHand=null;
         floorplanArrayList = new ArrayList<>();
         for(int i=0;i<row_max;i++){
@@ -53,14 +52,15 @@ public class Ship implements Serializable {
             }
         }
     }
-    public Tile getLastPlacedTile(){
 
+    public Tile getLastPlacedTile(){
         return lastPlacedTile;
     }
-    public void setLastPlacedTile(Tile lastPlacedTile){
 
+    public void setLastPlacedTile(Tile lastPlacedTile){
         this.lastPlacedTile = lastPlacedTile;
     }
+
     public Tile getTileInHand() {
         return tileInHand;
     }
@@ -99,7 +99,6 @@ public class Ship implements Serializable {
             index++;
         }
         return -1;
-
     }
 
     /**function finds a column of Tile if present

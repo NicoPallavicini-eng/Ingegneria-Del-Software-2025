@@ -112,10 +112,13 @@ public class WaitingScene extends MyScene{
         dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
 
         Optional<String> result = dialog.showAndWait();
+
         result.ifPresent(name -> {
             this.nickname = name;
             connectButton.setDisable(true);  // Disable after success
             nicknameFeedbackLabel.setText("Nickname set: " + nickname);
+            String message = "\\connect " + nickname;
+            // TODO send to server with VirtualServerSocketInterface with sendMessageToServer
             nicknameSet = true;
             checkIfReadyToProceed();
         });
