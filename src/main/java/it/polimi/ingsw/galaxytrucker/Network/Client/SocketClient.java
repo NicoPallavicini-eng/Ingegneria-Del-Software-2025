@@ -32,7 +32,9 @@ public class SocketClient implements VirtualClientSocket {
         this.server = new VirtualServerSocket(objOut);
         if (choice == 2) {
             server.sendMessageToServer("GAME", "");
-            ui = new GUI(game, ""); // TODO finish
+            GUI.launchGUI(game, "test"); // TODO update
+            ui = GUI.getInstance();
+
         } else {
             ui = new TUI();
             ui.printTitle();

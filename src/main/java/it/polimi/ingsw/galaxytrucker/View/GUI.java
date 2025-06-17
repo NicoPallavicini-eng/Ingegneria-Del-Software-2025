@@ -13,31 +13,53 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-
 public class GUI extends Application implements UI {
+
+    // Static fields used for initialization before launch()
+    private static Game staticGame;
+    private static String staticNickname;
+    private static GUI instance;
+
+    // Instance fields
     private Game game;
     private String nickname;
     private Stage stage;
     private SceneManager sceneManager;
     private boolean isFirstPlayer;
 
-    public GUI(Game game, String nickname) {
-        this.game = game;
+    // Called from outside to launch the GUI
+    public static void launchGUI(Game game, String nickname) {
+        staticGame = game;
+        staticNickname = nickname;
+        Application.launch(GUI.class);
+    }
+
+    public GUI() {
+        // JavaFX requires a no-args constructor
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        instance = this;
+        this.game = staticGame;
+        this.nickname = staticNickname;
         this.isFirstPlayer = game.getListOfActivePlayers().size() == 1;
-        this.nickname = nickname; // TODO change without nickname
-        this.stage = new Stage();
+        this.stage = primaryStage;
         this.sceneManager = new SceneManager(this.game, this.stage, this.nickname, this.isFirstPlayer);
+
+        stage.setTitle("Galaxy Trucker");
+        // TODO: set the sceneManager's initial scene
+        stage.show();
+    }
+
+
+    public static GUI getInstance() {
+        return instance;
     }
 
     @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
-        // TODO: Update nickname field in GUI if applicable
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        // TODO: Implement start logic (launch GUI scene, show window)
     }
 
     @Override
@@ -147,8 +169,6 @@ public class GUI extends Application implements UI {
     private void checkCard(Card card) {
         // TODO: Interpret card and update GUI
     }
-
-    // Static helper (optional)
 
     public void printHelpMessage() {
         // TODO: Show help dialog/popup in GUI
