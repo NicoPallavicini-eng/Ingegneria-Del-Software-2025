@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
+
 import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 import it.polimi.ingsw.galaxytrucker.JsonCardParsing;
 import it.polimi.ingsw.galaxytrucker.JsonParsing;

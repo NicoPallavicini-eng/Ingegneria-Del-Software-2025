@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class TUI implements UI {
     private Game game;
     private String nickname;

@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 
 import java.io.Serializable;
 
+
 public class CabinTile extends Tile implements Serializable {
     private CabinInhabitants inhabitants;
     private final boolean mainCapsule;

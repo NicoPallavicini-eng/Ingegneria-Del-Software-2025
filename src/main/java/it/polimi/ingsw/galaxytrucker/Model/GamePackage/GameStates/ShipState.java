@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 
+
 import it.polimi.ingsw.galaxytrucker.Model.Cards.ShipCard;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.EjectPeopleEvent;

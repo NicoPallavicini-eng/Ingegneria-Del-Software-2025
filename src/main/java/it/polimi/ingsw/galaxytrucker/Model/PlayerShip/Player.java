@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 
 import java.io.Serializable;
 
+
 public class Player implements Serializable {
     private String nickname;
     private Ship ship;

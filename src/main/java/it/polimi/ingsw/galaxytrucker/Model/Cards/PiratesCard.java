@@ -7,6 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import java.io.Serializable;
 import java.util.List;
 
+
 public class PiratesCard extends Card implements Serializable {
     private final int firepower;
     private final int credits;

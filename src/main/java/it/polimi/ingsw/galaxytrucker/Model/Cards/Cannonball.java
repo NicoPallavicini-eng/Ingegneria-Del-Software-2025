@@ -13,6 +13,7 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
+
 public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn, int diceRoll) implements Serializable {
 
     public Cannonball(boolean bigCannonball, Direction direction, RowOrColumn rowOrColumn){

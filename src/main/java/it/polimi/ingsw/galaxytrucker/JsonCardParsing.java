@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
