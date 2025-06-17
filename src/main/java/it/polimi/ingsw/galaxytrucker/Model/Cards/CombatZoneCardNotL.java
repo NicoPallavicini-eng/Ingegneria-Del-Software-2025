@@ -20,15 +20,6 @@ public class CombatZoneCardNotL extends CombatZoneCard implements Serializable {
 
     public String getName() { return name; }
 
-//    private static List<Cannonball> createCannonballList() {
-//        List <Cannonball> cannonballList = new ArrayList<>();
-//        cannonballList.add(new Cannonball(false, Direction.NORTH, RowOrColumn.COLUMN));
-//        cannonballList.add(new Cannonball(false, Direction.WEST, RowOrColumn.ROW));
-//        cannonballList.add(new Cannonball(false, Direction.EAST, RowOrColumn.ROW));
-//        cannonballList.add(new Cannonball(true, Direction.SOUTH, RowOrColumn.COLUMN));
-//        return cannonballList;
-//    }
-
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }
