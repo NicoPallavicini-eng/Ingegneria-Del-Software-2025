@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 
 import java.io.Serializable;
 
+
 public abstract class Card implements Serializable {
     private final boolean levelTwo;
     private boolean used;

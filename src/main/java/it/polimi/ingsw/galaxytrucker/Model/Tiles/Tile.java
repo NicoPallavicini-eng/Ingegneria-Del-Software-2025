@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents the basic tiel of the game with connectors, orientation and state.
+ * This class represents the basic tile of the game with connectors, orientation and state.
  */
+
 
 public class Tile implements Serializable {
     private ConnectorType northConnector;

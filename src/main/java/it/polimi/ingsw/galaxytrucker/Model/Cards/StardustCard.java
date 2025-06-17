@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 
 import java.io.Serializable;
 
+
 public class StardustCard extends Card implements Serializable {
     private String name;
 

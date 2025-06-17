@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 
 import java.io.Serializable;
 
+
 public class SlaversCard extends Card implements Serializable {
     private final int firepower;
     private final int credits;

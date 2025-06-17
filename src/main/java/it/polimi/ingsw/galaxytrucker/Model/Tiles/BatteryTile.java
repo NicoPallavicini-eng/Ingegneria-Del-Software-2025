@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 
 import java.io.Serializable;
