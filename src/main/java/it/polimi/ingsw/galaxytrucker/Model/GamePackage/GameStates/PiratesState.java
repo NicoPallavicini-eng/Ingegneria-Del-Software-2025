@@ -18,7 +18,7 @@ import java.util.Optional;
 /*Players fight pirates according to their travel order,
 once pirates have been slain or all player have been defeated
 the reckoning phase starts for all defeated players
-lastly the player that defeated pirates can loot them if they wish iin the claiming phase
+lastly the player that defeated pirates can loot them if they wish in the claiming phase
 */
 
 public class PiratesState extends TravellingState implements Serializable {
@@ -33,13 +33,13 @@ public class PiratesState extends TravellingState implements Serializable {
     public PiratesState(Game game, PiratesCard card) {
         super(game, card);
         currentCard = card;
-
     }
 
     public void init(){
         currentPlayer = game.getListOfActivePlayers().get(0);
         defeatedPlayers = new ArrayList<>();
         defendedPlayers = new ArrayList<>();
+        game.notifyObservers(game, "pirates");
     }
 
     public void handleEvent(ActivateCannonsEvent event){

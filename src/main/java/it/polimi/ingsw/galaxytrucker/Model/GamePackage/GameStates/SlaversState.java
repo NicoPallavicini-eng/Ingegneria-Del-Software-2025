@@ -31,6 +31,7 @@ public class SlaversState extends TravellingState implements Serializable {
         currentPlayer = game.getListOfActivePlayers().get(0);
         defeatedPlayers = new ArrayList<>();
         handledPlayers = new ArrayList<>();
+        game.notifyObservers(game, "slavers");
     }
 
     public void handleEvent(ActivateCannonsEvent event){
@@ -50,6 +51,7 @@ public class SlaversState extends TravellingState implements Serializable {
             }
             else{
                 slaversSlayer = currentPlayer;
+                game.notifyObservers(game, "slaversDefeated");
                 reckoning();
             }
         }

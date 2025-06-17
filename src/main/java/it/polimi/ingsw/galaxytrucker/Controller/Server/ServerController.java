@@ -334,7 +334,7 @@ public class ServerController {
                             Player player = checkPlayer(rmiClient.getNickname());
                             if (player != null){
                                 if (!targetNick.equals(player.getNickname())) {
-                                    rmiClient.printMessage("\n" + targetNick + "Has choosen to do nothing.\n");
+                                    rmiClient.printMessage("\n" + targetNick + "Has chosen to do nothing.\n");
                                 }
                             }
                         }
@@ -363,7 +363,7 @@ public class ServerController {
                         for (VirtualClient rmiClient : rmiClients){
                             Player player = checkPlayer(rmiClient.getNickname());
                             if (player != null){
-                                rmiClient.printMessage("\n" + "You are now in the abbondend station state.\n" +
+                                rmiClient.printMessage("\n" + "You are now in the abbandoned station state.\n" +
                                         "If you have enough crew, you can decide to land on the station (/claimreward).\n" +
                                         "Once you landed you can decide to add, remove or switch cargo from your ship. If you don't want to do anything, type /nochoice.\n" +
                                         "Once you are done with the cargo phase, you have to signal it with the /done command.\n");
@@ -393,7 +393,7 @@ public class ServerController {
                         for (VirtualClient rmiClient : rmiClients) {
                             Player player = checkPlayer(rmiClient.getNickname());
                             if (player != null) {
-                                rmiClient.printMessage("\nYou are now in the stardust state.\n You will lose 1 travel day for each exposed cnnectors.");
+                                rmiClient.printMessage("\nYou are now in the stardust state.\n You will lose 1 travel day for each exposed connectors.");
                                 rmiClient.viewMyShip(game, rmiClient.getNickname());
                                 rmiClient.printMessage("\n You will lose: " + player.getShip().getExposedConnectors() + " travel days.\n");
                             }
@@ -413,6 +413,87 @@ public class ServerController {
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
+                }
+                case "epidemic" -> {
+                    try{
+                        for (VirtualClient rmiClient : rmiClients){
+                            if(rmiClient != null){
+                                rmiClient.printMessage("\nYou are now in the epidemic state.\n"+
+                                        "You will lose 1 crew member from every occupied cabin that is joined to another occupied cabin.\n");
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "pirates" -> {
+                    try{
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null){
+                                rmiClient.printMessage("\nYou are now in the pirates state.\n" +
+                                        "Every player have to fight the pirates. The player that defeats the pirates can loot them with the /claimreward command.\n");
+                                //TODO: finish this card
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "ship" -> {
+                    try{
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                rmiClient.printMessage("\nYou are now in the ship state.\n"+
+                                        "Every player in order has to choose whether to eject people (/ejectpeople)  if they have enough or no action (/noaction).\n" +
+                                        "Now playing: " + ((ShipState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                rmiClient.viewMyShip(game, rmiClient.getNickname());
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "slavers" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null) {
+                                rmiClient.printMessage("\nYou are now in the slavers state.\n" +
+                                        "Every player in order has to choose whether to activate cannons (/activatecannons) or no action (/noaction).\n" +
+                                        "Now playing: " + ((SlaversState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                rmiClient.viewMyShip(game, rmiClient.getNickname());
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "slaversDefeated" -> {
+                    try {
+                        for (VirtualClient rmiClient : rmiClients) {
+                            Player player = checkPlayer(rmiClient.getNickname());
+                            if (player != null && !player.getNickname().equals(((SlaversState) gameState).getSlaversSlayer().getNickname())) {
+                                rmiClient.printMessage("\nThe slavers have been defeated by: " +  ((SlaversState)gameState).getSlaversSlayer().getNickname());
+                                rmiClient.viewMyShip(game, rmiClient.getNickname());
+                            }
+                            else if (player.getNickname().equals(((SlaversState) gameState).getSlaversSlayer().getNickname())){
+                                rmiClient.printMessage("\nYou have defeated the slavers! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "smugglers" -> {
+                    //TODO finish this card
+                }
+                case "combatZone" -> {
+                    //TODO finish this card
+                }
+                case "combatZoneL" -> {
+                    //TODO finish this card
                 }
 
             }

@@ -26,6 +26,7 @@ public class ShipState extends TravellingState implements Serializable {
 
     public void init(){
         super.init();
+        game.notifyObservers(game, "ship");
     }
 
     public void handleEvent(EjectPeopleEvent event){
