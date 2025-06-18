@@ -19,7 +19,6 @@ public class Client {
     private static SocketClient socketClient;
     private static UI ui;
 
-
     public static void main(String[] args) throws RemoteException, NotBoundException, InterruptedException {
         System.out.println("Select the method for the UI: (1) TUI, (2) GUI");
         Scanner scanner = new Scanner(System.in);
