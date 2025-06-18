@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,11 +21,15 @@ public class SceneManager extends Application {
     private BuildingSceneTilePile tilePileScene = null;
     private BuildingSceneOthersShip othersShipScene = null;
     private BuildingSceneBoard boardScene = null;
+    private final VirtualClient rmiClient;
+    private final SocketClient socketClient;
 
-    public SceneManager(Game game, Stage stage, String nickname, boolean isFirstPlayer) {
+    public SceneManager(Game game, Stage stage, String nickname, boolean isFirstPlayer, VirtualClient rmiClient, SocketClient socketClient) {
         this.game = game;
         this.nickname = nickname;
         this.isFirtsPlayer = isFirstPlayer;
+        this.rmiClient = rmiClient;
+        this.socketClient = socketClient;
         primaryStage = stage;
         start(primaryStage); // stage comes from instantiation of SceneManager
     }
@@ -37,6 +43,14 @@ public class SceneManager extends Application {
         primaryStage.setTitle("Waiting State");
         primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
+    }
+
+    public VirtualClient getRmiClient() {
+        return rmiClient;
+    }
+
+    public SocketClient getSocketClient() {
+        return socketClient;
     }
 
     public BuildingSceneOthersShip getOthersShipScene() {

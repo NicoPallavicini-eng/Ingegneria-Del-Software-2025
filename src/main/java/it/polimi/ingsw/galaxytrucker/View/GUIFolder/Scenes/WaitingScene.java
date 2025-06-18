@@ -1,6 +1,10 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
+import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
@@ -15,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 public class WaitingScene extends MyScene{
@@ -35,6 +41,8 @@ public class WaitingScene extends MyScene{
     private Button nextButton;
     private SceneManager sceneManager;
     private boolean ownerProceeded = false;
+    private VirtualClient rmiClient;
+    private SocketClient socketClient;
 
     public WaitingScene(Game game, String nickname, boolean isFirstPlayer, SceneManager sceneManager) {
         this.game = game;
@@ -44,6 +52,8 @@ public class WaitingScene extends MyScene{
         this.root = new StackPane();
         this.sceneManager = sceneManager;
         root.getChildren().add(background);
+        this.rmiClient = sceneManager.getRmiClient();
+        this.socketClient = sceneManager.getSocketClient();
 
         nextButton = new Button("Next");
         styleButton(nextButton, "#cc5555");  // Red
@@ -117,7 +127,25 @@ public class WaitingScene extends MyScene{
             this.nickname = name;
             connectButton.setDisable(true);  // Disable after success
             nicknameFeedbackLabel.setText("Nickname set: " + nickname);
-            String message = "\\connect " + nickname;
+            String message = "/connect " + nickname;
+            if (rmiClient != null) {
+                try {
+                    sceneManager.getRmiClient().getServer().handleUserInput(sceneManager.getRmiClient(), message);
+                    sceneManager.getRmiClient().getServer().showMessage(sceneManager.getRmiClient() + message);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (socketClient != null) {
+                try {
+                    socketClient.getServerSocket().sendMessageToServer(message, nickname);
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            else {
+                throw new IllegalEventException("No client connection available to send nickname.");
+            }
             // TODO send to server with VirtualServerSocketInterface with sendMessageToServer
             nicknameSet = true;
             checkIfReadyToProceed();

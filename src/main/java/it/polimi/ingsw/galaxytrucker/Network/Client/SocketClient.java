@@ -37,7 +37,7 @@ public class SocketClient implements VirtualClientSocket {
                 msg = (Message) objIn.readObject();
                 //showMessageFromServer(msg.getMessage());
                 referMethod(msg);
-                GUI.launchGUI(game, "test"); // TODO update
+                GUI.launchGUI(game, "test", null,this); // TODO update
                 ui = GUI.getInstance();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -207,6 +207,10 @@ public void showMessageFromServer(String message){
         }catch(IOException e){
             System.err.println(e.getMessage());
         }
+    }
+
+    public VirtualServerSocket getServerSocket() throws IOException{
+        return server;
     }
 
     public static void main(String[] args) throws IOException, UnknownHostException {
