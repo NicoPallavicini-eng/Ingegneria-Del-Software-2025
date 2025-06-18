@@ -2,6 +2,7 @@ package it.polimi.ingsw.galaxytrucker.Network.Client;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -22,4 +23,5 @@ public interface VirtualClient extends Remote {
     void viewCard(Game game) throws RemoteException;
     void pong()throws RemoteException;
     void viewDeck(Game game, int index) throws RemoteException;
+    VirtualServer getServer() throws RemoteException;
 }

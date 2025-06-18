@@ -17,14 +17,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     final VirtualServer server;
     private String nickname;
     private Game game;
-    private static UI ui; // Later maybe UI???
+    private static UI ui;
 
     public RMIClient(VirtualServer server, int choiceUI) throws RemoteException {
         this.server = server;
         this.game = server.getGame();
         nickname = null;
         if (choiceUI == 2) {
-            GUI.launchGUI(game, "test"); // TODO update
+            GUI.launchGUI(game, "test", this, null); // TODO update
             ui = GUI.getInstance();
         } else {
             ui = new TUI();
@@ -144,5 +144,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     public void viewDeck(Game game, int index) throws RemoteException {
         //ui.viewDeck(game, index);
         //TODO implements viewDeck in TUI
+    }
+
+    public VirtualServer getServer() throws RemoteException {
+        return server;
     }
 }
