@@ -119,6 +119,10 @@ public class WaitingScene extends MyScene{
             nicknameSet = true;
             checkIfReadyToProceed();
         });
+
+        if(game.getListOfPlayers().size() == 1){
+            setPlayersButton.setVisible(true);
+        }
     }
 
     private void handleSetPlayers() {
