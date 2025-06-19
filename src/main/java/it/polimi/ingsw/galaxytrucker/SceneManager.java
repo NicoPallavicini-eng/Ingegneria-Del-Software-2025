@@ -14,20 +14,17 @@ public class SceneManager extends Application {
     private static Stage primaryStage;
     private final Game game;
     private WaitingScene waitingScene;
-    private String nickname;
     private MyScene currentScene;
-    private boolean isFirtsPlayer;
     private BuildingSceneUserShip userShipScene = null;
     private BuildingSceneTilePile tilePileScene = null;
     private BuildingSceneOthersShip othersShipScene = null;
     private BuildingSceneBoard boardScene = null;
     private final VirtualClient rmiClient;
     private final SocketClient socketClient;
+    private String nickname;
 
-    public SceneManager(Game game, Stage stage, String nickname, boolean isFirstPlayer, VirtualClient rmiClient, SocketClient socketClient) {
+    public SceneManager(Game game, Stage stage, VirtualClient rmiClient, SocketClient socketClient) {
         this.game = game;
-        this.nickname = nickname;
-        this.isFirtsPlayer = isFirstPlayer;
         this.rmiClient = rmiClient;
         this.socketClient = socketClient;
         primaryStage = stage;
@@ -36,7 +33,7 @@ public class SceneManager extends Application {
 
     @Override
     public void start(Stage stage) {
-        waitingScene = new WaitingScene(game, nickname, isFirtsPlayer, this);
+        waitingScene = new WaitingScene(game, this);
         primaryStage = stage;
         primaryStage.setScene(waitingScene.getScene());
         primaryStage.setResizable(true); // TODO choose if keep
@@ -96,6 +93,10 @@ public class SceneManager extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public static Stage getPrimaryStage() {

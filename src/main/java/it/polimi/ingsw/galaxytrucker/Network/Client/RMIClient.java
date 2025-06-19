@@ -24,7 +24,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
         this.game = server.getGame();
         nickname = null;
         if (choiceUI == 2) {
-            GUI.launchGUI(game, "test", this, null); // TODO update
+            ui = new GUI();
+            ui.launchGUI(game, this, null); // TODO update - is now ok?
             ui = GUI.getInstance();
         } else {
             ui = new TUI();

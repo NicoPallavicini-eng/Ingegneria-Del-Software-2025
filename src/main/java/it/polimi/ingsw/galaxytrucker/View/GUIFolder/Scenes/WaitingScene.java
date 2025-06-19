@@ -43,11 +43,10 @@ public class WaitingScene extends MyScene{
     private boolean ownerProceeded = false;
     private VirtualClient rmiClient;
     private SocketClient socketClient;
+    private int playersNum;
 
-    public WaitingScene(Game game, String nickname, boolean isFirstPlayer, SceneManager sceneManager) {
+    public WaitingScene(Game game, SceneManager sceneManager) {
         this.game = game;
-        this.nickname = nickname;
-        this.isFirstPlayer = isFirstPlayer;
         this.background = new Background();
         this.root = new StackPane();
         this.sceneManager = sceneManager;
@@ -60,12 +59,13 @@ public class WaitingScene extends MyScene{
         nextButton.setDisable(true);          // Disabled until conditions met
         nextButton.setOnAction(e -> {
             if (isFirstPlayer) {
-                onOwnerClickNext();
-                // Then proceed to the next scene, or whatever else you want to do
-                sceneManager.next(this);
-            } else {
-                // For other players, just go to next scene normally
-                sceneManager.next(this);
+                if (playersNum == game.getListOfPlayers().size()) {
+                    // TODO link with building here
+                    sceneManager.next(this);
+                } else {
+                    // TODO update for others too
+                    // smt like waitForFirst();
+                }
             }
         });
 
@@ -79,7 +79,7 @@ public class WaitingScene extends MyScene{
         setPlayersButton = new Button("Set Players");
         styleButton(setPlayersButton, "#875f87");  // Purple
         setPlayersButton.setOnAction(e -> handleSetPlayers());
-        setPlayersButton.setVisible(isFirstPlayer);
+        setPlayersButton.setVisible(false);
 
         nicknameFeedbackLabel = new Label();
         nicknameFeedbackLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 500;");
@@ -116,7 +116,6 @@ public class WaitingScene extends MyScene{
         dialog.setContentText("Nickname:");
 
         styleDialog(dialog);
-
         Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
         dialogStage.getIcons().clear();
         dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
@@ -128,6 +127,8 @@ public class WaitingScene extends MyScene{
             connectButton.setDisable(true);  // Disable after success
             nicknameFeedbackLabel.setText("Nickname set: " + nickname);
             String message = "/connect " + nickname;
+            sceneManager.setNickname(nickname);
+
             if (rmiClient != null) {
                 try {
                     sceneManager.getRmiClient().getServer().handleUserInput(sceneManager.getRmiClient(), message);
@@ -146,14 +147,14 @@ public class WaitingScene extends MyScene{
             else {
                 throw new IllegalEventException("No client connection available to send nickname.");
             }
-            // TODO send to server with VirtualServerSocketInterface with sendMessageToServer
-            nicknameSet = true;
-            checkIfReadyToProceed();
-        });
 
-        if(game.getListOfPlayers().size() == 1){
-            setPlayersButton.setVisible(true);
-        }
+            if(game.getListOfPlayers().size() == 1){ // TODO understand why "-1" -> maybe sync problem
+                setPlayersButton.setVisible(true);
+                isFirstPlayer = true;
+            }
+
+            nicknameSet = true;
+        });
     }
 
     private void handleSetPlayers() {
@@ -172,39 +173,36 @@ public class WaitingScene extends MyScene{
         result.ifPresent(numberStr -> {
             try {
                 int number = Integer.parseInt(numberStr);
+                this.playersNum = number;
                 setPlayersButton.setDisable(true);  // Disable after success
                 playersFeedbackLabel.setText("Number of players: " + number);
+                String message = "/setnumberofplayers " + number;
+
+                if (rmiClient != null) {
+                    try {
+                        sceneManager.getRmiClient().getServer().handleUserInput(sceneManager.getRmiClient(), message);
+                        sceneManager.getRmiClient().getServer().showMessage(sceneManager.getRmiClient() + message);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (socketClient != null) {
+                    try {
+                        socketClient.getServerSocket().sendMessageToServer(message, nickname);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    throw new IllegalEventException("No client connection available to send players number.");
+                }
+
                 playersSet = true;
-                checkIfReadyToProceed();
+
             } catch (NumberFormatException e) {
                 playersFeedbackLabel.setText("Invalid number, try again");
             }
         });
-    }
-
-    private void checkIfReadyToProceed() {
-        if (isFirstPlayer) {
-            // Owner can click Next only if both nickname and players count set
-            if (nicknameSet && playersSet) {
-                nextButton.setDisable(false);
-            } else {
-                nextButton.setDisable(true);
-            }
-        } else {
-            // Other players can click Next only after owner clicked Next and nickname set
-            if (nicknameSet && ownerProceeded) {
-                nextButton.setDisable(false);
-            } else {
-                nextButton.setDisable(true);
-            }
-        }
-    }
-
-    // Call this when the owner clicks Next:
-    private void onOwnerClickNext() {
-        ownerProceeded = true;
-        nextButton.setDisable(true); // disable after clicking for owner if needed
-        // notify others or update state as needed
     }
 
     public Scene getScene() {

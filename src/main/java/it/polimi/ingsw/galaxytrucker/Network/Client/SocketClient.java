@@ -37,8 +37,8 @@ public class SocketClient {
                 msg = (Message) objIn.readObject();
                 //showMessageFromServer(msg.getMessage());
                 referMethod(msg);
-                GUI.launchGUI(game, "test", null,this); // TODO update
-                ui = GUI.getInstance();
+                ui = new GUI();
+                ui.launchGUI(game, null,this); // TODO update - is now ok?ui = GUI.getInstance();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

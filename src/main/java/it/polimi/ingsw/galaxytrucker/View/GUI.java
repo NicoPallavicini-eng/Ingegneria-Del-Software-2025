@@ -19,7 +19,6 @@ public class GUI extends Application implements UI {
 
     // Static fields used for initialization before launch()
     private static Game staticGame;
-    private static String staticNickname;
     private static GUI instance;
     private static VirtualClient staticRmiClient;
     private static SocketClient staticSocketClient;
@@ -30,14 +29,12 @@ public class GUI extends Application implements UI {
     private String nickname;
     private Stage stage;
     private SceneManager sceneManager;
-    private boolean isFirstPlayer;
     private VirtualClient rmiClient;
     private SocketClient socketClient;
 
     // Called from outside to launch the GUI
-    public static void launchGUI(Game game, String nickname, VirtualClient rmiClient, SocketClient socketClient) {
+    public void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) {
         staticGame = game;
-        staticNickname = nickname;
         staticRmiClient = rmiClient;
         staticSocketClient = socketClient;
         Application.launch(GUI.class);
@@ -51,12 +48,10 @@ public class GUI extends Application implements UI {
     public void start(Stage primaryStage) {
         instance = this;
         this.game = staticGame;
-        this.nickname = staticNickname;
-        this.isFirstPlayer = game.getListOfActivePlayers().size() == 1;
         this.stage = primaryStage;
         this.rmiClient = staticRmiClient;
         this.socketClient = staticSocketClient;
-        this.sceneManager = new SceneManager(this.game, this.stage, this.nickname, this.isFirstPlayer, this.rmiClient, this.socketClient);
+        this.sceneManager = new SceneManager(this.game, this.stage, this.rmiClient, this.socketClient);
 
         stage.setTitle("Galaxy Trucker");
         // TODO: set the sceneManager's initial scene

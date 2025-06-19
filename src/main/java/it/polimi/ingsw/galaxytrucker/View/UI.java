@@ -3,6 +3,9 @@ package it.polimi.ingsw.galaxytrucker.View;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Network.Client.RMIClient;
+import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import javafx.stage.Stage;
 
 public interface UI {
@@ -21,4 +24,6 @@ public interface UI {
     void viewCard(Game game);
     void printHelpMessage();
     void updateGame(Game game);
+
+    void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient);
 }

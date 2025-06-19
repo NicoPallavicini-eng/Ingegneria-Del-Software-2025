@@ -38,9 +38,7 @@ public class GUITrial extends Application {
         currentScene = null;
         Player player = new Player("mewmew", "mew", Color.BLUE);
         game.addPlayer(player);
-        nickname = player.getNickname();
-        boolean isFirstPlayer = game.getListOfActivePlayers().size() == 1;
-        sceneManager = new SceneManager(game, stage, nickname, isFirstPlayer,null, null);
+        sceneManager = new SceneManager(game, stage,null, null);
 
         sceneManager.start(stage);
         currentScene = sceneManager.getScene();
