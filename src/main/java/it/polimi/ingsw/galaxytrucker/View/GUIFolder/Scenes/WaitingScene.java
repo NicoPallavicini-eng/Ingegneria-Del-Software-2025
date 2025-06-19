@@ -148,7 +148,7 @@ public class WaitingScene extends MyScene{
                 throw new IllegalEventException("No client connection available to send nickname.");
             }
 
-            if(game.getListOfPlayers().size() == 1){ // TODO understand why "-1" -> maybe sync problem
+            if(game.getListOfPlayers().size() == 1){ // TODO understand why "-1" -> prob sync problem
                 setPlayersButton.setVisible(true);
                 isFirstPlayer = true;
             }

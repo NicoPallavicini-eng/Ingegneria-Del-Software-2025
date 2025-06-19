@@ -3038,7 +3038,7 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
-                                    client.setMainCabin(game); // TODO fix
+                                    client.setMainCabin(game); // TODO fix - what? how?
                                     client.connectView(game);
                                 } catch (IllegalArgumentException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
