@@ -59,6 +59,7 @@ public class PiratesState extends TravellingState implements Serializable {
                 piratesSlayer = currentPlayer;
                 currentPlayer = null;
                 reckoningPhase = true;
+                game.notifyObservers(game, "piratesDefeated");
                 consequences();
             }
         }

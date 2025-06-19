@@ -8,7 +8,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Server.SocketServer;
 import java.io.*;
 import java.net.Socket;
 
-public class SocketClientHandler implements VirtualClientSocket {
+public class SocketClientHandler {
     private boolean connect = true;
     //final CounterController controller;
     final ServerController serverController;
