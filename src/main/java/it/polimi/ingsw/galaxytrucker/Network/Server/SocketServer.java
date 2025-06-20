@@ -25,6 +25,7 @@ public class SocketServer {
     }
 
     public void run() throws IOException {
+        System.out.println("Socket port: " + listenSocket.getLocalPort());
         Socket clientSocket = null;
         while ((clientSocket = this.listenSocket.accept()) != null) {
 //            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
@@ -34,8 +35,6 @@ public class SocketServer {
             objOut.flush();
             //BufferedInputStream bufferedIn = new BufferedInputStream(, 64 * 1024);
             ObjectInputStream objIn = new ObjectInputStream(clientSocket.getInputStream());
-
-
 
             //SocketClientHandler handler = new SocketClientHandler( clientSocket,this.serverController,this, new BufferedReader(socketRx), new PrintWriter(socketTx,true));
             SocketClientHandler handler = new SocketClientHandler(clientSocket,this.serverController,this,objIn,objOut);

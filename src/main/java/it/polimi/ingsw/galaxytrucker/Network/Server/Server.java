@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -14,16 +15,19 @@ public class Server {
     public SocketServer socketServer;
 
     public Server() throws RemoteException , IOException {
-        
         final String serverName = "AdderServer";
+        int port = 1090;
+        InetAddress localHost = InetAddress.getLocalHost();
+        String ipAddress = localHost.getHostAddress();
 
         VirtualServer server = new RMIServer();
         rmiServer = server;
-        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server, 1090);
+        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server, port);
 
-        Registry registry = LocateRegistry.createRegistry(1090);
+        Registry registry = LocateRegistry.createRegistry(port);
         registry.rebind(serverName, stub);
-        System.out.println("server bound.");
+        System.out.println("server bound, waiting for connection");
+        System.out.println("IP: " + ipAddress + "\n" + "RMI port: " + port);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -38,9 +42,9 @@ public class Server {
         },0,5000);
 
         String host = "localhost";
-        int port = 12343;
+        int portSocket = 12343;
         try{
-            ServerSocket listenSocket = new ServerSocket(port);
+            ServerSocket listenSocket = new ServerSocket(portSocket);
             socketServer = new SocketServer(listenSocket);
             socketServer.run();
         }catch (IOException e){
