@@ -59,8 +59,9 @@ public class WaitingScene extends MyScene{
         nextButton.setDisable(true);          // Disabled until conditions met
         nextButton.setOnAction(e -> {
             if (isFirstPlayer) {
-                if (playersNum == game.getListOfPlayers().size()) {
-                    // TODO link with building here
+                if ( true /* playersNum == game.getListOfPlayers().size() */) {
+                    // TODO link with building state here
+                    sceneManager.updateGame(game);
                     sceneManager.next(this);
                 } else {
                     // TODO update for others too
@@ -79,7 +80,7 @@ public class WaitingScene extends MyScene{
         setPlayersButton = new Button("Set Players");
         styleButton(setPlayersButton, "#875f87");  // Purple
         setPlayersButton.setOnAction(e -> handleSetPlayers());
-        setPlayersButton.setVisible(false);
+        setPlayersButton.setDisable(true);
 
         nicknameFeedbackLabel = new Label();
         nicknameFeedbackLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 500;");
@@ -148,9 +149,11 @@ public class WaitingScene extends MyScene{
                 throw new IllegalEventException("No client connection available to send nickname.");
             }
 
-            if(game.getListOfPlayers().size() == 1){ // TODO understand why "-1" -> prob sync problem
-                setPlayersButton.setVisible(true);
-                isFirstPlayer = true;
+            synchronized(game.getListOfPlayers()) {
+                if (game.getListOfPlayers().size() == 1) { // TODO understand why "-1" -> prob sync problem
+                    setPlayersButton.setDisable(false);
+                    isFirstPlayer = true;
+                }
             }
 
             nicknameSet = true;
@@ -199,6 +202,8 @@ public class WaitingScene extends MyScene{
 
                 playersSet = true;
 
+                nextButton.setDisable(false); // TODO setChecks, now need like this for testing
+
             } catch (NumberFormatException e) {
                 playersFeedbackLabel.setText("Invalid number, try again");
             }
@@ -207,5 +212,9 @@ public class WaitingScene extends MyScene{
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void updateGame(Game game) {
+        this.game = game;
     }
 }

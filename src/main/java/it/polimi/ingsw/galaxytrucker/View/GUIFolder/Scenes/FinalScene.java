@@ -30,4 +30,8 @@ public class FinalScene extends MyScene{
     public Scene getScene() {
         return scene;
     }
+
+    public void updateGame(Game game) {
+        this.game = game;
+    }
 }

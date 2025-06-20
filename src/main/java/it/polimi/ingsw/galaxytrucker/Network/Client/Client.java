@@ -31,7 +31,7 @@ public class Client {
                 Registry registry = LocateRegistry.getRegistry("localhost", 1090);
                 VirtualServer server = (VirtualServer) registry.lookup(serverName);
                 rmi = new RMIClient(server, uiChoice);
-                rmi.run();
+                //rmi.run();
             }
             case 2 -> {
                 //Socket connection

@@ -57,6 +57,7 @@ public class Game implements Serializable, Observable {
     public void addPlayer(Player newPlayer){
         listOfPlayers.add(newPlayer);
         listOfActivePlayers.add(newPlayer);
+        notifyObservers(this, "game");
     }
 
     public int getNumberOfPlayers() {

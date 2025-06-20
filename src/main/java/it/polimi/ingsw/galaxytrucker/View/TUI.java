@@ -7,7 +7,6 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.*;
-import it.polimi.ingsw.galaxytrucker.Network.Client.RMIClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
@@ -803,9 +802,6 @@ public class TUI implements UI {
     public void updateGame(Game game) {
         this.game = game;
     }
-
-    @Override
-    public void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) { /* do nothing */ }
 
     private void printVoidTile(int i,int j){
         String voidTile = "       ";

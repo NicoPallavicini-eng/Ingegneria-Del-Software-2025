@@ -41,7 +41,7 @@ public class BuildingSceneUserShip extends MyScene {
         this.nickname = nickname;
         this.sceneManager = sceneManager;
 
-        user = checkPlayer(nickname);
+        user = checkPlayer(nickname); // TODO fix, rn is null
         Ship userShip = user.getShip();
 
         this.background = new Background();
@@ -151,5 +151,9 @@ public class BuildingSceneUserShip extends MyScene {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void updateGame(Game game) {
+        this.game = game;
     }
 }

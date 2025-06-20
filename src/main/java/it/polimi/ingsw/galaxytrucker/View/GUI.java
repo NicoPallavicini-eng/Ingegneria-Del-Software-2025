@@ -7,22 +7,24 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Network.Client.RMIClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.List;
 
-public class GUI extends Application implements UI {
+public class GUI extends Application implements UI, Serializable {
 
     // Static fields used for initialization before launch()
     private static Game staticGame;
     private static GUI instance;
     private static VirtualClient staticRmiClient;
     private static SocketClient staticSocketClient;
-
 
     // Instance fields
     private Game game;
@@ -31,17 +33,30 @@ public class GUI extends Application implements UI {
     private SceneManager sceneManager;
     private VirtualClient rmiClient;
     private SocketClient socketClient;
+    private static Boolean started;
 
     // Called from outside to launch the GUI
-    public void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) {
+    public static void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) {
         staticGame = game;
         staticRmiClient = rmiClient;
         staticSocketClient = socketClient;
-        Application.launch(GUI.class);
+        started = false;
+
+        Thread t = new Thread (() -> {
+            Application.launch(GUI.class);
+        });
+        t.start();
+
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            t.interrupt();
+        }
     }
 
     public GUI() {
         // JavaFX requires a no-args constructor
+        int i = 0;
     }
 
     @Override
@@ -55,9 +70,17 @@ public class GUI extends Application implements UI {
 
         stage.setTitle("Galaxy Trucker");
         // TODO: set the sceneManager's initial scene
+        started = true;
         stage.show();
-    }
 
+        if (staticRmiClient != null) {
+            if (staticRmiClient instanceof RMIClient rmiRealClient) {
+                rmiRealClient.setGUI(this);
+            }
+        } else if (staticSocketClient != null) {
+            staticSocketClient.setGUI(this);
+        }
+    }
 
     public static GUI getInstance() {
         return instance;
@@ -181,7 +204,9 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void updateGame(Game game) {
-        this.game = game;
+    public void updateGame(Game gameSend) {
+        this.game = gameSend;
+        while(!started);
+        this.sceneManager.updateGame(game);
     }
 }

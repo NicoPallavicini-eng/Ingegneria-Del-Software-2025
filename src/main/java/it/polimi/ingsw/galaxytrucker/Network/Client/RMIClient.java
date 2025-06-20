@@ -12,27 +12,39 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.galaxytrucker.View.GUI.launchGUI;
+
 
 public class RMIClient extends UnicastRemoteObject implements VirtualClient, Runnable {
     final VirtualServer server;
     private String nickname;
     private Game game;
+    private int uiChoice;
     private static UI ui;
 
     public RMIClient(VirtualServer server, int choiceUI) throws RemoteException {
         this.server = server;
-        this.game = server.getGame();
-        nickname = null;
+        this.uiChoice = choiceUI;
+        synchronized (this.server) {
+            this.game = server.getGame();
+        }
         if (choiceUI == 2) {
-            ui = new GUI();
-            ui.launchGUI(game, this, null); // TODO update - is now ok?
-            ui = GUI.getInstance();
+            synchronized(this.server){
+                this.server.connect(this);
+            }
+            launchGUI(game, this, null);
         } else {
             ui = new TUI();
+            this.run();
             ui.printTitle();
             ui.printGuide();
         }
     }
+
+    public void setGUI(GUI gui) {
+        ui = gui;
+    }
+
     @Override
     public void run(){
         try {
@@ -43,7 +55,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
             throw new RuntimeException(e);
         }
         try {
-            this.runCl();
+            if(uiChoice != 2) {
+                this.runCl();
+            }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -149,5 +163,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
 
     public VirtualServer getServer() throws RemoteException {
         return server;
+    }
+
+    @Override
+    public void updateGame(Game game) throws RemoteException {
+        ui.updateGame(game);
     }
 }

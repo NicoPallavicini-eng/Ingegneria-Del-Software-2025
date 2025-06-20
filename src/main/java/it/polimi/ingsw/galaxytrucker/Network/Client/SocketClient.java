@@ -16,6 +16,8 @@ import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.galaxytrucker.View.GUI.launchGUI;
+
 public class SocketClient {
     //final BufferedReader input;
     final VirtualServerSocket server;
@@ -37,8 +39,7 @@ public class SocketClient {
                 msg = (Message) objIn.readObject();
                 //showMessageFromServer(msg.getMessage());
                 referMethod(msg);
-                ui = new GUI();
-                ui.launchGUI(game, null,this); // TODO update - is now ok?ui = GUI.getInstance();
+                launchGUI(game, null,this); // TODO update - is now ok?ui = GUI.getInstance();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -49,6 +50,10 @@ public class SocketClient {
             ui.printTitle();
             ui.printGuide();
         }
+    }
+
+    public void setGUI(GUI gui) {
+        ui = gui;
     }
 
     public void run() throws RemoteException {

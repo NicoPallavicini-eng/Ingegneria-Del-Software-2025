@@ -12,13 +12,15 @@ import java.util.Objects;
 
 public class SceneManager extends Application {
     private static Stage primaryStage;
-    private final Game game;
+    private Game game;
     private WaitingScene waitingScene;
     private MyScene currentScene;
     private BuildingSceneUserShip userShipScene = null;
     private BuildingSceneTilePile tilePileScene = null;
     private BuildingSceneOthersShip othersShipScene = null;
     private BuildingSceneBoard boardScene = null;
+    private TravellingScene travellingScene = null;
+    private FinalScene finalScene = null;
     private final VirtualClient rmiClient;
     private final SocketClient socketClient;
     private String nickname;
@@ -229,5 +231,31 @@ public class SceneManager extends Application {
         primaryStage.setTitle("Building State - Tile Pile");
         primaryStage.setScene(buildingSceneTilePile.getScene());
         primaryStage.show();
+    }
+
+    public void updateGame(Game game) {
+        this.game = game;
+
+        if (userShipScene != null) {
+            userShipScene.updateGame(game);
+        }
+        if (tilePileScene != null) {
+            tilePileScene.updateGame(game);
+        }
+        if (boardScene != null) {
+            boardScene.updateGame(game);
+        }
+        if (othersShipScene != null) {
+            othersShipScene.updateGame(game);
+        }
+        if (waitingScene != null) {
+            waitingScene.updateGame(game);
+        }
+        if (travellingScene != null) {
+            travellingScene.updateGame(game);
+        }
+        if (finalScene != null) {
+            finalScene.updateGame(game);
+        }
     }
 }

@@ -96,6 +96,6 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public Game getGame() {
-        return serverController.getGame();
+        return ServerController.getGame();
     }
 }

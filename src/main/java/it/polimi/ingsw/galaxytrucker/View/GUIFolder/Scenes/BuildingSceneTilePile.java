@@ -122,4 +122,8 @@ public class BuildingSceneTilePile extends MyScene {
         tilePileGrid.setDefault(img, rotation);
         buildingSceneUserShip.emptyHand();
     }
+
+    public void updateGame(Game game) {
+        this.game = game;
+    }
 }

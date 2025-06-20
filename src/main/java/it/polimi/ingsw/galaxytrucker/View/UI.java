@@ -20,10 +20,11 @@ public interface UI {
     void printMyShip(Game game, String nickname);
     void printGuide();
     void printActualShip(Ship ship);
+
     void printTile(Tile tile);
     void viewCard(Game game);
     void printHelpMessage();
     void updateGame(Game game);
 
-    void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient);
+    static void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) { /* default empty */ }
 }

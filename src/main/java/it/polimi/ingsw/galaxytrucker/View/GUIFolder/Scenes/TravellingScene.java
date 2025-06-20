@@ -78,4 +78,8 @@ public class TravellingScene extends MyScene {
     public void setCardImage(Image image) {
         // TODO Optionally expose this method to update the right-side card
     }
+
+    public void updateGame(Game game) {
+        this.game = game;
+    }
 }

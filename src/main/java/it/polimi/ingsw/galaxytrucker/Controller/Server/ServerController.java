@@ -58,8 +58,19 @@ public class ServerController {
         GameState gameState = game.getGameState();
         Thread rmiThread = new Thread(() -> {
             synchronized (rmiClients){
-                if (rmiClients != null && !rmiClients.isEmpty()){
+                if (rmiClients != null && !rmiClients.isEmpty()){ // TODO understand why it goes in here twice when setupping GUI
                     switch (message) {
+                        case "game" -> {
+                            for (VirtualClient rmiClient : rmiClients){
+                                if (rmiClient != null){
+                                    try {
+                                        rmiClient.updateGame(game);
+                                    } catch (RemoteException e) {
+                                        e.printStackTrace(); // tmp
+                                    }
+                                }
+                            }
+                        }
                         case "gamestate" -> {
                             if  (gameState instanceof TravellingState){
                                 if (rmiClients == null || rmiClients.isEmpty()) {
