@@ -40,6 +40,7 @@ public class RMIServer implements VirtualServer {
 
     public static void main(String[] args) throws RemoteException {
         final String serverName = "AdderServer";
+        System.setProperty("java.rmi.server.hostname", "192.168.224.181");
 
         VirtualServer server = new RMIServer();
         VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server, 1090);

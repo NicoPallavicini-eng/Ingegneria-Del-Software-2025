@@ -25,6 +25,7 @@ public class SocketServer {
     }
 
     public void run() throws IOException {
+        System.out.println("Socket port: " + listenSocket.getLocalPort());
         Socket clientSocket = null;
         while ((clientSocket = this.listenSocket.accept()) != null) {
 //            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
@@ -34,8 +35,6 @@ public class SocketServer {
             objOut.flush();
             //BufferedInputStream bufferedIn = new BufferedInputStream(, 64 * 1024);
             ObjectInputStream objIn = new ObjectInputStream(clientSocket.getInputStream());
-
-
 
             //SocketClientHandler handler = new SocketClientHandler( clientSocket,this.serverController,this, new BufferedReader(socketRx), new PrintWriter(socketTx,true));
             SocketClientHandler handler = new SocketClientHandler(clientSocket,this.serverController,this,objIn,objOut);
@@ -79,12 +78,14 @@ public class SocketServer {
         return clients;
     }
     public static void main(String[] args) throws IOException {
-        String host = "localhost";
-        int port = 12343;
-
-        ServerSocket listenSocket = new ServerSocket(port);
-        System.out.println("[SERVER] In ascolto sulla porta " + port);
-        new SocketServer(listenSocket).run();
+        int port = 1091;
+        try {
+            ServerSocket listenSocket = new ServerSocket(port);
+            System.out.println("[SERVER] In ascolto sulla porta " + port);
+            new SocketServer(listenSocket).run();
+        } catch (IOException e) {
+            System.err.println("Error initializing server: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-
 }
