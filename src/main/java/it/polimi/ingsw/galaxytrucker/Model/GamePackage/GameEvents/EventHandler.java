@@ -158,6 +158,18 @@ public class EventHandler implements Serializable {
         ship.setTileOnFloorPlan(4,4,engine2);
         ship.setTileOnFloorPlan(2,5,cannon2);
         ship.setTileOnFloorPlan(1,5,batteryTile);
+
+        cabin1.setFacingUp(true);
+        cabin2.setFacingUp(true);
+        cannon1.setFacingUp(true);
+        cannon2.setFacingUp(true);
+        engine1.setFacingUp(true);
+        engine2.setFacingUp(true);
+        bioadaptorTile.setFacingUp(true);
+        cargoTile.setFacingUp(true);
+        batteryTile.setFacingUp(true);
+        shieldTile.setFacingUp(true);
+        tile.setFacingUp(true);
     }
 
     /*
