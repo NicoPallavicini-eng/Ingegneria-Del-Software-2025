@@ -219,14 +219,19 @@ public void showMessageFromServer(String message){
     }
 
     public static void main(String[] args) throws IOException, UnknownHostException {
-        String host = "localhost";
-        int port = 12343;
+        String host = "192.168.224.181";
+        int port = 1091;
+        try {
+            Socket serverSocket = new Socket(host, port);
 
-        Socket serverSocket = new Socket(host, port);
+            ObjectOutputStream objOut = new ObjectOutputStream(serverSocket.getOutputStream());
+            ObjectInputStream objIn = new ObjectInputStream(serverSocket.getInputStream());
 
-        ObjectOutputStream objOut = new ObjectOutputStream(serverSocket.getOutputStream());
-        ObjectInputStream objIn = new ObjectInputStream(serverSocket.getInputStream());
+            new SocketClient(objIn, objOut, 1).run();
+        } catch (IOException e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        }
 
-        new SocketClient(objIn,objOut,1).run();
-    }
 }

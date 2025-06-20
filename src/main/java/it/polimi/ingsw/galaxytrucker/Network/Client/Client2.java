@@ -29,14 +29,14 @@ public class Client2 {
         switch (connectionChoice) {
             case 1 -> {
                 final String serverName = "AdderServer";
-                Registry registry = LocateRegistry.getRegistry("localhost", 1090);
+                Registry registry = LocateRegistry.getRegistry("192.168.224.181", 1090);
                 VirtualServer server = (VirtualServer) registry.lookup(serverName);
                 rmi = new RMIClient(server, uiChoice);
                 rmi.run();
             }
             case 2 -> {
                 //Socket connection
-                String host = "localhost";
+                String host = "192.168.224.181";
                 int port = 12343;
                 try{
                     Socket serverSocket = new Socket(host, port);
