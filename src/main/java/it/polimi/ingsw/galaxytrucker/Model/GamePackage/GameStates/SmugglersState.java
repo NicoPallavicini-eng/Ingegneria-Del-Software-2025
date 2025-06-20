@@ -210,6 +210,7 @@ public class SmugglersState extends TravellingState implements Serializable {
             throw new IllegalEventException("you have not landed");
         }
         else {
+            event.player().getShip().resetCargoFromCards();
             slayerCommits = false;
             handledPlayers.add(smugglersSlayer);
             checkNext();
