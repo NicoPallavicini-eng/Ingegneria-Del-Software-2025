@@ -124,14 +124,14 @@ public class EventHandler implements Serializable {
                     cabinTile.setFacingUp(true);
                     shipNew.setTileOnFloorPlan(7-5, 7-4, cabinTile);
                     //for testing,create a new ship
-                    buildTestShip(shipNew);
+                    //buildTestShip(shipNew);
                 }
             }
             game.addPlayer(playerNew);
         }
     }
 
-    private static void buildTestShip(Ship ship){
+    private static void handleEvent(Ship ship){
         //CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL, CabinInhabitants.NONE,true,Color.RED,0,0);
 
         CabinTile cabin1 = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.NONE,CabinInhabitants.NONE,false,Color.NONE,1,0);

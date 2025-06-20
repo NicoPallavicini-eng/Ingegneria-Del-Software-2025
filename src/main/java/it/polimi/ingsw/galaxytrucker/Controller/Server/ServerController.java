@@ -2902,6 +2902,15 @@ public class ServerController {
 
     private void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, VirtualClient client) throws RemoteException {
         switch (command) {
+            case "ship" -> {
+                Player player = checkPlayer(client.getNickname());
+                if (player != null) {
+                    Ship ship = player.getShip();
+                    game.getGameState().handleEvent(ship);
+                } else {
+                    client.invalidCommand("You are not connected to the game!");
+                }
+            }
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
                     client.invalidCommand("/help doesn't support parameters, but here is the help command anyway!");

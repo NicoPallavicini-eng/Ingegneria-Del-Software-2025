@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -156,5 +157,9 @@ public abstract class GameState implements Serializable {
     }
 
     protected void disconnectionConsequences(Player p){
+    }
+
+    public void handleEvent(Ship ship) throws IllegalEventException{
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
 }
