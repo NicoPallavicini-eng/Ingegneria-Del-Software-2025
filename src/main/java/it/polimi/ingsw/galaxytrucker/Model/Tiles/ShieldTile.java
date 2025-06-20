@@ -3,7 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 import java.io.Serializable;
 
 public class ShieldTile extends Tile implements Serializable {
-    private ShieldOrientation orientation = ShieldOrientation.NORTHEAST;
+    private ShieldOrientation orientation;
     private boolean activeState;
     private boolean attached;
     private boolean facingUp;

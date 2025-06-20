@@ -81,7 +81,6 @@ public abstract class TravellingState extends GameState implements Serializable 
         synchronized (game.getListOfActivePlayers()) {
             currentPlayer = game.getListOfActivePlayers().getFirst();
         }
-        int i = 0;
     }
 
     public void handleEvent(GiveUpEvent event) throws IllegalEventException {

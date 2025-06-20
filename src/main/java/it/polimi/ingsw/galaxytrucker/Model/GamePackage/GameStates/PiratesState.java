@@ -168,10 +168,10 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ActivateShieldEvent event){
-        if(!reckoningPhase){
+        if(reckoningPhase){
             throw new IllegalEventException("Not time for activating shield");
         }
-        else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
+        else if(defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
             throw new IllegalEventException("you shall not defend");
         }
         Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());

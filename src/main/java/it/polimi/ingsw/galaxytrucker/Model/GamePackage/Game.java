@@ -49,10 +49,10 @@ public class Game implements Serializable, Observable {
     }
 
     public void updateListOfActivePlayers() {
-        synchronized (listOfActivePlayers) {
+        synchronized (this.listOfActivePlayers) {
             List<Player> list = listOfPlayers.stream().filter(p -> p.getShip().getTravelDays() != null && p.getOnlineStatus()).collect(Collectors.toList());
-            listOfActivePlayers.clear();
-            listOfActivePlayers.addAll(list);
+            this.listOfActivePlayers.clear();
+            this.listOfActivePlayers.addAll(list);
         }
     }
 
@@ -71,7 +71,9 @@ public class Game implements Serializable, Observable {
     }
 
     public void sortListOfActivePlayers(){
-        listOfActivePlayers.sort((p1, p2) -> p2.getShip().getTravelDays() - p1.getShip().getTravelDays());
+        synchronized (listOfActivePlayers) {
+            listOfActivePlayers.sort((p1, p2) -> p2.getShip().getTravelDays() - p1.getShip().getTravelDays());
+        }
     }
 
     public GameState getGameState() {

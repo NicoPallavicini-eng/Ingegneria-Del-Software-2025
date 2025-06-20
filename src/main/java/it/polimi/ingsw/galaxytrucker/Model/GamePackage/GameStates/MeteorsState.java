@@ -140,6 +140,7 @@ public class MeteorsState extends TravellingState implements Serializable {
                 for (Player player : game.getListOfActivePlayers()) {
                     player.getShip().disactivateEverything();
                 }
+                handledPlayers.clear();
             }
         }
     }
