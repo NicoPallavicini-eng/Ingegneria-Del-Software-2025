@@ -56,6 +56,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else{
             chosenPlanets.put(event.player(), planets.get(event.planetIndex()));
+            event.player().getShip().addBlocks(new ArrayList<>(planets.get(event.planetIndex()).getBlocks()));
             game.notifyObservers(game, "planetsSelection");
             nextPlayer();
         }
@@ -145,6 +146,7 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
         else {
             synchronized (satisfiedPlayers) {
+                event.player().getShip().resetCargoFromCards();
                 satisfiedPlayers.add(event.player());
                 if (satisfiedPlayers.containsAll(game.getListOfActivePlayers())) {
                     next();
