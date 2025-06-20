@@ -19,7 +19,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     final VirtualServer server;
     private String nickname;
     private Game game;
-    private int uiChoice;
+    private final int uiChoice;
     private static UI ui;
 
     public RMIClient(VirtualServer server, int choiceUI) throws RemoteException {
@@ -35,7 +35,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
             launchGUI(game, this, null);
         } else {
             ui = new TUI();
-            this.run();
             ui.printTitle();
             ui.printGuide();
         }

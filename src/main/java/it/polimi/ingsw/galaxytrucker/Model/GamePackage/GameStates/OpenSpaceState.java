@@ -47,6 +47,7 @@ public class OpenSpaceState extends TravellingState implements Serializable {
                 nextPlayer();
                 if (currentPlayer == null) {
                     next();
+                    //TODO Check if all players chose to do nothing. In that case go to final state.
                 }
             }
         }
@@ -59,6 +60,12 @@ public class OpenSpaceState extends TravellingState implements Serializable {
         }
         else if(ship.getEnginePower() == 0){
             ship.setTravelDays(null);
+            handledPlayers.add(event.player());
+            game.notifyObservers(game, "openSpaceAction");
+            nextPlayer();
+            if (currentPlayer == null) {
+                next();
+            }
         }
         else {
             EventHandler.moveForward(ship, ship.getEnginePower(), game);

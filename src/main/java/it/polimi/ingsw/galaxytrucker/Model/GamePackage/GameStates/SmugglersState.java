@@ -57,6 +57,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         reckoningPhase = false;
         availableResources = currentCard.getBlocksList();
         cargoless = new ArrayList<>();
+        game.notifyObservers(game, "smugglers");
     }
 
     public void handleEvent(ActivateCannonsEvent event){

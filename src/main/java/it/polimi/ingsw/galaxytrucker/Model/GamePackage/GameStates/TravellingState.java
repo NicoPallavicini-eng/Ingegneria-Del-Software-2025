@@ -61,19 +61,19 @@ public abstract class TravellingState extends GameState implements Serializable 
             game.notifyObservers(game, "final");
         } else {
             getGame().setGameState(nextCard.createGameState(game));
-            game.notifyObservers(game, "newcard");
+            //game.notifyObservers(game, "newcard");
         }
         game.getGameState().init();
     }
 
     protected void nextPlayer(){
-        game.notifyObservers(game, "nextplayer");
         int index = game.getListOfActivePlayers().indexOf(currentPlayer) + 1;
         if(index == game.getListOfActivePlayers().size()){
             currentPlayer = null;
             }
         else{
             currentPlayer = game.getListOfActivePlayers().get(index);
+            game.notifyObservers(game, "nextplayer");
         }
     }
 

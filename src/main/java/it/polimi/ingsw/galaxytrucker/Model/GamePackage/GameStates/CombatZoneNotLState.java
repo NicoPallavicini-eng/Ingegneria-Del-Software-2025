@@ -23,6 +23,7 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         currentChallenge = CombatZoneChallenge.CANNONS;
         currentPenalty = CombatZonePenalty.DAYS;
         cargoToLose = currentCard.getCargoLost();
+        game.notifyObservers(game, "combatZoneNotL");
     }
 
     protected void cannonsPenalty(){
