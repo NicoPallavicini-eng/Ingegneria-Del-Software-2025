@@ -22,6 +22,7 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         currentChallenge = CombatZoneChallenge.PEOPLE;
         currentPenalty = CombatZonePenalty.DAYS;
         peoplePenalty();
+        game.notifyObservers(game, "combatZoneL");
     }
 
     protected void peoplePenalty(){

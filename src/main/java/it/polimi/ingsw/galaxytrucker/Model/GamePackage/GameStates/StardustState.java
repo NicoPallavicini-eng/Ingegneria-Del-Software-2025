@@ -25,6 +25,7 @@ public class StardustState extends TravellingState implements Serializable {
         turns = new ArrayList<>(game.getListOfActivePlayers());
         Collections.reverse(turns);
         process();
+        game.notifyObservers(game, "stardust");
     }
 
     private void process(){

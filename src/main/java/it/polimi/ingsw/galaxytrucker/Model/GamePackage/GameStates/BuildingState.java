@@ -47,9 +47,10 @@ public class BuildingState extends GameState implements Serializable {
         game.updateListOfActivePlayers();
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
+        game.notifyObservers(game, "newcard");
         getGame().setGameState(nextCard.createGameState(game));
         game.getGameState().init();
-        game.notifyObservers(game, "newcard");
+
     }
 
     public void init(){
@@ -80,7 +81,6 @@ public class BuildingState extends GameState implements Serializable {
                     if(player.getShip().checkFloorPlanConnection()){
                         synchronized(playersWithLegalShips) {
                             playersWithLegalShips.add(player);
-                            game.notifyObservers(game, "legalship");
                             if (playersWithIllegalShips.contains(player)) {
                                 playersWithIllegalShips.remove(player);
                             }
@@ -89,10 +89,10 @@ public class BuildingState extends GameState implements Serializable {
                     else {
                         synchronized (playersWithLegalShips) {
                             playersWithIllegalShips.add(player);
-                            game.notifyObservers(game, "illegalship");
                         }
                     }
                 }
+                game.notifyObservers(game, "shipPlaced");
             }
 
         }
