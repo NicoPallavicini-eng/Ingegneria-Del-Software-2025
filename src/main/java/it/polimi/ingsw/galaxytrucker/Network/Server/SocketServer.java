@@ -79,12 +79,14 @@ public class SocketServer {
         return clients;
     }
     public static void main(String[] args) throws IOException {
-        String host = "localhost";
-        int port = 12343;
-
-        ServerSocket listenSocket = new ServerSocket(port);
-        System.out.println("[SERVER] In ascolto sulla porta " + port);
-        new SocketServer(listenSocket).run();
+        int port = 1091;
+        try {
+            ServerSocket listenSocket = new ServerSocket(port);
+            System.out.println("[SERVER] In ascolto sulla porta " + port);
+            new SocketServer(listenSocket).run();
+        } catch (IOException e) {
+            System.err.println("Error initializing server: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-
 }

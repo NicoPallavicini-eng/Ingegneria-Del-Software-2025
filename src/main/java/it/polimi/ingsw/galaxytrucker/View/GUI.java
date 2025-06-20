@@ -56,7 +56,6 @@ public class GUI extends Application implements UI, Serializable {
 
     public GUI() {
         // JavaFX requires a no-args constructor
-        int i = 0;
     }
 
     @Override

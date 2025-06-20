@@ -37,7 +37,6 @@ public class Server {
             }
         },0,5000);
 
-        // TODO capire: is socketServer always running???
         String host = "localhost";
         int port = 12343;
         try{
