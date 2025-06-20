@@ -208,7 +208,7 @@ public class ServerController {
                                 try{
                                     for (VirtualClient rmiClient : rmiClients) {
                                         Player player = checkPlayer(rmiClient.getNickname());
-                                        if (player != null && ((TravellingState) gameState).getHandledPlayers().contains(player)) {
+                                        if (player != null && !((TravellingState) gameState).getHandledPlayers().contains(player)) {
                                             rmiClient.viewLeaderboard(game);
                                             rmiClient.printMessage("\n You have to defend yourself from the meteors!\n You can do so activating your shields or cannons.\n If you don't want to defend yourself, type /nochoice.\n");
                                             rmiClient.viewCard(game);
