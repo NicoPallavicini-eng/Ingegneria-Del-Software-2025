@@ -27,16 +27,27 @@ public class Client {
         int connectionChoice = scanner.nextInt();
         switch (connectionChoice) {
             case 1 -> {
+                System.out.println("Connecting via RMI, please choose IP and port of the server:");
+                System.out.print("Enter server IP: ");
+                String serverIP = scanner.next();
+                System.out.println();
+                System.out.print("Enter server port: ");
+                int serverPort = scanner.nextInt();
                 final String serverName = "AdderServer";
-                Registry registry = LocateRegistry.getRegistry("192.168.224.181", 1090);
+                Registry registry = LocateRegistry.getRegistry(serverIP, serverPort);
                 VirtualServer server = (VirtualServer) registry.lookup(serverName);
                 rmi = new RMIClient(server, uiChoice);
                 rmi.run();
             }
             case 2 -> {
                 //Socket connection
-                String host = "192.168.224.181";
-                int port = 12343;
+                System.out.print("Enter server IP: ");
+                String serverIP = scanner.next();
+                System.out.println();
+                System.out.print("Enter server port: ");
+                int serverPort = scanner.nextInt();
+                String host = serverIP;
+                int port = serverPort;
                 try{
                     Socket serverSocket = new Socket(host, port);
                     ObjectOutputStream objOut = new ObjectOutputStream(serverSocket.getOutputStream());
