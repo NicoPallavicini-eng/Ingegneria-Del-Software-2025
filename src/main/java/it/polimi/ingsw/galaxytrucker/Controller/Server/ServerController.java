@@ -1245,9 +1245,7 @@ public class ServerController {
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                                     .filter(player1 -> player1.getNickname().equals(nickname))
                                     .findAny();
-
-                            if (!playerOptional.isPresent()) {
-                                try {
+                             try {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     newMessage = new Message("String", null, "setNickname");
@@ -1274,12 +1272,6 @@ public class ServerController {
                                     objOut.flush();
                                 }
 
-                            } else {
-                                newMessage = new Message("String", null, "Nickname already taken, please choose another one!");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.invalidCommand("Nickname already taken, please choose another one!");
-                            }
                         }
                     } else {
                         newMessage = new Message("String", null, "/connect request one parameter.");

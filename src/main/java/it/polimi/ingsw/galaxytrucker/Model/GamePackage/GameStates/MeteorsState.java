@@ -119,9 +119,7 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
         else{
             handledPlayers.add(event.player());
-            if(handledPlayers.containsAll(game.getListOfActivePlayers())){
-                checkNext();
-            }
+            checkNext();
         }
     }
 

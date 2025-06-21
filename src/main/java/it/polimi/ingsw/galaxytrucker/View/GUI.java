@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Cannonball;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.galaxytrucker.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -208,4 +210,5 @@ public class GUI extends Application implements UI, Serializable {
         while(!started);
         this.sceneManager.updateGame(game);
     }
+
 }
