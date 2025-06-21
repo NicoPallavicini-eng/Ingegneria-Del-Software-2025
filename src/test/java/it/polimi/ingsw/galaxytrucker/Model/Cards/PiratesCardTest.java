@@ -26,7 +26,10 @@ class PiratesCardTest {
     void processTestAccomplishedTrue() {
         Player p = new Player("IP", "nick", Color.RED);
         Ship s = p.getShip();
-        // s.setFirepower(10); TODO fix ship method
+        // s.setFirepower(10);
+        /* todo setfirepower does not set an attribute, it sets the active state of double cannon
+        creating a method that does what you are trying to do would be impossible
+         */
 
         // piratesCard.process(p, state);
 

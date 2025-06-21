@@ -45,12 +45,13 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             }
         }
     }
-    //TODO Pls check dice roll. We need to do minus 5 for row and minus 4 for column but i don't get what you are doing here...
+    //TODO i think diceroll is ok now
     public void checkForCannonOrRemoveRow(Ship ship, int diceRoll) {
+        diceRoll -= 5;
         if (this.bigMeteor) {
             List<Tile> list= ship.getRowListTiles(diceRoll);
             if(!direction.equals(NORTH)){
-                list.addAll(ship.getRowListTiles(diceRoll+1)); //TODO for reference, here i don't get it...
+                list.addAll(ship.getRowListTiles(diceRoll+1)); //add also the previous and following row
                 list.addAll(ship.getRowListTiles(diceRoll-1));
             }
             CannonTileVisitor ctv = new CannonTileVisitor();
@@ -93,6 +94,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
     }
 
     public void checkForCannonOrRemoveColumn(Ship ship, int diceRoll) {
+        diceRoll -= 4;
         if (this.bigMeteor) {
             List<Tile> list = ship.getColumnListTiles(diceRoll);
             if (!direction.equals(NORTH)) {

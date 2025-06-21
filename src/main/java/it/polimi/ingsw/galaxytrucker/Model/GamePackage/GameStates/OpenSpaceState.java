@@ -47,7 +47,6 @@ public class OpenSpaceState extends TravellingState implements Serializable {
                 nextPlayer();
                 if (currentPlayer == null) {
                     next();
-                    //TODO Check if all players chose to do nothing. In that case go to final state.
                 }
             }
         }
