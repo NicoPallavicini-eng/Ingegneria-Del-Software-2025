@@ -3368,7 +3368,7 @@ public class ServerController {
                                     engineRow.add(colEng - 4);
                                     engines.add(engineRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 3) {
+                                for (int j = 0; j < secondParameters.size(); j += 2) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
                                     String colBatStr = secondParameters.get(j++);
@@ -3434,7 +3434,7 @@ public class ServerController {
                                     cannonRow.add(colEng - 4);
                                     cannons.add(cannonRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 3) {
+                                for (int j = 0; j < secondParameters.size(); j += 2) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
                                     String colBatStr = secondParameters.get(j++);

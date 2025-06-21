@@ -36,7 +36,7 @@ public class MeteorsState extends TravellingState implements Serializable {
         super.init();
         handledPlayers = new ArrayList<>();
         meteors = currentCard.getMeteorsList();
-        currentMeteor = meteors.get(0);
+        currentMeteor = meteors.getFirst();
         meteors.remove(0);
         game.notifyObservers(game, "meteors");
     }
