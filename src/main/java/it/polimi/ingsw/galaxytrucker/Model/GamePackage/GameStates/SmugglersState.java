@@ -32,6 +32,7 @@ public class SmugglersState extends TravellingState implements Serializable {
     private boolean reckoningPhase;
     private List<Integer> availableResources;
     private List<Player> cargoless; //used for players that have <= cargo than asked from smugglers
+    private List<Player> playersAfterSlayer;
 
 
     public SmugglersState(Game game, SmugglersCard card) {
@@ -58,6 +59,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         availableResources = currentCard.getBlocksList();
         cargoless = new ArrayList<>();
         game.notifyObservers(game, "smugglers");
+        this.setHandledPlayers(new ArrayList<>());
     }
 
     public void handleEvent(ActivateCannonsEvent event){
@@ -91,6 +93,7 @@ public class SmugglersState extends TravellingState implements Serializable {
         else{
             EventHandler.moveBackward(smugglersSlayer.getShip(), currentCard.getDaysToLose(), game);
             slayerCommits = true;
+            event.player().getShip().addBlocks(new ArrayList<>(currentCard.getBlocksList()));
         }
     }
 
@@ -216,12 +219,19 @@ public class SmugglersState extends TravellingState implements Serializable {
             event.player().getShip().resetCargoFromCards();
             slayerCommits = false;
             handledPlayers.add(smugglersSlayer);
+            for(Player p : game.getListOfActivePlayers()){
+                if(!cargoToLose.containsKey(p)){
+                    handledPlayers.add(p);
+                }
+            }
+            reckoning();
             checkNext();
         }
     }
 
     private void reckoning(){
         reckoningPhase = true;
+        ArrayList<Player> deleteList = new ArrayList<>();
         for(Player p : cargoToLose.keySet()){
             long available = p.getShip().getListOfCargo().stream()
                     .flatMap(c -> c.getTileContent().stream())
@@ -241,13 +251,17 @@ public class SmugglersState extends TravellingState implements Serializable {
                         .sum();
                 if(available <= cargoToLose.get(p)) {
                     p.getShip().removeAllBatteries();
-                    cargoToLose.remove(p);
+                    deleteList.add(p);
+                    //cargoToLose.remove(p);
                     handledPlayers.add(p);
                 }
 
             }
         }
-
+        for(Player p : deleteList){
+            cargoToLose.remove(p);
+        }
+        checkNext();
     }
 
     @Override
