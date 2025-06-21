@@ -3049,6 +3049,7 @@ public class ServerController {
                                         client.setNickname(nickname);
                                         client.setMainCabin(game);
                                         client.connectView(game);
+                                        client.updateGame(game); //trying for gui update
                                     } catch (IllegalArgumentException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
                                     }

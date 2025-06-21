@@ -53,7 +53,7 @@ public class MyScene {
             }
         }
         else {
-            throw new IllegalEventException("No client connection available to send players number.");
+            throw new IllegalEventException("No client connection available.");
         }
     }
 

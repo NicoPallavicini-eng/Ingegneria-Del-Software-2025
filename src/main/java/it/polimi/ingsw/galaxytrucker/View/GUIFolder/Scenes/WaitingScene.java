@@ -110,7 +110,7 @@ public class WaitingScene extends MyScene{
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(name -> {
-            sendMessageToServer("/connect " + nickname);
+            sendMessageToServer("/connect " + name);
 
             this.nickname = name;
             connectButton.setDisable(true);  // Disable after success
@@ -123,7 +123,6 @@ public class WaitingScene extends MyScene{
                     isFirstPlayer = true;
                 }
             }
-
             nicknameSet = true;
         });
     }
