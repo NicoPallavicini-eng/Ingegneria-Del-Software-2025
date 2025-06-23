@@ -36,7 +36,7 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void init(){
-        currentPlayer = game.getListOfActivePlayers().get(0);
+        super.init();
         defeatedPlayers = new ArrayList<>();
         defendedPlayers = new ArrayList<>();
         game.notifyObservers(game, "pirates");
@@ -104,6 +104,9 @@ public class PiratesState extends TravellingState implements Serializable {
             else{
                 currentCannonball.getHit(event.player().getShip());
                 defendedPlayers.add(event.player());
+                if(defendedPlayers.containsAll(defeatedPlayers)){
+                    consequences();
+                }
             }
         }
         else{

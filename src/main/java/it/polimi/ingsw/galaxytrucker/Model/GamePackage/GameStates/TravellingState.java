@@ -79,6 +79,9 @@ public abstract class TravellingState extends GameState implements Serializable 
 
     public void init(){
         synchronized (game.getListOfActivePlayers()) {
+            if(game.getListOfActivePlayers().isEmpty()){
+                next();
+            }
             currentPlayer = game.getListOfActivePlayers().getFirst();
         }
     }

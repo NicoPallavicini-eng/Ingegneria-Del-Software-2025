@@ -1245,9 +1245,7 @@ public class ServerController {
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                                     .filter(player1 -> player1.getNickname().equals(nickname))
                                     .findAny();
-
-                            if (!playerOptional.isPresent()) {
-                                try {
+                             try {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     newMessage = new Message("String", null, "setNickname");
@@ -1274,12 +1272,6 @@ public class ServerController {
                                     objOut.flush();
                                 }
 
-                            } else {
-                                newMessage = new Message("String", null, "Nickname already taken, please choose another one!");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.invalidCommand("Nickname already taken, please choose another one!");
-                            }
                         }
                     } else {
                         newMessage = new Message("String", null, "/connect request one parameter.");
@@ -3057,6 +3049,7 @@ public class ServerController {
                                         client.setNickname(nickname);
                                         client.setMainCabin(game);
                                         client.connectView(game);
+                                        client.updateGame(game); //trying for gui update
                                     } catch (IllegalArgumentException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
                                     }
@@ -3368,7 +3361,7 @@ public class ServerController {
                                     engineRow.add(colEng - 4);
                                     engines.add(engineRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 3) {
+                                for (int j = 0; j < secondParameters.size(); j += 2) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
                                     String colBatStr = secondParameters.get(j++);
@@ -3434,7 +3427,7 @@ public class ServerController {
                                     cannonRow.add(colEng - 4);
                                     cannons.add(cannonRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 3) {
+                                for (int j = 0; j < secondParameters.size(); j += 2) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
                                     String colBatStr = secondParameters.get(j++);

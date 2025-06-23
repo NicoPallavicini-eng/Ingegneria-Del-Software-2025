@@ -131,6 +131,7 @@ public class EventHandler implements Serializable {
         }
     }
 
+    /*
     private static void handleEvent(Ship ship){
         //CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL, CabinInhabitants.NONE,true,Color.RED,0,0);
 
@@ -171,6 +172,8 @@ public class EventHandler implements Serializable {
         shieldTile.setFacingUp(true);
         tile.setFacingUp(true);
     }
+
+     */
 
     /*
     public record DisconnectEvent(Player player) implements GameEvent
@@ -1052,6 +1055,9 @@ public class EventHandler implements Serializable {
 
 
     public static void checkGiveUp(Game game){
+        if(game.getListOfActivePlayers().isEmpty()) {
+            return;
+        }
         game.sortListOfActivePlayers();
         int maxDays = game.getListOfActivePlayers().getFirst().getShip().getTravelDays();
         for(Ship ship : game.getListOfActivePlayers().stream().map(Player::getShip).toList()){

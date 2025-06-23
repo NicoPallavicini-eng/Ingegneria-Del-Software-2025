@@ -69,6 +69,7 @@ public class BuildingState extends GameState implements Serializable {
         game.notifyObservers(game, "time");
     }
 
+    /*
     public void handleEvent(Ship ship){
 
         CabinTile cabin1 = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.NONE, CabinInhabitants.NONE,false, Color.NONE,1,0);
@@ -109,6 +110,7 @@ public class BuildingState extends GameState implements Serializable {
         tile.setFacingUp(true);
     }
 
+     */
     public void handleEvent(SetPositionEvent event) {
         if(finishedBuildingPlayers.contains(event.player())){
             throw new IllegalEventException("You have already placed your rocket");
