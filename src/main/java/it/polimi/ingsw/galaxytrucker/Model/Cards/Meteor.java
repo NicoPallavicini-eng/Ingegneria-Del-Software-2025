@@ -75,7 +75,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getRowListTiles(diceRoll-5).getFirst();
+            Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
             ConnectorType c;
             if (this.direction == WEST) {
                 c = firstTile.getConnectors().get(1);
@@ -122,7 +122,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getRowListTiles(diceRoll-5).getFirst();
+            Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
             ConnectorType c;
             if (this.direction == NORTH) {
                 c = firstTile.getConnectors().get(0);
