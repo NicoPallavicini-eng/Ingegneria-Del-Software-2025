@@ -51,6 +51,10 @@ public class BuildingSceneBoard extends MyScene {
     private Button pos2Button;
     private Button pos3Button;
     private Button pos4Button;
+    private boolean pos1Taken = false;
+    private boolean pos2Taken = false;
+    private boolean pos3Taken = false;
+    private boolean pos4Taken = false;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -327,18 +331,30 @@ public class BuildingSceneBoard extends MyScene {
     }
 
     private void handlePos1Button() {
-        // set pos
+        if (!pos1Taken) {
+            // set user in pos 1
+            pos1Taken = true;
+        }
     }
 
     private void handlePos2Button() {
-        //
+        if (!pos2Taken) {
+            // set user in pos 2
+            pos2Taken = true;
+        }
     }
 
     private void handlePos3Button() {
-        //
+        if (!pos3Taken) {
+            // set user in pos 3
+            pos3Taken = true;
+        }
     }
 
     private void handlePos4Button() {
-        //
+        if (!pos4Taken) {
+            // set user in pos 4
+            pos4Taken = true;
+        }
     }
 }
