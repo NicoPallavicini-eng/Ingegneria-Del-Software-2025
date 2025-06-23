@@ -233,28 +233,28 @@ public class SceneManager extends Application {
         primaryStage.show();
     }
 
-    public void updateGame(Game game) {
+    public void updateGame(Game game, MyScene scene) {
         this.game = game;
 
-        if (userShipScene != null) {
+        if (userShipScene != null && scene != userShipScene) {
             userShipScene.updateGame(game);
         }
-        if (tilePileScene != null) {
+        if (tilePileScene != null && scene != tilePileScene) {
             tilePileScene.updateGame(game);
         }
-        if (boardScene != null) {
+        if (boardScene != null && scene != boardScene) {
             boardScene.updateGame(game);
         }
-        if (othersShipScene != null) {
+        if (othersShipScene != null && scene != othersShipScene) {
             othersShipScene.updateGame(game);
         }
-        if (waitingScene != null) {
+        if (waitingScene != null && scene != waitingScene) {
             waitingScene.updateGame(game);
         }
-        if (travellingScene != null) {
+        if (travellingScene != null  && scene != travellingScene) {
             travellingScene.updateGame(game);
         }
-        if (finalScene != null) {
+        if (finalScene != null  && scene != finalScene) {
             finalScene.updateGame(game);
         }
     }
