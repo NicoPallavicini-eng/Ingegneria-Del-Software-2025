@@ -1059,7 +1059,7 @@ public class EventHandler implements Serializable {
             return;
         }
         game.sortListOfActivePlayers();
-        int maxDays = game.getListOfActivePlayers().getFirst().getShip().getTravelDays();
+        int maxDays = game.getListOfActivePlayers().get(0).getShip().getTravelDays();
         for(Ship ship : game.getListOfActivePlayers().stream().map(Player::getShip).toList()){
             if(ship.getTravelDays() + game.getLapLenght() < maxDays){
                 ship.setTravelDays(null);
