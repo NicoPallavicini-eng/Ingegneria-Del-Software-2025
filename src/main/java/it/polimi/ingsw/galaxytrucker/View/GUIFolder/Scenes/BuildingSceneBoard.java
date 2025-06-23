@@ -47,6 +47,10 @@ public class BuildingSceneBoard extends MyScene {
     private boolean d1InView = false;
     private boolean d2InView = false;
     private boolean d3InView = false;
+    private Button pos1Button;
+    private Button pos2Button;
+    private Button pos3Button;
+    private Button pos4Button;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -93,7 +97,33 @@ public class BuildingSceneBoard extends MyScene {
         d3Button.setLayoutY(415 + 100);
         d3Button.setRotate(-26);
 
-        Pane base = new Pane(boardGrid, d1Button, d2Button, d3Button);
+        // position buttons
+        pos1Button = new Button("1");
+        pos2Button = new Button("2");
+        pos3Button = new Button("3");
+        pos4Button = new Button("4");
+        transparentCircleButton(pos1Button);
+        transparentCircleButton(pos2Button);
+        transparentCircleButton(pos3Button);
+        transparentCircleButton(pos4Button);
+        pos1Button.setOnAction(e -> handlePos1Button());
+        pos2Button.setOnAction(e -> handlePos2Button());
+        pos3Button.setOnAction(e -> handlePos3Button());
+        pos4Button.setOnAction(e -> handlePos4Button());
+
+        pos1Button.setLayoutX(648);
+        pos1Button.setLayoutY(189);
+
+        pos2Button.setLayoutX(480);
+        pos2Button.setLayoutY(168);
+
+        pos3Button.setLayoutX(370);
+        pos3Button.setLayoutY(187);
+
+        pos4Button.setLayoutX(316);
+        pos4Button.setLayoutY(207);
+
+        Pane base = new Pane(boardGrid, d1Button, d2Button, d3Button, pos1Button, pos2Button, pos3Button, pos4Button);
 
         // d1
 
@@ -231,6 +261,35 @@ public class BuildingSceneBoard extends MyScene {
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
     }
 
+    private void transparentCircleButton(Button button) {
+        double radius = 10; // px
+
+        String baseStyle = "-fx-background-color: transparent;" +
+                "-fx-border-color: white;" +
+                "-fx-border-width: 1px;" +
+                "-fx-border-radius: " + radius + "px;" +
+                "-fx-background-radius: " + radius + "px;" +
+                "-fx-min-width: " + (radius * 2) + "px;" +
+                "-fx-min-height: " + (radius * 2) + "px;" +
+                "-fx-max-width: " + (radius * 2) + "px;" +
+                "-fx-max-height: " + (radius * 2) + "px;";
+
+        String hoverStyle = "-fx-background-color: rgba(255,255,255,0.2);" +
+                "-fx-border-color: white;" +
+                "-fx-border-width: 1px;" +
+                "-fx-border-radius: " + radius + "px;" +
+                "-fx-background-radius: " + radius + "px;" +
+                "-fx-min-width: " + (radius * 2) + "px;" +
+                "-fx-min-height: " + (radius * 2) + "px;" +
+                "-fx-max-width: " + (radius * 2) + "px;" +
+                "-fx-max-height: " + (radius * 2) + "px;";
+
+        button.setStyle(baseStyle);
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
+    }
+
     private void handleD1Button() {
         if (!d1InView && !deck1.isVisible() && !deck2.isVisible() && !deck3.isVisible()) { // TODO link to other players' view status
             deck1.setVisible(true);
@@ -265,5 +324,21 @@ public class BuildingSceneBoard extends MyScene {
             d3InView = false;
             styleButton(d3Button, "#875f87"); // Purple normal
         }
+    }
+
+    private void handlePos1Button() {
+        // set pos
+    }
+
+    private void handlePos2Button() {
+        //
+    }
+
+    private void handlePos3Button() {
+        //
+    }
+
+    private void handlePos4Button() {
+        //
     }
 }
