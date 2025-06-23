@@ -125,9 +125,11 @@ public class BuildingState extends GameState implements Serializable {
                     if(player.getShip().checkFloorPlanConnection()){
                         synchronized(playersWithLegalShips) {
                             playersWithLegalShips.add(player);
+                            /*
                             if (playersWithIllegalShips.contains(player)) {
                                 playersWithIllegalShips.remove(player);
                             }
+                             */
                         }
                     }
                     else {

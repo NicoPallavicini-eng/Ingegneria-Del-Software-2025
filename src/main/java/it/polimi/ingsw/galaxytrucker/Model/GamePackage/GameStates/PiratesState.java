@@ -29,8 +29,10 @@ public class PiratesState extends TravellingState implements Serializable {
     private List<Player> defeatedPlayers;
     private boolean reckoningPhase = false;
     private boolean claimingPhase = false;
+    private boolean shipLegalityPhase = false;
     private Cannonball currentCannonball;
     private List<Player> defendedPlayers;
+    private List<Player> playersWithIllegalShips;
 
     public PiratesState(Game game, PiratesCard card) {
         super(game, card);
@@ -105,6 +107,9 @@ public class PiratesState extends TravellingState implements Serializable {
             }
             else{
                 currentCannonball.getHit(event.player().getShip());
+                if(!event.player().getShip().checkFloorPlanConnection()){
+                    playersWithIllegalShips.add(event.player());
+                }
                 defendedPlayers.add(event.player());
                 if(defendedPlayers.containsAll(defeatedPlayers)){
                     consequences();
@@ -134,6 +139,11 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     private void consequences(){
+        if(!playersWithIllegalShips.isEmpty()){
+            reckoningPhase = false;
+            shipLegalityPhase = true;
+            return;
+        }
         if(currentCard.getCannonballList().isEmpty() || defeatedPlayers.isEmpty()){
             reckoningPhase = false;
             claimingPhase = true;
@@ -142,12 +152,16 @@ public class PiratesState extends TravellingState implements Serializable {
             }
         }
         else{
+            reckoningPhase = true;
             defendedPlayers.clear();
             currentCannonball = currentCard.getCannonballList().getFirst();
             currentCard.getCannonballList().removeFirst();
             if(currentCannonball.bigCannonball()){
                 for(Player player : defeatedPlayers){
                     currentCannonball.getHit(player.getShip());
+                    if(!player.getShip().checkFloorPlanConnection()){
+                        playersWithIllegalShips.add(player);
+                    }
                 }
                 consequences();
             }
@@ -232,6 +246,27 @@ public class PiratesState extends TravellingState implements Serializable {
         }
         else{
             super.disconnectionConsequences(p);
+        }
+    }
+
+    public void handleEvent(RemoveTileEvent event) {
+        if(!shipLegalityPhase) {
+            throw new IllegalEventException("Not legal to remove in this phase");
+        }
+        else if(!playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            if(event.player().getShip().checkFloorPlanConnection()){
+                synchronized (playersWithIllegalShips) {
+                    playersWithIllegalShips.remove(event.player());
+                    game.notifyObservers(game, "legalship");
+                }
+            }
+            else{
+                game.notifyObservers(game, "illegalship");
+            }
         }
     }
 }
