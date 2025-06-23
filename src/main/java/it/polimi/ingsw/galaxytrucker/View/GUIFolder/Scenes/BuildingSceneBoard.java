@@ -34,8 +34,6 @@ public class BuildingSceneBoard extends MyScene {
     private List<Card> stackDeck1;
     private List<Card> stackDeck2;
     private List<Card> stackDeck3;
-    private List<Card> stackDeck4;
-    private List<Card> stackGameDeck;
     private Deck tmpDeck;
     private it.polimi.ingsw.galaxytrucker.Model.Cards.Deck gameDeck;
     private Button d1Button;
@@ -63,11 +61,9 @@ public class BuildingSceneBoard extends MyScene {
         this.gameDeck = game.getDeck();
 
         tmpDeck = new Deck(gameDeck);
-        stackGameDeck = tmpDeck.getGameDeck();
         stackDeck1 = tmpDeck.getDeck1();
         stackDeck2 = tmpDeck.getDeck2();
         stackDeck3 = tmpDeck.getDeck3();
-        stackDeck4 = tmpDeck.getDeck4(); // prob not used here
 
         Player user = checkPlayer(nickname);
         Ship userShip = user.getShip();

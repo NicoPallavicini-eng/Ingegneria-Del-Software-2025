@@ -1,8 +1,11 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,22 +13,48 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.util.Optional;
+
 public class TravellingScene extends MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
     private StackPane root;
+    private it.polimi.ingsw.galaxytrucker.Model.Cards.Deck gameDeck;
+    private Deck deck;
     private Background background;
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
+    private Player user;
 
     public TravellingScene(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
+        this.gameDeck = game.getDeck();
+
+        deck = new Deck(gameDeck);
+
+        user = checkPlayer(nickname);
+        Ship userShip = user.getShip();
+
         this.background = new Background();
         this.root = new StackPane();
+
+
+        // TODO everything here:
+        /*
+        __________________________
+        | plancia      | card    |
+        | (stack)      | (stack) |
+        |______________|  +      |
+        | log          | buttons |
+        | (pane?)      |         |
+        __________________________
+         */
+
+
         root.getChildren().add(background);
 
         // Create HBox for board (left) and card (right)
@@ -77,6 +106,13 @@ public class TravellingScene extends MyScene {
 
     public void setCardImage(Image image) {
         // TODO Optionally expose this method to update the right-side card
+    }
+
+    public Player checkPlayer(String nickname) {
+        Optional<Player> playerOptional = game.getListOfPlayers().stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+        return playerOptional.orElse(null);
     }
 
     public void updateGame(Game game) {
