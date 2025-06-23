@@ -25,8 +25,13 @@ public class Deck implements Serializable {
     }
 
     public Card drawCard() {
-        Card firstCard = gameDeck.getFirst();
-        gameDeck.removeFirst();
+        Card firstCard;
+        try{
+            firstCard = gameDeck.getFirst();
+            gameDeck.removeFirst();
+        }catch (Exception e){
+            firstCard = null;
+        }
         return firstCard;
     }
 
