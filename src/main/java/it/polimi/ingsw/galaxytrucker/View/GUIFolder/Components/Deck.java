@@ -60,23 +60,23 @@ public class Deck extends StackPane {
         }
     }
 
-    public static List<Card> getGameDeck() {
+    public List<Card> getGameDeck() {
         return gameDeck;
     }
 
-    public static List<Card> getDeck1() {
+    public List<Card> getDeck1() {
         return deck1;
     }
 
-    public static List<Card> getDeck2() {
+    public List<Card> getDeck2() {
         return deck2;
     }
 
-    public static List<Card> getDeck3() {
+    public List<Card> getDeck3() {
         return deck3;
     }
 
-    public static List<Card> getDeck4() {
+    public List<Card> getDeck4() {
         return deck4;
     }
 }
