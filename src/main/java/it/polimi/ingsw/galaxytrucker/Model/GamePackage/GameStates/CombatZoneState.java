@@ -21,6 +21,7 @@ it uses the attributes current penalty and current challenge for every phase of 
 when the challenge is completed a currentLoser is set and they have to endure the penalty
  */
 
+//todo view si deve vedere challenge corrente e penalty corrente atrimenti non si capisce
 public abstract class CombatZoneState extends TravellingState implements Serializable {
 
     protected Player currentLoser;

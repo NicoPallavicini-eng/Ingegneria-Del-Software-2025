@@ -21,6 +21,8 @@ the reckoning phase starts for all defeated players
 lastly the player that defeated pirates can loot them if they wish in the claiming phase
 */
 
+//todo view devo veder quale cannonball sta arrivando
+
 public class PiratesState extends TravellingState implements Serializable {
     private PiratesCard currentCard;
     private Player piratesSlayer;

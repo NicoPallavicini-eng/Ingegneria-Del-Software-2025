@@ -94,7 +94,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     }
 
     protected void disconnectionConsequences(Player p){
-        if(currentPlayer.equals(p)){
+        if(currentPlayer!=null && currentPlayer.equals(p)){
             nextPlayer();
         }
     }

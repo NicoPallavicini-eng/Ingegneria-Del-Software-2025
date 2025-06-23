@@ -2348,7 +2348,7 @@ public class ServerController {
                             newMessage = new Message("String",null,"/ejectpeople needs a numbero of parameters multiple of 3.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/ejectpeople needs a numbero of parameters multiple of 3.");
+                            //client.invalidCommand("/ejectpeople needs a number of parameters multiple of 3.");
                         }
                         else{
                             for (int i = 0; i < firstParameters.size(); i += 3){
