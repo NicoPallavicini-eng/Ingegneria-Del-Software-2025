@@ -47,7 +47,7 @@ public class WaitingScene extends MyScene{
             if (isFirstPlayer) {
                 if ( true /* playersNum == game.getListOfPlayers().size() */) {
                     // TODO link with building state here
-                    sceneManager.updateGame(game);
+                    sceneManager.updateGame(this.game, this);
                     sceneManager.next(this);
                 } else {
                     // TODO update for others too
