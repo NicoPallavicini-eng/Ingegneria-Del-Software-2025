@@ -67,7 +67,7 @@ public class SlaversState extends TravellingState implements Serializable {
         else{
             slaversSlayer.getShip().setCredits(slaversSlayer.getShip().getCredits() + currentCard.getNumberOfCredits());
             EventHandler.moveBackward(slaversSlayer.getShip(), currentCard.getNumberOfDaysToLose(), game);
-            handledPlayers.add(currentPlayer);
+            handledPlayers.add(slaversSlayer);
             checkNext();
         }
     }
@@ -146,8 +146,15 @@ public class SlaversState extends TravellingState implements Serializable {
         for(Player p : defeatedPlayers){
             if(p.getShip().getNumberOfInhabitants() <= currentCard.getNumberOfCrewLost()){
                 p.getShip().ejectAll();
+                handledPlayers.add(p);
             }
         }
+//        List<Player> iterator= new ArrayList<>(handledPlayers);
+//        for(Player p : iterator){
+//            if(p==null){
+//                handledPlayers.remove(p);
+//            }
+//        }
        checkNext();
     }
 
