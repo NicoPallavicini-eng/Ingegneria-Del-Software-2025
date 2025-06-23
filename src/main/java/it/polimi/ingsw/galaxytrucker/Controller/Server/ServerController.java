@@ -2903,6 +2903,7 @@ public class ServerController {
                     client.invalidCommand("You are not connected to the game!");
                 }
             }
+            //
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
                     client.invalidCommand("/help doesn't support parameters, but here is the help command anyway!");
