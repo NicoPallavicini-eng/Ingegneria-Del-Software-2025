@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.Model.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Direction;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.ActivateShieldEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.NoChoiceEvent;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.MeteorsState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
@@ -74,7 +75,9 @@ class MeteorsCardTest {
 
         state.init();
 
-        state.handleEvent(new NoChoiceEvent(p));
+        state.handleEvent(new ActivateShieldEvent(p,1,4,1,5));
+        assertEquals(1,ship.getBatteries());
+        //state.handleEvent(new NoChoiceEvent(p));
         state.handleEvent(new NoChoiceEvent(a));
 
     }
@@ -130,6 +133,7 @@ class MeteorsCardTest {
         ship.setTileOnFloorPlan(1,5,batteryTile);
 
         state.init();
+
 
         state.handleEvent(new NoChoiceEvent(p));
         state.handleEvent(new NoChoiceEvent(a));
@@ -245,8 +249,12 @@ class MeteorsCardTest {
 
         state.init();
 
+        List<Integer> list = new ArrayList<>();
+
+
         state.handleEvent(new NoChoiceEvent(p));
         state.handleEvent(new NoChoiceEvent(a));
+
 
     }
 
@@ -269,16 +277,18 @@ class MeteorsCardTest {
 
         //ship.setTileOnFloorPlan(2,3,centralCabin);
         ship.setTileOnFloorPlan(1,3,cannon1);
-        ship.setTileOnFloorPlan(3,3,engine1);
-        ship.setTileOnFloorPlan(2,2,bioadaptorTile);
+        //ship.setTileOnFloorPlan(3,3,engine1);
+        //ship.setTileOnFloorPlan(2,2,bioadaptorTile);
         ship.setTileOnFloorPlan(1,2,cargoTile);
-        ship.setTileOnFloorPlan(3,2,cabin1);
-        ship.setTileOnFloorPlan(2,4,cabin2);
-        ship.setTileOnFloorPlan(1,4,shieldTile);
+        //ship.setTileOnFloorPlan(3,2,cabin1);
+        //ship.setTileOnFloorPlan(2,4,cabin2);
+        //ship.setTileOnFloorPlan(1,4,shieldTile);
         ship.setTileOnFloorPlan(3,4,tile);
         ship.setTileOnFloorPlan(4,4,engine2);
         ship.setTileOnFloorPlan(2,5,cannon2);
         ship.setTileOnFloorPlan(1,5,batteryTile);
+
+        assertTrue(ship.isShipBroken());
 
     }
 }

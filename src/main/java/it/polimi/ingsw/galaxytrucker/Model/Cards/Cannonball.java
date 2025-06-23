@@ -44,6 +44,7 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
     }
 
     private void checkForShieldOrRemoveRow(Ship ship, int diceRoll) {
+        diceRoll -= 5;
         if (this.bigCannonball) {
             ship.removeFirstTile(diceRoll, direction);
         } else {
@@ -65,6 +66,7 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
     }
 
     private void checkForShieldOrRemoveColumn(Ship ship, int diceRoll) {
+        diceRoll -= 4;
         if (this.bigCannonball) {
             ship.removeFirstTile(diceRoll, direction);
         } else {
