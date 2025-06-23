@@ -44,10 +44,6 @@ public class FinalState extends GameState implements Serializable {
     }
 
     private void computeFinishOrderReward() {
-        Ship s = ships.getFirst();
-//        for(int i=0; s!=null; s = ships.get(++i)){
-//            s.setCredits(s.getCredits()+8-2*i);
-//        }
         int i=0;
         for(Ship ship : ships){
             ship.setCredits(ship.getCredits()+8-2*i);

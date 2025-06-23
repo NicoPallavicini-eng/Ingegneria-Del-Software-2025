@@ -131,7 +131,6 @@ public class EventHandler implements Serializable {
         }
     }
 
-    /*
     private static void handleEvent(Ship ship){
         //CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL, CabinInhabitants.NONE,true,Color.RED,0,0);
 
@@ -172,8 +171,6 @@ public class EventHandler implements Serializable {
         shieldTile.setFacingUp(true);
         tile.setFacingUp(true);
     }
-
-     */
 
     /*
     public record DisconnectEvent(Player player) implements GameEvent
