@@ -8,18 +8,17 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.Optional;
 
-public class TravellingScene extends MyScene {
+public class TravellingSceneDefault extends MyScene {
     private Scene scene;
     private Game game;
     private String nickname;
-    private StackPane root;
+    private BorderPane root;
     private it.polimi.ingsw.galaxytrucker.Model.Cards.Deck gameDeck;
     private Deck deck;
     private Background background;
@@ -27,8 +26,11 @@ public class TravellingScene extends MyScene {
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
     private Player user;
+    private StackPane boardPane;
+    private StackPane cardPane;
+    private Pane logPane;
 
-    public TravellingScene(Game game, String nickname, SceneManager sceneManager) {
+    public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
@@ -40,19 +42,29 @@ public class TravellingScene extends MyScene {
         Ship userShip = user.getShip();
 
         this.background = new Background();
-        this.root = new StackPane();
-
+        this.root = new BorderPane();
 
         // TODO everything here:
         /*
         __________________________
-        | plancia      | card    |
-        | (stack)      | (stack) |
-        |______________|  +      |
-        | log          | buttons |
-        | (pane?)      |         |
+        | plancia     |  card    |
+        | (stack)     |  (stack) |
+        |_____________|   +      |
+        | log         |  buttons |
+        | (pane?)     |          |
         __________________________
+        __________________________ <- button to switch to view of other ships here
          */
+
+        boardPane = new StackPane();
+
+
+
+        cardPane = new StackPane();
+
+
+
+        logPane = new Pane();
 
 
         root.getChildren().add(background);
