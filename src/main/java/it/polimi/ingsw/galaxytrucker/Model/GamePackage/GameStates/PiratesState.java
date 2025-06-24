@@ -43,6 +43,7 @@ public class PiratesState extends TravellingState implements Serializable {
         super.init();
         defeatedPlayers = new ArrayList<>();
         defendedPlayers = new ArrayList<>();
+        playersWithIllegalShips = new ArrayList<>();
         game.notifyObservers(game, "pirates");
     }
 
@@ -190,7 +191,7 @@ public class PiratesState extends TravellingState implements Serializable {
         if(reckoningPhase){
             throw new IllegalEventException("Not time for activating shield");
         }
-        else if(defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
+        else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
             throw new IllegalEventException("you shall not defend");
         }
         Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());
