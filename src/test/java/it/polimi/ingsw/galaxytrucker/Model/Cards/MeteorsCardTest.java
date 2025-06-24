@@ -290,5 +290,9 @@ class MeteorsCardTest {
 
         assertTrue(ship.isShipBroken());
 
+        assertFalse(!ship.getRowListTiles(2).isEmpty());
+
     }
+
+
 }

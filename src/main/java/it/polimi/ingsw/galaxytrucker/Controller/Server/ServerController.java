@@ -564,10 +564,11 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nStarted Travelling State\n");
+                                        Message msg = new Message("String", null, "\nStarted Travelling State\n");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -580,11 +581,12 @@ public class ServerController {
                                     try {
                                         Player player = checkPlayer(socketClient.getNickname());
                                         if (player != null) {
-                                            Message msg = new Message("String", game, "\nGame is over, the final state has been reached.\n" +
+                                            Message msg = new Message("String", null, "\nGame is over, the final state has been reached.\n" +
                                                     "You have collected " + player.getShip().getCredits() + " credits and " + player.getShip().getTravelDays() + " travel days.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
+                                            objOut.reset();
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -598,7 +600,7 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nHourglass flipped for the: " + game.getHourglass().getFlipNumber() + " time\n" +
+                                        Message msg = new Message("String", null, "\nHourglass flipped for the: " + game.getHourglass().getFlipNumber() + " time\n" +
                                                 "Time left: " + game.getHourglass().getElapsedTime() + " seconds\n");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
@@ -615,7 +617,7 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message ("String", game, "\nTime is up! You have to place your ship now!");
+                                        Message msg = new Message ("String", null, "\nTime is up! You have to place your ship now!");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
@@ -631,10 +633,11 @@ public class ServerController {
                             try {
                                 Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    Message msg = new Message ("", game, "viewLeaderboard");
+                                    Message msg = new Message ("Game", game, "viewLeaderboard");
                                     ObjectOutputStream objOut = socketClient.getObjOut();
                                     objOut.writeObject(msg);
                                     objOut.flush();
+                                    objOut.reset();
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -643,18 +646,19 @@ public class ServerController {
                     }
                     case "shipPlaced" -> {
                         synchronized(((BuildingState) gameState).getPlayersWithLegalShips()){
+                            //System.out.println("Sono dentro shipPlaced!");
                             try{
                                 for (SocketClientHandler socketClient : socketClients){
                                     Player player = checkPlayer(socketClient.getNickname());
                                     if (player != null){
                                         if (((BuildingState) gameState).getFinishedBuildingPlayers().contains(player) && !player.isChecked()) {
-                                            Message msg = new Message("String", game, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
+                                            Message msg = new Message("String", null, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
                                             player.setChecked(true);
                                         } else {
-                                            Message msg = new Message("String", game, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
+                                            Message msg = new Message("String", null, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
@@ -676,13 +680,17 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nNew card drawn\n");
+                                        System.out.println("Sono dentro newCard!");
+                                        Message msg = new Message("String", null, "\nNew card drawn\n");
+                                        msg.setNickname(socketClient.getNickname());
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
-                                        Message msg2 = new Message("", game, "viewCard");
+                                        Message msg2 = new Message("Game", game, "viewCard");
+                                        msg2.setNickname(socketClient.getNickname());
                                         objOut.writeObject(msg2);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -699,9 +707,11 @@ public class ServerController {
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
-                                        Message msg2 = new Message("", game, "viewLeaderboard");
+                                        objOut.reset();
+                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
                                         objOut.writeObject(msg2);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -716,13 +726,17 @@ public class ServerController {
                                     Player player = checkPlayer(socketClient.getNickname());
                                     if (player != null && ((TravellingState) gameState).getHandledPlayers().contains(player)) {
                                         ObjectOutputStream objOut = socketClient.getObjOut();
-                                        Message msg2 = new Message("", game, "viewLeaderboard");
+                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
                                         objOut.writeObject(msg2);
                                         objOut.flush();
+                                        objOut.reset();
                                         Message msg = new Message ("String", game, "\nYou are now in the meteors state.\n" +
                                                 "You have to defend yourself from the meteors!\n" +
                                                 "You can do so activating your shields or cannons.\n" +
                                                 "If you don't want to defend yourself, type /nochoice.\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
+                                        objOut.reset();
                                        }
                                 }
                             } catch (IOException e) {
@@ -734,13 +748,23 @@ public class ServerController {
                         for (SocketClientHandler socketClient : socketClients) {
                             if (socketClient != null) {
                                 try {
-                                    Message msg = new Message ("String", game, "\nMeteors card is now over. You will now see the damage done to your ship.\n");
                                     ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", game, "\nMeteors card is now over. You will now see the damage done to your ship.\n");
                                     objOut.writeObject(msg);
                                     objOut.flush();
-                                    Message msg2 = new Message("", game, "viewMyShip");
+                                    objOut.reset();
+
+                                    msg = new Message ("Game", game, "viewCard");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
                                     objOut.writeObject(msg2);
                                     objOut.flush();
+                                    objOut.reset();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -1057,15 +1081,15 @@ public class ServerController {
             }
         });
 
-        rmiThread.start();
-        socketThread.start();
+            rmiThread.start();
+            socketThread.start();
 
-        try{
-            rmiThread.join();
-            socketThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            try{
+                rmiThread.join();
+                socketThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
     /**
@@ -1124,6 +1148,14 @@ public class ServerController {
 
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
         switch (command) {
+            case "viewcard" ->{
+                Message newMessage;
+                newMessage = new Message("Game",game,"viewCard");
+                newMessage.setNickname(msg.getNickname());
+                objOut.writeObject(newMessage);
+                objOut.flush();
+                objOut.reset();
+            }
             case "GAME"->{
                 Message newMessage;
                 newMessage = new Message("Game",game,"NewGame");
@@ -1933,8 +1965,8 @@ public class ServerController {
                                 for (int j=0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -2031,8 +2063,8 @@ public class ServerController {
                                 for (int j=0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -3362,11 +3394,11 @@ public class ServerController {
                                     engineRow.add(colEng - 4);
                                     engines.add(engineRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 2) {
+                                for (int j = 0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -3688,21 +3720,11 @@ public class ServerController {
             case "claimreward" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
-                    if (secondParameters.isEmpty()) {
-                        if (firstParameters.size() == 1) {
-                            String engage = firstParameters.get(0);
-                            if (engage.equals("true") || engage.equals("false")) {
-                                boolean engageBool = Boolean.parseBoolean(engage);
-                                ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
-                                game.getGameState().handleEvent(event);
-                            } else {
-                                client.invalidCommand("The parameter must be either true or false.");
-                            }
-                        } else {
-                            client.invalidCommand("/claimreward supports only one parameter.");
-                        }
+                    if (secondParameters.isEmpty() && firstParameters.isEmpty()) {
+                        ClaimRewardEvent event = new ClaimRewardEvent(player, true);
+                        game.getGameState().handleEvent(event);
                     } else {
-                        client.invalidCommand("/claimreward supports only one paramter.");
+                        client.invalidCommand("/claimreward doesn't require any parameters.");
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");

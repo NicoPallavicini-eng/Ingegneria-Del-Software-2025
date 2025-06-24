@@ -188,7 +188,7 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ActivateShieldEvent event){
-        if(reckoningPhase){
+        if(!reckoningPhase){
             throw new IllegalEventException("Not time for activating shield");
         }
         else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
