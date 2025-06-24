@@ -20,7 +20,7 @@ public interface UI {
     void printMyShip(Game game, String nickname);
     void printGuide();
     void printActualShip(Ship ship);
-
+    void viewDeck(Game game, int index);
     void printTile(Tile tile);
     void viewCard(Game game);
     void printHelpMessage();

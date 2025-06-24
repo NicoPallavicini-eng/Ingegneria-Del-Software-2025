@@ -17,6 +17,7 @@ public class FinalScene extends MyScene{
     private SceneManager sceneManager;
 
     public FinalScene(Game game, String nickname, SceneManager sceneManager) {
+        super(game,sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;

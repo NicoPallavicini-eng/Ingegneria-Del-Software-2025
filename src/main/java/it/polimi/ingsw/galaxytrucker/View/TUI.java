@@ -24,6 +24,29 @@ public class TUI implements UI {
         // not used
     }
 
+    public void viewDeck(Game game, int index){
+        Deck deck = game.getDeck();
+        if (index == 1){
+            for (Card card : deck.getSubDeck1()){
+                checkCard(card);
+            }
+        } else if (index == 2){
+            for (Card card : deck.getSubDeck2()){
+                checkCard(card);
+            }
+        } else if (index == 3){
+            for (Card card : deck.getSubDeck3()){
+                checkCard(card);
+            }
+        } else if (index == 4){
+            for (Card card : deck.getSubDeck4()){
+                checkCard(card);
+            }
+        } else {
+            System.out.println("Invalid deck index.");
+        }
+    }
+
     public void setNickname(String nickname){
         this.nickname = nickname;
     }

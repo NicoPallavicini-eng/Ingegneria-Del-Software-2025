@@ -55,6 +55,7 @@ public class BuildingSceneBoard extends MyScene {
     private boolean pos4Taken = false;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
+        super(game, sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;

@@ -6,14 +6,11 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -37,6 +34,7 @@ public class BuildingSceneUserShip extends MyScene {
     private boolean rotateVisible = false;
 
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
+        super(game, sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;

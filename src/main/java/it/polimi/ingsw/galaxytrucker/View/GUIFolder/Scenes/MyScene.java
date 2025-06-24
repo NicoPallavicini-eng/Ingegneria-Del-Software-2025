@@ -21,10 +21,9 @@ public class MyScene {
     protected final int SCENE_WIDTH = 1024;
     protected final int SCENE_HEIGHT = 760;
     protected SceneManager sceneManager;
-    protected VirtualClient rmiClient;
-    protected SocketClient socketClient;
+    protected final VirtualClient rmiClient;
+    protected final SocketClient socketClient;
 
-    public MyScene(){}
 
     public MyScene(Game game, SceneManager sceneManager) {
         this.game = game;
@@ -39,8 +38,8 @@ public class MyScene {
     public  void sendMessageToServer(String message) {
         if (rmiClient != null) {
             try {
-                sceneManager.getRmiClient().getServer().handleUserInput(sceneManager.getRmiClient(), message);
-                sceneManager.getRmiClient().getServer().showMessage(sceneManager.getRmiClient() + message);
+                sceneManager.getServer().handleUserInput(sceneManager.getRmiClient(), message);
+                sceneManager.getServer().showMessage(sceneManager.getRmiClient() + message);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

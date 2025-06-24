@@ -1,10 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
-import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
-import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import javafx.geometry.Insets;
@@ -17,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BuildingSceneTilePile extends MyScene {
     private Scene scene;
@@ -35,6 +31,7 @@ public class BuildingSceneTilePile extends MyScene {
     private BuildingSceneBoard buildingSceneBoard = null;
 
     public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
+        super(game,sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
@@ -115,6 +112,8 @@ public class BuildingSceneTilePile extends MyScene {
     }
 
     public void pickUpTile(TilePileTileView tile) {
+        int index = tilePile.indexOf(tile.getLogicTile());
+        sendMessageToServer("/pickuptile " + index % 16 + "," + index/16);
         buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
         tile.setOpacity(0.2); // faintly visible
         tile.setClickable(false);

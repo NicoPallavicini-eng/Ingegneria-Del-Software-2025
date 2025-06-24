@@ -147,6 +147,11 @@ public class GUI extends Application implements UI, Serializable {
         // TODO: Show cards info
     }
 
+    @Override
+    public void viewDeck(Game game, int index) {
+        // TODO: view deck
+    }
+
     // PRIVATE HELPER METHODS (not in interface)
 
     private void printShipHeaders(Color color) {

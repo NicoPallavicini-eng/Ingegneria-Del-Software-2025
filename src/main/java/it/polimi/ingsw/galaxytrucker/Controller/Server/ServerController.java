@@ -13,6 +13,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 import it.polimi.ingsw.galaxytrucker.Network.Server.RMIServer;
 import it.polimi.ingsw.galaxytrucker.Network.Server.SocketServer;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -3015,10 +3016,14 @@ public class ServerController {
                                     client.connectView(game);
                                 } catch (IllegalArgumentException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
+                                } catch (IllegalEventException e){
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
 
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
+                                throw new IllegalGUIEventException("Error: Nickname already taken, please choose another one!");
                             }
                         }
                     } else {
@@ -3051,7 +3056,7 @@ public class ServerController {
                                         client.connectView(game);
                                         client.updateGame(game); //trying for gui update
                                     } catch (IllegalArgumentException e) {
-                                        client.invalidCommand("Error: " + e.getMessage());
+                                        client.invalidCommand("Error: command not valid!");
                                     }
                                 }
                             }
@@ -3249,6 +3254,7 @@ public class ServerController {
                             int maxNumberOfPlayers = game.getNumberOfPlayers();
                             if (position < 1 || position > maxNumberOfPlayers && maxNumberOfPlayers != -1) {
                                 client.invalidCommand("Position not valid. It must be between 1 and " + maxNumberOfPlayers);
+
                             } else if (maxNumberOfPlayers == -1) {
                                 client.invalidCommand("You need to set the number of players before setting the position.");
                             } else {

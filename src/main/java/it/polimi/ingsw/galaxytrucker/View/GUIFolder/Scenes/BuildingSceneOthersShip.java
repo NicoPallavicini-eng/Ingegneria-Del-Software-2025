@@ -6,8 +6,6 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.TilePileGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,6 +31,7 @@ public class BuildingSceneOthersShip extends MyScene {
     private BuildingSceneBoard buildingSceneBoard = null;
 
     public BuildingSceneOthersShip(Game game, String nickname, SceneManager sceneManager) {
+        super(game, sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;

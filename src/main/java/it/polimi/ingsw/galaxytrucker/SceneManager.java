@@ -3,11 +3,13 @@ package it.polimi.ingsw.galaxytrucker;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
+import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.Objects;
 
 public class SceneManager extends Application {
@@ -25,11 +27,17 @@ public class SceneManager extends Application {
     private final VirtualClient rmiClient;
     private final SocketClient socketClient;
     private String nickname;
+    private final VirtualServer server;
 
     public SceneManager(Game game, Stage stage, VirtualClient rmiClient, SocketClient socketClient) {
         this.game = game;
         this.rmiClient = rmiClient;
         this.socketClient = socketClient;
+        try {
+            this.server = rmiClient.getServer();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         primaryStage = stage;
         start(primaryStage); // stage comes from instantiation of SceneManager
     }
@@ -52,6 +60,8 @@ public class SceneManager extends Application {
     public SocketClient getSocketClient() {
         return socketClient;
     }
+
+    public VirtualServer getServer() {return server;}
 
     public BuildingSceneOthersShip getOthersShipScene() {
         return othersShipScene;

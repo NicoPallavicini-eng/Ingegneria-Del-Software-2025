@@ -9,6 +9,7 @@ import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUI;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,7 +43,7 @@ public class WaitingScene extends MyScene{
 
         nextButton = new Button("Next");
         styleButton(nextButton, "#cc5555");  // Red
-        nextButton.setDisable(true);          // Disabled until conditions met
+        nextButton.setDisable(false);          // Disabled until conditions met
         nextButton.setOnAction(e -> {
             if (isFirstPlayer) {
                 if ( true /* playersNum == game.getListOfPlayers().size() */) {
@@ -54,6 +55,7 @@ public class WaitingScene extends MyScene{
                     // smt like waitForFirst();
                 }
             }
+            sceneManager.next(this);
         });
 
         VBox menuBox = new VBox(20);
@@ -110,12 +112,26 @@ public class WaitingScene extends MyScene{
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(name -> {
-            sendMessageToServer("/connect " + name);
+            try {
+                sendMessageToServer("/connect " + name);
+                this.nickname = name;
+                connectButton.setDisable(true);  // Disable after success
+                nicknameFeedbackLabel.setText("Nickname set: " + nickname);
+                sceneManager.setNickname(nickname);
+            } catch(IllegalGUIEventException e){
+                javafx.application.Platform.runLater(() -> {
+                    javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("Connection Error");
+                    errorAlert.setContentText(e.getMessage());
 
-            this.nickname = name;
-            connectButton.setDisable(true);  // Disable after success
-            nicknameFeedbackLabel.setText("Nickname set: " + nickname);
-            sceneManager.setNickname(nickname);
+                    Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+                    errorStage.getIcons().clear();
+                    errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+                    errorAlert.showAndWait();
+                });
+                connectButton.setDisable(false);
+            }
 
             synchronized(game.getListOfPlayers()) {
                 if (game.getListOfPlayers().size() == 1) { // TODO understand why "-1" -> prob sync problem
@@ -124,6 +140,7 @@ public class WaitingScene extends MyScene{
                 }
             }
             nicknameSet = true;
+            nextButton.setDisable(false);
         });
     }
 
@@ -143,14 +160,27 @@ public class WaitingScene extends MyScene{
         result.ifPresent(numberStr -> {
             try {
                 int number = Integer.parseInt(numberStr);
-                this.playersNum = number;
-                setPlayersButton.setDisable(true);  // Disable after success
-                playersFeedbackLabel.setText("Number of players: " + number);
-                sendMessageToServer("/setnumberofplayers " + number);
+                try {
+                    sendMessageToServer("/setnumberofplayers " + number);
+                    this.playersNum = number;
+                    setPlayersButton.setDisable(true);  // Disable after success
+                    playersFeedbackLabel.setText("Number of players: " + number);
+                    playersSet = true;
+                } catch (IllegalGUIEventException e) {
+                    javafx.application.Platform.runLater(() -> {
+                        javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Error");
+                        errorAlert.setHeaderText("Setting Players Error");
+                        errorAlert.setContentText(e.getMessage());
 
-                playersSet = true;
-
-                nextButton.setDisable(false); // TODO setChecks, now need like this for testing
+                        Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+                        errorStage.getIcons().clear();
+                        errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+                        errorAlert.showAndWait();
+                    });
+                    setPlayersButton.setDisable(false);
+                }
+                nextButton.setDisable(false);
 
             } catch (NumberFormatException e) {
                 playersFeedbackLabel.setText("Invalid number, try again");

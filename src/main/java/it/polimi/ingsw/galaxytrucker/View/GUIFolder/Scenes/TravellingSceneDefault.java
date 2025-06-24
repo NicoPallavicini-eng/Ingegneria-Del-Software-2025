@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -63,6 +62,7 @@ public class TravellingSceneDefault extends MyScene {
     private Button day0Pos4Button; // 24 buttons: [0; 23]
 
     public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
+        super(game, sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
