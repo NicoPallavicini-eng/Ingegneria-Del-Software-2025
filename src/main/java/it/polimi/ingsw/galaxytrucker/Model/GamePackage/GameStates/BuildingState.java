@@ -50,7 +50,6 @@ public class BuildingState extends GameState implements Serializable {
         game.updateListOfActivePlayers();
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
-        game.notifyObservers(game, "newcard");
         getGame().setGameState(nextCard.createGameState(game));
         game.getGameState().init();
 
