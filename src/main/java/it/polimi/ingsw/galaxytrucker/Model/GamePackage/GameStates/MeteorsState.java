@@ -26,7 +26,7 @@ public class MeteorsState extends TravellingState implements Serializable {
     private ArrayList<Player> handledPlayers;
     private List<Meteor> meteors;
     private Meteor currentMeteor;
-
+    private List<Player> playersWithIllegalShips;
     public MeteorsState(Game game, MeteorsCard card) {
         super(game, card);
         currentCard = card;
@@ -60,6 +60,9 @@ public class MeteorsState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ActivateShieldEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
         if(handledPlayers.contains(event.player())){
             throw new IllegalEventException("You are already defended");
         }
@@ -80,6 +83,9 @@ public class MeteorsState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ActivateCannonsEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
         if(handledPlayers.contains(event.player())){
             throw new IllegalEventException("You are already defended");
         }
@@ -114,6 +120,9 @@ public class MeteorsState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(NoChoiceEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
         if(handledPlayers.contains(event.player())){
             throw new IllegalEventException("You are already defended");
         }
@@ -127,10 +136,14 @@ public class MeteorsState extends TravellingState implements Serializable {
         if (handledPlayers.containsAll(game.getListOfActivePlayers())) {
             for (Player player : game.getListOfActivePlayers()) {
                 currentMeteor.getHit(player.getShip());
+                if(player.getShip().isShipBroken()){
+                    playersWithIllegalShips.add(player);
+                }
             }
             game.notifyObservers(game,"finalMeteors");
-            if (meteors.isEmpty()) {
-                next();
+            if(meteors.isEmpty()){
+                currentMeteor = null;
+                checkNextCard();
             }
             else {
                 currentMeteor = meteors.get(0);
@@ -140,6 +153,29 @@ public class MeteorsState extends TravellingState implements Serializable {
                 }
                 handledPlayers.clear();
             }
+        }
+    }
+
+    private void checkNextCard(){
+        if(playersWithIllegalShips.isEmpty() && currentMeteor == null){
+            next();
+        }
+        else{
+            checkNext();
+        }
+    }
+
+    public void handleEvent(ChooseSubShipEvent event) {
+        if(!playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            synchronized (playersWithIllegalShips) {
+                playersWithIllegalShips.remove(event.player());
+            }
+            game.notifyObservers(game, "legalship");
+            checkNextCard();
         }
     }
 

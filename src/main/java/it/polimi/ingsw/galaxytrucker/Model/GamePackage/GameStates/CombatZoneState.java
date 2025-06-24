@@ -12,6 +12,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.ShieldTileVisitor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
@@ -29,11 +30,13 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     protected CombatZonePenalty currentPenalty;
     protected CombatZoneCard currentCard;
     protected Cannonball currentCannonball;
+    protected boolean loserIsIllegal;
 
 
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
         currentCard = card;
+        loserIsIllegal = false;
     }
 
 
@@ -179,6 +182,10 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     }
 
     public void cannonballStorm(){
+        if(currentLoser.getShip().isShipBroken()){
+            loserIsIllegal = true;
+            return;
+        }
         if(currentCard.getCannonballList().isEmpty()){
             next();
         }
@@ -233,4 +240,18 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     }
 
     protected void nextChallenge(){}
+
+
+    public void handleEvent(ChooseSubShipEvent event) {
+        if(!event.player().equals(currentLoser) || !loserIsIllegal){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            loserIsIllegal =  false;
+            game.notifyObservers(game, "legalship");
+            cannonballStorm();
+        }
+    }
+
 }

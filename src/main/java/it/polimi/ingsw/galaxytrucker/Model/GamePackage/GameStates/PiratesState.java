@@ -107,7 +107,7 @@ public class PiratesState extends TravellingState implements Serializable {
             }
             else{
                 currentCannonball.getHit(event.player().getShip());
-                if(!event.player().getShip().checkFloorPlanConnection()){
+                if(event.player().getShip().isShipBroken()){
                     playersWithIllegalShips.add(event.player());
                 }
                 defendedPlayers.add(event.player());
@@ -249,7 +249,7 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
-    public void handleEvent(RemoveTileEvent event) {
+    public void handleEvent(ChooseSubShipEvent event) {
         if(!shipLegalityPhase) {
             throw new IllegalEventException("Not legal to remove in this phase");
         }
@@ -258,15 +258,12 @@ public class PiratesState extends TravellingState implements Serializable {
         }
         else{
             EventHandler.handleEvent(event);
-            if(event.player().getShip().checkFloorPlanConnection()){
-                synchronized (playersWithIllegalShips) {
-                    playersWithIllegalShips.remove(event.player());
-                    game.notifyObservers(game, "legalship");
-                }
+            synchronized (playersWithIllegalShips) {
+                playersWithIllegalShips.remove(event.player());
             }
-            else{
-                game.notifyObservers(game, "illegalship");
-            }
+            game.notifyObservers(game, "legalship");
+            consequences();
         }
     }
+
 }
