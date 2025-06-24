@@ -6,8 +6,10 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,6 +31,7 @@ public class TravellingSceneDefault extends MyScene {
     private StackPane boardPane;
     private StackPane cardPane;
     private Pane logPane;
+    private TravellingSceneOthersShip travellingSceneOthersShip;
 
     public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -42,7 +45,7 @@ public class TravellingSceneDefault extends MyScene {
         Ship userShip = user.getShip();
 
         this.background = new Background();
-        this.root = new BorderPane();
+        BorderPane layout = new BorderPane();
 
         // TODO everything here:
         /*
@@ -58,58 +61,40 @@ public class TravellingSceneDefault extends MyScene {
 
         boardPane = new StackPane();
 
-
-
         cardPane = new StackPane();
-
-
 
         logPane = new Pane();
 
 
-        root.getChildren().add(background);
+        StackPane centerContent = new StackPane(boardPane, cardPane, logPane);
 
-        // Create HBox for board (left) and card (right)
-        HBox mainLayout = new HBox();
-        mainLayout.setSpacing(50);
-        mainLayout.setAlignment(Pos.CENTER);
+        Button othersShip = new Button("Others' Ship");
+        Button finish = new Button("Finish");
+        othersShip.getStyleClass().add("bottom-button");
+        finish.getStyleClass().add("next-button");
 
-        // Left side: board with clickable slots
-        Pane boardPane = new Pane();
-        ImageView boardImage = new ImageView(new Image("/Images/cardboard/cardboard-5.png"));
-        boardImage.setFitWidth(500);
-        boardImage.setPreserveRatio(true);
-        boardPane.getChildren().add(boardImage);
+        othersShip.setOnAction(e -> {
+            sceneManager.switchTravelling(this);
+        });
 
-//        // Create 28 buttons and manually position them
-//        for (int i = 0; i < 28; i++) {
-//            Button slot = new Button();
-//            slot.setStyle("-fx-background-color: transparent; -fx-border-color: yellow;");
-//            slot.setPrefSize(30, 30);
-//            slot.setLayoutX(100 + (i % 7) * 40); // 🔧 adjust manually to match your board
-//            slot.setLayoutY(100 + (i / 7) * 40);
-//            int finalI = i;
-//            slot.setOnAction(e -> {
-//                System.out.println("Clicked slot " + finalI);
-//                // trigger game logic here
-//            });
-//            boardPane.getChildren().add(slot);
-//        }
-//
-//        // Right side: card display
-//        VBox cardBox = new VBox();
-//        cardBox.setAlignment(Pos.CENTER);
-//        cardBox.setSpacing(10);
-//        ImageView cardImage = new ImageView(); // initially empty
-//        cardImage.setFitWidth(300);
-//        cardImage.setPreserveRatio(true);
-//        cardBox.getChildren().add(cardImage);
+        finish.setOnAction(e -> {
+            // TODO introduce checks
+            sceneManager.next(this);
+        });
 
-        // Add board and card to layout
-        mainLayout.getChildren().addAll(boardPane);
-        root.getChildren().add(mainLayout);
+        HBox buttonBox = new HBox(300, othersShip, finish);
+        buttonBox.setPadding(new Insets(20));
+        buttonBox.setAlignment(Pos.CENTER);
 
-        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        layout.setCenter(centerContent);
+        layout.setBottom(buttonBox);
+
+        StackPane rootWithBackground = new StackPane();
+        rootWithBackground.getChildren().addAll(background, layout);
+
+        scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        sceneManager.setTravellingSceneDefault(this);
     }
 
     public Scene getScene() {
@@ -129,5 +114,9 @@ public class TravellingSceneDefault extends MyScene {
 
     public void updateGame(Game game) {
         this.game = game;
+    }
+
+    public void setTravellingSceneOthersShip(TravellingSceneOthersShip travellingSceneOthersShip) {
+        this.travellingSceneOthersShip = travellingSceneOthersShip;
     }
 }

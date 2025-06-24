@@ -56,9 +56,11 @@ public class BuildingSceneUserShip extends MyScene {
         Button viewOthersButton = new Button("View Others' Ships");
         Button viewTilePileButton = new Button("View Tile Pile");
         Button viewBoardButton = new Button("View Board");
+        Button travelButton = new Button("Travel");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
+        travelButton.getStyleClass().add("next-button");
 
         viewOthersButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "OthersShip");
@@ -69,8 +71,11 @@ public class BuildingSceneUserShip extends MyScene {
         viewBoardButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "Board");
         });
+        travelButton.setOnAction(e -> {
+            sceneManager.next(this);
+        });
 
-        HBox buttonBox = new HBox(200, viewOthersButton, viewTilePileButton, viewBoardButton);
+        HBox buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 

@@ -39,10 +39,9 @@ public class BuildingSceneOthersShip extends MyScene {
 
         Player user = checkPlayer(nickname);
         Ship userShip = user.getShip();
-        ///
+
         this.background = new Background();
         BorderPane layout = new BorderPane();
-        this.root = new BorderPane();
 
         // see others' ships
         this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this);
@@ -52,9 +51,11 @@ public class BuildingSceneOthersShip extends MyScene {
         Button viewUserButton = new Button("View User Ship");
         Button viewTilePileButton = new Button("View Tile Pile");
         Button viewBoardButton = new Button("View Board");
+        Button travelButton = new Button("Travel");
         viewUserButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
+        travelButton.getStyleClass().add("next-button");
 
         viewUserButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "UserShip");
@@ -65,8 +66,11 @@ public class BuildingSceneOthersShip extends MyScene {
         viewBoardButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "Board");
         });
+        travelButton.setOnAction(e -> {
+            sceneManager.next(this);
+        });
 
-        HBox buttonBox = new HBox(200, viewUserButton, viewTilePileButton, viewBoardButton);
+        HBox buttonBox = new HBox(100, viewUserButton, viewTilePileButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 

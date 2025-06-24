@@ -39,6 +39,19 @@
     -fx-cursor: hand;
 }
 
+.next-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-background-color: #875f87;
+    -fx-text-fill: white;
+}
+
+.next-button:hover {
+    -fx-background-color: derive(#875f87, 20%);
+    -fx-cursor: hand;
+}
+
 .rotate-button {
     -fx-font-size: 14px;
     -fx-font-weight: bold;

@@ -42,7 +42,6 @@ public class BuildingSceneTilePile extends MyScene {
 
         this.background = new Background();
         BorderPane layout = new BorderPane();
-        this.root = new BorderPane();
 
         // see TilePile
         this.tilePileGrid = new TilePileGrid(this, tilePile);
@@ -52,9 +51,11 @@ public class BuildingSceneTilePile extends MyScene {
         Button viewOthersButton = new Button("View Others' Ships");
         Button viewUserButton = new Button("View User Ship");
         Button viewBoardButton = new Button("View Board");
+        Button travelButton = new Button("Travel");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewUserButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
+        travelButton.getStyleClass().add("next-button");
 
         viewOthersButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "OthersShip");
@@ -65,8 +66,11 @@ public class BuildingSceneTilePile extends MyScene {
         viewBoardButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "Board");
         });
+        travelButton.setOnAction(e -> {
+            sceneManager.next(this);
+        });
 
-        HBox buttonBox = new HBox(200, viewOthersButton, viewUserButton, viewBoardButton);
+        HBox buttonBox = new HBox(100, viewOthersButton, viewUserButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
