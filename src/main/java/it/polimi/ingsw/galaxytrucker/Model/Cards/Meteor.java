@@ -51,8 +51,13 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
         if (this.bigMeteor) {
             List<Tile> list= ship.getRowListTiles(diceRoll);
             if(!direction.equals(NORTH)){
-                list.addAll(ship.getRowListTiles(diceRoll+1)); //add also the previous and following row
-                list.addAll(ship.getRowListTiles(diceRoll-1));
+                if(diceRoll<(ship.getRowMax()-1)){
+                    list.addAll(ship.getRowListTiles(diceRoll+1));
+                }
+                if(diceRoll>0){
+                    list.addAll(ship.getRowListTiles(diceRoll-1));
+                }
+                 //add also the previous and following row
             }
             CannonTileVisitor ctv = new CannonTileVisitor();
             for (Tile t : list) {
@@ -75,7 +80,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getRowListTiles(diceRoll-5).getFirst();
+            Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
             ConnectorType c;
             if (this.direction == WEST) {
                 c = firstTile.getConnectors().get(1);
@@ -98,8 +103,12 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
         if (this.bigMeteor) {
             List<Tile> list = ship.getColumnListTiles(diceRoll);
             if (!direction.equals(NORTH)) {
-                list.addAll(ship.getColumnListTiles(diceRoll + 1));
-                list.addAll(ship.getColumnListTiles(diceRoll - 1));
+                if(diceRoll<(ship.getColMax()-1)){
+                    list.addAll(ship.getColumnListTiles(diceRoll + 1));
+                }
+                if(diceRoll>0){
+                    list.addAll(ship.getColumnListTiles(diceRoll - 1));
+                }
             }
             CannonTileVisitor ctv = new CannonTileVisitor();
             for (Tile t : list) {
@@ -122,7 +131,7 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getRowListTiles(diceRoll-5).getFirst();
+            Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
             ConnectorType c;
             if (this.direction == NORTH) {
                 c = firstTile.getConnectors().get(0);

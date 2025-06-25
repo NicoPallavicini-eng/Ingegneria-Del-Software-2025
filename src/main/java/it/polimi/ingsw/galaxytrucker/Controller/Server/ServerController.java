@@ -15,6 +15,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Server.RMIServer;
 import it.polimi.ingsw.galaxytrucker.Network.Server.SocketServer;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -565,10 +566,11 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nStarted Travelling State\n");
+                                        Message msg = new Message("String", null, "\nStarted Travelling State\n");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -581,11 +583,12 @@ public class ServerController {
                                     try {
                                         Player player = checkPlayer(socketClient.getNickname());
                                         if (player != null) {
-                                            Message msg = new Message("String", game, "\nGame is over, the final state has been reached.\n" +
+                                            Message msg = new Message("String", null, "\nGame is over, the final state has been reached.\n" +
                                                     "You have collected " + player.getShip().getCredits() + " credits and " + player.getShip().getTravelDays() + " travel days.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
+                                            objOut.reset();
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -599,7 +602,7 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nHourglass flipped for the: " + game.getHourglass().getFlipNumber() + " time\n" +
+                                        Message msg = new Message("String", null, "\nHourglass flipped for the: " + game.getHourglass().getFlipNumber() + " time\n" +
                                                 "Time left: " + game.getHourglass().getElapsedTime() + " seconds\n");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
@@ -616,7 +619,7 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message ("String", game, "\nTime is up! You have to place your ship now!");
+                                        Message msg = new Message ("String", null, "\nTime is up! You have to place your ship now!");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
@@ -632,10 +635,11 @@ public class ServerController {
                             try {
                                 Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    Message msg = new Message ("", game, "viewLeaderboard");
+                                    Message msg = new Message ("Game", game, "viewLeaderboard");
                                     ObjectOutputStream objOut = socketClient.getObjOut();
                                     objOut.writeObject(msg);
                                     objOut.flush();
+                                    objOut.reset();
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -644,18 +648,19 @@ public class ServerController {
                     }
                     case "shipPlaced" -> {
                         synchronized(((BuildingState) gameState).getPlayersWithLegalShips()){
+                            //System.out.println("Sono dentro shipPlaced!");
                             try{
                                 for (SocketClientHandler socketClient : socketClients){
                                     Player player = checkPlayer(socketClient.getNickname());
                                     if (player != null){
                                         if (((BuildingState) gameState).getFinishedBuildingPlayers().contains(player) && !player.isChecked()) {
-                                            Message msg = new Message("String", game, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
+                                            Message msg = new Message("String", null, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
                                             player.setChecked(true);
                                         } else {
-                                            Message msg = new Message("String", game, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
+                                            Message msg = new Message("String", null, "\n" + player.getNickname() + "Your ship is legal! You can now place your aliens. If you don't want to place any alien, type /done.\n");
                                             ObjectOutputStream objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
@@ -677,13 +682,17 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nNew card drawn\n");
+                                        System.out.println("Sono dentro newCard!");
+                                        Message msg = new Message("String", null, "\nNew card drawn\n");
+                                        msg.setNickname(socketClient.getNickname());
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
-                                        Message msg2 = new Message("", game, "viewCard");
+                                        Message msg2 = new Message("Game", game, "viewCard");
+                                        msg2.setNickname(socketClient.getNickname());
                                         objOut.writeObject(msg2);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -700,9 +709,12 @@ public class ServerController {
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
-                                        Message msg2 = new Message("", game, "viewLeaderboard");
+                                        objOut.reset();
+                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                        msg2.setNickname(socketClient.getNickname());
                                         objOut.writeObject(msg2);
                                         objOut.flush();
+                                        objOut.reset();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -717,13 +729,18 @@ public class ServerController {
                                     Player player = checkPlayer(socketClient.getNickname());
                                     if (player != null && ((TravellingState) gameState).getHandledPlayers().contains(player)) {
                                         ObjectOutputStream objOut = socketClient.getObjOut();
-                                        Message msg2 = new Message("", game, "viewLeaderboard");
+                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                        msg2.setNickname(socketClient.getNickname());
                                         objOut.writeObject(msg2);
                                         objOut.flush();
-                                        Message msg = new Message ("String", game, "\nYou are now in the meteors state.\n" +
+                                        objOut.reset();
+                                        Message msg = new Message ("String", null, "\nYou are now in the meteors state.\n" +
                                                 "You have to defend yourself from the meteors!\n" +
                                                 "You can do so activating your shields or cannons.\n" +
                                                 "If you don't want to defend yourself, type /nochoice.\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
+                                        objOut.reset();
                                        }
                                 }
                             } catch (IOException e) {
@@ -735,13 +752,24 @@ public class ServerController {
                         for (SocketClientHandler socketClient : socketClients) {
                             if (socketClient != null) {
                                 try {
-                                    Message msg = new Message ("String", game, "\nMeteors card is now over. You will now see the damage done to your ship.\n");
                                     ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nMeteors card is now over. You will now see the damage done to your ship.\n");
                                     objOut.writeObject(msg);
                                     objOut.flush();
-                                    Message msg2 = new Message("", game, "viewMyShip");
+                                    objOut.reset();
+
+                                    msg = new Message ("Game", game, "viewCard");
+                                    msg.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
                                     objOut.writeObject(msg2);
                                     objOut.flush();
+                                    objOut.reset();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -749,172 +777,273 @@ public class ServerController {
                         }
                     }
                     case "openSpace" -> {
-                        try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
-                                if (player != null) {
-                                    rmiClient.printMessage("\nYou are now in open space.\n You can choose to activate your engines or do nothing.\n If you want to do nothing, type /nochoice.\n Now playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+//                        try {
+//                            for (VirtualClient rmiClient : rmiClients) {
+//                                Player player = checkPlayer(rmiClient.getNickname());
+//                                if (player != null) {
+//                                    rmiClient.printMessage("\nYou are now in open space.\n You can choose to activate your engines or do nothing.\n If you want to do nothing, type /nochoice.\n Now playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
+//                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+//                                }
+//                            }
+//                        } catch (RemoteException e) {
+//                            throw new RuntimeException(e);
+//                        }
+                        for (SocketClientHandler socketClient : socketClients) {
+                            if (socketClient != null) {
+                                try{
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in open space.\n You can choose to activate your engines or do nothing.\n If you want to do nothing, type /nochoice.\n Now playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+                                }catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
                         }
                     }
                     case "openSpaceAction" -> {
-                        try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
-                                if (player != null && ((OpenSpaceState) gameState).getHandledPlayers().contains(player)) {
-                                    try {
-                                        rmiClient.printMessage("\nYou have activated your engines and moved forward.\n");
-                                        rmiClient.viewLeaderboard(game);
-                                    } catch (RemoteException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                } else if (player != null && !((OpenSpaceState) gameState).getHandledPlayers().contains(player)) {
-                                    rmiClient.printMessage("\n" + ((OpenSpaceState) gameState).getHandledPlayers().getLast() + "Has activated his/her engines and moved forward.\n");
-                                    rmiClient.viewLeaderboard(game);
-                                }
+                        try{
+                            for(SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null&& ((OpenSpaceState) gameState).getHandledPlayers().contains(player)) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
 
+                                    Message msg = new Message ("String", null, "\nYou have activated your engines and moved forward.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+                                } else if (player != null && !((OpenSpaceState) gameState).getHandledPlayers().contains(player)) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\n" + ((OpenSpaceState) gameState).getHandledPlayers().getLast() + "Has activated his/her engines and moved forward.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+                                }
                             }
-                        }catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        }catch(IOException e){
+                            e.printStackTrace();
                         }
                     }
                     case "nextplayer" -> {
                         if (gameState instanceof TravellingState) {
                             try {
                                 synchronized (((TravellingState) gameState).getCurrentPlayer()){
-                                    for (VirtualClient rmiClient : rmiClients) {
-                                        Player player = checkPlayer(rmiClient.getNickname());
-                                        if (player != null) {
-                                            rmiClient.printMessage("\nNow playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
-                                            rmiClient.viewCard(game);
+                                    for(SocketClientHandler socketClient : socketClients) {
+                                        Player player = checkPlayer(socketClient.getNickname());
+                                        if(player != null) {
+                                            ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                            Message msg = new Message ("String", null, "\nNow playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                            objOut.writeObject(msg);
+                                            objOut.flush();
+
+                                            msg = new Message ("Game", game, "viewCard");
+                                            msg.setNickname(socketClient.getNickname());
+                                            objOut.writeObject(msg);
+                                            objOut.flush();
+                                            objOut.reset();
                                         }
                                     }
                                 }
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
                     case "planets" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
-                                if (player != null){
-                                    rmiClient.printMessage("\nYou are now in the planets state. \n You can choose a planet to land on (/chooseplanet <index>) or do nothing (/nochoice).\n Once everyone has chosen a planet, you can add cargo to your ship (/addcargo <index> <cargoType>), remove cargo (/removecargo <index>), switch cargo (/switchcarg <index1>; <index2> or do nothing (/nochoice).\n Once you are dne with the cargo phase you have to signal it with the /done command.\n Now playing: " + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                            for(SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the planets state. \n You can choose a planet to land on (/chooseplanet <index>) or do nothing (/nochoice).\n Once everyone has chosen a planet, you can add cargo to your ship (/addcargo <index> <cargoType>), remove cargo (/removecargo <index>), switch cargo (/switchcarg <index1>; <index2> or do nothing (/nochoice).\n Once you are dne with the cargo phase you have to signal it with the /done command.\n Now playing: " + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+
                     }
                     case "planetsSelection" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients){
-                                Player player = checkPlayer(rmiClient.getNickname());
-                                if (player != null){
-                                    if (((PlanetsState) gameState).getChosenPlanets().containsKey(player) && !player.isChecked()) {
-                                        rmiClient.printMessage("\nYou have chosen the planet: " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                            for(SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    if(((PlanetsState) gameState).getChosenPlanets().containsKey(player) && !player.isChecked()){
+                                        ObjectOutputStream objOut = socketClient.getObjOut();
+                                        Message msg = new Message("String",null,"\nYou have chosen the planet: " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
                                         player.setChecked(true);
-                                    } else {
-                                        rmiClient.printMessage("\n" + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + " has chosen the planet " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                                    }else{
+                                        ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                        Message msg = new Message ("String", null, "\n" + ((PlanetsState) gameState).getCurrentPlayer().getNickname() + " has chosen the planet " + ((PlanetsState) gameState).getChosenPlanets().get(player) + ".\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
                                     }
-                                    rmiClient.viewCard(game);
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("Game", game, "viewCard");
+                                    msg.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    objOut.reset();
                                 }
                             }
-                        } catch (RemoteException e){
-                            throw new RuntimeException(e);
+                        } catch (IOException e){
+                           e.printStackTrace();
                         }
                     }
                     case "planetsNoSelection" -> {
                         try{
                             Player target = ((PlanetsState)gameState).getSatisfiedPlayers().getLast();
                             String targetNick = target.getNickname();
-                            for (VirtualClient rmiClient : rmiClients){
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients){
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null){
                                     if (!targetNick.equals(player.getNickname())) {
-                                        rmiClient.printMessage("\n" + targetNick + "Has chosen to do nothing.\n");
+                                        ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                        Message msg = new Message ("String", null, "\n" + targetNick + "Has chosen to do nothing.\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
                                     }
                                 }
                             }
-                        } catch (RemoteException e){
-                            throw new RuntimeException(e);
+                        } catch (IOException e){
+                            e.printStackTrace();
                         }
                     }
                     case "loseDays" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
                                     try {
-                                        rmiClient.viewLeaderboard(game);
+                                        ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                        msg2.setNickname(socketClient.getNickname());
+                                        objOut.writeObject(msg2);
+                                        objOut.flush();
+                                        objOut.reset();
+
                                     } catch (RemoteException e) {
                                         throw new RuntimeException(e);
                                     }
                                 }
                             }
-                        } catch(RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch(IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "station" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients){
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients){
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null){
-                                    rmiClient.printMessage("\n" + "You are now in the abbandoned station state.\n" +
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\n" + "You are now in the abbandoned station state.\n" +
                                             "If you have enough crew, you can decide to land on the station (/claimreward).\n" +
                                             "Once you landed you can decide to add, remove or switch cargo from your ship. If you don't want to do anything, type /nochoice.\n" +
                                             "Once you are done with the cargo phase, you have to signal it with the /done command.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "stationAction" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients){
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients){
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
                                     if (!player.getNickname().equals(((StationState) gameState).getRewardClaimer().getNickname())) {
-                                        rmiClient.printMessage("\n" + ((StationState) gameState).getCurrentPlayer().getNickname() + " has landed on the station.\n");
+                                        ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                        Message msg = new Message ("String", null, "\n" + ((StationState) gameState).getCurrentPlayer().getNickname() + " has landed on the station.\n");
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
                                     }
-                                    rmiClient.viewLeaderboard(game);
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "stardust" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    rmiClient.printMessage("\nYou are now in the stardust state.\n You will lose 1 travel day for each exposed connectors.");
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
-                                    rmiClient.printMessage("\n You will lose: " + player.getShip().getExposedConnectors() + " travel days.\n");
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the stardust state.\n You will lose 1 travel day for each exposed connectors.");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    msg = new Message ("String", null, "\n You will lose: " + player.getShip().getExposedConnectors() + " travel days.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "stardustEnd" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    rmiClient.viewLeaderboard(game);
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg2 = new Message("Game", game, "viewLeaderboard");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "epidemic" -> {
@@ -925,127 +1054,213 @@ public class ServerController {
                                             "You will lose 1 crew member from every occupied cabin that is joined to another occupied cabin.\n");
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                            for(SocketClientHandler socketClient : socketClients){
+                                if(socketClient != null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the epidemic state.\n"+
+                                            "You will lose 1 crew member from every occupied cabin that is joined to another occupied cabin.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "pirates" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients){
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null){
-                                    rmiClient.printMessage("\nYou are now in the pirates state.\n" +
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the pirates state.\n" +
                                             "Every player have to fight the pirates.\n" +
                                             "You can activate your cannons (/activatecannons), your shields (/activateshields) or do nothing (/nochoice).\n" +
                                             "The player that defeats the pirates can loot them with the /claimreward command.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "piratesDefeated" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for(SocketClientHandler socketClient : socketClients){
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null && !player.getNickname().equals(((PiratesState) gameState).getPiratesSlayer().getNickname())) {
-                                    rmiClient.printMessage("\nThe pirates have been defeated by: " + ((PiratesState) gameState).getPiratesSlayer().getNickname());
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nThe pirates have been defeated by: " + ((PiratesState) gameState).getPiratesSlayer().getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
                                 } else if (player.getNickname().equals(((PiratesState) gameState).getPiratesSlayer().getNickname())) {
-                                    rmiClient.printMessage("\nYou have defeated the pirates! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou have defeated the pirates! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        }catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        }catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "ship" -> {
                         try{
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    rmiClient.printMessage("\nYou are now in the ship state.\n"+
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the ship state.\n"+
                                             "Every player in order has to choose whether to eject people (/ejectpeople)  if they have enough or no action (/nochoice).\n" +
                                             "Now playing: " + ((ShipState) gameState).getCurrentPlayer().getNickname() + ".\n");
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "slavers" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    rmiClient.printMessage("\nYou are now in the slavers state.\n" +
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the slavers state.\n" +
                                             "Every player in order has to choose whether to activate cannons (/activatecannons) or no action (/nochoice).\n" +
                                             "Now playing: " + ((SlaversState) gameState).getCurrentPlayer().getNickname() + ".\n");
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        }  catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "slaversDefeated" -> {
+
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null && !player.getNickname().equals(((SlaversState) gameState).getSlaversSlayer().getNickname())) {
-                                    rmiClient.printMessage("\nThe slavers have been defeated by: " +  ((SlaversState)gameState).getSlaversSlayer().getNickname());
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nThe slavers have been defeated by: " +  ((SlaversState)gameState).getSlaversSlayer().getNickname() +
+                                            "Now playing: " + ((SlaversState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
                                 }
                                 else if (player.getNickname().equals(((SlaversState) gameState).getSlaversSlayer().getNickname())){
-                                    rmiClient.printMessage("\nYou have defeated the slavers! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou have defeated the slavers! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "smugglers" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null) {
-                                    rmiClient.printMessage("\nYou are now in the smugglers state.\n" +
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in the smugglers state.\n" +
                                             "Every player have to fight the smugglers.\n" +
                                             "You can activate your cannons (/activatecannons) or do nothing (/nochoice).\n" +
                                             "When defeated you can claim your reward (/claimreward) and the adjust your cargo with the commands (/addcargo, /removecargo or /switchcargo).\n" +
                                             "Now playing: " + ((SmugglersState) gameState).getCurrentPlayer().getNickname() + ".\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "smugglersNoChoice" -> {
+
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null && !((SmugglersState) gameState).getHandledPlayers().contains(player)) {
-                                    rmiClient.printMessage("\n" + ((SmugglersState) gameState).getHandledPlayers().getLast() + " has chosen to do nothing.\n");
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\n" + ((SmugglersState) gameState).getHandledPlayers().getLast() + " has chosen to do nothing.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "smugglersDefeated" -> {
                         try {
-                            for (VirtualClient rmiClient : rmiClients) {
-                                Player player = checkPlayer(rmiClient.getNickname());
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
                                 if (player != null && !player.getNickname().equals(((SmugglersState) gameState).getSmugglersSlayer().getNickname())) {
-                                    rmiClient.printMessage("\nThe smugglers have been defeated by: " + ((SmugglersState) gameState).getSmugglersSlayer().getNickname());
-                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nThe smugglers have been defeated by: " + ((SmugglersState) gameState).getSmugglersSlayer().getNickname());
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
                                 } else if (player.getNickname().equals(((SmugglersState) gameState).getSmugglersSlayer().getNickname())) {
-                                    rmiClient.printMessage("\nYou have defeated the smugglers! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou have defeated the smugglers! You can now claim your reward with the /claimreward command or do nothing with the /nochoice command.\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
                                 }
                             }
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     case "combatZone" -> {
@@ -1058,15 +1273,15 @@ public class ServerController {
             }
         });
 
-        rmiThread.start();
-        socketThread.start();
+            rmiThread.start();
+            socketThread.start();
 
-        try{
-            rmiThread.join();
-            socketThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            try{
+                rmiThread.join();
+                socketThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
     /**
@@ -1125,6 +1340,14 @@ public class ServerController {
 
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
         switch (command) {
+            case "viewcard" ->{
+                Message newMessage;
+                newMessage = new Message("Game",game,"viewCard");
+                newMessage.setNickname(msg.getNickname());
+                objOut.writeObject(newMessage);
+                objOut.flush();
+                objOut.reset();
+            }
             case "GAME"->{
                 Message newMessage;
                 newMessage = new Message("Game",game,"NewGame");
@@ -1934,8 +2157,8 @@ public class ServerController {
                                 for (int j=0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -2032,8 +2255,8 @@ public class ServerController {
                                 for (int j=0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -2349,7 +2572,7 @@ public class ServerController {
                             newMessage = new Message("String",null,"/ejectpeople needs a numbero of parameters multiple of 3.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/ejectpeople needs a numbero of parameters multiple of 3.");
+                            //client.invalidCommand("/ejectpeople needs a number of parameters multiple of 3.");
                         }
                         else{
                             for (int i = 0; i < firstParameters.size(); i += 3){
@@ -2904,6 +3127,7 @@ public class ServerController {
                     client.invalidCommand("You are not connected to the game!");
                 }
             }
+            //
             case "help" -> {
                 if (!firstParameters.isEmpty() || !secondParameters.isEmpty()) {
                     client.invalidCommand("/help doesn't support parameters, but here is the help command anyway!");
@@ -3003,11 +3227,14 @@ public class ServerController {
                         if (clientNickname != null) {
                             client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else {
+                            /*
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                                     .filter(player1 -> player1.getNickname().equals(nickname))
                                     .findAny();
 
                             if (!playerOptional.isPresent()) {
+
+                             */
                                 try {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
@@ -3020,11 +3247,13 @@ public class ServerController {
                                     client.invalidCommand("Error: " + e.getMessage());
                                     throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
-
+                                /*
                             } else {
                                 client.invalidCommand("Nickname already taken, please choose another one!");
                                 throw new IllegalGUIEventException("Error: Nickname already taken, please choose another one!");
                             }
+
+                                 */
                         }
                     } else {
                             client.invalidCommand("/connect request one parameter.");
@@ -3367,11 +3596,11 @@ public class ServerController {
                                     engineRow.add(colEng - 4);
                                     engines.add(engineRow);
                                 }
-                                for (int j = 0; j < secondParameters.size(); j += 2) {
+                                for (int j = 0; j < secondParameters.size(); j += 3) {
                                     //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
-                                    String colBatStr = secondParameters.get(j++);
-                                    String valueBatStr = secondParameters.get(j += 2);
+                                    String colBatStr = secondParameters.get(j+1);
+                                    String valueBatStr = secondParameters.get(j + 2);
 
                                     int rowBat = Integer.parseInt(rowBatStr);
                                     int colBat = Integer.parseInt(colBatStr);
@@ -3693,21 +3922,11 @@ public class ServerController {
             case "claimreward" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
-                    if (secondParameters.isEmpty()) {
-                        if (firstParameters.size() == 1) {
-                            String engage = firstParameters.get(0);
-                            if (engage.equals("true") || engage.equals("false")) {
-                                boolean engageBool = Boolean.parseBoolean(engage);
-                                ClaimRewardEvent event = new ClaimRewardEvent(player, engageBool);
-                                game.getGameState().handleEvent(event);
-                            } else {
-                                client.invalidCommand("The parameter must be either true or false.");
-                            }
-                        } else {
-                            client.invalidCommand("/claimreward supports only one parameter.");
-                        }
+                    if (secondParameters.isEmpty() && firstParameters.isEmpty()) {
+                        ClaimRewardEvent event = new ClaimRewardEvent(player, true);
+                        game.getGameState().handleEvent(event);
                     } else {
-                        client.invalidCommand("/claimreward supports only one paramter.");
+                        client.invalidCommand("/claimreward doesn't require any parameters.");
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");

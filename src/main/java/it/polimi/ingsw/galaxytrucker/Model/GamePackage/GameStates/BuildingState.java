@@ -50,7 +50,6 @@ public class BuildingState extends GameState implements Serializable {
         game.updateListOfActivePlayers();
         game.sortListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
-        game.notifyObservers(game, "newcard");
         getGame().setGameState(nextCard.createGameState(game));
         game.getGameState().init();
 
@@ -69,7 +68,7 @@ public class BuildingState extends GameState implements Serializable {
         game.notifyObservers(game, "time");
     }
 
-    /*
+
     public void handleEvent(Ship ship){
 
         CabinTile cabin1 = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.NONE, CabinInhabitants.NONE,false, Color.NONE,1,0);
@@ -109,8 +108,22 @@ public class BuildingState extends GameState implements Serializable {
         shieldTile.setFacingUp(true);
         tile.setFacingUp(true);
     }
+    public void handleEvent(ChooseSubShipEvent event){
+        if(!playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            synchronized (playersWithIllegalShips) {
+                if(event.player().getShip().checkFloorPlanConnection()){
+                    playersWithIllegalShips.remove(event.player());
+                    playersWithLegalShips.add(event.player());
+                    game.notifyObservers(game, "legalship");
+                }
+            }
+        }
+    }
 
-     */
     public void handleEvent(SetPositionEvent event) {
         if(finishedBuildingPlayers.contains(event.player())){
             throw new IllegalEventException("You have already placed your rocket");
@@ -125,9 +138,11 @@ public class BuildingState extends GameState implements Serializable {
                     if(player.getShip().checkFloorPlanConnection()){
                         synchronized(playersWithLegalShips) {
                             playersWithLegalShips.add(player);
+                            /*
                             if (playersWithIllegalShips.contains(player)) {
                                 playersWithIllegalShips.remove(player);
                             }
+                             */
                         }
                     }
                     else {

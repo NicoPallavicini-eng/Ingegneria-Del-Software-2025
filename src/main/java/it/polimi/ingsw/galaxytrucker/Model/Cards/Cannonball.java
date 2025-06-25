@@ -33,17 +33,18 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
 
     public void getHit(Ship ship) {
         if (this.rowOrColumn == ROW) {
-            if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll).isEmpty()) {
+            if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll-5).isEmpty()) {
                 checkForShieldOrRemoveRow(ship, diceRoll);
             }
         } else if (this.rowOrColumn == COLUMN) {
-            if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll).isEmpty()) {
+            if (diceRoll >= 4 && diceRoll <= 10 && !ship.getColumnListTiles(diceRoll-4).isEmpty()) {
                 checkForShieldOrRemoveColumn(ship, diceRoll);
             }
         }
     }
 
     private void checkForShieldOrRemoveRow(Ship ship, int diceRoll) {
+        diceRoll -= 5;
         if (this.bigCannonball) {
             ship.removeFirstTile(diceRoll, direction);
         } else {
@@ -65,6 +66,7 @@ public record Cannonball(boolean bigCannonball, Direction direction, RowOrColumn
     }
 
     private void checkForShieldOrRemoveColumn(Ship ship, int diceRoll) {
+        diceRoll -= 4;
         if (this.bigCannonball) {
             ship.removeFirstTile(diceRoll, direction);
         } else {

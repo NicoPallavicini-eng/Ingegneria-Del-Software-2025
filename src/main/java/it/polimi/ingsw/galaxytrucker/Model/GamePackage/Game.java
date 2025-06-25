@@ -79,6 +79,12 @@ public class Game implements Serializable, Observable {
         }
     }
 
+    public void removePlayerFromActiveList(Player player){
+        if(listOfActivePlayers.contains(player)){
+            listOfActivePlayers.remove(player);
+        }
+    }
+
     public GameState getGameState() {
         return gameState;
     }

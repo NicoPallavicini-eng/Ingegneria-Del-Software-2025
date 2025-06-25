@@ -18,7 +18,7 @@ then the rockets are moved foward according to the engine power of their ship
 
 public class OpenSpaceState extends TravellingState implements Serializable {
     private OpenSpaceCard currentCard;
-    private ArrayList<Player> handledPlayers;
+    //private ArrayList<Player> handledPlayers;
 
     public OpenSpaceState(Game game, OpenSpaceCard card) {
         super(game, card);
@@ -39,6 +39,7 @@ public class OpenSpaceState extends TravellingState implements Serializable {
             EventHandler.handleEvent(event);
             if(ship.getEnginePower() == 0){
                 ship.setTravelDays(null);
+                game.removePlayerFromActiveList(event.player());
             }
             else {
                 EventHandler.moveForward(ship, ship.getEnginePower(), game);
@@ -59,6 +60,7 @@ public class OpenSpaceState extends TravellingState implements Serializable {
         }
         else if(ship.getEnginePower() == 0){
             ship.setTravelDays(null);
+            game.removePlayerFromActiveList(event.player());
             handledPlayers.add(event.player());
             game.notifyObservers(game, "openSpaceAction");
             nextPlayer();

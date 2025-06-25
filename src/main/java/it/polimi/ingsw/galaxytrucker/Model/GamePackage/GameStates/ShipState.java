@@ -38,10 +38,10 @@ public class ShipState extends TravellingState implements Serializable {
         else{
             int numberEject = 0;
             for(List<Integer> list : event.people()){
-                numberEject=list.get(2)+numberEject;
+                numberEject += list.get(2);
             }
             if(numberEject!=currentCard.getCrewNumberLost()){
-                throw new IllegalEventException("You choose not correct number of people to eject");
+                throw new IllegalEventException("You selected " + numberEject + " instead of " + currentCard.getCrewNumberLost() + " people");
             }
 
             Ship s = event.player().getShip();

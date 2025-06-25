@@ -1066,6 +1066,7 @@ public class TUI implements UI {
                         System.out.println("Size = Small, ");
                     }
                     System.out.println("Direction = " + ball.direction());
+                    System.out.println("Dice = " + ball.diceRoll());
                     i++;
                 }
             }

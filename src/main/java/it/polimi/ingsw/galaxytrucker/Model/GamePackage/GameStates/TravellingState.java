@@ -58,7 +58,7 @@ public abstract class TravellingState extends GameState implements Serializable 
         //
         game.updateListOfActivePlayers();
         Card nextCard = getGame().getDeck().drawCard();
-        if (nextCard == null) {
+        if (nextCard == null || game.getListOfActivePlayers().isEmpty()) {
             getGame().setGameState(new FinalState(game));
             game.notifyObservers(game, "final");
         } else {
@@ -87,6 +87,7 @@ public abstract class TravellingState extends GameState implements Serializable 
             }
             currentPlayer = game.getListOfActivePlayers().getFirst();
         }
+        game.notifyObservers(game, "newcard");
     }
 
     public void handleEvent(GiveUpEvent event) throws IllegalEventException {
@@ -94,7 +95,7 @@ public abstract class TravellingState extends GameState implements Serializable 
     }
 
     protected void disconnectionConsequences(Player p){
-        if(currentPlayer.equals(p)){
+        if(currentPlayer!=null && currentPlayer.equals(p)){
             nextPlayer();
         }
     }

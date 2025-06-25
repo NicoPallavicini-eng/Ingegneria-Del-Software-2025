@@ -156,6 +156,10 @@ public abstract class GameState implements Serializable {
         throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
 
+    public void handleEvent(ChooseSubShipEvent event) throws IllegalEventException {
+        throw new IllegalEventException("The player used a command not available in this phase of the game.");
+    }
+
     protected void disconnectionConsequences(Player p){
     }
 

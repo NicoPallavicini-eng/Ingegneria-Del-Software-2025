@@ -127,7 +127,7 @@ public void referMethod(Message msg) throws RemoteException {
                 pongNickname();
 
             }case "PING"->{
-                // TODO ?
+
             }case "disconnect" ->{
                 flag = false;
             }
@@ -167,7 +167,7 @@ public void referMethod(Message msg) throws RemoteException {
                 viewCard(game);
             }
             default -> {
-                System.out.println("Il messaggio con attributo Game non ha il commando specificato"); //PORCO DIO VA IN INGLESE!!!!!!!!!!!
+                System.out.println("Il messaggio con attributo Game non ha il commando specificato");
             }
 
         }
