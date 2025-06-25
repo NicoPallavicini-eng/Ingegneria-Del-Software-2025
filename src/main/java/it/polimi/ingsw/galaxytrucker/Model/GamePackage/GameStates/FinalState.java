@@ -46,40 +46,48 @@ public class FinalState extends GameState implements Serializable {
     private void computeFinishOrderReward() {
         int i=0;
         for(Ship ship : ships){
-            ship.setCredits(ship.getCredits()+8-2*i);
-            i++;
+            if(ship.getTravelDays()!=null){
+                ship.setCredits(ship.getCredits()+8-2*i);
+                i++;
+            }
         }
     }
 
     private void computeBLSReward() {
-        int min = ships.stream().
-                map(Ship::getExposedConnectors).
-                min(Integer::compareTo).get();
+        if(!ships.isEmpty()){
+            int min = ships.stream().
+                    map(Ship::getExposedConnectors).
+                    min(Integer::compareTo).get();
 
-        ships.stream().
-                filter(s -> s.getExposedConnectors() == min).forEach(s -> {
-                    s.setCredits(s.getCredits()+4);
-                });
+            ships.stream().
+                    filter(s -> s.getExposedConnectors() == min).forEach(s -> {
+                        s.setCredits(s.getCredits()+4);
+                    });
+        }
     }
 
     private void computeSaleOfGoods() {
-        ships.stream().
-                forEach(s -> s.setCredits(s.getCredits() +
-                        s.getListOfCargo().stream().
-                                flatMapToInt(c -> c.getTileContent().stream().
-                                        mapToInt(Integer::intValue)).
-                                sum())
-                        );
-        gaveUpShips.stream().
-                forEach(s -> s.setCredits(s.getCredits() +
-                        (s.getListOfCargo().stream().
-                                flatMapToInt(c -> c.getTileContent().stream().
-                                        mapToInt(Integer::intValue)).
-                                sum())/2
-                ));
+        if(!ships.isEmpty()){
+            ships.stream().
+                    forEach(s -> s.setCredits(s.getCredits() +
+                            s.getListOfCargo().stream().
+                                    flatMapToInt(c -> c.getTileContent().stream().
+                                            mapToInt(Integer::intValue)).
+                                    sum())
+                    );
+            gaveUpShips.stream().
+                    forEach(s -> s.setCredits(s.getCredits() +
+                            (s.getListOfCargo().stream().
+                                    flatMapToInt(c -> c.getTileContent().stream().
+                                            mapToInt(Integer::intValue)).
+                                    sum())/2
+                    ));
+        }
     }
 
     private void computeLosses() {
-        ships.stream().forEach(s -> s.setCredits(s.getCredits() - s.getLostTiles()));
+        if(!ships.isEmpty()){
+            ships.stream().forEach(s -> s.setCredits(s.getCredits() - s.getLostTiles()));
+        }
     }
 }
