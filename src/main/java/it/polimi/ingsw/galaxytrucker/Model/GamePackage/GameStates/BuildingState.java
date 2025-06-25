@@ -108,7 +108,21 @@ public class BuildingState extends GameState implements Serializable {
         shieldTile.setFacingUp(true);
         tile.setFacingUp(true);
     }
-
+    public void handleEvent(ChooseSubShipEvent event){
+        if(!playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            synchronized (playersWithIllegalShips) {
+                if(event.player().getShip().checkFloorPlanConnection()){
+                    playersWithIllegalShips.remove(event.player());
+                    playersWithLegalShips.add(event.player());
+                    game.notifyObservers(game, "legalship");
+                }
+            }
+        }
+    }
 
     public void handleEvent(SetPositionEvent event) {
         if(finishedBuildingPlayers.contains(event.player())){

@@ -39,7 +39,9 @@ public class EventHandler implements Serializable {
 
         for (ArrayList<Tile> list : ship.getFloorplanArrayList()) {
             for (Tile t : list) {
-                if (!pieceOfShip.contains(t)) {
+                if (!pieceOfShip.contains(t)&&t!=null) {
+//                    ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(t),ship.findTileOnFloorPlanColumn(t),null);
+
                     t.accept(batteryTileVisitor);
                     t.accept(bioadaptorTileVisitor);
                     t.accept(cabinTileVisitor);
@@ -104,6 +106,13 @@ public class EventHandler implements Serializable {
         for (ShieldTile shieldTile : shieldList) {
             ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(shieldTile), ship.findTileOnFloorPlanColumn(shieldTile), null);
         }
+        for (ArrayList<Tile> list : ship.getFloorplanArrayList()) {
+            for (Tile t : list) {
+                if (!pieceOfShip.contains(t)&&t!=null) {
+                    ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(t),ship.findTileOnFloorPlanColumn(t),null);
+                }
+            }
+        }
 
     }
 
@@ -153,7 +162,7 @@ public class EventHandler implements Serializable {
         ship.setTileOnFloorPlan(1,2,cargoTile);
         ship.setTileOnFloorPlan(3,2,cabin1);
         ship.setTileOnFloorPlan(2,4,cabin2);
-        ship.setTileOnFloorPlan(1,4,shieldTile);
+        //ship.setTileOnFloorPlan(1,4,shieldTile);
         ship.setTileOnFloorPlan(3,4,tile);
         ship.setTileOnFloorPlan(4,4,engine2);
         ship.setTileOnFloorPlan(2,5,cannon2);

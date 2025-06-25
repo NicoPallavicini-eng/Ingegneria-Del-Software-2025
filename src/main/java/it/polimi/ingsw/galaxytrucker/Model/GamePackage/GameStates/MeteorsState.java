@@ -39,6 +39,7 @@ public class MeteorsState extends TravellingState implements Serializable {
         currentMeteor = meteors.getFirst();
         meteors.remove(0);
         game.notifyObservers(game, "meteors");
+        playersWithIllegalShips = new ArrayList<>();
     }
 
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
@@ -161,7 +162,7 @@ public class MeteorsState extends TravellingState implements Serializable {
             next();
         }
         else{
-            checkNext();
+            //checkNext();
         }
     }
 
@@ -172,7 +173,9 @@ public class MeteorsState extends TravellingState implements Serializable {
         else{
             EventHandler.handleEvent(event);
             synchronized (playersWithIllegalShips) {
-                playersWithIllegalShips.remove(event.player());
+                if(!event.player().getShip().isShipBroken()){
+                    playersWithIllegalShips.remove(event.player());
+                }
             }
             game.notifyObservers(game, "legalship");
             checkNextCard();
