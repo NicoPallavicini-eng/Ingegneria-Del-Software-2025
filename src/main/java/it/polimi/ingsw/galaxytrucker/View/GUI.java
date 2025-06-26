@@ -210,5 +210,4 @@ public class GUI extends Application implements UI, Serializable {
         while(!started);
         this.sceneManager.updateGame(game, null);
     }
-
 }
