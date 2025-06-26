@@ -139,9 +139,9 @@ public class BuildingSceneTilePile extends MyScene {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
             sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16));
-            buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
-            tile.setOpacity(0.2); // faintly visible
-            tile.setClickable(false);
+//            buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
+//            tile.setOpacity(0.2); // faintly visible
+//            tile.setClickable(false);
         }
         catch (IllegalGUIEventException e){
             errorPopUp(e);
@@ -174,6 +174,7 @@ public class BuildingSceneTilePile extends MyScene {
         this.tilePileGrid = new TilePileGrid(this, tilePile);
         Platform.runLater(() -> {
             centerContent = new StackPane(tilePileGrid);
+            this.layout.setCenter(centerContent);
         });
     }
 

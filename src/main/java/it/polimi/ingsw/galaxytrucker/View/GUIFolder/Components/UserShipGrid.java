@@ -164,6 +164,7 @@ public class UserShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
+        setHandTile(user.getShip().getTileInHand(), 0);
     }
 
     /**
@@ -200,16 +201,11 @@ public class UserShipGrid extends Pane {
     }
 
     public void setHandTile (Tile tile, int rotation) {
-        if (handCell[0].getTileImage().getImage() == null) {
-            handCell[0].setLogicTile(tile);
-            handCell[0].setClickable(true);
-            handCell[0].setRotation(rotation);
-            handCell[0].setFull(true);
-            updateRotateVisible(true);
-        } else {
-            // TODO print error: "hand already full"
-        }
-        // TODO add conformity checks
+        handCell[0].setLogicTile(tile);
+        handCell[0].setClickable(true);
+        handCell[0].setRotation(rotation);
+        handCell[0].setFull(true);
+        updateRotateVisible(true);
     }
 
     public void updateRotateVisible(boolean rotateVisible) {
@@ -276,4 +272,6 @@ public class UserShipGrid extends Pane {
             errorAlert.showAndWait();
         });
     }
+
+
 }

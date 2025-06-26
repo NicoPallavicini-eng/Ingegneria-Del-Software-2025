@@ -133,6 +133,7 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void printMyShip(Game game, String nickname) {
+        sceneManager.updateGame(game, null);
         // TODO: Show current player's ship
     }
 

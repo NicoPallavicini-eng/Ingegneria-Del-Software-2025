@@ -8,6 +8,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,6 +36,15 @@ public class BuildingSceneUserShip extends MyScene {
     private BuildingSceneTilePile buildingSceneTilePile = null;
     private BuildingSceneBoard buildingSceneBoard = null;
     private boolean rotateVisible = false;
+    private Ship userShip;
+    private StackPane centerContent;
+    private Button viewOthersButton;
+    private Button viewTilePileButton;
+    private Button viewBoardButton;
+    private Button travelButton;
+    private HBox buttonBox;
+    private StackPane rootWithBackground;
+    private BorderPane layout;
 
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
@@ -43,21 +53,21 @@ public class BuildingSceneUserShip extends MyScene {
         this.sceneManager = sceneManager;
 
         user = checkPlayer(nickname); // TODO fix, rn is null
-        Ship userShip = user.getShip();
+        this.userShip = user.getShip();
 
         this.background = new Background();
-        BorderPane layout = new BorderPane();
+        layout = new BorderPane();
         this.root = new BorderPane();
 
         // see userShip
         this.userShipGrid = new UserShipGrid(userShip.getColor(), this);
-        StackPane centerContent = new StackPane(userShipGrid);
+        centerContent = new StackPane(userShipGrid);
 
         // --- Bottom Buttons ---
-        Button viewOthersButton = new Button("View Others' Ships");
-        Button viewTilePileButton = new Button("View Tile Pile");
-        Button viewBoardButton = new Button("View Board");
-        Button travelButton = new Button("Travel");
+        viewOthersButton = new Button("View Others' Ships");
+        viewTilePileButton = new Button("View Tile Pile");
+        viewBoardButton = new Button("View Board");
+        travelButton = new Button("Travel");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
@@ -76,7 +86,7 @@ public class BuildingSceneUserShip extends MyScene {
             sceneManager.next(this);
         });
 
-        HBox buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, travelButton);
+        buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -84,12 +94,12 @@ public class BuildingSceneUserShip extends MyScene {
         layout.setBottom(buttonBox);
 
         // Now wrap layout with background in a StackPane
-        StackPane rootWithBackground = new StackPane();
+        rootWithBackground = new StackPane();
         rootWithBackground.getChildren().addAll(background, layout);
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        sceneManager.setUserShipScene(this);
+        this.sceneManager.setUserShipScene(this);
     }
 
     public Game getGame(){
@@ -160,7 +170,25 @@ public class BuildingSceneUserShip extends MyScene {
     }
 
     public void updateGame(Game game) {
+
         this.game = game;
+        update();
+
+    }
+
+    public void update(){
+        this.user = game.getListOfActivePlayers()
+                .stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst()
+                .orElse(null);
+        if (user != null) {
+            this.userShipGrid = new UserShipGrid(userShip.getColor(), this);
+            Platform.runLater(() -> {
+                this.centerContent = new StackPane(userShipGrid);
+                this.layout.setCenter(centerContent);
+            });
+        }
     }
 
 
