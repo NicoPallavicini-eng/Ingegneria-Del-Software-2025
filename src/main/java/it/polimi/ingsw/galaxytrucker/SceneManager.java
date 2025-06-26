@@ -309,7 +309,6 @@ public class SceneManager extends Application {
 
     public void updateGame(Game game, MyScene scene) {
         this.game = game;
-
         if (userShipScene != null && scene != userShipScene) {
             userShipScene.updateGame(game);
         }

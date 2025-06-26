@@ -13,6 +13,8 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -104,6 +106,13 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void printMessage(String message) {
+        javafx.application.Platform.runLater(() -> {
+            javafx.scene.control.Alert messageFromServer = new javafx.scene.control.Alert(Alert.AlertType.INFORMATION);
+            messageFromServer.setTitle("Update");
+            messageFromServer.setHeaderText(null);
+            messageFromServer.setContentText(message);
+            messageFromServer.showAndWait();
+        });
         // TODO: Show message (popup, status bar, etc.)
     }
 
@@ -124,6 +133,7 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void printMyShip(Game game, String nickname) {
+        sceneManager.updateGame(game, null);
         // TODO: Show current player's ship
     }
 

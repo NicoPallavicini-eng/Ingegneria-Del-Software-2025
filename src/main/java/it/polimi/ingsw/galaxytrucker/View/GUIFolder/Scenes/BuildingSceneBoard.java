@@ -5,16 +5,14 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +52,8 @@ public class BuildingSceneBoard extends MyScene {
     private boolean pos2Taken = false;
     private boolean pos3Taken = false;
     private boolean pos4Taken = false;
+    private Button orangeAlienButton;
+    private Button purpleAlienButton;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
@@ -184,10 +184,16 @@ public class BuildingSceneBoard extends MyScene {
         Button viewTilePileButton = new Button("View Tile Pile");
         Button viewOthersButton = new Button("View Others' Ships");
         Button travelButton = new Button("Travel");
+        orangeAlienButton = new Button("Orange Alien");
+        purpleAlienButton = new Button("Purple Alien");
         viewUserButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewOthersButton.getStyleClass().add("bottom-button");
+        orangeAlienButton.getStyleClass().add("bottom-button");
+        purpleAlienButton.getStyleClass().add("bottom-button");
         travelButton.getStyleClass().add("next-button");
+        orangeAlienButton.setVisible(false);
+        purpleAlienButton.setVisible(false);
 
         viewUserButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "UserShip");
@@ -199,15 +205,27 @@ public class BuildingSceneBoard extends MyScene {
             sceneManager.switchBuilding(this, "OthersShip");
         });
         travelButton.setOnAction(e -> {
+            sendMessageToServer("/done");
             sceneManager.next(this);
         });
+        orangeAlienButton.setOnAction(e -> handleOrangeAlien());
+        purpleAlienButton.setOnAction(e -> handlePurpleAlien());
+
 
         HBox buttonBox = new HBox(100, viewUserButton, viewTilePileButton, viewOthersButton, travelButton);
-        buttonBox.setPadding(new Insets(20));
+        buttonBox.setPadding(new Insets(10));
         buttonBox.setAlignment(Pos.CENTER);
 
+        HBox alienBox = new HBox(50, orangeAlienButton, purpleAlienButton);
+        alienBox.setPadding(new Insets(10));
+        alienBox.setAlignment(Pos.CENTER);
+
+        VBox buttonsBoxWithAlien = new VBox(20, alienBox, buttonBox);
+        buttonsBoxWithAlien.setPadding(new Insets(20));
+        buttonsBoxWithAlien.setAlignment(Pos.CENTER);
+
         layout.setCenter(centerContent);
-        layout.setBottom(buttonBox);
+        layout.setBottom(buttonsBoxWithAlien);
 
         // Now wrap layout with background in a StackPane
         StackPane rootWithBackground = new StackPane();
@@ -334,6 +352,9 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos1Button() {
         if (!pos1Taken) {
+            sendMessageToServer("/setposition 1");
+            orangeAlienButton.setVisible(true);
+            purpleAlienButton.setVisible(true);
             // set user in pos 1
             pos1Taken = true;
         }
@@ -341,6 +362,9 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos2Button() {
         if (!pos2Taken) {
+            sendMessageToServer("/setposition 2");
+            orangeAlienButton.setVisible(true);
+            purpleAlienButton.setVisible(true);
             // set user in pos 2
             pos2Taken = true;
         }
@@ -348,6 +372,9 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos3Button() {
         if (!pos3Taken) {
+            sendMessageToServer("/setposition 3");
+            orangeAlienButton.setVisible(true);
+            purpleAlienButton.setVisible(true);
             // set user in pos 3
             pos3Taken = true;
         }
@@ -355,8 +382,21 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos4Button() {
         if (!pos4Taken) {
+            sendMessageToServer("/setposition 4");
+            orangeAlienButton.setVisible(true);
+            purpleAlienButton.setVisible(true);
             // set user in pos 4
             pos4Taken = true;
         }
+    }
+
+    private void handleOrangeAlien() {
+        //TODO: finish
+        sendMessageToServer("/placeorangealien");
+    }
+
+    private void handlePurpleAlien() {
+        //TODO: finish
+        sendMessageToServer("/placepurplealien");
     }
 }

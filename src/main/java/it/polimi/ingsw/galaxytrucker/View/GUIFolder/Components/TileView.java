@@ -20,6 +20,7 @@ public class TileView extends StackPane {
     private int rotation = 0; // 0, 90, 180, 270 only
     private TileImage tileImageEnum;
     private Tile logicTile;
+    private StackPane centerContent;
 
     public TileView() {
         // Set up the top tile image (initially empty)
