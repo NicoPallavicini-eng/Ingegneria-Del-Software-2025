@@ -3241,9 +3241,8 @@ public class ServerController {
                                     client.setNickname(nickname);
                                     client.setMainCabin(game); // TODO fix - what? how?
                                     client.connectView(game);
-                                } catch (IllegalArgumentException e) {
-                                    client.invalidCommand("Error: " + e.getMessage());
-                                } catch (IllegalEventException e){
+                                }
+                                catch (IllegalEventException e){
                                     client.invalidCommand("Error: " + e.getMessage());
                                     throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
@@ -3284,7 +3283,7 @@ public class ServerController {
                                         client.setMainCabin(game);
                                         client.connectView(game);
                                         client.updateGame(game); //trying for gui update
-                                    } catch (IllegalArgumentException e) {
+                                    } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: command not valid!");
                                     }
                                 }
@@ -3321,8 +3320,13 @@ public class ServerController {
                             if (numberOfPlayers < 2 || numberOfPlayers > 4) {
                                 client.invalidCommand("Number of players not valid. It must be between 2 and 4");
                             } else {
-                                SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
-                                game.getGameState().handleEvent(event);
+                                try {
+                                    SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
+                                    game.getGameState().handleEvent(event);
+                                } catch (IllegalEventException e){
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         } else {
                             client.invalidCommand("/setnumberofplayers supports only one parameter!");
@@ -3345,17 +3349,22 @@ public class ServerController {
                             int tileColumnInt = Integer.parseInt(tileColumn);
                             int tilePositionInt = (tileRowInt * 16) + tileColumnInt;
                             if (tilePositionInt >= 0 && tilePositionInt <= 152) {
-                                PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
-                                game.getGameState().handleEvent(event);
-                                Tile currentTile = player.getShip().getTileInHand();
-                                List<VirtualClient> clientsRMI = rmiServer.getClients();
-                                for (VirtualClient virtualClient : clientsRMI) {
-                                    if (virtualClient.getNickname().equals(client.getNickname())) {
-                                        virtualClient.viewMyShip(game, client.getNickname());
+                                try {
+                                    PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
+                                    game.getGameState().handleEvent(event);
+                                    Tile currentTile = player.getShip().getTileInHand();
+                                    List<VirtualClient> clientsRMI = rmiServer.getClients();
+                                    client.updateGame(game);
+                                    for (VirtualClient virtualClient : clientsRMI) {
+                                        if (virtualClient.getNickname().equals(client.getNickname())) {
+                                            virtualClient.viewMyShip(game, client.getNickname());
+                                        } else {
+                                            virtualClient.viewTilepile(game);
+                                        }
                                     }
-                                    else {
-                                        virtualClient.viewTilepile(game);
-                                    }
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
                             } else {
                                 client.invalidCommand("Tile position not valid. It must be between 1 and 156");
@@ -3393,11 +3402,16 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        PutDownTileEvent event = new PutDownTileEvent(player);
-                        game.getGameState().handleEvent(event);
-                        List<VirtualClient> clientsRMI = rmiServer.getClients();
-                        for (VirtualClient virtualClient : clientsRMI) {
-                            virtualClient.viewTilepile(game);
+                        try {
+                            PutDownTileEvent event = new PutDownTileEvent(player);
+                            game.getGameState().handleEvent(event);
+                            List<VirtualClient> clientsRMI = rmiServer.getClients();
+                            for (VirtualClient virtualClient : clientsRMI) {
+                                virtualClient.viewTilepile(game);
+                            }
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
                         }
                     } else {
                         client.invalidCommand("/putdowntile doesn't support parameters!");
@@ -3419,9 +3433,14 @@ public class ServerController {
                             if ((rowInt < 5 || rowInt > 9 || columnInt < 4 || columnInt > 10) || !checkPosition) {
                                 client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                             } else {
-                                PlaceTileEvent event = new PlaceTileEvent(player, rowInt - 5, columnInt - 4);
-                                game.getGameState().handleEvent(event);
-                                client.connectView(game);
+                                try {
+                                    PlaceTileEvent event = new PlaceTileEvent(player, rowInt - 5, columnInt - 4);
+                                    game.getGameState().handleEvent(event);
+                                    client.connectView(game);
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         } else {
                             client.invalidCommand("/placetile supports only two parameters!");
@@ -3435,9 +3454,14 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (secondParameters.isEmpty() && firstParameters.isEmpty()) {
-                        ReserveTileEvent event = new ReserveTileEvent(player);
-                        game.getGameState().handleEvent(event);
-                        client.connectView(game);
+                        try {
+                            ReserveTileEvent event = new ReserveTileEvent(player);
+                            game.getGameState().handleEvent(event);
+                            client.connectView(game);
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                        }
                     }
                 } else {
                     client.invalidCommand("You are not connected to the game!");
@@ -3534,9 +3558,14 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        PickUpFromShipEvent event = new PickUpFromShipEvent(player);
-                        game.getGameState().handleEvent(event);
-                        client.viewMyShip(game, client.getNickname());
+                        try {
+                            PickUpFromShipEvent event = new PickUpFromShipEvent(player);
+                            game.getGameState().handleEvent(event);
+                            client.viewMyShip(game, client.getNickname());
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                        }
                     } else {
                         client.invalidCommand("/pickupfromship doesn't support parameters!");
                     }
@@ -3556,9 +3585,14 @@ public class ServerController {
                             if (index < 1 || index > numberOfReservedTiles) {
                                 client.invalidCommand("Index not valid. It must be either 1 or 2");
                             } else {
-                                PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
-                                game.getGameState().handleEvent(event);
-                                client.viewMyShip(game, client.getNickname());
+                                try {
+                                    PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
+                                    game.getGameState().handleEvent(event);
+                                    client.viewMyShip(game, client.getNickname());
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         }
                     } else {
@@ -3622,8 +3656,13 @@ public class ServerController {
                                         }
                                     }
                                 }
-                                ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
-                                game.getGameState().handleEvent(event);
+                                try {
+                                    ActivateEnginesEvent event = new ActivateEnginesEvent(player, engines, batteries);
+                                    game.getGameState().handleEvent(event);
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         }
 
@@ -3689,8 +3728,13 @@ public class ServerController {
                                     }
                                 }
                                 // batteries cannot be ArrayList<Pair<Integer, Integer>>
-                                ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
-                                game.getGameState().handleEvent(event);
+                                try {
+                                    ActivateCannonsEvent event = new ActivateCannonsEvent(player, cannons, batteries);
+                                    game.getGameState().handleEvent(event);
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         }
 
@@ -3727,8 +3771,13 @@ public class ServerController {
                                 if ((rowShield < 5 || rowShield > 9 || colShield < 4 || colShield > 10) || (rowBat < 5 || rowBat > 9 || colBat < 4 || colBat > 10)) {
                                     client.invalidCommand("Invalid row or column.");
                                 } else {
-                                    ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield - 5, colShield - 4, rowBat - 5, colBat - 4);
-                                    game.getGameState().handleEvent(event);
+                                    try {
+                                        ActivateShieldEvent event = new ActivateShieldEvent(player, rowShield - 5, colShield - 4, rowBat - 5, colBat - 4);
+                                        game.getGameState().handleEvent(event);
+                                    } catch (IllegalEventException e) {
+                                        client.invalidCommand("Error: " + e.getMessage());
+                                        throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    }
                                 }
                             } else {
                                 client.invalidCommand("Invalid row or column");
@@ -3762,8 +3811,13 @@ public class ServerController {
                                 if (value < 1 || value > 3) {
                                     client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 } else {
-                                    RemoveCargoEvent event = new RemoveCargoEvent(player, row - 5, col - 4, value);
-                                    game.getGameState().handleEvent(event);
+                                    try {
+                                        RemoveCargoEvent event = new RemoveCargoEvent(player, row - 5, col - 4, value);
+                                        game.getGameState().handleEvent(event);
+                                    } catch (IllegalEventException e) {
+                                        client.invalidCommand("Error: " + e.getMessage());
+                                        throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    }
                                 }
 
                             }
@@ -3797,8 +3851,13 @@ public class ServerController {
                                 if (value < 1 || value > 3) {
                                     client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 } else {
-                                    AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
-                                    game.getGameState().handleEvent(event);
+                                    try {
+                                        AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
+                                        game.getGameState().handleEvent(event);
+                                    } catch (IllegalEventException e) {
+                                        client.invalidCommand("Error: " + e.getMessage());
+                                        throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    }
                                 }
                             }
                         }
@@ -3835,8 +3894,13 @@ public class ServerController {
                             } else if (prevValue < 1 || prevValue > 3) {
                                 client.invalidCommand("Invalid value. It must be between 1 and 3");
                             } else {
-                                SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
-                                game.getGameState().handleEvent(event);
+                                try {
+                                    SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
+                                    game.getGameState().handleEvent(event);
+                                } catch (IllegalEventException e) {
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
                         }
 
@@ -3872,13 +3936,18 @@ public class ServerController {
                                         client.invalidCommand("Invalid value. It must be 1 or 2.");
                                         break;
                                     } else {
-                                        List<Integer> peopleRow = new ArrayList<>();
-                                        peopleRow.add(row - 5);
-                                        peopleRow.add(col - 4);
-                                        peopleRow.add(value);
-                                        people.add(peopleRow);
-                                        EjectPeopleEvent event = new EjectPeopleEvent(player, people);
-                                        game.getGameState().handleEvent(event);
+                                        try {
+                                            List<Integer> peopleRow = new ArrayList<>();
+                                            peopleRow.add(row - 5);
+                                            peopleRow.add(col - 4);
+                                            peopleRow.add(value);
+                                            people.add(peopleRow);
+                                            EjectPeopleEvent event = new EjectPeopleEvent(player, people);
+                                            game.getGameState().handleEvent(event);
+                                        } catch (IllegalEventException e) {
+                                            client.invalidCommand("Error: " + e.getMessage());
+                                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        }
                                     }
                                 }
                             }
@@ -3923,8 +3992,13 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (secondParameters.isEmpty() && firstParameters.isEmpty()) {
-                        ClaimRewardEvent event = new ClaimRewardEvent(player, true);
-                        game.getGameState().handleEvent(event);
+                        try {
+                            ClaimRewardEvent event = new ClaimRewardEvent(player, true);
+                            game.getGameState().handleEvent(event);
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                        }
                     } else {
                         client.invalidCommand("/claimreward doesn't require any parameters.");
                     }
@@ -3946,8 +4020,13 @@ public class ServerController {
                             if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
                             } else {
-                                ChooseSubShipEvent event = new ChooseSubShipEvent(player, row - 5, col - 4);
-                                game.getGameState().handleEvent(event);
+                                try {
+                                    ChooseSubShipEvent event = new ChooseSubShipEvent(player, row - 5, col - 4);
+                                    game.getGameState().handleEvent(event);
+                                } catch (IllegalEventException e){
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
 
                         } else {
@@ -3964,9 +4043,13 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        NoChoiceEvent event = new NoChoiceEvent(player);
-                        game.getGameState().handleEvent(event);
-
+                        try {
+                            NoChoiceEvent event = new NoChoiceEvent(player);
+                            game.getGameState().handleEvent(event);
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                        }
                     } else {
                         client.invalidCommand("/nochoice doesn't support parameters!");
                     }
@@ -3978,9 +4061,13 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        DoneEvent event = new DoneEvent(player);
-                        game.getGameState().handleEvent(event);
-
+                        try {
+                            DoneEvent event = new DoneEvent(player);
+                            game.getGameState().handleEvent(event);
+                        } catch (IllegalEventException e) {
+                            client.invalidCommand("Error: " + e.getMessage());
+                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                        }
                     } else {
                         client.invalidCommand("/done doesn't support parameters!");
                     }
@@ -4009,6 +4096,7 @@ public class ServerController {
                                     client.viewMyShip(game, client.getNickname());
                                 } catch (IllegalEventException e){
                                     client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
                             }
 
@@ -4043,6 +4131,7 @@ public class ServerController {
                                     client.printMessage("Alien placed correctly.");
                                 } catch (IllegalEventException e){
                                     client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
                             }
 
@@ -4070,9 +4159,14 @@ public class ServerController {
                             if ((row < 5 || row > 9 || col < 4 || col > 10) || !checkPosition) {
                                 client.invalidCommand("Invalid row or column.");
                             } else {
-                                RemoveTileEvent event = new RemoveTileEvent(player, row - 5, col - 4);
-                                game.getGameState().handleEvent(event);
-                                client.viewMyShip(game, client.getNickname());
+                                try {
+                                    RemoveTileEvent event = new RemoveTileEvent(player, row - 5, col - 4);
+                                    game.getGameState().handleEvent(event);
+                                    client.viewMyShip(game, client.getNickname());
+                                } catch (IllegalEventException e){
+                                    client.invalidCommand("Error: " + e.getMessage());
+                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                }
                             }
 
                         } else {
@@ -4092,10 +4186,15 @@ public class ServerController {
                         if (firstParameters.size() != 1) {
                             client.invalidCommand("/chooseplanet supports only one parameter.");
                         } else {
-                            String indexStr = firstParameters.get(0);
-                            int index = Integer.parseInt(indexStr);
-                            ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
-                            game.getGameState().handleEvent(event);
+                            try {
+                                String indexStr = firstParameters.get(0);
+                                int index = Integer.parseInt(indexStr);
+                                ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
+                                game.getGameState().handleEvent(event);
+                            } catch (IllegalEventException e) {
+                                client.invalidCommand("Error: " + e.getMessage());
+                                throw new IllegalGUIEventException("Error: " + e.getMessage());
+                            }
                         }
                     } else {
                         client.invalidCommand("/chooseplanet supports only one set of parameters.");
