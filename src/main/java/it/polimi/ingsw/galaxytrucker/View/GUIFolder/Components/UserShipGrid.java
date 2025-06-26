@@ -155,10 +155,10 @@ public class UserShipGrid extends Pane {
         rotateRight.setVisible(false);
 
         rotateLeft.setOnAction(e -> {
-            handCell[0].rotate(Side.LEFT);
+            buildingSceneUserShip.sendMessageToServer("/rotate left");
         });
         rotateRight.setOnAction(e -> {
-            handCell[0].rotate(Side.RIGHT);
+            buildingSceneUserShip.sendMessageToServer("/rotate right");
         });
 
         // Absolute positioning
@@ -301,6 +301,18 @@ public class UserShipGrid extends Pane {
             errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
             errorAlert.showAndWait();
         });
+    }
+
+    public List<TileView> getTiles() {
+        List<TileView> tiles = new ArrayList<>();
+        for (int row = 0; row < cells.length; row++) {
+            for (int col = 0; col < cells[row].length; col++) {
+                if (cells[row][col] != null) {
+                    tiles.add(cells[row][col]);
+                }
+            }
+        }
+        return tiles;
     }
 
 

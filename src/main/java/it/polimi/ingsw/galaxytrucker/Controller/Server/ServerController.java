@@ -3498,6 +3498,7 @@ public class ServerController {
                                 try {
                                     SetPositionEvent event = new SetPositionEvent(player, position);
                                     game.getGameState().handleEvent(event);
+                                    client.updateGame(game);
                                     //client.viewLeaderboard(game);
                                     if(rmiServer != null) {
                                         List<VirtualClient> clientsRMI = rmiServer.getClients();

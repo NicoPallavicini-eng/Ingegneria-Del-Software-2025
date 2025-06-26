@@ -186,6 +186,39 @@ public class BuildingSceneUserShip extends MyScene {
 
     }
 
+    public void enableAlienSelection(String message, Game game){
+        this.game = game;
+        this.userShip = user.getShip();
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                disableTileSelection();
+                sceneManager.switchBuilding(this, "Board");
+            });
+        });
+    }
+
+    public void removeTile(String message, Game game){
+        this.game = game;
+        this.userShip = user.getShip();
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                disableTileSelection();
+            });
+        });
+    }
+
+    private void disableTileSelection() {
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                        tile.setStyle("-fx-border-color: transparent; -fx-border-width: 0px;");
+                    });
+            });
+    }
+
     public void update(){
         this.user = game.getListOfActivePlayers()
                 .stream()

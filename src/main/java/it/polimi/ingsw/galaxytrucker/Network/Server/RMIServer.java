@@ -59,10 +59,7 @@ public class RMIServer implements VirtualServer {
         }
 
     }
-    @Override
-    public String sayHello() throws RemoteException {
-        return "Hello, world!";
-    }
+
     @Override
     public void handleUserInput(VirtualClient virtualClient, String input) throws RemoteException {
         serverController.handleUserInput(virtualClient,input);
@@ -81,9 +78,6 @@ public class RMIServer implements VirtualServer {
                 disconnectedClients.add(virtualClient);
                 String nickname = mapper.get(virtualClient);
                 serverController.disconnect(nickname);
-
-                //gestire la disconessione di Client in server Controller
-                //serverController.disconnect(virtualClient)
             }
         }
         for (VirtualClient virtualClient : disconnectedClients) {
@@ -99,4 +93,6 @@ public class RMIServer implements VirtualServer {
     public Game getGame() {
         return ServerController.getGame();
     }
+
+    public void sendMessageToServer(String message, String nickname) {}
 }

@@ -6,9 +6,11 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Objects;
 
@@ -33,10 +35,20 @@ public class SceneManager extends Application {
         this.game = game;
         this.rmiClient = rmiClient;
         this.socketClient = socketClient;
-        try {
-            this.server = rmiClient.getServer();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        if (rmiClient != null) {
+            try {
+                this.server = rmiClient.getServer();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (socketClient != null) {
+            try {
+                this.server = socketClient.getServerSocket();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else {
+            throw new IllegalArgumentException("Either rmiClient or socketClient must be provided.");
         }
         primaryStage = stage;
         start(primaryStage); // stage comes from instantiation of SceneManager
@@ -156,9 +168,11 @@ public class SceneManager extends Application {
 
     public void next(BuildingSceneUserShip buildingSceneUserShip) {
         TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this);
-        primaryStage.setTitle("Travelling State - Default");
-        primaryStage.setScene(travellingSceneDefault.getScene());
-        primaryStage.show();
+        Platform.runLater(() -> {
+            primaryStage.setTitle("Travelling State - Default");
+            primaryStage.setScene(travellingSceneDefault.getScene());
+            primaryStage.show();
+        });
     }
 
     public void next(BuildingSceneTilePile buildingSceneTilePile) {

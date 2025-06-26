@@ -3,12 +3,12 @@ package it.polimi.ingsw.galaxytrucker.Network.Server;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualServer extends Remote {
-    String sayHello() throws RemoteException;
     void connect(VirtualClient virtualClient) throws RemoteException;
     void showMessage(String input) throws RemoteException;
     void handleUserInput(VirtualClient virtualClient, String input) throws RemoteException;
@@ -17,4 +17,5 @@ public interface VirtualServer extends Remote {
     void addNickname(String nickname) throws RemoteException;
     void mapNicknameClient(VirtualClient virtualClient, String nickname) throws RemoteException;
     Game getGame() throws RemoteException;
+    void sendMessageToServer(String message,String nickname)throws IOException;
 }
