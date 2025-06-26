@@ -1,11 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.BoardGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,30 +40,40 @@ public class TravellingSceneDefault extends MyScene {
     private Pane logPane;
     private BoardGrid boardGrid;
     private TravellingSceneOthersShip travellingSceneOthersShip;
-    private Button day23Button;
-    private Button day22Button;
-    private Button day21Button;
-    private Button day20Button;
-    private Button day19Button;
-    private Button day18Button;
-    private Button day17Button;
-    private Button day16Button;
-    private Button day15Button;
-    private Button day14Button;
-    private Button day13Button;
-    private Button day12Button;
-    private Button day11Button;
-    private Button day10Button;
-    private Button day9Button;
-    private Button day8Button;
-    private Button day7Button;
-    private Button day6Pos1Button;
-    private Button day5Button;
-    private Button day4Button;
-    private Button day3Pos2Button;
-    private Button day2Button;
-    private Button day1Pos3Button;
-    private Button day0Pos4Button; // 24 buttons: [0; 23]
+    private Circle day23Circle;
+    private Circle day22Circle;
+    private Circle day21Circle;
+    private Circle day20Circle;
+    private Circle day19Circle;
+    private Circle day18Circle;
+    private Circle day17Circle;
+    private Circle day16Circle;
+    private Circle day15Circle;
+    private Circle day14Circle;
+    private Circle day13Circle;
+    private Circle day12Circle;
+    private Circle day11Circle;
+    private Circle day10Circle;
+    private Circle day9Circle;
+    private Circle day8Circle;
+    private Circle day7Circle;
+    private Circle day6Pos1Circle;
+    private Circle day5Circle;
+    private Circle day4Circle;
+    private Circle day3Pos2Circle;
+    private Circle day2Circle;
+    private Circle day1Pos3Circle;
+    private Circle day0Pos4Circle; // 24 buttons: [0; 23]
+    private List <Circle> circles = new ArrayList<>();
+    private int bluePlayerDays = 0;
+    private int greenPlayerDays = 0;
+    private int yellowPlayerDays = 0;
+    private int redPlayerDays = 0;
+    private Card currentCard;
+    private int currentCardNum = 0;
+    private Button drawCard;
+    private HBox buttonBox;
+    private Button finish;
 
     public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
@@ -74,7 +88,6 @@ public class TravellingSceneDefault extends MyScene {
         Ship userShip = user.getShip();
 
         this.background = new Background();
-        BorderPane layout = new BorderPane();
 
         // TODO everything here:
         /*
@@ -88,142 +101,72 @@ public class TravellingSceneDefault extends MyScene {
         __________________________ <- button to switch to view of other ships here
          */
 
+        //--------------------
+
         boardPane = new StackPane();
 
-        /////////
         this.boardGrid = new BoardGrid(userShip.getColor(), null); // TODO understand if okay
+        boardGrid.setLayoutX(-140);
+        boardGrid.setLayoutY(-50);
 
-        boardGrid.setLayoutX(50);
-        boardGrid.setLayoutY(100);
+        makeCircles();
 
-        List <Button> buttons = new ArrayList<>();
+        Pane base = new Pane(boardGrid, day0Pos4Circle, day1Pos3Circle, day2Circle,
+                day3Pos2Circle, day4Circle, day5Circle, day6Pos1Circle, day7Circle,
+                day8Circle, day9Circle, day10Circle, day11Circle, day12Circle,
+                day13Circle, day14Circle, day15Circle, day16Circle, day17Circle,
+                day18Circle, day19Circle, day20Circle, day21Circle, day22Circle, day23Circle);
 
-        // buttons (immense pain)
-        day0Pos4Button = new Button("4");
-        day1Pos3Button = new Button("3");
-        day2Button = new Button("");
-        day3Pos2Button = new Button("2");
-        day4Button = new Button("");
-        day5Button = new Button("");
-        day6Pos1Button = new Button("1");
-        day7Button = new Button("");
-        day8Button = new Button("");
-        day9Button = new Button("");
-        day10Button = new Button("");
-        day11Button = new Button("");
-        day12Button = new Button("");
-        day13Button = new Button("");
-        day14Button = new Button("");
-        day15Button = new Button("");
-        day16Button = new Button("");
-        day17Button = new Button("");
-        day18Button = new Button("");
-        day19Button = new Button("");
-        day20Button = new Button("");
-        day21Button = new Button("");
-        day22Button = new Button("");
-        day23Button = new Button("");
-
-        buttons.add(day0Pos4Button);
-        buttons.add(day1Pos3Button);
-        buttons.add(day2Button);
-        buttons.add(day3Pos2Button);
-        buttons.add(day4Button);
-        buttons.add(day5Button);
-        buttons.add(day6Pos1Button);
-        buttons.add(day7Button);
-        buttons.add(day8Button);
-        buttons.add(day9Button);
-        buttons.add(day10Button);
-        buttons.add(day11Button);
-        buttons.add(day12Button);
-        buttons.add(day13Button);
-        buttons.add(day14Button);
-        buttons.add(day15Button);
-        buttons.add(day16Button);
-        buttons.add(day17Button);
-        buttons.add(day18Button);
-        buttons.add(day19Button);
-        buttons.add(day20Button);
-        buttons.add(day21Button);
-        buttons.add(day22Button);
-        buttons.add(day23Button);
-
-        for (Button button : buttons) {
-            styleCircularButton(button, null);
-            // TODO setup color logic around the handlePos
-            button.setOnAction(e -> handlePos(button, "875f87"));
-        }
-
-        day0Pos4Button.setLayoutX(316);
-        day0Pos4Button.setLayoutY(207);
-        day1Pos3Button.setLayoutX(370);
-        day1Pos3Button.setLayoutY(187);
-        day2Button.setLayoutX(430);
-        day2Button.setLayoutY(175);
-        day3Pos2Button.setLayoutX(480);
-        day3Pos2Button.setLayoutY(168);
-        day4Button.setLayoutX(544);
-        day4Button.setLayoutY(167);
-        day5Button.setLayoutX(599);
-        day5Button.setLayoutY(177);
-        day6Pos1Button.setLayoutX(648);
-        day6Pos1Button.setLayoutY(189);
-        day7Button.setLayoutX(706);
-        day7Button.setLayoutY(215);
-        day8Button.setLayoutX(754);
-        day8Button.setLayoutY(248);
-        day9Button.setLayoutX(790);
-        day9Button.setLayoutY(298);
-
-        day10Button.setLayoutX(786);
-        day10Button.setLayoutY(364);
-        day11Button.setLayoutX(747);
-        day11Button.setLayoutY(419);
-        day12Button.setLayoutX(699);
-        day12Button.setLayoutY(449);
-        day13Button.setLayoutX(645);
-        day13Button.setLayoutY(468);
-        day14Button.setLayoutX(590);
-        day14Button.setLayoutY(485);
-        day15Button.setLayoutX(538);
-        day15Button.setLayoutY(489);
-        day16Button.setLayoutX(479);
-        day16Button.setLayoutY(489);
-        day17Button.setLayoutX(422);
-        day17Button.setLayoutY(480);
-        day18Button.setLayoutX(365);
-        day18Button.setLayoutY(464);
-        day19Button.setLayoutX(308);
-        day19Button.setLayoutY(446);
-
-        day20Button.setLayoutX(262);
-        day20Button.setLayoutY(407);
-        day21Button.setLayoutX(227);
-        day21Button.setLayoutY(352);
-        day22Button.setLayoutX(230);
-        day22Button.setLayoutY(288);
-        day23Button.setLayoutX(270);
-        day23Button.setLayoutY(239);
-
-        Pane base = new Pane(boardGrid, day0Pos4Button, day1Pos3Button, day2Button,
-                day3Pos2Button, day4Button, day5Button, day6Pos1Button, day7Button,
-                day8Button, day9Button, day10Button, day11Button, day12Button,
-                day13Button, day14Button, day15Button, day16Button, day17Button,
-                day18Button, day19Button, day20Button, day21Button, day22Button, day23Button);
-
+        base.setScaleX(0.8);
+        base.setScaleY(0.8);
         boardPane.getChildren().add(base);
-        /////////
+
+        //--------------------
 
         cardPane = new StackPane();
+        currentCard = deck.getGameDeck().getFirst();
+
+        drawCard = new Button("Draw");
+        drawCard.getStyleClass().add("action-button");
+        drawCard.setOnAction(event -> {
+            drawCard();
+        });
+
+        StackPane.setAlignment(drawCard, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(currentCard, Pos.TOP_CENTER);
+
+        cardPane.getChildren().addAll(currentCard, drawCard);
+
+        //--------------------
 
         logPane = new Pane();
 
+        //--------------------
 
-        StackPane centerContent = new StackPane(boardPane, cardPane, logPane);
+        // LEFT: BoardPane (stacked) + LogPane
+        VBox leftColumn = new VBox(10, boardPane, logPane);
+
+        // RIGHT: CardPane (spans full height)
+        VBox rightColumn = new VBox(cardPane);
+        cardPane.prefWidthProperty().bind(rightColumn.widthProperty());
+        cardPane.prefHeightProperty().bind(rightColumn.heightProperty());
+        rightColumn.setAlignment(Pos.CENTER);
+        rightColumn.setPadding(new Insets(0, 20, 0, 20)); // optional spacing
+
+        // TOP/MID: Left and Right side-by-side
+        HBox centerContent = new HBox(20, leftColumn, rightColumn);
+        centerContent.setPadding(new Insets(20));
+
+        // For debugging layout: temporary borders TODO remove when done
+        boardPane.setStyle("-fx-border-color: blue; -fx-border-width: 2; -fx-border-style: dashed;");
+        cardPane.setStyle("-fx-border-color: green; -fx-border-width: 2; -fx-border-style: dashed;");
+        logPane.setStyle("-fx-border-color: orange; -fx-border-width: 2; -fx-border-style: dashed;");
+        leftColumn.setStyle("-fx-border-color: purple; -fx-border-width: 2; -fx-border-style: dashed;");
+        rightColumn.setStyle("-fx-border-color: darkred; -fx-border-width: 2; -fx-border-style: dashed;");
+        centerContent.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-style: solid;");
 
         Button othersShip = new Button("Others' Ship");
-        Button finish = new Button("Finish");
+        finish = new Button("Finish");
         othersShip.getStyleClass().add("bottom-button");
         finish.getStyleClass().add("next-button");
 
@@ -236,10 +179,11 @@ public class TravellingSceneDefault extends MyScene {
             sceneManager.next(this);
         });
 
-        HBox buttonBox = new HBox(300, othersShip, finish);
+        buttonBox = new HBox(300, othersShip);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
+        BorderPane layout = new BorderPane();
         layout.setCenter(centerContent);
         layout.setBottom(buttonBox);
 
@@ -251,45 +195,141 @@ public class TravellingSceneDefault extends MyScene {
         sceneManager.setTravellingSceneDefault(this);
     }
 
-    private void styleCircularButton(Button button, String hexColor) {
+    private void makeCircles() {
+        // circles (immense pain)
+        day0Pos4Circle = new Circle(10);
+        day1Pos3Circle = new Circle(10);
+        day2Circle = new Circle(10);
+        day3Pos2Circle = new Circle(10);
+        day4Circle = new Circle(10);
+        day5Circle = new Circle(10);
+        day6Pos1Circle = new Circle(10);
+        day7Circle = new Circle(10);
+        day8Circle = new Circle(10);
+        day9Circle = new Circle(10);
+        day10Circle = new Circle(10);
+        day11Circle = new Circle(10);
+        day12Circle = new Circle(10);
+        day13Circle = new Circle(10);
+        day14Circle = new Circle(10);
+        day15Circle = new Circle(10);
+        day16Circle = new Circle(10);
+        day17Circle = new Circle(10);
+        day18Circle = new Circle(10);
+        day19Circle = new Circle(10);
+        day20Circle = new Circle(10);
+        day21Circle = new Circle(10);
+        day22Circle = new Circle(10);
+        day23Circle = new Circle(10);
+
+        circles.add(day0Pos4Circle);
+        circles.add(day1Pos3Circle);
+        circles.add(day2Circle);
+        circles.add(day3Pos2Circle);
+        circles.add(day4Circle);
+        circles.add(day5Circle);
+        circles.add(day6Pos1Circle);
+        circles.add(day7Circle);
+        circles.add(day8Circle);
+        circles.add(day9Circle);
+        circles.add(day10Circle);
+        circles.add(day11Circle);
+        circles.add(day12Circle);
+        circles.add(day13Circle);
+        circles.add(day14Circle);
+        circles.add(day15Circle);
+        circles.add(day16Circle);
+        circles.add(day17Circle);
+        circles.add(day18Circle);
+        circles.add(day19Circle);
+        circles.add(day20Circle);
+        circles.add(day21Circle);
+        circles.add(day22Circle);
+        circles.add(day23Circle);
+
+        for (Circle circle : circles) {
+            styleCircle(circle, null);
+        }
+
+        day0Pos4Circle.setLayoutX(326 - 190);
+        day0Pos4Circle.setLayoutY(217 - 150);
+        day1Pos3Circle.setLayoutX(380 - 190);
+        day1Pos3Circle.setLayoutY(197 - 150);
+        day2Circle.setLayoutX(435 - 190);
+        day2Circle.setLayoutY(185 - 150);
+        day3Pos2Circle.setLayoutX(490 - 190);
+        day3Pos2Circle.setLayoutY(178 - 150);
+        day4Circle.setLayoutX(547 - 190);
+        day4Circle.setLayoutY(178 - 150);
+        day5Circle.setLayoutX(603 - 190);
+        day5Circle.setLayoutY(185 - 150);
+        day6Pos1Circle.setLayoutX(659 - 190);
+        day6Pos1Circle.setLayoutY(198 - 150);
+        day7Circle.setLayoutX(711 - 190);
+        day7Circle.setLayoutY(221 - 150);
+        day8Circle.setLayoutX(759 - 190);
+        day8Circle.setLayoutY(257 - 150);
+        day9Circle.setLayoutX(794 - 190);
+        day9Circle.setLayoutY(310 - 150);
+
+        day10Circle.setLayoutX(790 - 190);
+        day10Circle.setLayoutY(374 - 150);
+        day11Circle.setLayoutX(752 - 190);
+        day11Circle.setLayoutY(423 - 150);
+        day12Circle.setLayoutX(702 - 190);
+        day12Circle.setLayoutY(454 - 150);
+        day13Circle.setLayoutX(648 - 190);
+        day13Circle.setLayoutY(476 - 150);
+        day14Circle.setLayoutX(593 - 190);
+        day14Circle.setLayoutY(488 - 150);
+        day15Circle.setLayoutX(538 - 190);
+        day15Circle.setLayoutY(494 - 150);
+        day16Circle.setLayoutX(481 - 190);
+        day16Circle.setLayoutY(493 - 150);
+        day17Circle.setLayoutX(423 - 190);
+        day17Circle.setLayoutY(487 - 150);
+        day18Circle.setLayoutX(372 - 190);
+        day18Circle.setLayoutY(472 - 150);
+        day19Circle.setLayoutX(317 - 190);
+        day19Circle.setLayoutY(451 - 150);
+
+        day20Circle.setLayoutX(268 - 190);
+        day20Circle.setLayoutY(417 - 150);
+        day21Circle.setLayoutX(234 - 190);
+        day21Circle.setLayoutY(362 - 150);
+        day22Circle.setLayoutX(239 - 190);
+        day22Circle.setLayoutY(298 - 150);
+        day23Circle.setLayoutX(278 - 190);
+        day23Circle.setLayoutY(249 - 150);
+    }
+
+    private void styleCircle(Circle circle, String hexColor) {
         double radius = 10;
+        circle.setRadius(radius);
 
-        String baseColor = (hexColor != null) ? hexColor : "transparent";
-        String hoverColor = (hexColor != null)
-                ? "derive(" + hexColor + ", 20%)"
-                : "rgba(255,255,255,0.2)";
+        if (hexColor != null) {
+            circle.setFill(Paint.valueOf("#" + hexColor));
+        } else {
+            circle.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        }
 
-        String baseStyle = "-fx-background-color: " + baseColor + ";" +
-                "-fx-border-color: white;" +
-                "-fx-border-width: 1px;" +
-                "-fx-border-radius: " + radius + "px;" +
-                "-fx-background-radius: " + radius + "px;" +
-                "-fx-min-width: " + (radius * 2) + "px;" +
-                "-fx-min-height: " + (radius * 2) + "px;" +
-                "-fx-max-width: " + (radius * 2) + "px;" +
-                "-fx-max-height: " + (radius * 2) + "px;";
-
-        String hoverStyle = "-fx-background-color: " + hoverColor + ";" +
-                "-fx-border-color: white;" +
-                "-fx-border-width: 1px;" +
-                "-fx-border-radius: " + radius + "px;" +
-                "-fx-background-radius: " + radius + "px;" +
-                "-fx-min-width: " + (radius * 2) + "px;" +
-                "-fx-min-height: " + (radius * 2) + "px;" +
-                "-fx-max-width: " + (radius * 2) + "px;" +
-                "-fx-max-height: " + (radius * 2) + "px;";
-
-        button.setStyle(baseStyle);
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
-        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
+        circle.setStroke(javafx.scene.paint.Color.WHITE);
+        circle.setStrokeWidth(1);
     }
 
     public Scene getScene() {
         return scene;
     }
 
-    public void setCardImage(Image image) {
-        // TODO Optionally expose this method to update the right-side card
+    public void drawCard() {
+        cardPane.getChildren().remove(currentCard);
+        currentCardNum++;
+        if (currentCardNum == 11) {
+            cardPane.getChildren().remove(drawCard);
+            buttonBox.getChildren().add(finish);
+        }
+        currentCard = deck.getGameDeck().get(currentCardNum);
+        cardPane.getChildren().addFirst(currentCard);
     }
 
     public Player checkPlayer(String nickname) {
@@ -307,7 +347,49 @@ public class TravellingSceneDefault extends MyScene {
         this.travellingSceneOthersShip = travellingSceneOthersShip;
     }
 
-    private void handlePos(Button button, String hexColor) {
-        styleCircularButton(button, hexColor); // TODO setup logic around
+    private void fillPos(Circle circle, boolean fill, Color color) {
+        if (fill) {
+            String hexColor = switch (color) {
+                case RED -> "FF0000";
+                case YELLOW -> "FFFF00";
+                case GREEN -> "00FF00";
+                case BLUE -> "0087FF";
+                default -> null; // fallback transparent
+            };
+            styleCircle(circle, hexColor);
+        } else {
+            styleCircle(circle, null);
+        }
+    }
+
+    public void setDay(int day, Player player) {
+        Color color = player.getShip().getColor();
+        switch (color) {
+            case BLUE:
+                // empty old one
+                fillPos(circles.get(bluePlayerDays), false, color);
+                bluePlayerDays = day;
+                // fill new one
+                fillPos(circles.get(bluePlayerDays), true, color);
+                break;
+            case GREEN:
+                fillPos(circles.get(greenPlayerDays), false, color);
+                greenPlayerDays = day;
+                fillPos(circles.get(greenPlayerDays), true, color);
+                break;
+            case YELLOW:
+                fillPos(circles.get(yellowPlayerDays), false, color);
+                yellowPlayerDays = day;
+                fillPos(circles.get(yellowPlayerDays), true, color);
+                break;
+            case RED:
+                fillPos(circles.get(redPlayerDays), false, color);
+                redPlayerDays = day;
+                fillPos(circles.get(redPlayerDays), true, color);
+                break;
+            default:
+                fillPos(circles.get(day), false, color);
+                break;
+        }
     }
 }

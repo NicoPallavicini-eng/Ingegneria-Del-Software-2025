@@ -48,6 +48,9 @@ public class TilePileGrid extends Pane {
                 TilePileTileView tile = tiles.get(i);
 
                 tile.getOverlayButton().setOnAction(e -> {
+                    if (!tile.getLogicTile().getFacingUp()) {
+                        tile.getChildren().remove(tile.getBack());
+                    }
                     if (tile.isClickable()) {
                         buildingSceneTilePile.pickUpTile(tile);
                     } else {
@@ -59,7 +62,7 @@ public class TilePileGrid extends Pane {
                 pile.add(tile, col, row);
                 i++;
 
-                if (row == ROWS - 1 && col == 1) {
+                if (row == ROWS - 1 && col == 7) {
                     break;
                 }
             }
