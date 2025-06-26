@@ -91,6 +91,17 @@ public class TilePileGrid extends Pane {
         return null;
     }
 
+    public int getFirstEmpty() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j] == null) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     public ImageView getTileImageView (ReservedTileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -119,22 +130,31 @@ public class TilePileGrid extends Pane {
         return null;
     }
 
-    public void setDefault(ImageView img, int rotation) {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                if (img != null) {
-                    if (cells[i][j].getTileImage().getImage() == img.getImage()) {
-                        cells[i][j].setOpacity(1);
-                        cells[i][j].setClickable(true);
-                        cells[i][j].setRotation(rotation);
-                    }
-                    if (i == ROWS - 1 && j == 1) {
-                        break;
-                    }
-                } else {
-                    // TODO proper exception
-                }
-            }
-        }
+    public void setDefault(int index, Tile t, int rotation) {
+        int row = index / COLS;
+        int col = index % COLS;
+        cells[row][col].setLogicTile(t);
+        cells[row][col].setOpacity(1);
+        cells[row][col].setClickable(true);
+        cells[row][col].setRotation(rotation);
     }
+
+//    public void setDefault(ImageView img, int rotation) {
+//        for (int i = 0; i < ROWS; i++) {
+//            for (int j = 0; j < COLS; j++) {
+//                if (img != null) {
+//                    if (cells[i][j].getTileImage().getImage() == img.getImage()) {
+//                        cells[i][j].setOpacity(1);
+//                        cells[i][j].setClickable(true);
+//                        cells[i][j].setRotation(rotation);
+//                    }
+//                    if (i == ROWS - 1 && j == 1) {
+//                        break;
+//                    }
+//                } else {
+//                    // TODO proper exception
+//                }
+//            }
+//        }
+//    }
 }

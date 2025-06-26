@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BuildingSceneTilePile extends MyScene {
     private Scene scene;
@@ -148,13 +149,15 @@ public class BuildingSceneTilePile extends MyScene {
     }
 
     public void putDownTile(ReservedTileView tile) {
-        ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
+        int index = tilePileGrid.getFirstEmpty();
+        tile.setFull(false);
+        //ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
         int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
         Tile t = tile.getLogicTile();
         try {
             sendMessageToServer("/putdowntile");
-            tilePileGrid.setDefault(img, rotation);
-            tilePileGrid.getTileImageView(tile);
+            tilePileGrid.setDefault(index, t, rotation);
+            // tilePileGrid.getTileImageView(tile);
             buildingSceneUserShip.emptyHand();
         } catch (IllegalGUIEventException e){
             errorPopUp(e);
@@ -171,13 +174,6 @@ public class BuildingSceneTilePile extends MyScene {
         this.tilePileGrid = new TilePileGrid(this, tilePile);
         Platform.runLater(() -> {
             centerContent = new StackPane(tilePileGrid);
-//            layout.setCenter(centerContent);
-//            rootWithBackground.getChildren().removeAll(background, layout);
-//            rootWithBackground.getChildren().addAll(background, layout);
-//
-//            scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
-//            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-//            this.sceneManager.setTilePileScene(this);
         });
     }
 
@@ -189,7 +185,7 @@ public class BuildingSceneTilePile extends MyScene {
 
             Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
             errorStage.getIcons().clear();
-            errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+            errorStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png"))));
             errorAlert.showAndWait();
         });
     }
