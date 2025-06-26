@@ -97,6 +97,13 @@ public class SceneManager extends Application {
 
     public void setTilePileScene(BuildingSceneTilePile tilePileScene) {
         this.tilePileScene = tilePileScene;
+//        this.userShipScene.setBuildingSceneTilePile(tilePileScene);
+//        if (this.othersShipScene != null) {
+//            this.othersShipScene.setBuildingSceneTilePile(tilePileScene);
+//        }
+//        if (this.boardScene != null) {
+//            this.boardScene.setBuildingSceneTilePile(tilePileScene);
+//        }
     }
 
     public void setOthersShipScene(BuildingSceneOthersShip othersShipScene) {

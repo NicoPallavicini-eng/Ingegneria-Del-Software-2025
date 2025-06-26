@@ -36,11 +36,14 @@ public class TilePileGrid extends Pane {
         List <TilePileTileView> tiles = new ArrayList<>();
         for (Tile tile : tilePile) {
             if (tile == null) {
-                continue;
+                TilePileTileView guiTile = new TilePileTileView(null);
+                guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                tiles.add(guiTile);
+            } else {
+                TilePileTileView guiTile = new TilePileTileView(tile);
+                guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                tiles.add(guiTile);
             }
-            TilePileTileView guiTile = new TilePileTileView(tile);
-            guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
-            tiles.add(guiTile);
         }
 
         int i = 0;
@@ -50,7 +53,7 @@ public class TilePileGrid extends Pane {
                 TilePileTileView tile = tiles.get(i);
 
                 tile.getOverlayButton().setOnAction(e -> {
-                    if (!tile.getLogicTile().getFacingUp()) {
+                    if (tile.getLogicTile() != null && !tile.getLogicTile().getFacingUp()) {
                         tile.getChildren().remove(tile.getBack());
                     }
                     if (tile.isClickable()) {
@@ -64,7 +67,7 @@ public class TilePileGrid extends Pane {
                 pile.add(tile, col, row);
                 i++;
 
-                if (row == ROWS - 1 && col == 7 || i == 151) {
+                if (row == ROWS - 1 && col == 7 || i == tiles.size()) {
                     break;
                 }
             }

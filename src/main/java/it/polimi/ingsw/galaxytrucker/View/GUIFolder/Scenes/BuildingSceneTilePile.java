@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -47,6 +48,17 @@ public class BuildingSceneTilePile extends MyScene {
         this.nickname = nickname;
         this.sceneManager = sceneManager;
         this.tilePile = game.getTilePile().getTilePile();
+
+        // necessary bit to handle tilePile update
+//        if (sceneManager.getOthersShipScene() != null) {
+//            buildingSceneOthersShip = sceneManager.getOthersShipScene();
+//        }
+//        if (sceneManager.getUserShipScene() != null) {
+//            buildingSceneUserShip = sceneManager.getUserShipScene();
+//        }
+//        if (sceneManager.getBoardScene() != null) {
+//            buildingSceneBoard = sceneManager.getBoardScene();
+//        }
 
         this.background = new Background();
         layout = new BorderPane();
@@ -125,7 +137,7 @@ public class BuildingSceneTilePile extends MyScene {
     public void pickUpTile(TilePileTileView tile) {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
-            sendMessageToServer("/pickuptile " + index / 16 + "," + index % 16);
+            sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16));
             buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
             tile.setOpacity(0.2); // faintly visible
             tile.setClickable(false);
@@ -138,9 +150,11 @@ public class BuildingSceneTilePile extends MyScene {
     public void putDownTile(ReservedTileView tile) {
         ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
         int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
+        Tile t = tile.getLogicTile();
         try {
             sendMessageToServer("/putdowntile");
             tilePileGrid.setDefault(img, rotation);
+            tilePileGrid.getTileImageView(tile);
             buildingSceneUserShip.emptyHand();
         } catch (IllegalGUIEventException e){
             errorPopUp(e);
@@ -155,6 +169,16 @@ public class BuildingSceneTilePile extends MyScene {
     public void update() {
         this.tilePile = game.getTilePile().getTilePile();
         this.tilePileGrid = new TilePileGrid(this, tilePile);
+        Platform.runLater(() -> {
+            centerContent = new StackPane(tilePileGrid);
+//            layout.setCenter(centerContent);
+//            rootWithBackground.getChildren().removeAll(background, layout);
+//            rootWithBackground.getChildren().addAll(background, layout);
+//
+//            scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+//            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+//            this.sceneManager.setTilePileScene(this);
+        });
     }
 
     private void errorPopUp(IllegalGUIEventException e){
