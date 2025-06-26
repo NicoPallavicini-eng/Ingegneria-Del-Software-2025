@@ -1032,12 +1032,12 @@ public class Ship implements Serializable {
                 removeTileOnFloorPlan(index2, index);
                 break;
             case EAST:
-                t = getRowListTiles(index).getFirst();
+                t = getRowListTiles(index).getLast();
                 index2 = findTileOnFloorPlanColumn(t);
                 removeTileOnFloorPlan(index, index2);
                 break;
             case WEST:
-                t = getRowListTiles(index).getLast();
+                t = getRowListTiles(index).getFirst();
                 index2 = findTileOnFloorPlanColumn(t);
                 removeTileOnFloorPlan(index, index2);
                 break;
