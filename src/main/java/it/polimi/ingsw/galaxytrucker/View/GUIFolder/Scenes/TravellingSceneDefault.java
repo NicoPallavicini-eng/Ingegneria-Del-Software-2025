@@ -5,10 +5,8 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.BoardGrid;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -67,7 +65,9 @@ public class TravellingSceneDefault extends MyScene {
     private int greenPlayerDays = 0;
     private int yellowPlayerDays = 0;
     private int redPlayerDays = 0;
-    private Card currentCard;
+    private it.polimi.ingsw.galaxytrucker.Model.Cards.Card currentCard;
+    private Card guiCard;
+    private CardInteractive cardInteractive;
     private int currentCardNum = 0;
     private Button drawCard;
     private HBox buttonBox;
@@ -122,7 +122,9 @@ public class TravellingSceneDefault extends MyScene {
         //--------------------
 
         cardPane = new StackPane();
-        currentCard = deck.getGameDeck().getFirst();
+        guiCard = deck.getGameDeck().getFirst();
+        currentCard = guiCard.getLogicCard();
+        this.cardInteractive = new CardInteractive(currentCard, this);
 
         drawCard = new Button("Draw"); // TODO remove, this is for testing
         drawCard.getStyleClass().add("action-button");
@@ -131,9 +133,9 @@ public class TravellingSceneDefault extends MyScene {
         });
 
         StackPane.setAlignment(drawCard, Pos.BOTTOM_CENTER);
-        StackPane.setAlignment(currentCard, Pos.TOP_CENTER);
+        StackPane.setAlignment(guiCard, Pos.TOP_CENTER);
 
-        cardPane.getChildren().addAll(currentCard, drawCard);
+        cardPane.getChildren().addAll(guiCard, drawCard);
 
         //--------------------
 
@@ -320,14 +322,15 @@ public class TravellingSceneDefault extends MyScene {
     }
 
     public void drawCard() {
-        cardPane.getChildren().remove(currentCard);
+        cardPane.getChildren().remove(guiCard);
         currentCardNum++;
         if (currentCardNum == 11) {
             cardPane.getChildren().remove(drawCard);
             buttonBox.getChildren().add(finish);
         }
-        currentCard = deck.getGameDeck().get(currentCardNum);
-        cardPane.getChildren().addFirst(currentCard);
+        guiCard = deck.getGameDeck().get(currentCardNum);
+        currentCard = guiCard.getLogicCard();
+        cardPane.getChildren().addFirst(guiCard);
     }
 
     public Player checkPlayer(String nickname) {
