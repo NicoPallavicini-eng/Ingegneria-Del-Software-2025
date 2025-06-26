@@ -3354,6 +3354,7 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                     Tile currentTile = player.getShip().getTileInHand();
                                     List<VirtualClient> clientsRMI = rmiServer.getClients();
+                                    client.updateGame(game);
                                     for (VirtualClient virtualClient : clientsRMI) {
                                         if (virtualClient.getNickname().equals(client.getNickname())) {
                                             virtualClient.viewMyShip(game, client.getNickname());

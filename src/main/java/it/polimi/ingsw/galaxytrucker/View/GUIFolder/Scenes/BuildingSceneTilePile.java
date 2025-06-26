@@ -117,7 +117,7 @@ public class BuildingSceneTilePile extends MyScene {
     public void pickUpTile(TilePileTileView tile) {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
-            sendMessageToServer("/pickuptile " + index % 16 + "," + index / 16);
+            sendMessageToServer("/pickuptile " + index / 16 + "," + index % 16);
             buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
             tile.setOpacity(0.2); // faintly visible
             tile.setClickable(false);
