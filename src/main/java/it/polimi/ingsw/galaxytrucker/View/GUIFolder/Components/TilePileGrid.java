@@ -75,7 +75,8 @@ public class TilePileGrid extends Pane {
     public ImageView getTileImageView (TilePileTileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (cells[i][j].getLogicTile().equals(tile.getLogicTile())) {                    return cells[i][j].getTileImage();
+                if (cells[i][j].getLogicTile().equals(tile.getLogicTile())) {
+                    return cells[i][j].getTileImage();
                 }
                 if (i == ROWS - 1 && j == 1) {
                     break;

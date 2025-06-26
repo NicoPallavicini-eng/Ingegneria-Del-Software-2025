@@ -7,13 +7,16 @@ import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -159,4 +162,6 @@ public class BuildingSceneUserShip extends MyScene {
     public void updateGame(Game game) {
         this.game = game;
     }
+
+
 }

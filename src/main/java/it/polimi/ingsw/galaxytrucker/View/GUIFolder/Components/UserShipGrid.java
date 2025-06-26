@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +12,7 @@ import javafx.scene.layout.Pane;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -77,13 +79,23 @@ public class UserShipGrid extends Pane {
                     int finalCol = col;
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
-                            setTile(finalRow, finalCol, handCell[0].getLogicTile(), handCell[0].getRotation());
-                            handCell[0].clearTileImage();
-                            tile.setFull(true);
+                            try {
+                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow+5 + "," + finalCol+4);
+                                setTile(finalRow, finalCol, handCell[0].getLogicTile(), handCell[0].getRotation());
+                                handCell[0].clearTileImage();
+                                tile.setFull(true);
+                            } catch (IllegalGUIEventException ex) {
+                                errorPopUp(ex);
+                            }
                         } else if (tile.isClickable() && tile.isFull()) {
-                            setHandTile(tile.getLogicTile(), tile.getRotation());
-                            cells[finalRow][finalCol].clearTileImage();
-                            tile.setFull(false);
+                            try {
+                                buildingSceneUserShip.sendMessageToServer("/pickupfromship");
+                                setHandTile(tile.getLogicTile(), tile.getRotation());
+                                cells[finalRow][finalCol].clearTileImage();
+                                tile.setFull(false);
+                            } catch (IllegalGUIEventException ex) {
+                                errorPopUp(ex);
+                            }
                         }
                     });
                     cells[row][col] = tile;
@@ -250,5 +262,18 @@ public class UserShipGrid extends Pane {
         cells[row][column] = tile;
         handCell[0] = null;
         // TODO add conformity checks
+    }
+
+    private void errorPopUp(IllegalGUIEventException e){
+        javafx.application.Platform.runLater(() -> {
+            javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText(e.getMessage());
+
+            Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+            errorStage.getIcons().clear();
+            errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+            errorAlert.showAndWait();
+        });
     }
 }
