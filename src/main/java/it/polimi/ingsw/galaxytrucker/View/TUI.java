@@ -164,7 +164,7 @@ public class TUI implements UI {
     public void printMyShip(Game game, String nickname) {
         this.game = game;
         Ship ship = null;
-        for (Player p : game.getListOfActivePlayers()) {
+        for (Player p : game.getListOfPlayers()) {
             if (p.getNickname().equals(nickname)) {
                 ship = p.getShip();
             }

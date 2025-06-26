@@ -3235,6 +3235,7 @@ public class ServerController {
                             if (!playerOptional.isPresent()) {
 
                              */
+
                                 try {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);

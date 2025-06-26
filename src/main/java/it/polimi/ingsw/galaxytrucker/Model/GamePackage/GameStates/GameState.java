@@ -33,6 +33,7 @@ public abstract class GameState implements Serializable {
             }
             else{
                 player.setOnlineStatus(true);
+                //not added to active players until the end of the card
             }
         }
         else{
