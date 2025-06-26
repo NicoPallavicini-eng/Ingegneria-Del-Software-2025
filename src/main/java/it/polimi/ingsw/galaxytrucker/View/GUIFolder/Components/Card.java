@@ -1,7 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -11,7 +10,6 @@ public class Card extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView cardImage;
     private final Button overlayButton = new Button();
-    private int rotation = 0; // deg, needed for Building orientation of sub-decks
     private CardImage cardImageEnum;
     private final it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard;
 
@@ -54,19 +52,5 @@ public class Card extends StackPane {
 
     public Button getOverlayButton() {
         return overlayButton;
-    }
-
-    public void resetRotation() {
-        rotation = 0;
-        cardImage.setRotate(0);
-    }
-
-    public int getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(int rotation) {
-        this.rotation = rotation;
-        cardImage.setRotate(rotation);
     }
 }

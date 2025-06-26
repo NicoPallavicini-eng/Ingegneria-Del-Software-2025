@@ -25,19 +25,15 @@ public class TilePileTileView extends StackPane {
 
     public TilePileTileView(Tile logicTile) {
         this.logicTile = logicTile;
-        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
-
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/tiles/GT-new_tiles_16_for web157.jpg")));
-        back = new ImageView(image);
-        back.setFitWidth(TILE_SIZE);
-        back.setFitHeight(TILE_SIZE);
-        back.setMouseTransparent(true);
-
-        // Set up the top tile image (initially empty)
-        tileImage = new ImageView(tileImageEnum.getImage());
-        tileImage.setFitWidth(TILE_SIZE);
-        tileImage.setFitHeight(TILE_SIZE);
-        tileImage.setMouseTransparent(true);
+        if (logicTile != null) {
+            this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+            tileImage = new ImageView(tileImageEnum.getImage());
+            tileImage.setFitWidth(TILE_SIZE);
+            tileImage.setFitHeight(TILE_SIZE);
+            tileImage.setMouseTransparent(true);
+        } else {
+            tileImage = null;
+        }
 
         backgroundImage.setFitWidth(TILE_SIZE);
         backgroundImage.setFitHeight(TILE_SIZE);
@@ -48,8 +44,25 @@ public class TilePileTileView extends StackPane {
         overlayButton.setOpacity(0); // invisible but active
         overlayButton.getStyleClass().add("tile-button");
 
-        // Stack background and tile
-        getChildren().addAll(backgroundImage, tileImage, back, overlayButton);
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/tiles/GT-new_tiles_16_for web157.jpg")));
+        back = new ImageView(image);
+        back.setFitWidth(TILE_SIZE);
+        back.setFitHeight(TILE_SIZE);
+        back.setMouseTransparent(true);
+
+        if (logicTile != null && !logicTile.getFacingUp()) {
+            if (tileImage != null) {
+                getChildren().addAll(backgroundImage, tileImage, back, overlayButton);
+            } else {
+                getChildren().addAll(backgroundImage, back, overlayButton);
+            }
+        } else {
+            if (tileImage != null) {
+                getChildren().addAll(backgroundImage, tileImage, overlayButton);
+            } else {
+                getChildren().addAll(backgroundImage, overlayButton);
+            }
+        }
     }
 
     public ImageView getBack() {
@@ -102,11 +115,6 @@ public class TilePileTileView extends StackPane {
         }
 
         tileImage.setRotate(rotation);
-    }
-
-    public void resetRotation() {
-        rotation = 0;
-        tileImage.setRotate(0);
     }
 
     public int getRotation() {

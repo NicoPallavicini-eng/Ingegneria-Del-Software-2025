@@ -35,9 +35,15 @@ public class TilePileGrid extends Pane {
 
         List <TilePileTileView> tiles = new ArrayList<>();
         for (Tile tile : tilePile) {
-            TilePileTileView guiTile = new TilePileTileView(tile);
-            guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
-            tiles.add(guiTile);
+            if (tile == null) {
+                TilePileTileView guiTile = new TilePileTileView(null);
+                guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                tiles.add(guiTile);
+            } else {
+                TilePileTileView guiTile = new TilePileTileView(tile);
+                guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
+                tiles.add(guiTile);
+            }
         }
 
         int i = 0;
@@ -47,7 +53,7 @@ public class TilePileGrid extends Pane {
                 TilePileTileView tile = tiles.get(i);
 
                 tile.getOverlayButton().setOnAction(e -> {
-                    if (!tile.getLogicTile().getFacingUp()) {
+                    if (tile.getLogicTile() != null && !tile.getLogicTile().getFacingUp()) {
                         tile.getChildren().remove(tile.getBack());
                     }
                     if (tile.isClickable()) {
@@ -61,7 +67,7 @@ public class TilePileGrid extends Pane {
                 pile.add(tile, col, row);
                 i++;
 
-                if (row == ROWS - 1 && col == 7) {
+                if (row == ROWS - 1 && col == 7 || i == tiles.size()) {
                     break;
                 }
             }
@@ -84,6 +90,17 @@ public class TilePileGrid extends Pane {
             }
         }
         return null;
+    }
+
+    public int getFirstEmpty() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cells[i][j] == null) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     public ImageView getTileImageView (ReservedTileView tile) {
@@ -114,22 +131,31 @@ public class TilePileGrid extends Pane {
         return null;
     }
 
-    public void setDefault(ImageView img, int rotation) {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                if (img != null) {
-                    if (cells[i][j].getTileImage().getImage() == img.getImage()) {
-                        cells[i][j].setOpacity(1);
-                        cells[i][j].setClickable(true);
-                        cells[i][j].setRotation(rotation);
-                    }
-                    if (i == ROWS - 1 && j == 1) {
-                        break;
-                    }
-                } else {
-                    // TODO proper exception
-                }
-            }
-        }
+    public void setDefault(int index, Tile t, int rotation) {
+        int row = index / COLS;
+        int col = index % COLS;
+        cells[row][col].setLogicTile(t);
+        cells[row][col].setOpacity(1);
+        cells[row][col].setClickable(true);
+        cells[row][col].setRotation(rotation);
     }
+
+//    public void setDefault(ImageView img, int rotation) {
+//        for (int i = 0; i < ROWS; i++) {
+//            for (int j = 0; j < COLS; j++) {
+//                if (img != null) {
+//                    if (cells[i][j].getTileImage().getImage() == img.getImage()) {
+//                        cells[i][j].setOpacity(1);
+//                        cells[i][j].setClickable(true);
+//                        cells[i][j].setRotation(rotation);
+//                    }
+//                    if (i == ROWS - 1 && j == 1) {
+//                        break;
+//                    }
+//                } else {
+//                    // TODO proper exception
+//                }
+//            }
+//        }
+//    }
 }

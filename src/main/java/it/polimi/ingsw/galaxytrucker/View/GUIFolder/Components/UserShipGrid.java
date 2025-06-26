@@ -226,18 +226,18 @@ public class UserShipGrid extends Pane {
         return handCell[0];
     }
 
-    public Tile pickUpFromShip(TileView tile) {
-        Tile ret;
-        if (tile.getLogicTile() != null) {
-            ret = tile.getLogicTile();
-            tile.setLogicTile(null);
-        } else {
-            ret = null;
-            // TODO print error: "no tile present"
-        }
-        return ret;
-        // TODO add conformity checks
-    }
+//    public Tile pickUpFromShip(TileView tile) { TODO understand if necessary (prob no)
+//        Tile ret;
+//        if (tile.getLogicTile() != null) {
+//            ret = tile.getLogicTile();
+//            tile.setLogicTile(null);
+//        } else {
+//            ret = null;
+//            // TODO print error: "no tile present"
+//        }
+//        return ret;
+//        // TODO add conformity checks
+//    }
 
     public Tile pickUpReserved(ReservedTileView tile) {
         Tile ret;

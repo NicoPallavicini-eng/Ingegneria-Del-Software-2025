@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
