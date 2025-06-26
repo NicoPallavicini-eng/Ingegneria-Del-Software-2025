@@ -7,6 +7,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.BoardGrid;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Deck;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -69,6 +70,9 @@ public class TravellingSceneDefault extends MyScene {
     private int greenPlayerDays = 0;
     private int yellowPlayerDays = 0;
     private int redPlayerDays = 0;
+    private Card currentCard;
+    private int currentCardNum = 0;
+    private Button drawCard;
 
     public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
         this.game = game;
@@ -103,9 +107,6 @@ public class TravellingSceneDefault extends MyScene {
         boardGrid.setLayoutX(0);
         boardGrid.setLayoutY(0);
 
-        boardGrid.setLayoutX(50);
-        boardGrid.setLayoutY(100);
-
         makeCircles();
 
         Pane base = new Pane(boardGrid, day0Pos4Circle, day1Pos3Circle, day2Circle,
@@ -114,13 +115,25 @@ public class TravellingSceneDefault extends MyScene {
                 day13Circle, day14Circle, day15Circle, day16Circle, day17Circle,
                 day18Circle, day19Circle, day20Circle, day21Circle, day22Circle, day23Circle);
 
-        base.setScaleX(0.5);
-        base.setScaleY(0.5);
+        base.setScaleX(0.8);
+        base.setScaleY(0.8);
         boardPane.getChildren().add(base);
 
         //--------------------
 
         cardPane = new StackPane();
+        currentCard = deck.getGameDeck().getFirst();
+
+        drawCard = new Button("Draw");
+        drawCard.getStyleClass().add("action-button");
+        drawCard.setOnAction(event -> {
+            drawCard();
+        });
+
+        StackPane.setAlignment(drawCard, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(currentCard, Pos.TOP_CENTER);
+
+        cardPane.getChildren().addAll(currentCard, drawCard);
 
         //--------------------
 
@@ -234,56 +247,56 @@ public class TravellingSceneDefault extends MyScene {
             styleCircle(circle, null);
         }
 
-        day0Pos4Circle.setLayoutX(326);
-        day0Pos4Circle.setLayoutY(217);
-        day1Pos3Circle.setLayoutX(380);
-        day1Pos3Circle.setLayoutY(197);
-        day2Circle.setLayoutX(435);
-        day2Circle.setLayoutY(185);
-        day3Pos2Circle.setLayoutX(490);
-        day3Pos2Circle.setLayoutY(178);
-        day4Circle.setLayoutX(547);
-        day4Circle.setLayoutY(178);
-        day5Circle.setLayoutX(603);
-        day5Circle.setLayoutY(185);
-        day6Pos1Circle.setLayoutX(659);
-        day6Pos1Circle.setLayoutY(198);
-        day7Circle.setLayoutX(711);
-        day7Circle.setLayoutY(221);
-        day8Circle.setLayoutX(759);
-        day8Circle.setLayoutY(257);
-        day9Circle.setLayoutX(794);
-        day9Circle.setLayoutY(310);
+        day0Pos4Circle.setLayoutX(326 - 50);
+        day0Pos4Circle.setLayoutY(217 - 100);
+        day1Pos3Circle.setLayoutX(380 - 50);
+        day1Pos3Circle.setLayoutY(197 - 100);
+        day2Circle.setLayoutX(435 - 50);
+        day2Circle.setLayoutY(185 - 100);
+        day3Pos2Circle.setLayoutX(490 - 50);
+        day3Pos2Circle.setLayoutY(178 - 100);
+        day4Circle.setLayoutX(547 - 50);
+        day4Circle.setLayoutY(178 - 100);
+        day5Circle.setLayoutX(603 - 50);
+        day5Circle.setLayoutY(185 - 100);
+        day6Pos1Circle.setLayoutX(659 - 50);
+        day6Pos1Circle.setLayoutY(198 - 100);
+        day7Circle.setLayoutX(711 - 50);
+        day7Circle.setLayoutY(221 - 100);
+        day8Circle.setLayoutX(759 - 50);
+        day8Circle.setLayoutY(257 - 100);
+        day9Circle.setLayoutX(794 - 50);
+        day9Circle.setLayoutY(310 - 100);
 
-        day10Circle.setLayoutX(790);
-        day10Circle.setLayoutY(374);
-        day11Circle.setLayoutX(752);
-        day11Circle.setLayoutY(423);
-        day12Circle.setLayoutX(702);
-        day12Circle.setLayoutY(454);
-        day13Circle.setLayoutX(648);
-        day13Circle.setLayoutY(476);
-        day14Circle.setLayoutX(593);
-        day14Circle.setLayoutY(488);
-        day15Circle.setLayoutX(538);
-        day15Circle.setLayoutY(494);
-        day16Circle.setLayoutX(481);
-        day16Circle.setLayoutY(493);
-        day17Circle.setLayoutX(423);
-        day17Circle.setLayoutY(487);
-        day18Circle.setLayoutX(372);
-        day18Circle.setLayoutY(472);
-        day19Circle.setLayoutX(317);
-        day19Circle.setLayoutY(451);
+        day10Circle.setLayoutX(790 - 50);
+        day10Circle.setLayoutY(374 - 100);
+        day11Circle.setLayoutX(752 - 50);
+        day11Circle.setLayoutY(423 - 100);
+        day12Circle.setLayoutX(702 - 50);
+        day12Circle.setLayoutY(454 - 100);
+        day13Circle.setLayoutX(648 - 50);
+        day13Circle.setLayoutY(476 - 100);
+        day14Circle.setLayoutX(593 - 50);
+        day14Circle.setLayoutY(488 - 100);
+        day15Circle.setLayoutX(538 - 50);
+        day15Circle.setLayoutY(494 - 100);
+        day16Circle.setLayoutX(481 - 50);
+        day16Circle.setLayoutY(493 - 100);
+        day17Circle.setLayoutX(423 - 50);
+        day17Circle.setLayoutY(487 - 100);
+        day18Circle.setLayoutX(372 - 50);
+        day18Circle.setLayoutY(472 - 100);
+        day19Circle.setLayoutX(317 - 50);
+        day19Circle.setLayoutY(451 - 100);
 
-        day20Circle.setLayoutX(268);
-        day20Circle.setLayoutY(417);
-        day21Circle.setLayoutX(234);
-        day21Circle.setLayoutY(362);
-        day22Circle.setLayoutX(239);
-        day22Circle.setLayoutY(298);
-        day23Circle.setLayoutX(278);
-        day23Circle.setLayoutY(249);
+        day20Circle.setLayoutX(268 - 50);
+        day20Circle.setLayoutY(417 - 100);
+        day21Circle.setLayoutX(234 - 50);
+        day21Circle.setLayoutY(362 - 100);
+        day22Circle.setLayoutX(239 - 50);
+        day22Circle.setLayoutY(298 - 100);
+        day23Circle.setLayoutX(278 - 50);
+        day23Circle.setLayoutY(249 - 100);
     }
 
     private void styleCircle(Circle circle, String hexColor) {
@@ -304,8 +317,14 @@ public class TravellingSceneDefault extends MyScene {
         return scene;
     }
 
-    public void setCardImage(Image image) {
-        // TODO Optionally expose this method to update the right-side card
+    public void drawCard() {
+        cardPane.getChildren().remove(currentCard);
+        currentCardNum++;
+        if (currentCardNum == 11) {
+            cardPane.getChildren().remove(drawCard);
+        }
+        currentCard = deck.getGameDeck().get(currentCardNum);
+        cardPane.getChildren().addFirst(currentCard);
     }
 
     public Player checkPlayer(String nickname) {
