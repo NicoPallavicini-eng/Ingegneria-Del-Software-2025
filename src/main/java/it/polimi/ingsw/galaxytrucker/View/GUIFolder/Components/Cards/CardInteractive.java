@@ -1,4 +1,4 @@
-package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
+package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
@@ -30,6 +30,10 @@ public class CardInteractive extends StackPane {
         this.card = card;
         this.travellingScene = travellingScene;
 
+        doButtons();
+    }
+
+    public void doButtons() {
         activateCannonsButton = new Button("Activate Cannons");
         activateShieldsButton = new Button("Activate Shields");
         addCargoButton = new Button("Add Cargo");
@@ -44,7 +48,6 @@ public class CardInteractive extends StackPane {
         noChoiceButton = new Button("No Choice");
         giveUpButton = new Button("Give Up");
         inventoryButton = new Button("Inventory");
-
 
         activateCannonsButton.setOnAction(e -> {
             travellingScene.sendMessageToServer("/activatecannons");
@@ -87,6 +90,43 @@ public class CardInteractive extends StackPane {
             travellingScene.sendMessageToServer("/viewinvetory");
         });
 
+        activateCannonsButton.getStyleClass().add("bottom-button");
+        activateShieldsButton.getStyleClass().add("bottom-button");
+        addCargoButton.getStyleClass().add("bottom-button");
+        chooseSubshipButton.getStyleClass().add("bottom-button");
+        ejectPeopleButton.getStyleClass().add("bottom-button");
+        activateEnginesButton.getStyleClass().add("bottom-button");
+        removeCargoButton.getStyleClass().add("bottom-button");
+        switchCargoButton.getStyleClass().add("bottom-button");
+        choosePlanetButton.getStyleClass().add("bottom-button");
 
+        doneButton.getStyleClass().add("bottom-button");
+        noChoiceButton.getStyleClass().add("bottom-button");
+        giveUpButton.getStyleClass().add("bottom-button");
+        inventoryButton.getStyleClass().add("bottom-button");
+
+        activateCannonsButton.setVisible(false);
+        activateShieldsButton.setVisible(false);
+        addCargoButton.setVisible(false);
+        chooseSubshipButton.setVisible(false);
+        ejectPeopleButton.setVisible(false);
+        activateEnginesButton.setVisible(false);
+        removeCargoButton.setVisible(false);
+        switchCargoButton.setVisible(false);
+        choosePlanetButton.setVisible(false);
+
+        doneButton.setVisible(true);
+        noChoiceButton.setVisible(true);
+        giveUpButton.setVisible(true);
+        inventoryButton.setVisible(true);
+
+        doneButton.setLayoutX(20);
+        doneButton.setLayoutY(400);
+        noChoiceButton.setLayoutX(20);
+        noChoiceButton.setLayoutY(450);
+        giveUpButton.setLayoutX(120);
+        giveUpButton.setLayoutY(400);
+        inventoryButton.setLayoutX(120);
+        inventoryButton.setLayoutY(450);
     }
 }
