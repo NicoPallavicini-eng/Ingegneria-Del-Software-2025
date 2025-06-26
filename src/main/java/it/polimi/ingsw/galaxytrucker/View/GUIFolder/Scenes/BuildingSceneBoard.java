@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
+import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
+import it.polimi.ingsw.galaxytrucker.View.Trials.AnsiColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -54,6 +56,7 @@ public class BuildingSceneBoard extends MyScene {
     private boolean pos4Taken = false;
     private Button orangeAlienButton;
     private Button purpleAlienButton;
+    private Button removeTileButton;
 
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
@@ -183,17 +186,20 @@ public class BuildingSceneBoard extends MyScene {
         Button viewUserButton = new Button("View User Ship");
         Button viewTilePileButton = new Button("View Tile Pile");
         Button viewOthersButton = new Button("View Others' Ships");
-        Button travelButton = new Button("Travel");
+        Button travelButton = new Button("Done");
         orangeAlienButton = new Button("Orange Alien");
         purpleAlienButton = new Button("Purple Alien");
+        removeTileButton = new Button("Remove Tile");
         viewUserButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewOthersButton.getStyleClass().add("bottom-button");
         orangeAlienButton.getStyleClass().add("bottom-button");
         purpleAlienButton.getStyleClass().add("bottom-button");
+        removeTileButton.getStyleClass().add("bottom-button");
         travelButton.getStyleClass().add("next-button");
         orangeAlienButton.setVisible(false);
         purpleAlienButton.setVisible(false);
+        removeTileButton.setVisible(false);
 
         viewUserButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "UserShip");
@@ -206,18 +212,19 @@ public class BuildingSceneBoard extends MyScene {
         });
         travelButton.setOnAction(e -> {
             sendMessageToServer("/done");
-            sceneManager.next(this);
+            //sceneManager.next(this);
         });
         orangeAlienButton.setOnAction(e -> handleOrangeAlien());
         purpleAlienButton.setOnAction(e -> handlePurpleAlien());
+        removeTileButton.setOnAction(e -> handleRemoveTile());
 
 
         HBox buttonBox = new HBox(100, viewUserButton, viewTilePileButton, viewOthersButton, travelButton);
         buttonBox.setPadding(new Insets(10));
         buttonBox.setAlignment(Pos.CENTER);
 
-        HBox alienBox = new HBox(50, orangeAlienButton, purpleAlienButton);
-        alienBox.setPadding(new Insets(10));
+        HBox alienBox = new HBox(50, orangeAlienButton, purpleAlienButton, removeTileButton);
+        alienBox.setPadding(new Insets(5));
         alienBox.setAlignment(Pos.CENTER);
 
         VBox buttonsBoxWithAlien = new VBox(20, alienBox, buttonBox);
@@ -340,6 +347,7 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handleD3Button() {
         if (!d3InView && !deck1.isVisible() && !deck2.isVisible() && !deck3.isVisible()) { // TODO link to other players' view status
+            Player player = checkPlayer(nickname);
             deck3.setVisible(true);
             d3InView = true;
             styleButton(d3Button, "#cc5555"); // Red to close
@@ -355,7 +363,20 @@ public class BuildingSceneBoard extends MyScene {
             sendMessageToServer("/setposition 1");
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
-            // set user in pos 1
+            removeTileButton.setVisible(true);
+            Player player = checkPlayer(nickname);
+            Color color = player.getShip().getColor();
+            String colorStyle = "";
+            if (color == Color.RED) {
+                colorStyle = "-fx-background-color: red;";
+            } else if (color == Color.BLUE) {
+                colorStyle = "-fx-background-color: blue;";
+            } else if (color == Color.GREEN) {
+                colorStyle = "-fx-background-color: green;";
+            } else if (color == Color.YELLOW) {
+                colorStyle = "-fx-background-color: yellow;";
+            }
+            pos1Button.setStyle(colorStyle);
             pos1Taken = true;
         }
     }
@@ -365,6 +386,20 @@ public class BuildingSceneBoard extends MyScene {
             sendMessageToServer("/setposition 2");
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
+            removeTileButton.setVisible(true);
+            Player player = checkPlayer(nickname);
+            Color color = player.getShip().getColor();
+            String colorStyle = "";
+            if (color == Color.RED) {
+                colorStyle = "-fx-background-color: red;";
+            } else if (color == Color.BLUE) {
+                colorStyle = "-fx-background-color: blue;";
+            } else if (color == Color.GREEN) {
+                colorStyle = "-fx-background-color: green;";
+            } else if (color == Color.YELLOW) {
+                colorStyle = "-fx-background-color: yellow;";
+            }
+            pos2Button.setStyle(colorStyle);
             // set user in pos 2
             pos2Taken = true;
         }
@@ -375,6 +410,20 @@ public class BuildingSceneBoard extends MyScene {
             sendMessageToServer("/setposition 3");
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
+            removeTileButton.setVisible(true);
+            Player player = checkPlayer(nickname);
+            Color color = player.getShip().getColor();
+            String colorStyle = "";
+            if (color == Color.RED) {
+                colorStyle = "-fx-background-color: red;";
+            } else if (color == Color.BLUE) {
+                colorStyle = "-fx-background-color: blue;";
+            } else if (color == Color.GREEN) {
+                colorStyle = "-fx-background-color: green;";
+            } else if (color == Color.YELLOW) {
+                colorStyle = "-fx-background-color: yellow;";
+            }
+            pos3Button.setStyle(colorStyle);
             // set user in pos 3
             pos3Taken = true;
         }
@@ -385,6 +434,20 @@ public class BuildingSceneBoard extends MyScene {
             sendMessageToServer("/setposition 4");
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
+            removeTileButton.setVisible(true);
+            Player player = checkPlayer(nickname);
+            Color color = player.getShip().getColor();
+            String colorStyle = "";
+            if (color == Color.RED) {
+                colorStyle = "-fx-background-color: red;";
+            } else if (color == Color.BLUE) {
+                colorStyle = "-fx-background-color: blue;";
+            } else if (color == Color.GREEN) {
+                colorStyle = "-fx-background-color: green;";
+            } else if (color == Color.YELLOW) {
+                colorStyle = "-fx-background-color: yellow;";
+            }
+            pos4Button.setStyle(colorStyle);
             // set user in pos 4
             pos4Taken = true;
         }
@@ -392,11 +455,24 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handleOrangeAlien() {
         //TODO: finish
-        sendMessageToServer("/placeorangealien");
+        if (buildingSceneUserShip != null){
+            buildingSceneUserShip.enableAlienSelection("/placeorangealien", this.game);
+            sceneManager.switchBuilding(this, "UserShip");
+        }
     }
 
     private void handlePurpleAlien() {
         //TODO: finish
-        sendMessageToServer("/placepurplealien");
+        if (buildingSceneUserShip != null){
+            buildingSceneUserShip.enableAlienSelection("/placepurplealien", this.game);
+            sceneManager.switchBuilding(this, "UserShip");
+        }
+    }
+
+    private void handleRemoveTile(){
+        if (buildingSceneUserShip != null) {
+            buildingSceneUserShip.removeTile("/removetile", this.game);
+            sceneManager.switchBuilding(this, "UserShip");
+        }
     }
 }

@@ -1,11 +1,15 @@
 package it.polimi.ingsw.galaxytrucker.Network.Server;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
+import java.util.List;
 
-public class VirtualServerSocket implements VirtualServerSocketInterface {
+public class VirtualServerSocket implements VirtualServer {
     //final PrintWriter output;
     private final ObjectOutputStream objOut;
 
@@ -33,5 +37,18 @@ metodo corrispondente
         objOut.writeObject(obj);
         objOut.flush();
         //System.out.println("Message sent to server: " + message);
+    }
+
+    public void connect(VirtualClient virtualClient) {}
+    public void showMessage(String input) {}
+    public void handleUserInput(VirtualClient virtualClient, String input){}
+    public List<VirtualClient> getClients() {
+        return null;
+    }
+    public void ping() {}
+    public void addNickname(String nickname) {}
+    public void mapNicknameClient(VirtualClient virtualClient, String nickname){}
+    public Game getGame() {
+        return null;
     }
 }

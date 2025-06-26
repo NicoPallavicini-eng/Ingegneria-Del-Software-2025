@@ -42,6 +42,7 @@ public class BuildingSceneUserShip extends MyScene {
     private Button viewTilePileButton;
     private Button viewBoardButton;
     private Button travelButton;
+    private Button hourglassButton;
     private HBox buttonBox;
     private StackPane rootWithBackground;
     private BorderPane layout;
@@ -52,7 +53,7 @@ public class BuildingSceneUserShip extends MyScene {
         this.nickname = nickname;
         this.sceneManager = sceneManager;
 
-        user = checkPlayer(nickname); // TODO fix, rn is null
+        user = checkPlayer(nickname);
         this.userShip = user.getShip();
 
         this.background = new Background();
@@ -68,12 +69,15 @@ public class BuildingSceneUserShip extends MyScene {
         viewTilePileButton = new Button("View Tile Pile");
         viewBoardButton = new Button("View Board");
         travelButton = new Button("Travel");
+        hourglassButton = new Button("Hourglass");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
+        hourglassButton.getStyleClass().add("bottom-button");
         travelButton.getStyleClass().add("next-button");
 
         viewOthersButton.setOnAction(e -> {
+            sendMessageToServer("/viewships");
             sceneManager.switchBuilding(this, "OthersShip");
         });
         viewTilePileButton.setOnAction(e -> {
@@ -82,11 +86,18 @@ public class BuildingSceneUserShip extends MyScene {
         viewBoardButton.setOnAction(e -> {
             sceneManager.switchBuilding(this, "Board");
         });
+        hourglassButton.setOnAction(e -> {
+            try {
+                sendMessageToServer("/fliphourglass");
+            } catch (IllegalGUIEventException ex) {
+                ex.printStackTrace();
+            }
+        });
         travelButton.setOnAction(e -> {
             sceneManager.next(this);
         });
 
-        buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, travelButton);
+        buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, hourglassButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -170,10 +181,42 @@ public class BuildingSceneUserShip extends MyScene {
     }
 
     public void updateGame(Game game) {
-
         this.game = game;
         update();
 
+    }
+
+    public void enableAlienSelection(String message, Game game){
+        this.game = game;
+        this.userShip = user.getShip();
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                disableTileSelection();
+                sceneManager.switchBuilding(this, "Board");
+            });
+        });
+    }
+
+    public void removeTile(String message, Game game){
+        this.game = game;
+        this.userShip = user.getShip();
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                disableTileSelection();
+            });
+        });
+    }
+
+    private void disableTileSelection() {
+        userShipGrid.getTiles().forEach(tile -> {
+            tile.getOverlayButton().setOnAction(e -> {
+                        tile.setStyle("-fx-border-color: transparent; -fx-border-width: 0px;");
+                    });
+            });
     }
 
     public void update(){

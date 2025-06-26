@@ -12,6 +12,7 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.RMIClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -123,6 +124,7 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void printShips(Game game) {
+        sceneManager.updateGame(game, null);
         // TODO: Display all ships graphically
     }
 
@@ -154,6 +156,9 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void viewCard(Game game) {
+        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, game.getListOfActivePlayers().getFirst().getNickname(), sceneManager);
+        sceneManager.updateGame(game, null);
+        sceneManager.next(buildingSceneUserShip);
         // TODO: Show cards info
     }
 

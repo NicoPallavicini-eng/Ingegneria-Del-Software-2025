@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
@@ -14,6 +15,8 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserShipGrid extends Pane {
@@ -75,24 +78,22 @@ public class UserShipGrid extends Pane {
                         (row == 4 && col == 3))) {
                     TileView tile = new TileView();
                     tile.setPrefSize(TILE_SIZE, TILE_SIZE);
-                    int finalRow = row;
-                    int finalCol = col;
+                    int finalRow = row+5;
+                    int finalCol = col+4;
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
                             try {
-                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow+5 + "," + finalCol+4);
-                                setTile(finalRow, finalCol, handCell[0].getLogicTile(), handCell[0].getRotation());
-                                handCell[0].clearTileImage();
-                                tile.setFull(true);
+                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol);
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
                         } else if (tile.isClickable() && tile.isFull()) {
                             try {
-                                buildingSceneUserShip.sendMessageToServer("/pickupfromship");
-                                setHandTile(tile.getLogicTile(), tile.getRotation());
-                                cells[finalRow][finalCol].clearTileImage();
-                                tile.setFull(false);
+                                Tile realTile = tile.getLogicTile();
+                                if (realTile == user.getShip().getLastPlacedTile()) {
+                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship"); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
+                                    update(user.getShip(), 0);
+                                }
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
@@ -110,13 +111,14 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
-                    handCell[0].clearTileImage();
-                    tile.setFull(true);
+                    buildingSceneUserShip.sendMessageToServer("/reservetile");
+                    update(user.getShip(), 0);
+//                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
+//                    handCell[0].clearTileImage();
+//                    tile.setFull(true);
                 } else if (tile.isClickable() && tile.isFull()) {
-                    setHandTile(tile.getLogicTile(), tile.getRotation());
-                    resCells[finalSlot].clearTileImage();
-                    tile.setFull(false);
+                    buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1));
+                    update(user.getShip(), 0);
                 }
             });
             resCells[slot] = tile;
@@ -127,7 +129,7 @@ public class UserShipGrid extends Pane {
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
             if (tile.isClickable() && tile.isFull()) {
-                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
+                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile); //TODO: NON HO CAPITO :) COSA FA?
             }
         });
         handCell[0] = tile;
@@ -153,10 +155,10 @@ public class UserShipGrid extends Pane {
         rotateRight.setVisible(false);
 
         rotateLeft.setOnAction(e -> {
-            handCell[0].rotate(Side.LEFT);
+            buildingSceneUserShip.sendMessageToServer("/rotate left");
         });
         rotateRight.setOnAction(e -> {
-            handCell[0].rotate(Side.RIGHT);
+            buildingSceneUserShip.sendMessageToServer("/rotate right");
         });
 
         // Absolute positioning
@@ -164,9 +166,37 @@ public class UserShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-        setHandTile(user.getShip().getTileInHand(), 0);
+        update(user.getShip(), 0);
     }
 
+    private void update(Ship ship, int rotation){
+        buildGridFromShip(ship);
+        buildReservedTilesFromShip(ship);
+        setHandTile(ship.getTileInHand(), rotation);
+    }
+
+    public void buildGridFromShip(Ship ship) {
+        ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
+        for (int row = 0; row < floorplan.size(); row++) {
+            for (int col = 0; col < floorplan.get(row).size(); col++) {
+                Tile tile = floorplan.get(row).get(col);
+                if (tile != null) {
+                    cells[row][col].setLogicTile(tile);
+                    cells[row][col].setFull(true);
+                    cells[row][col].setClickable(false);
+                }
+            }
+        }
+    }
+
+    public void buildReservedTilesFromShip(Ship ship) {
+        List<Tile> reservedTiles = ship.getReservedTiles();
+        for (int i = 0; i < reservedTiles.size(); i++) {
+            resCells[i].setLogicTile(reservedTiles.get(i));
+            resCells[i].setFull(true);
+            resCells[i].setClickable(true);
+        }
+    }
     /**
      * Sets a tile image at the specified logical row and column.
      */
@@ -271,6 +301,18 @@ public class UserShipGrid extends Pane {
             errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
             errorAlert.showAndWait();
         });
+    }
+
+    public List<TileView> getTiles() {
+        List<TileView> tiles = new ArrayList<>();
+        for (int row = 0; row < cells.length; row++) {
+            for (int col = 0; col < cells[row].length; col++) {
+                if (cells[row][col] != null) {
+                    tiles.add(cells[row][col]);
+                }
+            }
+        }
+        return tiles;
     }
 
 

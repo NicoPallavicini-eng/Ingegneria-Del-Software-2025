@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.OthersShipGrid;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,6 +30,16 @@ public class BuildingSceneOthersShip extends MyScene {
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneTilePile buildingSceneTilePile = null;
     private BuildingSceneBoard buildingSceneBoard = null;
+    private Ship userShip;
+    private Player user;
+    private BorderPane layout;
+    private StackPane centerContent;
+    private Button viewUserButton;
+    private Button viewTilePileButton;
+    private Button viewBoardButton;
+    private Button travelButton;
+    private HBox buttonBox;
+    private StackPane rootWithBackground;
 
     public BuildingSceneOthersShip(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
@@ -36,27 +47,27 @@ public class BuildingSceneOthersShip extends MyScene {
         this.nickname = nickname;
         this.sceneManager = sceneManager;
 
-        Player user = checkPlayer(nickname);
-        Ship userShip = user.getShip();
+        this.user = checkPlayer(nickname);
+        this.userShip = user.getShip();
 
         this.background = new Background();
-        BorderPane layout = new BorderPane();
+        this.layout = new BorderPane();
 
         // see others' ships
-        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this);
-        StackPane centerContent = new StackPane(othersShipGrid);
+        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this, game.getListOfActivePlayers());
+        this.centerContent = new StackPane(othersShipGrid);
 
         // --- Bottom Buttons ---
-        Button viewUserButton = new Button("View User Ship");
-        Button viewTilePileButton = new Button("View Tile Pile");
-        Button viewBoardButton = new Button("View Board");
-        Button travelButton = new Button("Travel");
+        viewUserButton = new Button("View User Ship");
+        viewTilePileButton = new Button("View Tile Pile");
+        viewBoardButton = new Button("View Board");
+        travelButton = new Button("Travel");
         viewUserButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
         travelButton.getStyleClass().add("next-button");
 
-        viewUserButton.setOnAction(e -> {
+        viewUserButton.setOnAction(e -> {;
             sceneManager.switchBuilding(this, "UserShip");
         });
         viewTilePileButton.setOnAction(e -> {
@@ -69,7 +80,7 @@ public class BuildingSceneOthersShip extends MyScene {
             sceneManager.next(this);
         });
 
-        HBox buttonBox = new HBox(100, viewUserButton, viewTilePileButton, viewBoardButton, travelButton);
+        buttonBox = new HBox(100, viewUserButton, viewTilePileButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -77,7 +88,7 @@ public class BuildingSceneOthersShip extends MyScene {
         layout.setBottom(buttonBox);
 
         // Now wrap layout with background in a StackPane
-        StackPane rootWithBackground = new StackPane();
+        rootWithBackground = new StackPane();
         rootWithBackground.getChildren().addAll(background, layout);
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
@@ -122,5 +133,19 @@ public class BuildingSceneOthersShip extends MyScene {
 
     public void updateGame(Game game) {
         this.game = game;
+        update();
+    }
+
+    private void update(){
+       this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this,game.getListOfActivePlayers());
+//       for (Player player : game.getListOfPlayers()) {
+//           if (player != user){
+//               this.othersShipGrid.populateGrid(player.getShip());
+//           }
+//       }
+       Platform.runLater(() -> {
+            this.centerContent = new StackPane(othersShipGrid);
+            this.layout.setCenter(centerContent);
+        });
     }
 }

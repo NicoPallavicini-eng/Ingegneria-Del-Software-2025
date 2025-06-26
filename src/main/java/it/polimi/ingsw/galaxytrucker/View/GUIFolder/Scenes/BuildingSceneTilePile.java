@@ -50,17 +50,6 @@ public class BuildingSceneTilePile extends MyScene {
         this.sceneManager = sceneManager;
         this.tilePile = game.getTilePile().getTilePile();
 
-        // necessary bit to handle tilePile update
-//        if (sceneManager.getOthersShipScene() != null) {
-//            buildingSceneOthersShip = sceneManager.getOthersShipScene();
-//        }
-//        if (sceneManager.getUserShipScene() != null) {
-//            buildingSceneUserShip = sceneManager.getUserShipScene();
-//        }
-//        if (sceneManager.getBoardScene() != null) {
-//            buildingSceneBoard = sceneManager.getBoardScene();
-//        }
-
         this.background = new Background();
         layout = new BorderPane();
 
@@ -139,9 +128,6 @@ public class BuildingSceneTilePile extends MyScene {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
             sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16));
-//            buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
-//            tile.setOpacity(0.2); // faintly visible
-//            tile.setClickable(false);
         }
         catch (IllegalGUIEventException e){
             errorPopUp(e);
@@ -156,9 +142,6 @@ public class BuildingSceneTilePile extends MyScene {
         Tile t = tile.getLogicTile();
         try {
             sendMessageToServer("/putdowntile");
-            tilePileGrid.setDefault(index, t, rotation);
-            // tilePileGrid.getTileImageView(tile);
-            buildingSceneUserShip.emptyHand();
         } catch (IllegalGUIEventException e){
             errorPopUp(e);
         }

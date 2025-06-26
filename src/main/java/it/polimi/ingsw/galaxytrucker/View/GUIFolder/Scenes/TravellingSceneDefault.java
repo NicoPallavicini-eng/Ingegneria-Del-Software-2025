@@ -2,6 +2,8 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
@@ -122,8 +124,9 @@ public class TravellingSceneDefault extends MyScene {
         //--------------------
 
         cardPane = new StackPane();
-        guiCard = deck.getGameDeck().getFirst();
-        currentCard = guiCard.getLogicCard();
+        GameState gameState = game.getGameState();
+        currentCard = ((TravellingState)gameState).getCurrentCard();
+        guiCard = new Card(currentCard);
         this.cardInteractive = new CardInteractive(currentCard, this);
 
         drawCard = new Button("Draw"); // TODO remove, this is for testing

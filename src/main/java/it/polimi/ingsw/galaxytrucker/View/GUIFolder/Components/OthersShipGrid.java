@@ -1,11 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneOthersShip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Color.BLUE;
 
@@ -36,7 +42,7 @@ public class OthersShipGrid extends Pane {
     private final OthersShipReservedTileView[] handCell2 = new OthersShipReservedTileView[1];
     private final OthersShipReservedTileView[] handCell3 = new OthersShipReservedTileView[1];
 
-    public OthersShipGrid(Color color, BuildingSceneOthersShip buildingSceneOthersShip) {
+    public OthersShipGrid(Color color, BuildingSceneOthersShip buildingSceneOthersShip, List<Player> players) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
         // --- BACKGROUND ---
         Image bgImage = new Image(getClass().getResource("/Images/cardboard/cardboard-1c.png").toExternalForm());
@@ -211,5 +217,23 @@ public class OthersShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
+
+        //TODO set the right ships from model.
     }
+    /*
+    public void buildGridFromShip(Ship ship) {
+        ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
+        for (int row = 0; row < floorplan.size(); row++) {
+            for (int col = 0; col < floorplan.get(row).size(); col++) {
+                Tile tile = floorplan.get(row).get(col);
+                if (tile != null) {
+                    cells[row][col].setLogicTile(tile);
+                    cells[row][col].setFull(true);
+                    cells[row][col].setClickable(false);
+                }
+            }
+        }
+    }
+     */
+
 }
