@@ -82,7 +82,6 @@ public class TravellingSceneDefault extends MyScene {
         Ship userShip = user.getShip();
 
         this.background = new Background();
-        BorderPane layout = new BorderPane();
 
         // TODO everything here:
         /*
@@ -96,14 +95,90 @@ public class TravellingSceneDefault extends MyScene {
         __________________________ <- button to switch to view of other ships here
          */
 
+        //--------------------
+
         boardPane = new StackPane();
 
-        /////////
         this.boardGrid = new BoardGrid(userShip.getColor(), null); // TODO understand if okay
+        boardGrid.setLayoutX(0);
+        boardGrid.setLayoutY(0);
 
         boardGrid.setLayoutX(50);
         boardGrid.setLayoutY(100);
 
+        makeCircles();
+
+        Pane base = new Pane(boardGrid, day0Pos4Circle, day1Pos3Circle, day2Circle,
+                day3Pos2Circle, day4Circle, day5Circle, day6Pos1Circle, day7Circle,
+                day8Circle, day9Circle, day10Circle, day11Circle, day12Circle,
+                day13Circle, day14Circle, day15Circle, day16Circle, day17Circle,
+                day18Circle, day19Circle, day20Circle, day21Circle, day22Circle, day23Circle);
+
+        base.setScaleX(0.5);
+        base.setScaleY(0.5);
+        boardPane.getChildren().add(base);
+
+        //--------------------
+
+        cardPane = new StackPane();
+
+        //--------------------
+
+        logPane = new Pane();
+
+        //--------------------
+
+        // LEFT: BoardPane (stacked) + LogPane
+        VBox leftColumn = new VBox(10, boardPane, logPane);
+
+        // RIGHT: CardPane (spans full height)
+        VBox rightColumn = new VBox(cardPane);
+        rightColumn.setAlignment(Pos.CENTER);
+        rightColumn.setPadding(new Insets(0, 20, 0, 20)); // optional spacing
+
+        // TOP/MID: Left and Right side-by-side
+        HBox centerContent = new HBox(20, leftColumn, rightColumn);
+        centerContent.setPadding(new Insets(20));
+
+        // For debugging layout: temporary borders TODO remove when done
+        boardPane.setStyle("-fx-border-color: blue; -fx-border-width: 2; -fx-border-style: dashed;");
+        cardPane.setStyle("-fx-border-color: green; -fx-border-width: 2; -fx-border-style: dashed;");
+        logPane.setStyle("-fx-border-color: orange; -fx-border-width: 2; -fx-border-style: dashed;");
+        leftColumn.setStyle("-fx-border-color: purple; -fx-border-width: 2; -fx-border-style: dashed;");
+        rightColumn.setStyle("-fx-border-color: darkred; -fx-border-width: 2; -fx-border-style: dashed;");
+        centerContent.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-style: solid;");
+
+        Button othersShip = new Button("Others' Ship");
+        Button finish = new Button("Finish");
+        othersShip.getStyleClass().add("bottom-button");
+        finish.getStyleClass().add("next-button");
+
+        othersShip.setOnAction(e -> {
+            sceneManager.switchTravelling(this);
+        });
+
+        finish.setOnAction(e -> {
+            // TODO introduce checks
+            sceneManager.next(this);
+        });
+
+        HBox buttonBox = new HBox(300, othersShip, finish);
+        buttonBox.setPadding(new Insets(20));
+        buttonBox.setAlignment(Pos.CENTER);
+
+        BorderPane layout = new BorderPane();
+        layout.setCenter(centerContent);
+        layout.setBottom(buttonBox);
+
+        StackPane rootWithBackground = new StackPane();
+        rootWithBackground.getChildren().addAll(background, layout);
+
+        scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        sceneManager.setTravellingSceneDefault(this);
+    }
+
+    private void makeCircles() {
         // circles (immense pain)
         day0Pos4Circle = new Circle(10);
         day1Pos3Circle = new Circle(10);
@@ -159,101 +234,56 @@ public class TravellingSceneDefault extends MyScene {
             styleCircle(circle, null);
         }
 
-        day0Pos4Circle.setLayoutX(316);
-        day0Pos4Circle.setLayoutY(207);
-        day1Pos3Circle.setLayoutX(370);
-        day1Pos3Circle.setLayoutY(187);
-        day2Circle.setLayoutX(430);
-        day2Circle.setLayoutY(175);
-        day3Pos2Circle.setLayoutX(480);
-        day3Pos2Circle.setLayoutY(168);
-        day4Circle.setLayoutX(544);
-        day4Circle.setLayoutY(167);
-        day5Circle.setLayoutX(599);
-        day5Circle.setLayoutY(177);
-        day6Pos1Circle.setLayoutX(648);
-        day6Pos1Circle.setLayoutY(189);
-        day7Circle.setLayoutX(706);
-        day7Circle.setLayoutY(215);
-        day8Circle.setLayoutX(754);
-        day8Circle.setLayoutY(248);
-        day9Circle.setLayoutX(790);
-        day9Circle.setLayoutY(298);
+        day0Pos4Circle.setLayoutX(326);
+        day0Pos4Circle.setLayoutY(217);
+        day1Pos3Circle.setLayoutX(380);
+        day1Pos3Circle.setLayoutY(197);
+        day2Circle.setLayoutX(435);
+        day2Circle.setLayoutY(185);
+        day3Pos2Circle.setLayoutX(490);
+        day3Pos2Circle.setLayoutY(178);
+        day4Circle.setLayoutX(547);
+        day4Circle.setLayoutY(178);
+        day5Circle.setLayoutX(603);
+        day5Circle.setLayoutY(185);
+        day6Pos1Circle.setLayoutX(659);
+        day6Pos1Circle.setLayoutY(198);
+        day7Circle.setLayoutX(711);
+        day7Circle.setLayoutY(221);
+        day8Circle.setLayoutX(759);
+        day8Circle.setLayoutY(257);
+        day9Circle.setLayoutX(794);
+        day9Circle.setLayoutY(310);
 
-        day10Circle.setLayoutX(786);
-        day10Circle.setLayoutY(364);
-        day11Circle.setLayoutX(747);
-        day11Circle.setLayoutY(419);
-        day12Circle.setLayoutX(699);
-        day12Circle.setLayoutY(449);
-        day13Circle.setLayoutX(645);
-        day13Circle.setLayoutY(468);
-        day14Circle.setLayoutX(590);
-        day14Circle.setLayoutY(485);
+        day10Circle.setLayoutX(790);
+        day10Circle.setLayoutY(374);
+        day11Circle.setLayoutX(752);
+        day11Circle.setLayoutY(423);
+        day12Circle.setLayoutX(702);
+        day12Circle.setLayoutY(454);
+        day13Circle.setLayoutX(648);
+        day13Circle.setLayoutY(476);
+        day14Circle.setLayoutX(593);
+        day14Circle.setLayoutY(488);
         day15Circle.setLayoutX(538);
-        day15Circle.setLayoutY(489);
-        day16Circle.setLayoutX(479);
-        day16Circle.setLayoutY(489);
-        day17Circle.setLayoutX(422);
-        day17Circle.setLayoutY(480);
-        day18Circle.setLayoutX(365);
-        day18Circle.setLayoutY(464);
-        day19Circle.setLayoutX(308);
-        day19Circle.setLayoutY(446);
+        day15Circle.setLayoutY(494);
+        day16Circle.setLayoutX(481);
+        day16Circle.setLayoutY(493);
+        day17Circle.setLayoutX(423);
+        day17Circle.setLayoutY(487);
+        day18Circle.setLayoutX(372);
+        day18Circle.setLayoutY(472);
+        day19Circle.setLayoutX(317);
+        day19Circle.setLayoutY(451);
 
-        day20Circle.setLayoutX(262);
-        day20Circle.setLayoutY(407);
-        day21Circle.setLayoutX(227);
-        day21Circle.setLayoutY(352);
-        day22Circle.setLayoutX(230);
-        day22Circle.setLayoutY(288);
-        day23Circle.setLayoutX(270);
-        day23Circle.setLayoutY(239);
-
-        Pane base = new Pane(boardGrid, day0Pos4Circle, day1Pos3Circle, day2Circle,
-                day3Pos2Circle, day4Circle, day5Circle, day6Pos1Circle, day7Circle,
-                day8Circle, day9Circle, day10Circle, day11Circle, day12Circle,
-                day13Circle, day14Circle, day15Circle, day16Circle, day17Circle,
-                day18Circle, day19Circle, day20Circle, day21Circle, day22Circle, day23Circle);
-
-        boardPane.getChildren().add(base);
-        // boardPane.resize(100, 200); TODO find a way to do this
-        /////////
-
-        cardPane = new StackPane();
-
-        logPane = new Pane();
-
-
-        StackPane centerContent = new StackPane(boardPane, cardPane, logPane);
-
-        Button othersShip = new Button("Others' Ship");
-        Button finish = new Button("Finish");
-        othersShip.getStyleClass().add("bottom-button");
-        finish.getStyleClass().add("next-button");
-
-        othersShip.setOnAction(e -> {
-            sceneManager.switchTravelling(this);
-        });
-
-        finish.setOnAction(e -> {
-            // TODO introduce checks
-            sceneManager.next(this);
-        });
-
-        HBox buttonBox = new HBox(300, othersShip, finish);
-        buttonBox.setPadding(new Insets(20));
-        buttonBox.setAlignment(Pos.CENTER);
-
-        layout.setCenter(centerContent);
-        layout.setBottom(buttonBox);
-
-        StackPane rootWithBackground = new StackPane();
-        rootWithBackground.getChildren().addAll(background, layout);
-
-        scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        sceneManager.setTravellingSceneDefault(this);
+        day20Circle.setLayoutX(268);
+        day20Circle.setLayoutY(417);
+        day21Circle.setLayoutX(234);
+        day21Circle.setLayoutY(362);
+        day22Circle.setLayoutX(239);
+        day22Circle.setLayoutY(298);
+        day23Circle.setLayoutX(278);
+        day23Circle.setLayoutY(249);
     }
 
     private void styleCircle(Circle circle, String hexColor) {
@@ -269,7 +299,6 @@ public class TravellingSceneDefault extends MyScene {
         circle.setStroke(javafx.scene.paint.Color.WHITE);
         circle.setStrokeWidth(1);
     }
-
 
     public Scene getScene() {
         return scene;
@@ -296,24 +325,13 @@ public class TravellingSceneDefault extends MyScene {
 
     private void fillPos(Circle circle, boolean fill, Color color) {
         if (fill) {
-            String hexColor;
-            switch (color) {
-                case RED:
-                    hexColor = "FF0000";
-                    break;
-                case YELLOW:
-                    hexColor = "FFFF00";
-                    break;
-                case GREEN:
-                    hexColor = "00FF00";
-                    break;
-                case BLUE:
-                    hexColor = "0087FF";
-                    break;
-                default:
-                    hexColor = null; // fallback transparent
-                    break;
-            }
+            String hexColor = switch (color) {
+                case RED -> "FF0000";
+                case YELLOW -> "FFFF00";
+                case GREEN -> "00FF00";
+                case BLUE -> "0087FF";
+                default -> null; // fallback transparent
+            };
             styleCircle(circle, hexColor);
         } else {
             styleCircle(circle, null);
