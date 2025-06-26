@@ -35,6 +35,9 @@ public class TilePileGrid extends Pane {
 
         List <TilePileTileView> tiles = new ArrayList<>();
         for (Tile tile : tilePile) {
+            if (tile == null) {
+                continue;
+            }
             TilePileTileView guiTile = new TilePileTileView(tile);
             guiTile.setPrefSize(TILE_SIZE, TILE_SIZE);
             tiles.add(guiTile);
@@ -61,7 +64,7 @@ public class TilePileGrid extends Pane {
                 pile.add(tile, col, row);
                 i++;
 
-                if (row == ROWS - 1 && col == 7) {
+                if (row == ROWS - 1 && col == 7 || i == 151) {
                     break;
                 }
             }
