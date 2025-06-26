@@ -1075,7 +1075,7 @@ public class EventHandler implements Serializable {
                     .map(CabinTile::getInhabitants)
                     .filter(i -> i != CabinInhabitants.NONE && i != CabinInhabitants.ALIEN)
                     .toList();
-            if (!humans.isEmpty()) {
+            if (humans.isEmpty()) {
                 ship.setTravelDays(null);
             }
         }
