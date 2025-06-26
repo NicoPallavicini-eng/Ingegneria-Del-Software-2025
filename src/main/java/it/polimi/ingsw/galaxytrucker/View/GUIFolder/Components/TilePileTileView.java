@@ -4,14 +4,18 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import java.io.FileInputStream;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class TilePileTileView extends StackPane {
     private static final int TILE_SIZE = 54;
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
+    private final ImageView back;
     private final Button overlayButton = new Button();
     private boolean isClickable = true;
     private boolean isFull = true;
@@ -22,6 +26,12 @@ public class TilePileTileView extends StackPane {
     public TilePileTileView(Tile logicTile) {
         this.logicTile = logicTile;
         this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/tiles/GT-new_tiles_16_for web157.jpg")));
+        back = new ImageView(image);
+        back.setFitWidth(TILE_SIZE);
+        back.setFitHeight(TILE_SIZE);
+        back.setMouseTransparent(true);
 
         // Set up the top tile image (initially empty)
         tileImage = new ImageView(tileImageEnum.getImage());
@@ -39,7 +49,11 @@ public class TilePileTileView extends StackPane {
         overlayButton.getStyleClass().add("tile-button");
 
         // Stack background and tile
-        getChildren().addAll(backgroundImage, tileImage, overlayButton);
+        getChildren().addAll(backgroundImage, tileImage, back, overlayButton);
+    }
+
+    public ImageView getBack() {
+        return back;
     }
 
     public Tile getLogicTile() {
@@ -49,7 +63,6 @@ public class TilePileTileView extends StackPane {
     public void setLogicTile(Tile logicTile) {
         this.logicTile = logicTile;
         this.tileImageEnum = TileImage.valueOf(logicTile.getName());
-
         tileImage.setImage(tileImageEnum.getImage());
     }
 

@@ -46,9 +46,12 @@ public class ReservedTileView extends StackPane {
 
     public void setLogicTile(Tile tile) {
         this.logicTile = tile;
-        this.tileImageEnum = TileImage.valueOf(logicTile.getName());
-
-        tileImage.setImage(tileImageEnum.getImage());
+        if (logicTile != null) {
+            this.tileImageEnum = TileImage.valueOf(logicTile.getName());
+            tileImage.setImage(tileImageEnum.getImage());
+        } else {
+            tileImage.setImage(null);
+        }
     }
 
     public ImageView getTileImage() {
