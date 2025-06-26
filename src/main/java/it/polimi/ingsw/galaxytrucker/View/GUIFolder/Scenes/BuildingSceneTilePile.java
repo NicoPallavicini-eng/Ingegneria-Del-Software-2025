@@ -4,14 +4,17 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.*;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -113,20 +116,43 @@ public class BuildingSceneTilePile extends MyScene {
 
     public void pickUpTile(TilePileTileView tile) {
         int index = tilePile.indexOf(tile.getLogicTile());
-        sendMessageToServer("/pickuptile " + index % 16 + "," + index/16);
-        buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
-        tile.setOpacity(0.2); // faintly visible
-        tile.setClickable(false);
+        try {
+            sendMessageToServer("/pickuptile " + index % 16 + "," + index / 16);
+            buildingSceneUserShip.setInHand(tile.getLogicTile(), tile.getRotation());
+            tile.setOpacity(0.2); // faintly visible
+            tile.setClickable(false);
+        }
+        catch (IllegalGUIEventException e){
+            errorPopUp(e);
+        }
     }
 
     public void putDownTile(ReservedTileView tile) {
         ImageView img = tilePileGrid.getTileImageView(buildingSceneUserShip.getUserShipGrid().getHandTile());
         int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
-        tilePileGrid.setDefault(img, rotation);
-        buildingSceneUserShip.emptyHand();
+        try {
+            sendMessageToServer("/putdowntile");
+            tilePileGrid.setDefault(img, rotation);
+            buildingSceneUserShip.emptyHand();
+        } catch (IllegalGUIEventException e){
+            errorPopUp(e);
+        }
     }
 
     public void updateGame(Game game) {
         this.game = game;
+    }
+
+    private void errorPopUp(IllegalGUIEventException e){
+        javafx.application.Platform.runLater(() -> {
+            javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText(e.getMessage());
+
+            Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+            errorStage.getIcons().clear();
+            errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
+            errorAlert.showAndWait();
+        });
     }
 }

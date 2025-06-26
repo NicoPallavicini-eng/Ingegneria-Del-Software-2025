@@ -27,7 +27,6 @@ public class TilePileGrid extends Pane {
 
     public TilePileGrid(BuildingSceneTilePile buildingSceneTilePile, List<Tile> tilePile) {
         this.buildingSceneTilePile = buildingSceneTilePile;
-
         GridPane pile = new GridPane();
         pile.setHgap(5);
         pile.setVgap(5);
