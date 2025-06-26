@@ -141,6 +141,12 @@ public class BuildingSceneTilePile extends MyScene {
 
     public void updateGame(Game game) {
         this.game = game;
+        update();
+    }
+
+    public void update() {
+        this.tilePile = game.getTilePile().getTilePile();
+        this.tilePileGrid = new TilePileGrid(this, tilePile);
     }
 
     private void errorPopUp(IllegalGUIEventException e){

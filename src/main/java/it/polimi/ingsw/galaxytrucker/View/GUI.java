@@ -109,7 +109,7 @@ public class GUI extends Application implements UI, Serializable {
 
     @Override
     public void viewTilePile(Game game) {
-        // TODO: Visualize the tile pile
+        sceneManager.updateGame(game, null);
     }
 
     @Override
