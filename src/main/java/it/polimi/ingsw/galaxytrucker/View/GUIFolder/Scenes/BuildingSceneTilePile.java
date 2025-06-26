@@ -32,6 +32,14 @@ public class BuildingSceneTilePile extends MyScene {
     private BuildingSceneUserShip buildingSceneUserShip = null;
     private BuildingSceneOthersShip buildingSceneOthersShip = null;
     private BuildingSceneBoard buildingSceneBoard = null;
+    private BorderPane layout;
+    private Button viewOthersButton;
+    private Button viewUserButton;
+    private Button viewBoardButton;
+    private Button travelButton;
+    private StackPane centerContent;
+    private HBox buttonBox;
+    private StackPane rootWithBackground;
 
     public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
         super(game,sceneManager);
@@ -41,17 +49,17 @@ public class BuildingSceneTilePile extends MyScene {
         this.tilePile = game.getTilePile().getTilePile();
 
         this.background = new Background();
-        BorderPane layout = new BorderPane();
+        layout = new BorderPane();
 
         // see TilePile
         this.tilePileGrid = new TilePileGrid(this, tilePile);
-        StackPane centerContent = new StackPane(tilePileGrid);
+        centerContent = new StackPane(tilePileGrid);
 
         // --- Bottom Buttons ---
-        Button viewOthersButton = new Button("View Others' Ships");
-        Button viewUserButton = new Button("View User Ship");
-        Button viewBoardButton = new Button("View Board");
-        Button travelButton = new Button("Travel");
+        viewOthersButton = new Button("View Others' Ships");
+        viewUserButton = new Button("View User Ship");
+        viewBoardButton = new Button("View Board");
+        travelButton = new Button("Travel");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewUserButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
@@ -70,7 +78,7 @@ public class BuildingSceneTilePile extends MyScene {
             sceneManager.next(this);
         });
 
-        HBox buttonBox = new HBox(100, viewOthersButton, viewUserButton, viewBoardButton, travelButton);
+        buttonBox = new HBox(100, viewOthersButton, viewUserButton, viewBoardButton, travelButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -78,12 +86,12 @@ public class BuildingSceneTilePile extends MyScene {
         layout.setBottom(buttonBox);
 
         // Now wrap layout with background in a StackPane
-        StackPane rootWithBackground = new StackPane();
+        rootWithBackground = new StackPane();
         rootWithBackground.getChildren().addAll(background, layout);
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        sceneManager.setTilePileScene(this);
+        this.sceneManager.setTilePileScene(this);
     }
 
     public void setBuildingSceneUserShip (BuildingSceneUserShip buildingSceneUserShip) {
