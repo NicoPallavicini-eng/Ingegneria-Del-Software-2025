@@ -3,10 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck extends StackPane {
     private static final int CARD_HEIGHT = 361;
