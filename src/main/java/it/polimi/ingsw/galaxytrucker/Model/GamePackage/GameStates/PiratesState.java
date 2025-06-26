@@ -160,7 +160,7 @@ public class PiratesState extends TravellingState implements Serializable {
             if(currentCannonball.bigCannonball()){
                 for(Player player : defeatedPlayers){
                     currentCannonball.getHit(player.getShip());
-                    if(!player.getShip().checkFloorPlanConnection()){
+                    if(!player.getShip().isShipBroken()){
                         playersWithIllegalShips.add(player);
                     }
                 }

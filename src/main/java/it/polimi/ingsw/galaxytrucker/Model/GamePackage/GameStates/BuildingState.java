@@ -329,7 +329,8 @@ public class BuildingState extends GameState implements Serializable {
                 }
             }
         }
-        placedAliens.remove(p);
+        placedAliens.get(p)[0] = true;
+        placedAliens.get(p)[1] = true;
         checkNext();
     }
 
