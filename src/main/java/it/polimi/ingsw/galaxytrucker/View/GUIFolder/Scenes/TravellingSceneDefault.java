@@ -124,7 +124,7 @@ public class TravellingSceneDefault extends MyScene {
         cardPane = new StackPane();
         currentCard = deck.getGameDeck().getFirst();
 
-        drawCard = new Button("Draw");
+        drawCard = new Button("Draw"); // TODO remove, this is for testing
         drawCard.getStyleClass().add("action-button");
         drawCard.setOnAction(event -> {
             drawCard();

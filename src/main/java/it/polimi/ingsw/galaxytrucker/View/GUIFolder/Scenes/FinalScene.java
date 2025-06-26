@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 public class FinalScene extends MyScene{
@@ -15,6 +16,7 @@ public class FinalScene extends MyScene{
     private final int SCENE_WIDTH = 1024;
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
+    private Button claim;
 
     public FinalScene(Game game, String nickname, SceneManager sceneManager) {
         super(game,sceneManager);
@@ -23,9 +25,17 @@ public class FinalScene extends MyScene{
         this.sceneManager = sceneManager;
         this.background = new Background();
         this.root = new StackPane();
-        root.getChildren().add(background);
 
+        claim = new Button("Claim");
+        claim.getStyleClass().add("draw-button");
+        claim.setOnMouseClicked(e -> {
+            sendMessageToServer("/claimreward");
+        });
+
+        root.getChildren().addAll(background, claim);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        sceneManager.setFinalScene(this);
     }
 
     public Scene getScene() {

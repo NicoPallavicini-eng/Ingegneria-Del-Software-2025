@@ -56,20 +56,13 @@ public class TravellingSceneOthersShip extends MyScene {
         StackPane centerContent = new StackPane(othersShipGrid);
 
         Button defaultView = new Button("Default View");
-        Button finish = new Button("Finish");
         defaultView.getStyleClass().add("bottom-button");
-        finish.getStyleClass().add("next-button");
 
         defaultView.setOnAction(e -> {
             sceneManager.switchTravelling(this);
         });
 
-        finish.setOnAction(e -> {
-            // TODO introduce checks
-            sceneManager.next(this);
-        });
-
-        HBox buttonBox = new HBox(300, defaultView, finish);
+        HBox buttonBox = new HBox(300, defaultView);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
