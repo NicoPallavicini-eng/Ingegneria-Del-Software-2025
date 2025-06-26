@@ -47,6 +47,9 @@ public class TilePileGrid extends Pane {
                 TilePileTileView tile = tiles.get(i);
 
                 tile.getOverlayButton().setOnAction(e -> {
+                    if (!tile.getLogicTile().getFacingUp()) {
+                        tile.getChildren().remove(tile.getBack());
+                    }
                     if (tile.isClickable()) {
                         buildingSceneTilePile.pickUpTile(tile);
                     } else {

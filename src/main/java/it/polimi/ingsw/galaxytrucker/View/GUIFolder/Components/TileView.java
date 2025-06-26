@@ -44,7 +44,6 @@ public class TileView extends StackPane {
     public void setLogicTile(Tile logicTile) {
         this.logicTile = logicTile;
         this.tileImageEnum = TileImage.valueOf(logicTile.getName());
-
         tileImage.setImage(tileImageEnum.getImage());
     }
 
