@@ -6,9 +6,9 @@ public enum CardImage {
     openSpaceCard1("GT-cards_I_IT_4.jpg", 1),
     openSpaceCard2("GT-cards_I_IT_5.jpg", 1),
     openSpaceCard3("GT-cards_I_IT_6.jpg", 1),
-    openSpaceCard4("GT-cards_II_IT_6.jpg", 2),
+    openSpaceCard4("GT-cards_II_IT_5.jpg", 2),
     openSpaceCard5("GT-cards_II_IT_6.jpg", 2),
-    openSpaceCard6("GT-cards_II_IT_6.jpg", 2),
+    openSpaceCard6("GT-cards_II_IT_7.jpg", 2),
     openSpaceCard7("GT-cards_I_IT_7.jpg", 1),
     planetsCard1("GT-cards_I_IT_12.jpg", 1),
     planetsCard2("GT-cards_I_IT_13.jpg", 1),
@@ -70,14 +70,5 @@ public enum CardImage {
 
     public String getFileName() {
         return fileName;
-    }
-
-    public static TileImage fromJsonName(String name) { // TODO capi
-        try {
-            return TileImage.valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Unknown tile name in JSON: " + name);
-            return null;
-        }
     }
 }
