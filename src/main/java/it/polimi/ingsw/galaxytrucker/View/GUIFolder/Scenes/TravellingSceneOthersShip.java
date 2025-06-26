@@ -52,7 +52,7 @@ public class TravellingSceneOthersShip extends MyScene {
         BorderPane layout = new BorderPane();
 
         // see others' ships
-        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), null); // TODO check that null is ok
+        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), null, game.getListOfActivePlayers()); // TODO check that null is ok
         StackPane centerContent = new StackPane(othersShipGrid);
 
         Button defaultView = new Button("Default View");

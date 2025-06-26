@@ -3227,15 +3227,6 @@ public class ServerController {
                         if (clientNickname != null) {
                             client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else {
-                            /*
-                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                                    .filter(player1 -> player1.getNickname().equals(nickname))
-                                    .findAny();
-
-                            if (!playerOptional.isPresent()) {
-
-                             */
-
                                 try {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
@@ -3247,13 +3238,6 @@ public class ServerController {
                                     client.invalidCommand("Error: " + e.getMessage());
                                     throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
-                                /*
-                            } else {
-                                client.invalidCommand("Nickname already taken, please choose another one!");
-                                throw new IllegalGUIEventException("Error: Nickname already taken, please choose another one!");
-                            }
-
-                                 */
                         }
                     } else {
                             client.invalidCommand("/connect request one parameter.");

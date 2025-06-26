@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import it.polimi.ingsw.galaxytrucker.Model.Color;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Side;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class UserShipGrid extends Pane {
@@ -75,15 +77,15 @@ public class UserShipGrid extends Pane {
                         (row == 4 && col == 3))) {
                     TileView tile = new TileView();
                     tile.setPrefSize(TILE_SIZE, TILE_SIZE);
-                    int finalRow = row;
-                    int finalCol = col;
+                    int finalRow = row+5;
+                    int finalCol = col+4;
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
                             try {
-                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow+5 + "," + finalCol+4);
-                                setTile(finalRow, finalCol, handCell[0].getLogicTile(), handCell[0].getRotation());
-                                handCell[0].clearTileImage();
-                                tile.setFull(true);
+                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol);
+//                                setTile(finalRow-5, finalCol-4, handCell[0].getLogicTile(), handCell[0].getRotation());
+//                                handCell[0].clearTileImage();
+//                                tile.setFull(true);
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
@@ -165,8 +167,23 @@ public class UserShipGrid extends Pane {
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
         setHandTile(user.getShip().getTileInHand(), 0);
+        buildGridFromShip(user.getShip());
     }
 
+
+    public void buildGridFromShip(Ship ship) {
+        ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
+        for (int row = 0; row < floorplan.size(); row++) {
+            for (int col = 0; col < floorplan.get(row).size(); col++) {
+                Tile tile = floorplan.get(row).get(col);
+                if (tile != null) {
+                    cells[row][col].setLogicTile(tile);
+                    cells[row][col].setFull(true);
+                    cells[row][col].setClickable(false);
+                }
+            }
+        }
+    }
     /**
      * Sets a tile image at the specified logical row and column.
      */
