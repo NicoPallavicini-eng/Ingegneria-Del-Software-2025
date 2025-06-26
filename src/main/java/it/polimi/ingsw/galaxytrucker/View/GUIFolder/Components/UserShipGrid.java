@@ -16,6 +16,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserShipGrid extends Pane {
@@ -83,18 +84,16 @@ public class UserShipGrid extends Pane {
                         if (tile.isClickable() && !tile.isFull()) {
                             try {
                                 buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol);
-//                                setTile(finalRow-5, finalCol-4, handCell[0].getLogicTile(), handCell[0].getRotation());
-//                                handCell[0].clearTileImage();
-//                                tile.setFull(true);
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
                         } else if (tile.isClickable() && tile.isFull()) {
                             try {
-                                buildingSceneUserShip.sendMessageToServer("/pickupfromship");
-                                setHandTile(tile.getLogicTile(), tile.getRotation());
-                                cells[finalRow][finalCol].clearTileImage();
-                                tile.setFull(false);
+                                Tile realTile = tile.getLogicTile();
+                                if (realTile == user.getShip().getLastPlacedTile()) {
+                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship"); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
+                                    update(user.getShip(), 0);
+                                }
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
@@ -112,13 +111,14 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
-                    handCell[0].clearTileImage();
-                    tile.setFull(true);
+                    buildingSceneUserShip.sendMessageToServer("/reservetile");
+                    update(user.getShip(), 0);
+//                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
+//                    handCell[0].clearTileImage();
+//                    tile.setFull(true);
                 } else if (tile.isClickable() && tile.isFull()) {
-                    setHandTile(tile.getLogicTile(), tile.getRotation());
-                    resCells[finalSlot].clearTileImage();
-                    tile.setFull(false);
+                    buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1));
+                    update(user.getShip(), 0);
                 }
             });
             resCells[slot] = tile;
@@ -129,7 +129,7 @@ public class UserShipGrid extends Pane {
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
             if (tile.isClickable() && tile.isFull()) {
-                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
+                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile); //TODO: NON HO CAPITO :) COSA FA?
             }
         });
         handCell[0] = tile;
@@ -166,10 +166,14 @@ public class UserShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-        setHandTile(user.getShip().getTileInHand(), 0);
-        buildGridFromShip(user.getShip());
+        update(user.getShip(), 0);
     }
 
+    private void update(Ship ship, int rotation){
+        buildGridFromShip(ship);
+        buildReservedTilesFromShip(ship);
+        setHandTile(ship.getTileInHand(), rotation);
+    }
 
     public void buildGridFromShip(Ship ship) {
         ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
@@ -182,6 +186,15 @@ public class UserShipGrid extends Pane {
                     cells[row][col].setClickable(false);
                 }
             }
+        }
+    }
+
+    public void buildReservedTilesFromShip(Ship ship) {
+        List<Tile> reservedTiles = ship.getReservedTiles();
+        for (int i = 0; i < reservedTiles.size(); i++) {
+            resCells[i].setLogicTile(reservedTiles.get(i));
+            resCells[i].setFull(true);
+            resCells[i].setClickable(true);
         }
     }
     /**
