@@ -11,16 +11,6 @@ public class CardInteractive extends StackPane {
     private final TravellingSceneDefault travellingScene;
     private final it.polimi.ingsw.galaxytrucker.Model.Cards.Card card;
 
-    private Button activateCannonsButton;
-    private Button activateShieldsButton;
-    private Button addCargoButton;
-    private Button chooseSubshipButton;
-    private Button ejectPeopleButton;
-    private Button activateEnginesButton;
-    private Button removeCargoButton;
-    private Button switchCargoButton;
-    private Button choosePlanetButton;
-
     private Button doneButton;
     private Button noChoiceButton;
     private Button giveUpButton;
@@ -30,52 +20,14 @@ public class CardInteractive extends StackPane {
         this.card = card;
         this.travellingScene = travellingScene;
 
-        doButtons();
+        doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
     }
 
-    public void doButtons() {
-        activateCannonsButton = new Button("Activate Cannons");
-        activateShieldsButton = new Button("Activate Shields");
-        addCargoButton = new Button("Add Cargo");
-        chooseSubshipButton = new Button("Choose Subship");
-        ejectPeopleButton = new Button("Eject People");
-        activateEnginesButton = new Button("Activate Engines");
-        removeCargoButton = new Button("Remove Cargo");
-        switchCargoButton = new Button("Switch Cargo");
-        choosePlanetButton = new Button("Choose Planet");
-
+    public void doMainButtons(Button doneButton, Button noChoiceButton, Button giveUpButton, Button inventoryButton) {
         doneButton = new Button("Done");
         noChoiceButton = new Button("No Choice");
         giveUpButton = new Button("Give Up");
         inventoryButton = new Button("Inventory");
-
-        activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
-        });
-        activateShieldsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateshield");
-        });
-        addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo");
-        });
-        chooseSubshipButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/choosesubship");
-        });
-        ejectPeopleButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/ejectpeople");
-        });
-        activateEnginesButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateengines");
-        });
-        removeCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/removecargo");
-        });
-        switchCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/switchcargo");
-        });
-        choosePlanetButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/chooseplanet");
-        });
 
         doneButton.setOnAction(e -> {
             travellingScene.sendMessageToServer("/done");
@@ -90,30 +42,10 @@ public class CardInteractive extends StackPane {
             travellingScene.sendMessageToServer("/viewinvetory");
         });
 
-        activateCannonsButton.getStyleClass().add("bottom-button");
-        activateShieldsButton.getStyleClass().add("bottom-button");
-        addCargoButton.getStyleClass().add("bottom-button");
-        chooseSubshipButton.getStyleClass().add("bottom-button");
-        ejectPeopleButton.getStyleClass().add("bottom-button");
-        activateEnginesButton.getStyleClass().add("bottom-button");
-        removeCargoButton.getStyleClass().add("bottom-button");
-        switchCargoButton.getStyleClass().add("bottom-button");
-        choosePlanetButton.getStyleClass().add("bottom-button");
-
         doneButton.getStyleClass().add("bottom-button");
         noChoiceButton.getStyleClass().add("bottom-button");
         giveUpButton.getStyleClass().add("bottom-button");
         inventoryButton.getStyleClass().add("bottom-button");
-
-        activateCannonsButton.setVisible(false);
-        activateShieldsButton.setVisible(false);
-        addCargoButton.setVisible(false);
-        chooseSubshipButton.setVisible(false);
-        ejectPeopleButton.setVisible(false);
-        activateEnginesButton.setVisible(false);
-        removeCargoButton.setVisible(false);
-        switchCargoButton.setVisible(false);
-        choosePlanetButton.setVisible(false);
 
         doneButton.setVisible(true);
         noChoiceButton.setVisible(true);
