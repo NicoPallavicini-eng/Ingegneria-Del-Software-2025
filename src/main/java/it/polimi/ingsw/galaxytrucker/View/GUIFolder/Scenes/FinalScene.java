@@ -27,7 +27,7 @@ public class FinalScene extends MyScene{
         this.root = new StackPane();
 
         claim = new Button("Claim");
-        claim.getStyleClass().add("draw-button");
+        claim.getStyleClass().add("bottom-button");
         claim.setOnMouseClicked(e -> {
             sendMessageToServer("/claimreward", this.nickname);
         });

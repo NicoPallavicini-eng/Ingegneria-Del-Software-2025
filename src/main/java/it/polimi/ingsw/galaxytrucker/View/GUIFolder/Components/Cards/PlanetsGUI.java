@@ -5,7 +5,11 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class PlanetsGUI {
     private final TravellingSceneDefault travellingScene;
@@ -24,10 +28,30 @@ public class PlanetsGUI {
         choosePlanetButton = new Button("Choose Planet");
         
         addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo", this.nickname);
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setContentText("cargo row:");
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row = dialog.showAndWait();
+            dialog.setContentText("cargo column:");
+            Stage dialogStage2 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> col = dialog.showAndWait();
+            dialog.setContentText("cargo num:");
+            Stage dialogStage3 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> num = dialog.showAndWait();
+
+            String msg = "/addcargo " + row + "," + col + "," + num;
+
+            travellingScene.sendMessageToServer(msg, this.nickname);
         });
         choosePlanetButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/chooseplanet", this.nickname);
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setContentText("planet num:");
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row = dialog.showAndWait();
+
+            String msg = "/chooseplanet " + row;
+
+            travellingScene.sendMessageToServer(msg, this.nickname);
         });
 
         addCargoButton.getStyleClass().add("bottom-button");

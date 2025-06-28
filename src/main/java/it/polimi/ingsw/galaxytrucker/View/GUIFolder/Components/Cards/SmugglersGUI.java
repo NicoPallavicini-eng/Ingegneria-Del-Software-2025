@@ -5,7 +5,11 @@ import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class SmugglersGUI {
     private final TravellingSceneDefault travellingScene;
@@ -26,13 +30,58 @@ public class SmugglersGUI {
         removeCargoButton = new Button("Remove Cargo");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setContentText("cannon row:");
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row = dialog.showAndWait();
+            dialog.setContentText("cannon column:");
+            Stage dialogStage2 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> col = dialog.showAndWait();
+            dialog.setContentText("battery row:");
+            Stage dialogStage3 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row2 = dialog.showAndWait();
+            dialog.setContentText("battery column:");
+            Stage dialogStage4 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> col2 = dialog.showAndWait();
+            dialog.setContentText("battery num:");
+            Stage dialogStage5 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> bat = dialog.showAndWait();
+
+            String msg = "/activatecannons " + row + "," + col + ";" + row2 + "," + col2 + "," + bat;
+
+            travellingScene.sendMessageToServer(msg, this.nickname);
         });
         addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo", this.nickname);
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setContentText("cargo row:");
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row = dialog.showAndWait();
+            dialog.setContentText("cargo column:");
+            Stage dialogStage2 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> col = dialog.showAndWait();
+            dialog.setContentText("cargo num:");
+            Stage dialogStage3 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> num = dialog.showAndWait();
+
+            String msg = "/addcargo " + row + "," + col + "," + num;
+
+            travellingScene.sendMessageToServer(msg, this.nickname);
         });
         removeCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/removecargo", this.nickname);
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setContentText("cargo row:");
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> row = dialog.showAndWait();
+            dialog.setContentText("cargo column:");
+            Stage dialogStage2 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> col = dialog.showAndWait();
+            dialog.setContentText("cargo num:");
+            Stage dialogStage3 = (Stage) dialog.getDialogPane().getScene().getWindow();
+            Optional<String> num = dialog.showAndWait();
+
+            String msg = "/removecargo " + row + "," + col + "," + num;
+
+            travellingScene.sendMessageToServer(msg, this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");
