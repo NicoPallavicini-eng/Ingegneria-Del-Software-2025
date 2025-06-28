@@ -1321,7 +1321,6 @@ public class ServerController {
     }
 
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
-        try {
             switch (command) {
                 case "ship" -> {
                     Player player = checkPlayer(msg.getNickname());
@@ -1489,10 +1488,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                 } catch (IllegalArgumentException | IllegalEventException e) {
-                                    newMessage = new Message("String", null, e.getMessage());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                } catch (IllegalEventException e) {
                                     newMessage = new Message("String", null, e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
@@ -2887,11 +2882,6 @@ public class ServerController {
                 objOut.flush();
                 //client.invalidCommand("Invalid command. Type /help for a list of available commands.");
             }
-        }catch(NumberFormatException e) {
-            Message newMessage;
-            newMessage = new Message("String", null, "Invalid command. Type /help for a list of available commands.");
-            objOut.writeObject(newMessage);
-            objOut.flush();
         }
     }
 
@@ -4064,10 +4054,7 @@ public class ServerController {
                     client.invalidCommand("Invalid command. Type /help for a list of available commands.");
                 }
             }
-        }catch(NumberFormatException e){
-            client.invalidCommand("Invalid command. Type /help for a list of available commands.");
         }
-    }
 
     /**
      * Check if a player with the given nickname is in the game.
