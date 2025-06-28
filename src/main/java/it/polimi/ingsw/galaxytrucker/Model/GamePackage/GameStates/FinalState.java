@@ -41,6 +41,7 @@ public class FinalState extends GameState implements Serializable {
         computeBLSReward();
         computeSaleOfGoods();
         computeLosses();
+        game.getListOfPlayers().sort( (p1, p2) -> p2.getShip().getCredits() - p1.getShip().getCredits());
         game.notifyObservers(game, "final");
     }
 
@@ -91,4 +92,6 @@ public class FinalState extends GameState implements Serializable {
             ships.stream().forEach(s -> s.setCredits(s.getCredits() - s.getLostTiles()));
         }
     }
+
+
 }

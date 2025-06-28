@@ -190,7 +190,10 @@ public class ServerController {
                                     if (rmiClient != null) {
                                         try {
                                             rmiClient.printMessage("\nGame is over, the final state has been reached");
-                                            rmiClient.viewLeaderboard(game);
+                                            rmiClient.printMessage("\nStandings:");
+                                            for(Player player : game.getListOfPlayers()){
+                                                rmiClient.printMessage("\n" + player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            }
                                         } catch (RemoteException e) {
                                             throw new RuntimeException(e);
                                         }
@@ -703,11 +706,18 @@ public class ServerController {
                                         objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
-                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
-                                        msg2.setNickname(socketClient.getNickname());
-                                        objOut.writeObject(msg2);
+                                        msg = new Message("String", game, "Standings:\n");
+                                        objOut = socketClient.getObjOut();
+                                        objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
+                                        for(Player player : game.getListOfPlayers()){
+                                            msg = new Message("String", game,"\n" + player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            objOut = socketClient.getObjOut();
+                                            objOut.writeObject(msg);
+                                            objOut.flush();
+                                            objOut.reset();
+                                        }
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }

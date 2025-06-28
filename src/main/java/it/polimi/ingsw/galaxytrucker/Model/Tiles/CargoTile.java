@@ -35,7 +35,7 @@ public class CargoTile extends Tile implements Serializable {
 
     public void addBlock(Integer block) {
         if(block == 4 && !fitsRed){
-            throw new IllegalEventException("You can't put red cargo in this normal cargo tile")
+            throw new IllegalEventException("You can't put red cargo in this normal cargo tile");
         }
         this.tileContent.add(block);
     }
