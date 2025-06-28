@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -41,5 +42,6 @@ public class MeteorsGUI {
         chooseSubshipButton.setVisible(true);
 
         box.getChildren().addAll(activateCannonsButton, activateShieldsButton, chooseSubshipButton);
+        box.setAlignment(Pos.CENTER);
     }
 }

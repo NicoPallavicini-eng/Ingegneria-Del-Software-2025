@@ -96,6 +96,7 @@ public class CardInteractive extends Pane {
         highButtonBox.setSpacing(10);
 
         lowButtonBox.setLayoutY(600);
+        lowButtonBox.setAlignment(Pos.CENTER);
 
         card.setLayoutX(50);
         card.setLayoutY(150);

@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -34,5 +35,6 @@ public class PlanetsGUI {
         choosePlanetButton.setVisible(true);
 
         box.getChildren().addAll(addCargoButton, choosePlanetButton);
+        box.setAlignment(Pos.CENTER);
     }
 }

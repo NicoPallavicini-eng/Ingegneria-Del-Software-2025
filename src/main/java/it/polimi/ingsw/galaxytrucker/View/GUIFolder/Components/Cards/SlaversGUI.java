@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.SlaversCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -34,5 +35,6 @@ public class SlaversGUI {
         ejectPeopleButton.setVisible(true);
 
         box.getChildren().addAll(activateCannonsButton, ejectPeopleButton);
+        box.setAlignment(Pos.CENTER);
     }
 }

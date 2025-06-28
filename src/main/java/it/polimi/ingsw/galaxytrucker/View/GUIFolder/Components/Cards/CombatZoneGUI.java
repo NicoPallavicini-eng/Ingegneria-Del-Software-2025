@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,8 +68,9 @@ public class CombatZoneGUI {
         h1.setSpacing(10);
         h2.setSpacing(10);
         VBox v = new VBox(h1, h2);
+        h1.setAlignment(Pos.CENTER);
+        h2.setAlignment(Pos.CENTER);
 
         box.getChildren().add(v);
-
     }
 }

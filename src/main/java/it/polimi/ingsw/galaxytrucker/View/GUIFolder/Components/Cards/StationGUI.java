@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.StationCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -34,5 +35,6 @@ public class StationGUI {
         switchCargoButton.setVisible(true);
 
         box.getChildren().addAll(addCargoButton, switchCargoButton);
+        box.setAlignment(Pos.CENTER);
     }
 }
