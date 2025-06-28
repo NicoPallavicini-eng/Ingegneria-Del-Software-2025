@@ -6,6 +6,7 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 /*superclass of all the gamestates,
@@ -34,6 +35,7 @@ public abstract class GameState implements Serializable {
             else{
                 player.setOnlineStatus(true);
                 //not added to active players until the end of the card
+                game.getHourglass().connection();
             }
         }
         else{
@@ -162,6 +164,11 @@ public abstract class GameState implements Serializable {
     }
 
     protected void disconnectionConsequences(Player p){
+        List<Player> connectedPlayers = game.getListOfPlayers().stream().filter(Player::getOnlineStatus).toList();
+        if(connectedPlayers.size() == 1){
+            Player winner = connectedPlayers.get(0);
+            game.getHourglass().disconnectionTimer(game, winner);
+        }
     }
 
     public void handleEvent(Ship ship) throws IllegalEventException{

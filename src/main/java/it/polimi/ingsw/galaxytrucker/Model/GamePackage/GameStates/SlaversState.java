@@ -160,6 +160,11 @@ public class SlaversState extends TravellingState implements Serializable {
 
     @Override
     protected void disconnectionConsequences(Player p) {
+        List<Player> connectedPlayers = game.getListOfPlayers().stream().filter(player->player.getOnlineStatus()).toList();
+        if(connectedPlayers.size() == 1){
+            Player winner = connectedPlayers.get(0);
+            game.getHourglass().disconnectionTimer(game, winner);
+        }
         if(p.equals(slaversSlayer)){
             slaversSlayer = null;
         }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//authonomous
+//todo non vedo la carta dopo stardust, non viene stampata
 
 public class StardustState extends TravellingState implements Serializable {
     private StardustCard currentCard;

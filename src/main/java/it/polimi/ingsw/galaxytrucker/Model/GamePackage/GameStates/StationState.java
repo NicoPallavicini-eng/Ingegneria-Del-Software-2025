@@ -110,10 +110,8 @@ public class StationState extends TravellingState implements Serializable {
 
     @Override
     protected void disconnectionConsequences(Player p) {
-        if(rewardClaimer == null){
-            super.disconnectionConsequences(p);
-        }
-        else if(p.equals(rewardClaimer)){
+        super.disconnectionConsequences(p);
+        if(p.equals(rewardClaimer)){
             next();
         }
     }

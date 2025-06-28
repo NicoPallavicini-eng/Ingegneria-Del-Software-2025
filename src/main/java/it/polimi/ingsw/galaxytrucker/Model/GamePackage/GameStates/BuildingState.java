@@ -321,6 +321,7 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     protected void disconnectionConsequences(Player p){
+        super.disconnectionConsequences(p);
         if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
             timeIsUp = true;
             for(Player player : game.getListOfActivePlayers()) {

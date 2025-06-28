@@ -41,6 +41,7 @@ public class FinalState extends GameState implements Serializable {
         computeBLSReward();
         computeSaleOfGoods();
         computeLosses();
+        game.notifyObservers(game, "final");
     }
 
     private void computeFinishOrderReward() {

@@ -2,6 +2,8 @@ package it.polimi.ingsw.galaxytrucker.Model.GamePackage;
 
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.BuildingState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.FinalState;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
 import java.util.concurrent.Executors;
@@ -14,6 +16,7 @@ public class Hourglass implements Serializable {
     private long startTime;
     private BuildingState state;
     private transient final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private boolean someoneHasReconnected = false;
 
     public Hourglass(BuildingState state) {
         this.state = state;
@@ -31,7 +34,7 @@ public class Hourglass implements Serializable {
             if(flipNumber == 3){
                 state.timeUp();
             }
-        }, 3, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);//todo change to 60
     }
 
     public int getFlipNumber() {
@@ -47,4 +50,18 @@ public class Hourglass implements Serializable {
         return remaining > 0 ? remaining : 0;
     }
 
+    public void disconnectionTimer(Game game, Player winner){
+        someoneHasReconnected = false;
+        scheduler.schedule(() -> {
+            if(!someoneHasReconnected) {
+                game.setGameState(new FinalState(game));
+                game.getGameState().init();
+                throw new IllegalEventException(winner + "has won for disconnections");
+            }
+        }, 3, TimeUnit.SECONDS);
+    }
+
+    public void connection(){
+        someoneHasReconnected = true;
+    }
 }
