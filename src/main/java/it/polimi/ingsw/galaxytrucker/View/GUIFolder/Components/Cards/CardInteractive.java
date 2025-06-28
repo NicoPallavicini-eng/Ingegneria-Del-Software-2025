@@ -120,6 +120,8 @@ public class CardInteractive extends Pane {
         });
         giveUpButton.setOnAction(e -> {
             travellingScene.sendMessageToServer("/giveup", this.nickname);
+            travellingScene.getSceneManager().next(travellingScene);
+
         });
 
         doneButton.getStyleClass().add("bottom-button");

@@ -399,4 +399,7 @@ public class TravellingSceneDefault extends MyScene {
                 break;
         }
     }
+    public SceneManager getSceneManager() {
+        return this.sceneManager;
+    }
 }

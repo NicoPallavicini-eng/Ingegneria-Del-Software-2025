@@ -3073,7 +3073,7 @@ public class ServerController {
                                     client.connectView(game);
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    //
                                 }
                             }
                         } else {
@@ -3147,7 +3147,6 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                 } catch (IllegalEventException e){
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
                             }
                         } else {
@@ -3185,7 +3184,6 @@ public class ServerController {
                                     }
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
                                 }
                             } else {
                                 client.invalidCommand("Tile position not valid. It must be between 1 and 156");
@@ -3232,7 +3230,7 @@ public class ServerController {
                             }
                         } catch (IllegalEventException e) {
                             client.invalidCommand("Error: " + e.getMessage());
-                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                            
                         }
                     } else {
                         client.invalidCommand("/putdowntile doesn't support parameters!");
@@ -3260,7 +3258,7 @@ public class ServerController {
                                     client.connectView(game);
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    
                                 }
                             }
                         } else {
@@ -3281,7 +3279,7 @@ public class ServerController {
                             client.connectView(game);
                         } catch (IllegalEventException e) {
                             client.invalidCommand("Error: " + e.getMessage());
-                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                            
                         }
                     }
                 } else {
@@ -3385,7 +3383,7 @@ public class ServerController {
                             client.viewMyShip(game, client.getNickname());
                         } catch (IllegalEventException e) {
                             client.invalidCommand("Error: " + e.getMessage());
-                            throw new IllegalGUIEventException("Error: " + e.getMessage());
+                            
                         }
                     } else {
                         client.invalidCommand("/pickupfromship doesn't support parameters!");
@@ -3412,7 +3410,7 @@ public class ServerController {
                                     client.viewMyShip(game, client.getNickname());
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    
                                 }
                             }
                         }
@@ -3482,7 +3480,7 @@ public class ServerController {
                                         game.getGameState().handleEvent(event);
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
                             }
@@ -3554,7 +3552,7 @@ public class ServerController {
                                         game.getGameState().handleEvent(event);
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
                             }
@@ -3597,7 +3595,7 @@ public class ServerController {
                                             game.getGameState().handleEvent(event);
                                         } catch (IllegalEventException e) {
                                             client.invalidCommand("Error: " + e.getMessage());
-                                            //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                            //
                                         }
                                     }
                                 } else {
@@ -3637,7 +3635,7 @@ public class ServerController {
                                             game.getGameState().handleEvent(event);
                                         } catch (IllegalEventException e) {
                                             client.invalidCommand("Error: " + e.getMessage());
-                                            //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                            //
                                         }
                                     }
 
@@ -3677,7 +3675,7 @@ public class ServerController {
                                             game.getGameState().handleEvent(event);
                                         } catch (IllegalEventException e) {
                                             client.invalidCommand("Error: " + e.getMessage());
-                                            //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                            //
                                         }
                                     }
                                 }
@@ -3720,7 +3718,7 @@ public class ServerController {
                                         game.getGameState().handleEvent(event);
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
                             }
@@ -3767,7 +3765,7 @@ public class ServerController {
                                                 game.getGameState().handleEvent(event);
                                             } catch (IllegalEventException e) {
                                                 client.invalidCommand("Error: " + e.getMessage());
-                                                //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                                //
                                             }
                                         }
                                     }
@@ -3818,7 +3816,6 @@ public class ServerController {
                             game.getGameState().handleEvent(event);
                         } catch (IllegalEventException e) {
                             client.invalidCommand("Error: " + e.getMessage());
-                            throw new IllegalGUIEventException("Error: " + e.getMessage());
                         }
                     } else {
                         client.invalidCommand("/claimreward doesn't require any parameters.");
@@ -3846,7 +3843,6 @@ public class ServerController {
                                         game.getGameState().handleEvent(event);
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
                                     }
                                 }
 
@@ -3869,7 +3865,7 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             } catch (IllegalEventException e) {
                                 client.invalidCommand("Error: " + e.getMessage());
-                                //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                //
                             }
                         } else {
                             client.invalidCommand("/nochoice doesn't support parameters!");
@@ -3887,7 +3883,7 @@ public class ServerController {
                                 game.getGameState().handleEvent(event);
                             } catch (IllegalEventException e) {
                                 client.invalidCommand("Error: " + e.getMessage());
-                                //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                //
                             }
                         } else {
                             client.invalidCommand("/done doesn't support parameters!");
@@ -3917,7 +3913,7 @@ public class ServerController {
                                         client.viewMyShip(game, client.getNickname());
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
 
@@ -3952,7 +3948,7 @@ public class ServerController {
                                         client.printMessage("Alien placed correctly.");
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
 
@@ -3986,7 +3982,7 @@ public class ServerController {
                                         client.viewMyShip(game, client.getNickname());
                                     } catch (IllegalEventException e) {
                                         client.invalidCommand("Error: " + e.getMessage());
-                                        //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                        //
                                     }
                                 }
 
@@ -4014,7 +4010,7 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());
-                                    //throw new IllegalGUIEventException("Error: " + e.getMessage());
+                                    //
                                 }
                             }
                         } else {
