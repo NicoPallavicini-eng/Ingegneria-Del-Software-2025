@@ -87,13 +87,14 @@ public class UserShipGrid extends Pane {
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
-                        } else if (tile.isClickable() && tile.isFull()) {
+                        } else if (tile.isClickable()) {
                             try {
                                 Tile realTile = tile.getLogicTile();
-                                if (realTile == user.getShip().getLastPlacedTile()) {
+                                buildingSceneUserShip.sendMessageToServer("GAME", buildingSceneUserShip.getUser().getNickname());
+//                                if (realTile == buildingSceneUserShip.getUser().getShip().getLastPlacedTile()) {
                                     buildingSceneUserShip.sendMessageToServer("/pickupfromship", this.user.getNickname()); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
-                                    update(user.getShip(), 0);
-                                }
+                                    update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+//                                }
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
@@ -112,13 +113,14 @@ public class UserShipGrid extends Pane {
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
                     buildingSceneUserShip.sendMessageToServer("/reservetile", this.user.getNickname());
-                    update(user.getShip(), 0);
+                    update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+
 //                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
 //                    handCell[0].clearTileImage();
 //                    tile.setFull(true);
-                } else if (tile.isClickable() && tile.isFull()) {
+                } else if (tile.isClickable()) {
                     buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1), this.user.getNickname());
-                    update(user.getShip(), 0);
+                    update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
                 }
             });
             resCells[slot] = tile;
@@ -166,7 +168,7 @@ public class UserShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-        update(user.getShip(), 0);
+        update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
     }
 
     private void update(Ship ship, int rotation){
@@ -183,7 +185,8 @@ public class UserShipGrid extends Pane {
                 if (tile != null) {
                     cells[row][col].setLogicTile(tile);
                     cells[row][col].setFull(true);
-                    cells[row][col].setClickable(false);
+                    cells[row][col].setRotation(tile.getRotation());
+                    //cells[row][col].setClickable(false);
                 }
             }
         }
@@ -208,7 +211,7 @@ public class UserShipGrid extends Pane {
             cells[row][col].getLogicTile() == null) {
             cells[row][col].setLogicTile(logicTile);
             cells[row][col].setFull(true);
-            cells[row][col].setRotation(rotation);
+            cells[row][col].setRotation(logicTile.getRotation());
             updateRotateVisible(false);
             cells[row][col].setClickable(true); // TODO setup logic of last picked up cell
         } else {

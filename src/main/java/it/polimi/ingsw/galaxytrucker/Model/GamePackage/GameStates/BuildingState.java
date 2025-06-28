@@ -297,9 +297,6 @@ public class BuildingState extends GameState implements Serializable {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer view deck");
         }
-        else{
-            //todo lock for gui, the event shall be handled in the controller
-        }
     }
 
     private void checkNext(){
