@@ -69,7 +69,7 @@ public class SocketClient {
         }
     }
 
-    private void runVirtualServer() throws IOException,ClassNotFoundException {
+    public void runVirtualServer() throws IOException,ClassNotFoundException {
         String line;
         Object obj;
         Message msg;

@@ -46,7 +46,15 @@ public class GUI extends Application implements UI, Serializable {
         staticRmiClient = rmiClient;
         staticSocketClient = socketClient;
         started = false;
-
+        if (socketClient != null) {
+            new Thread(() -> {
+                try {
+                    socketClient.runVirtualServer();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
         Thread t = new Thread (() -> {
             Application.launch(GUI.class);
         });
@@ -227,7 +235,7 @@ public class GUI extends Application implements UI, Serializable {
     @Override
     public void updateGame(Game gameSend) {
         this.game = gameSend;
-        while(!started);
+//        while(!started);
         this.sceneManager.updateGame(game, null);
     }
 }

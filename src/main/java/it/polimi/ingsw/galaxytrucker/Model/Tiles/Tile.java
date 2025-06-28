@@ -21,6 +21,7 @@ public class Tile implements Serializable {
     private boolean choosable;
     private boolean reserved;
     private String name;
+    private int rotation = 0;
 
     /**
      * Constructs a Tile with specified connector types for each side
@@ -161,5 +162,13 @@ public class Tile implements Serializable {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public void setRotation(int rotation){
+        this.rotation = (this.rotation + rotation) % 360;
+    }
+
+    public int getRotation(){
+        return this.rotation;
     }
 }

@@ -7,7 +7,6 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
-import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClientHandler;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Message;
@@ -33,7 +32,6 @@ public class ServerController {
     private final RemoteObserver remoteObserver = new RemoteObserver(this, game);
     private List<VirtualClient> rmiClients = new ArrayList<>();
     private List<SocketClientHandler> socketClients = new ArrayList<>();
-    private Map<String,Game> gameMapper;
     private int hourglassCounter = 1;
 
     public ServerController(RMIServer rmiServer) {
@@ -108,9 +106,6 @@ public class ServerController {
                         }
                         case "time" -> {
                             if (gameState instanceof BuildingState){
-                                if (rmiClients == null || rmiClients.isEmpty()) {
-                                    return;
-                                }
                                 for (VirtualClient rmiClient : rmiClients) {
                                     if (rmiClient != null) {
                                         try {
@@ -126,9 +121,6 @@ public class ServerController {
                         }
                         case "timeisup" -> {
                             if (gameState instanceof BuildingState){
-                                if (rmiClients == null || rmiClients.isEmpty()) {
-                                    return;
-                                }
                                 for (VirtualClient rmiClient : rmiClients) {
                                     if (rmiClient != null) {
                                         try {
@@ -777,17 +769,6 @@ public class ServerController {
                         }
                     }
                     case "openSpace" -> {
-//                        try {
-//                            for (VirtualClient rmiClient : rmiClients) {
-//                                Player player = checkPlayer(rmiClient.getNickname());
-//                                if (player != null) {
-//                                    rmiClient.printMessage("\nYou are now in open space.\n You can choose to activate your engines or do nothing.\n If you want to do nothing, type /nochoice.\n Now playing: " + ((TravellingState) gameState).getCurrentPlayer().getNickname() + ".\n");
-//                                    rmiClient.viewMyShip(game, rmiClient.getNickname());
-//                                }
-//                            }
-//                        } catch (RemoteException e) {
-//                            throw new RuntimeException(e);
-//                        }
                         for (SocketClientHandler socketClient : socketClients) {
                             if (socketClient != null) {
                                 try{
@@ -1280,7 +1261,7 @@ public class ServerController {
                 rmiThread.join();
                 socketThread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
     }
 
@@ -1398,7 +1379,7 @@ public class ServerController {
                 if (secondParameters.isEmpty()) {
                     if (firstParameters.size() == 1) {
                         String clientNickname = msg.getNickname();
-                        String nickname = firstParameters.get(0);
+                        String nickname = firstParameters.getFirst();
                         if (clientNickname != null) {
                             newMessage = new Message("String", null, "It's forbidden for one client to connect to the game more than once!");
                             objOut.writeObject(newMessage);
@@ -1421,12 +1402,8 @@ public class ServerController {
                                     objOut.flush();
                                     objOut.reset();
                                     // TODO update view
-                                } catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException | IllegalEventException e) {
                                     newMessage = new Message("String", null, e.getMessage());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                }catch(IllegalEventException e){
-                                    newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                 }
@@ -1477,7 +1454,6 @@ public class ServerController {
                     newMessage = new Message("String", null, "You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "setnumberofplayers" -> {
@@ -1486,13 +1462,12 @@ public class ServerController {
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
                         if (firstParameters.size() == 1) {
-                            String numberOfPlayersStr = firstParameters.get(0);
+                            String numberOfPlayersStr = firstParameters.getFirst();
                             int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
                             if (numberOfPlayers < 2 || numberOfPlayers > 4) {
                                 newMessage = new Message("String", null, "Number of players not valid. It must be between 2 and 4");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Number of players not valid. It must be between 2 and 4");
                             } else {
                                 SetNumberOfPlayersEvent event = new SetNumberOfPlayersEvent(numberOfPlayers);
                                 try {
@@ -1500,12 +1475,8 @@ public class ServerController {
                                     newMessage = new Message("String", null, "Hai settato il numero dei giocatori");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                } catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException | IllegalEventException e) {
                                     newMessage = new Message("String", null, e.getMessage());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                }catch(IllegalEventException e){
-                                    newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                 }
@@ -1618,7 +1589,7 @@ public class ServerController {
                                     game.getGameState().handleEvent(event);
                                     Tile currentTile = player.getShip().getTileInHand();
                                     for (SocketClientHandler socketClient : socketClients) {
-                                        if (socketClient.getNickname() != msg.getNickname()) {
+                                        if (!Objects.equals(socketClient.getNickname(), msg.getNickname())) {
                                             ObjectOutputStream objOutClient = socketClient.getObjOut();
                                             newMessage = new Message("Game", game, "viewMyShip");
                                             newMessage.setNickname(msg.getNickname());
@@ -1671,14 +1642,14 @@ public class ServerController {
                     objOut.flush();
                 }
             }
-            case "rotatetile" -> {
+            case "rotate" -> {
                 Message newMessage;
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
                             try{
-                                String side = firstParameters.get(0);
+                                String side = firstParameters.getFirst();
                                 RotateTileEvent event = new RotateTileEvent(player, side);
                                 game.getGameState().handleEvent(event);
                                 newMessage = new Message("Game",game,"defaultView");
@@ -1800,7 +1771,7 @@ public class ServerController {
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1){
-                            String indexStr = firstParameters.get(0);
+                            String indexStr = firstParameters.getFirst();
                             int index = Integer.parseInt(indexStr);
                             if (index < 1 || index > 2) {
                                 newMessage = new Message("String",null,"Index not valid. It must be either 1 or 2");
@@ -1878,7 +1849,7 @@ public class ServerController {
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
-                            String pos = firstParameters.get(0);
+                            String pos = firstParameters.getFirst();
                             int position = Integer.parseInt(pos);
                             int maxNumberOfPlayers = game.getNumberOfPlayers();
                             if (position < 1 || position > maxNumberOfPlayers && maxNumberOfPlayers != -1) {
@@ -1892,7 +1863,7 @@ public class ServerController {
                                 objOut.flush();
                             }
                             else {
-                                ObjectOutputStream objOutHandler = null;
+                                ObjectOutputStream objOutHandler;
                                 try {
                                     SetPositionEvent event = new SetPositionEvent(player, position);
                                     game.getGameState().handleEvent(event);
@@ -1923,11 +1894,7 @@ public class ServerController {
                                             client1.viewCard(game);
                                         }
                                     }
-                                } catch (IllegalArgumentException e) {
-                                    newMessage = new Message("String",null,e.getMessage());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                }catch (IllegalEventException e){
+                                } catch (IllegalArgumentException | IllegalEventException e) {
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
@@ -1987,7 +1954,7 @@ public class ServerController {
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1) {
-                            String indexStr = firstParameters.get(0);
+                            String indexStr = firstParameters.getFirst();
                             int index = Integer.parseInt(indexStr);
                             Ship playerShip = player.getShip();
                             int numberOfReservedTiles = playerShip.getReservedTiles().size();
@@ -2304,7 +2271,6 @@ public class ServerController {
                                     newMessage = new Message("String",null,"Invalid value. It must be between 1 and 3");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                    //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 }
                                 else{
                                     try{
@@ -2364,7 +2330,6 @@ public class ServerController {
                                     newMessage = new Message("String",null,"Invalid value. It must be between 1 and 3");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                    //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                 } else {
                                     try{
                                         AddCargoEvent event = new AddCargoEvent(player, row - 5, col - 4, value);
@@ -2401,7 +2366,6 @@ public class ServerController {
                             newMessage = new Message("String",null,"For each cargo it's needed to specify the position and the quantity to switch.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("For each cargo it's needed to specify the position and the quantity to switch.");
                         } else {
                             String prevRowStr = firstParameters.get(0);
                             String prevColStr = firstParameters.get(1);
@@ -2426,7 +2390,6 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Invalid value. It must be between 1 and 3");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Invalid value. It must be between 1 and 3");
                             } else {
                                 try{
                                     SwitchCargoEvent event = new SwitchCargoEvent(player, prevRow - 5, prevCol - 4, newRow - 5, newCol - 4, prevValue);
@@ -2487,7 +2450,6 @@ public class ServerController {
                                         newMessage = new Message("String",null,"Invalid value. It must be 1 or 2.");
                                         objOut.writeObject(newMessage);
                                         objOut.flush();
-                                        //client.invalidCommand("Invalid value. It must be 1 or 2.");
                                         break;
                                     } else {
                                         List<Integer> peopleRow = new ArrayList<>();
@@ -2557,8 +2519,6 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()){
-                        //ViewInventoryEvent event = new ViewInventoryEvent(player);
-                        //game.getGameState().handleEvent(event);
 
                     }
                     else{
@@ -2581,7 +2541,7 @@ public class ServerController {
                 if (player != null){
                     if (secondParameters.isEmpty()){
                         if (firstParameters.size() == 1){
-                            String engage = firstParameters.get(0);
+                            String engage = firstParameters.getFirst();
                             if (engage.equals("true") || engage.equals("false")){
                                 boolean engageBool = Boolean.parseBoolean(engage);
                                 try{
@@ -2626,7 +2586,7 @@ public class ServerController {
                 Player player = checkPlayer(msg.getNickname());
                 if (player != null){
                     if (secondParameters.isEmpty()){
-                        if (firstParameters.size() == 2){ // Choosing by specifying a random tile in the subship you want to keep
+                        if (firstParameters.size() == 2){
                             String rowStr = firstParameters.get(0);
                             String colstr = firstParameters.get(1);
 
@@ -2899,7 +2859,7 @@ public class ServerController {
                             //client.invalidCommand("/chooseplanet supports only one parameter.");
                         }
                         else{
-                            String indexStr = firstParameters.get(0);
+                            String indexStr = firstParameters.getFirst();
                             int index = Integer.parseInt(indexStr);
                             try{
                                 ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
@@ -2933,7 +2893,6 @@ public class ServerController {
                 newMessage = new Message("String",null,"Invalid command. Type /help for a list of available commands.");
                 objOut.writeObject(newMessage);
                 objOut.flush();
-                //client.invalidCommand("Invalid command. Type /help for a list of available commands.");
             }
         }
     }
@@ -2949,7 +2908,6 @@ public class ServerController {
                 Player player1 = playerOptional.get();
                 DisconnectEvent event = new DisconnectEvent(player1);
                 game.getGameState().handleEvent(event,game);
-                //player.setOnlineStatus(false);
             }
 
         }
@@ -2964,7 +2922,10 @@ public class ServerController {
     public void handleUserInput(VirtualClient client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
             client.invalidCommand("Invalid command");
-            //System.out.println("Invalid command");
+            return;
+        }
+        if (input.equals("GAME")){
+            updateView(ServerController.game, "game");
             return;
         }
         // Input to lowercase
@@ -3025,9 +2986,7 @@ public class ServerController {
                 }
                 client.helpMessage();
             } //ok
-            case "viewcard" -> {
-                client.viewCard(game);
-            }
+            case "viewcard" -> client.viewCard(game);
             case "viewleaderboard" -> {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
@@ -3078,7 +3037,7 @@ public class ServerController {
                 if(secondParameters.isEmpty()){
                     if(firstParameters.size()==1){
                         String clientNickname = client.getNickname();
-                        String nickname = firstParameters.get(0);
+                        String nickname = firstParameters.getFirst();
                         if(clientNickname==null){
                             //trovare il Player di quel nickname
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
@@ -3114,7 +3073,7 @@ public class ServerController {
                 if (secondParameters.isEmpty()) {
                     if (firstParameters.size() == 1) {
                         String clientNickname = client.getNickname();
-                        String nickname = firstParameters.get(0);
+                        String nickname = firstParameters.getFirst();
                         if (clientNickname != null) {
                             client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else {
@@ -3136,15 +3095,15 @@ public class ServerController {
                 } else if (secondParameters.size() == 1 && game.getListOfPlayers().isEmpty()){
                     if (firstParameters.size() == 1){
                         String clientNickname = client.getNickname();
-                        String nickname = firstParameters.get(0);
+                        String nickname = firstParameters.getFirst();
                         if(clientNickname != null){
                             client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else{
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                                     .filter(player1 -> player1.getNickname().equals(nickname))
                                     .findAny();
-                            if (!playerOptional.isPresent()) {
-                                String numberOfPlayersStr = secondParameters.get(0);
+                            if (playerOptional.isEmpty()) {
+                                String numberOfPlayersStr = secondParameters.getFirst();
                                 int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
                                 if (numberOfPlayers < 2 || numberOfPlayers > 4){
                                     client.invalidCommand("Number of players not valid. It must be between 2 and 4");
@@ -3191,7 +3150,7 @@ public class ServerController {
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
                         if (firstParameters.size() == 1) {
-                            String numberOfPlayersStr = firstParameters.get(0);
+                            String numberOfPlayersStr = firstParameters.getFirst();
                             int numberOfPlayers = Integer.parseInt(numberOfPlayersStr);
                             if (numberOfPlayers < 2 || numberOfPlayers > 4) {
                                 client.invalidCommand("Number of players not valid. It must be between 2 and 4");
@@ -3259,7 +3218,7 @@ public class ServerController {
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
                         if (firstParameters.size() == 1) {
-                            String side = firstParameters.get(0);
+                            String side = firstParameters.getFirst();
                             RotateTileEvent event = new RotateTileEvent(player, side);
                             game.getGameState().handleEvent(event);
                             client.viewMyShip(game, client.getNickname());
@@ -3377,7 +3336,7 @@ public class ServerController {
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
                         if (firstParameters.size() == 1) {
-                            String pos = firstParameters.get(0);
+                            String pos = firstParameters.getFirst();
                             int position = Integer.parseInt(pos);
                             int maxNumberOfPlayers = game.getNumberOfPlayers();
                             if (position < 1 || position > maxNumberOfPlayers && maxNumberOfPlayers != -1) {
@@ -3454,7 +3413,7 @@ public class ServerController {
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
                         if (firstParameters.size() == 1) {
-                            String indexStr = firstParameters.get(0);
+                            String indexStr = firstParameters.getFirst();
                             int index = Integer.parseInt(indexStr);
                             Ship playerShip = player.getShip();
                             int numberOfReservedTiles = playerShip.getReservedTiles().size();
@@ -3854,8 +3813,6 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (firstParameters.isEmpty() && secondParameters.isEmpty()) {
-                        //ViewInventoryEvent event = new ViewInventoryEvent(player);
-                        //game.getGameState().handleEvent(event);
 
                     } else {
                         client.invalidCommand("/viewinventory doesn't support parameters!");
@@ -3886,7 +3843,7 @@ public class ServerController {
                 Player player = checkPlayer(client.getNickname());
                 if (player != null) {
                     if (secondParameters.isEmpty()) {
-                        if (firstParameters.size() == 2) { // Choosing by specifying a random tile in the subship you want to keep
+                        if (firstParameters.size() == 2) {
                             String rowStr = firstParameters.get(0);
                             String colstr = firstParameters.get(1);
 
@@ -4063,7 +4020,7 @@ public class ServerController {
                             client.invalidCommand("/chooseplanet supports only one parameter.");
                         } else {
                             try {
-                                String indexStr = firstParameters.get(0);
+                                String indexStr = firstParameters.getFirst();
                                 int index = Integer.parseInt(indexStr);
                                 ChoosePlanetEvent event = new ChoosePlanetEvent(player, index);
                                 game.getGameState().handleEvent(event);
@@ -4086,10 +4043,8 @@ public class ServerController {
                         client.invalidCommand("/viewdeck supports only one set of parameters.");
                     }
                     if (firstParameters.size() == 1){
-                        String indexStr = firstParameters.get(0);
+                        String indexStr = firstParameters.getFirst();
                         int index = Integer.parseInt(indexStr);
-                        //ViewDeckEvent event = new ViewDeckEvent(player, index);
-                        //game.getGameState().handleEvent(event);
                         client.viewDeck(game, index);
                     } else {
                         client.invalidCommand("/viewdeck supports only one parameter or no parameters at all.");
@@ -4105,9 +4060,7 @@ public class ServerController {
                 }
                 client.viewTilepile(game);
             }
-            default -> {
-                client.invalidCommand("Invalid command. Type /help for a list of available commands.");
-            }
+            default -> client.invalidCommand("Invalid command. Type /help for a list of available commands.");
         }
     }
 
@@ -4135,25 +4088,13 @@ public class ServerController {
      */
 
     public boolean validTilePosition(int row, int col) {
-        boolean checkPosition = false;
+        boolean checkPosition;
         if (row == 5) {
-            if (col == 4 || col == 5 || col == 7 || col == 9 || col == 10) {
-                checkPosition = false;
-            } else {
-                checkPosition = true;
-            }
+            checkPosition = col != 4 && col != 5 && col != 7 && col != 9 && col != 10;
         } else if (row == 6) {
-            if (col == 4 || col == 10) {
-                checkPosition = false;
-            } else {
-                checkPosition = true;
-            }
+            checkPosition = col != 4 && col != 10;
         } else if (row == 9) {
-            if (col == 7) {
-                checkPosition = false;
-            } else {
-                checkPosition = true;
-            }
+            checkPosition = col != 7;
         } else {
             checkPosition = true;
         }

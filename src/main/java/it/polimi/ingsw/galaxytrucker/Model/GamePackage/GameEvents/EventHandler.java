@@ -232,8 +232,10 @@ public class EventHandler implements Serializable {
             }
             if (event.right().equals("right")) {
                 ship.getTileInHand().rotate(Side.RIGHT);
+                ship.getTileInHand().setRotation(90);
             } else {
                 ship.getTileInHand().rotate(Side.LEFT);
+                ship.getTileInHand().setRotation(270);
             }
         }
     }

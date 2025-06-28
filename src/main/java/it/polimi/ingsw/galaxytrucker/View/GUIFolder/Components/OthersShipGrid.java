@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Color.BLUE;
 
@@ -208,6 +209,7 @@ public class OthersShipGrid extends Pane {
             mainCabinIcon3 = TileImage.centralCabin2.getImage(); // YELLOW
         }
 
+
         cells1[2][3].setTileImage(mainCabinIcon1);
         cells2[2][3].setTileImage(mainCabinIcon2);
         cells3[2][3].setTileImage(mainCabinIcon3);
@@ -217,23 +219,6 @@ public class OthersShipGrid extends Pane {
 
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-
         //TODO set the right ships from model.
     }
-    /*
-    public void buildGridFromShip(Ship ship) {
-        ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
-        for (int row = 0; row < floorplan.size(); row++) {
-            for (int col = 0; col < floorplan.get(row).size(); col++) {
-                Tile tile = floorplan.get(row).get(col);
-                if (tile != null) {
-                    cells[row][col].setLogicTile(tile);
-                    cells[row][col].setFull(true);
-                    cells[row][col].setClickable(false);
-                }
-            }
-        }
-    }
-     */
-
 }
