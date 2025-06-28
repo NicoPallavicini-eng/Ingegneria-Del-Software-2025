@@ -11,7 +11,6 @@ import java.util.List;
 //calculates the rewards
 
 public class FinalState extends GameState implements Serializable {
-    private final Game game;
     private List<Ship> ships = new ArrayList<>();
     private List<Ship> gaveUpShips = new ArrayList<>();
 

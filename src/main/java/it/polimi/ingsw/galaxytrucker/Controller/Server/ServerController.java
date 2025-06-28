@@ -701,18 +701,18 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached\n");
+                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
-                                        msg = new Message("String", game, "Standings:\n");
+                                        msg = new Message("String", game, "Standings:");
                                         objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
                                         for(Player player : game.getListOfPlayers()){
-                                            msg = new Message("String", game,"\n" + player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            msg = new Message("String", game,player.getNickname() +"\t credits: " + player.getShip().getCredits());
                                             objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();

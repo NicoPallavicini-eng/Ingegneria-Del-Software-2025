@@ -15,7 +15,6 @@ and then for all the numberofplayers - 1 remaining players to connect
  */
 
 public class WaitingState extends GameState implements Serializable {
-    private final Game game;
     public WaitingState(Game game ) {
         this.game = game;
     }
