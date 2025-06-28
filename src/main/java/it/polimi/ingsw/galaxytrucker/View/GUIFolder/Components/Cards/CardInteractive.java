@@ -111,6 +111,7 @@ public class CardInteractive extends Pane {
         doneButton = new Button("Done");
         noChoiceButton = new Button("No Choice");
         giveUpButton = new Button("Give Up");
+
         doneButton.setOnAction(e -> {
             travellingScene.sendMessageToServer("/done", this.nickname);
         });
@@ -124,7 +125,6 @@ public class CardInteractive extends Pane {
         doneButton.getStyleClass().add("bottom-button");
         noChoiceButton.getStyleClass().add("bottom-button");
         giveUpButton.getStyleClass().add("bottom-button");
-        inventoryButton.getStyleClass().add("bottom-button");
 
         doneButton.setVisible(true);
         noChoiceButton.setVisible(true);
@@ -136,9 +136,7 @@ public class CardInteractive extends Pane {
         noChoiceButton.setLayoutY(450);
         giveUpButton.setLayoutX(120);
         giveUpButton.setLayoutY(400);
-        inventoryButton.setLayoutX(120);
-        inventoryButton.setLayoutY(450);
 
-        lowButtonBox.getChildren().addAll(doneButton, noChoiceButton, giveUpButton, inventoryButton);
+        lowButtonBox.getChildren().addAll(doneButton, noChoiceButton, giveUpButton);
     }
 }
