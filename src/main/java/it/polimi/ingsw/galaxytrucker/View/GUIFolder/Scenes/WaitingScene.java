@@ -43,12 +43,13 @@ public class WaitingScene extends MyScene{
 
         nextButton = new Button("Next");
         styleButton(nextButton, "#cc5555");  // Red
-        nextButton.setDisable(false);          // Disabled until conditions met
+        nextButton.setDisable(false);
+        // Disabled until conditions met
         nextButton.setOnAction(e -> {
             if (isFirstPlayer) {
                 if ( true /* playersNum == game.getListOfPlayers().size() */) {
                     // TODO link with building state here
-                    sceneManager.updateGame(this.game, this);
+                    //sceneManager.updateGame(this.game, this);
                     sceneManager.next(this);
                 } else {
                     // TODO update for others too

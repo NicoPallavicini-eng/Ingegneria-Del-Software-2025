@@ -14,7 +14,8 @@ public class OthersShipTileView extends StackPane {
     private final ImageView backgroundImage = new ImageView();
     private final ImageView tileImage;
     private final Button overlayButton = new Button();
-    private Optional<Tile> logicTile;
+    private Tile logicTile;
+    private TileImage tileImageEnum;
 
     public OthersShipTileView() {
         // Set up the top tile image (initially empty)

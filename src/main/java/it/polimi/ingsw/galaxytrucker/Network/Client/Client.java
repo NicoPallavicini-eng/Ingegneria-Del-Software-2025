@@ -117,7 +117,9 @@ public class Client {
                             ObjectInputStream objIn = new ObjectInputStream(serverSocket.getInputStream());
                             try {
                                 socketClient = new SocketClient(objIn, objOut, uiChoice);
-                                socketClient.run();
+                                if (uiChoice != 2) {
+                                    socketClient.run();
+                                }
                             } catch (IOException e) {
                                 System.out.println("Server is not available");
                                 System.exit(0);
@@ -152,7 +154,9 @@ public class Client {
                             ObjectInputStream objIn = new ObjectInputStream(serverSocket.getInputStream());
                             try {
                                 socketClient = new SocketClient(objIn, objOut, uiChoice);
-                                socketClient.run();
+                                if (uiChoice != 2) {
+                                    socketClient.run();
+                                }
                             } catch (IOException e) {
                                 System.out.println("You wrote non valid serverIp or serverPort relaunch application!");
                                 System.exit(0);

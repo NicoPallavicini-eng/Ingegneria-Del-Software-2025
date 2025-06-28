@@ -131,18 +131,17 @@ public class BuildingSceneOthersShip extends MyScene {
         return scene;
     }
 
+    public String getNickname() {
+        return this.nickname;
+    }
+
     public void updateGame(Game game) {
         this.game = game;
-        update();
+        //update();
     }
 
     private void update(){
        this.othersShipGrid = new OthersShipGrid(userShip.getColor(), this,game.getListOfActivePlayers());
-//       for (Player player : game.getListOfPlayers()) {
-//           if (player != user){
-//               this.othersShipGrid.populateGrid(player.getShip());
-//           }
-//       }
        Platform.runLater(() -> {
             this.centerContent = new StackPane(othersShipGrid);
             this.layout.setCenter(centerContent);
