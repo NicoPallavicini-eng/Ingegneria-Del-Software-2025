@@ -1,31 +1,27 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class MeteorsGUI extends CardInteractive {
+public class MeteorsGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button activateCannonsButton;
     private Button activateShieldsButton;
     private Button chooseSubshipButton;
-
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
     private String nickname;
 
-    MeteorsGUI(MeteorsCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
-        super(card, travellingSceneDefault, nickname);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
+    MeteorsGUI(TravellingSceneDefault travellingScene, String nickname) {
+        this.travellingScene = travellingScene;
         this.nickname = nickname;
-        doButtons();
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         activateShieldsButton = new Button("Activate Shields");
         chooseSubshipButton = new Button("Choose Subship");
@@ -47,6 +43,8 @@ public class MeteorsGUI extends CardInteractive {
         activateCannonsButton.setVisible(true);
         activateShieldsButton.setVisible(true);
         chooseSubshipButton.setVisible(true);
-    }
 
+        box.getChildren().addAll(activateCannonsButton, activateShieldsButton, chooseSubshipButton);
+        box.setAlignment(Pos.CENTER);
+    }
 }

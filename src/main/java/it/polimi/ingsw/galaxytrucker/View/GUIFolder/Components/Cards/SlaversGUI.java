@@ -1,30 +1,27 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.SlaversCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class SlaversGUI extends CardInteractive {
+import java.rmi.server.UnicastRemoteObject;
+
+public class SlaversGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button activateCannonsButton;
     private Button ejectPeopleButton;
-
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
     private String nickname;
 
-    SlaversGUI(SlaversCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
-        super(card, travellingSceneDefault, nickname);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
+    SlaversGUI(TravellingSceneDefault travellingScene, String nickname) {
+        this.travellingScene = travellingScene;
         this.nickname = nickname;
-        doButtons();
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         ejectPeopleButton = new Button("Eject People");
 
@@ -40,5 +37,8 @@ public class SlaversGUI extends CardInteractive {
 
         activateCannonsButton.setVisible(true);
         ejectPeopleButton.setVisible(true);
+
+        box.getChildren().addAll(activateCannonsButton, ejectPeopleButton);
+        box.setAlignment(Pos.CENTER);
     }
 }
