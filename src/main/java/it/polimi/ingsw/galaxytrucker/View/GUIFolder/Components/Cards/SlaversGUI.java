@@ -14,11 +14,13 @@ public class SlaversGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    SlaversGUI(SlaversCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    SlaversGUI(SlaversCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -27,10 +29,10 @@ public class SlaversGUI extends CardInteractive {
         ejectPeopleButton = new Button("Eject People");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
+            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
         });
         ejectPeopleButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/ejectpeople");
+            travellingScene.sendMessageToServer("/ejectpeople", this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");

@@ -77,7 +77,7 @@ public class BuildingSceneUserShip extends MyScene {
         travelButton.getStyleClass().add("next-button");
 
         viewOthersButton.setOnAction(e -> {
-            sendMessageToServer("/viewships");
+            sendMessageToServer("/viewships", this.nickname);
             sceneManager.switchBuilding(this, "OthersShip");
         });
         viewTilePileButton.setOnAction(e -> {
@@ -88,7 +88,7 @@ public class BuildingSceneUserShip extends MyScene {
         });
         hourglassButton.setOnAction(e -> {
             try {
-                sendMessageToServer("/fliphourglass");
+                sendMessageToServer("/fliphourglass", this.nickname);
             } catch (IllegalGUIEventException ex) {
                 ex.printStackTrace();
             }
@@ -192,7 +192,7 @@ public class BuildingSceneUserShip extends MyScene {
         userShipGrid.getTiles().forEach(tile -> {
             tile.getOverlayButton().setOnAction(e -> {
                 tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4), this.nickname);
                 disableTileSelection();
                 sceneManager.switchBuilding(this, "Board");
             });
@@ -205,7 +205,7 @@ public class BuildingSceneUserShip extends MyScene {
         userShipGrid.getTiles().forEach(tile -> {
             tile.getOverlayButton().setOnAction(e -> {
                 tile.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4));
+                sendMessageToServer(message + " " + (userShip.findTileOnFloorplanRow(tile.getLogicTile()) +5) + "," + (userShip.findTileOnFloorPlanColumn(tile.getLogicTile()) + 4), this.nickname);
                 disableTileSelection();
             });
         });

@@ -1297,7 +1297,7 @@ public class ServerController {
     public void handleUserInput(Message msg, ObjectOutputStream objOut) throws IOException {
         String input = msg.getMessage();
         if (Objects.equals(input, "GAME")) {
-            Message newMessage = new Message("String", this.game, "NewGame");
+            Message newMessage = new Message("String", ServerController.game, "NewGame");
             objOut.writeObject(newMessage);
             objOut.flush();
             return;
@@ -1393,68 +1393,7 @@ public class ServerController {
                 }
 
             } //ok
-            case "riconnect" ->{
-                Message newMessage;
-                if(secondParameters.isEmpty()){
-                    if(firstParameters.size()==1){
-                        String clientNickname = msg.getNickname();
-                        String nickname = firstParameters.get(0);
-                        if(clientNickname==null){
-                            //trovare il Player di quel nickname
-                            //trovare il Player di quel nickname
-                            Optional<Player> playerOptional = game.getListOfPlayers().stream()
-                                    .filter(player1 -> player1.getNickname().equals(nickname))
-                                    .findAny();
-                            if (playerOptional.isPresent()) {
-                                //gestire lo status se offline riconetti,se no manda errore
-                                Player player = playerOptional.get();
-                                if(player.getOnlineStatus()){
-                                    newMessage = new Message("String",null,"Il giocatore è online");
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                    //client.invalidCommand("Il giocatore è online");
-                                }else{
-                                    player.setOnlineStatus(true);
-                                    newMessage = new Message("String",null,"setNickname");
-                                    newMessage.setNickname(nickname);
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                    newMessage = new Message("Game",game,"defaultView");
-                                    newMessage.setNickname(nickname);
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                    objOut.reset();
-                                    //client.setNickname(nickname);
-                                }
-
-
-                            } else {
-                                newMessage = new Message("String",null,"Il nickname di Player is not present");
-                                objOut.writeObject(newMessage);
-                                objOut.flush();
-                                //client.invalidCommand("Il nickname di Player is not present");
-                            }
-                        }else{
-                            newMessage = new Message("String",null,"/You already riconnected to the game");
-                            objOut.writeObject(newMessage);
-                            objOut.flush();
-                            //client.invalidCommand("/You already riconnected to the game");
-                        }
-                    }else{
-                        newMessage = new Message("String",null,"/riconnect request one parameter.");
-                        objOut.writeObject(newMessage);
-                        objOut.flush();
-                        //client.invalidCommand("/riconnect request one parameter.");
-                    }
-                }else{
-                    newMessage = new Message("String",null,"/riconnect request one parameter.");
-                    objOut.writeObject(newMessage);
-                    objOut.flush();
-                    //client.invalidCommand("/riconnect request one parameter.");
-                }
-            }
             case "connect" -> {
-                //GameState gameState = game.getGameState();
                 Message newMessage;
                 if (secondParameters.isEmpty()) {
                     if (firstParameters.size() == 1) {
@@ -1464,7 +1403,6 @@ public class ServerController {
                             newMessage = new Message("String", null, "It's forbidden for one client to connect to the game more than once!");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("It's forbidden for one client to connect to the game more than once!");
                         } else {
                             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                                     .filter(player1 -> player1.getNickname().equals(nickname))
@@ -1476,20 +1414,17 @@ public class ServerController {
                                     newMessage.setNickname(nickname);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-
-                                    //client.setNickname(nickname);
-                                    newMessage = new Message("Game", game, "defaultView");
+                                    objOut.reset();
+                                    newMessage = new Message("Game", ServerController.game, "defaultView");
                                     newMessage.setNickname(nickname);
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    //client.defaultView(game, nickname);
                                     // TODO update view
                                 } catch (IllegalArgumentException e) {
                                     newMessage = new Message("String", null, e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                    //client.invalidCommand("Error: " + e.getMessage());
                                 }catch(IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -1677,23 +1612,34 @@ public class ServerController {
                             int tileRowInt = Integer.parseInt(tileRow);
                             int tileColumnInt = Integer.parseInt(tileColumn);
                             int tilePositionInt = (tileRowInt * 16) + tileColumnInt;
-                            if (tilePositionInt > 0 && tilePositionInt < 152) {
+                            if (tilePositionInt >= 0 && tilePositionInt <= 152) {
                                 try{
                                     PickUpTileEvent event = new PickUpTileEvent(player, tilePositionInt);
                                     game.getGameState().handleEvent(event);
                                     Tile currentTile = player.getShip().getTileInHand();
-                                    newMessage = new Message("Game",game,"viewMyShip");
-                                    newMessage.setNickname(msg.getNickname());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                    objOut.reset();
-                                    //client.viewMyShip(game, client.getNickname());
-                                    newMessage = new Message("Game",game,"viewTilepile");
-                                    newMessage.setNickname(msg.getNickname());
-                                    objOut.writeObject(newMessage);
-                                    objOut.flush();
-                                    objOut.reset();
-                                    //client.viewTilepile(game);
+                                    for (SocketClientHandler socketClient : socketClients) {
+                                        if (socketClient.getNickname() != msg.getNickname()) {
+                                            ObjectOutputStream objOutClient = socketClient.getObjOut();
+                                            newMessage = new Message("Game", game, "viewMyShip");
+                                            newMessage.setNickname(msg.getNickname());
+                                            objOutClient.writeObject(newMessage);
+                                            objOutClient.flush();
+                                            objOutClient.reset();
+                                            //client.viewMyShip(game, client.getNickname());
+                                            newMessage = new Message("Game", game, "viewTilepile");
+                                            newMessage.setNickname(msg.getNickname());
+                                            objOutClient.writeObject(newMessage);
+                                            objOutClient.flush();
+                                            objOutClient.reset();
+                                        } else {
+                                            ObjectOutputStream objOutClient = socketClient.getObjOut();
+                                            newMessage = new Message("Game", game, "viewMyShip");
+                                            newMessage.setNickname(socketClient.getNickname());
+                                            objOutClient.writeObject(newMessage);
+                                            objOutClient.flush();
+                                            objOutClient.reset();
+                                        }
+                                    }
                                 }catch(IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -1705,30 +1651,26 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Tile position not valid. It must be between 1 and 156");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Tile position not valid. It must be between 1 and 156");
                             }
                         }
                         else{
                             newMessage = new Message("String",null,"/pickuptile supports only one parameter!");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/pickuptile supports only one parameter!");
                         }
                     }
                     else{
                         newMessage = new Message("String",null,"/pickuptile supports only one parameter!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/pickuptile supports only one parameter!");
                     }
                 }
                 else {
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
-            } // ok
+            }
             case "rotatetile" -> {
                 Message newMessage;
                 Player player = checkPlayer(msg.getNickname());
@@ -1781,12 +1723,14 @@ public class ServerController {
                         try{
                             PutDownTileEvent event = new PutDownTileEvent(player);
                             game.getGameState().handleEvent(event);
-                            newMessage = new Message("Game",game,"defaultView");
-                            newMessage.setNickname(msg.getNickname());
-                            objOut.writeObject(newMessage);
-                            objOut.flush();
-                            objOut.reset();
-                            //client.defaultView(game);
+                            for (SocketClientHandler socketClient : socketClients){
+                                ObjectOutputStream objOutClient = socketClient.getObjOut();
+                                newMessage = new Message("Game",game,"defaultView");
+                                newMessage.setNickname(msg.getNickname());
+                                objOutClient.writeObject(newMessage);
+                                objOutClient.flush();
+                                objOutClient.reset();
+                            }
                         }catch (IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
                             objOut.writeObject(newMessage);
@@ -1797,14 +1741,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/putdowntile doesn't support parameters!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/putdowntile doesn't support parameters!");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "placetile" -> {
@@ -1822,7 +1764,6 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Row or column not valid. It must be between 5 and 9 for rows and between 4 and 10 for columns");
                             }
                             else{
                                 try{
@@ -1833,7 +1774,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    //client.defaultView(game);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -1845,7 +1785,6 @@ public class ServerController {
                             newMessage = new Message("String",null,"/placetile supports only two parameters!");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/placetile supports only two parameters!");
                         }
                     }
                 }
@@ -1853,7 +1792,6 @@ public class ServerController {
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "reservetile" -> {
@@ -1868,7 +1806,6 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Index not valid. It must be either 1 or 2");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Index not valid. It must be either 1 or 2");
                             }
                             else{
                                 try{
@@ -1879,7 +1816,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    //client.defaultView(game);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -1893,7 +1829,6 @@ public class ServerController {
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "fliphourglass" -> {
@@ -1929,14 +1864,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/fliphourglass doesn't support parameters!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/fliphourglass doesn't support parameters!");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "setposition" -> {
@@ -1952,13 +1885,11 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Position not valid. It must be between 1 and " + maxNumberOfPlayers);
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Position not valid. It must be between 1 and " + maxNumberOfPlayers);
                             }
                             else if (maxNumberOfPlayers == -1){
                                 newMessage = new Message("String",null,"You need to set the number of players before setting the position.");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("You need to set the number of players before setting the position.");
                             }
                             else {
                                 ObjectOutputStream objOutHandler = null;
@@ -1970,8 +1901,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    //client.viewLeaderboard(game);
-                                    //List<VirtualClient> clientsRMI = rmiServer.getClients();
                                     List<SocketClientHandler> clientsSocket = socketServer.getClientsList();
                                     for (SocketClientHandler client : clientsSocket) {
                                         if (!client.getNickname().equals(msg.getNickname())) {
@@ -1979,13 +1908,7 @@ public class ServerController {
                                             objOutHandler = client.getObjOut();
                                             objOutHandler.writeObject(newMessage);
                                             objOutHandler.flush();
-                                            //virtualClient.printMessage(player.getNickname() + " has set the position to " + position);
                                         }
-//                                        newMessage = new Message("String",null,game.getGameState().toString());
-//                                        objOut.writeObject(newMessage);
-//                                        objOut.flush();
-                                        //client.printMessage(game.getGameState().toString());
-
                                         if (game.getGameState() instanceof TravellingState) {
                                             newMessage = new Message("Game",game,"viewCard");
                                             newMessage.setNickname(msg.getNickname());
@@ -1993,7 +1916,6 @@ public class ServerController {
                                             objOutHandler.writeObject(newMessage);
                                             objOutHandler.flush();
                                             objOut.reset();
-                                            //virtualClient.viewCard(game);
                                         }
                                     }
                                     if(game.getGameState() instanceof TravellingState){
@@ -2005,7 +1927,6 @@ public class ServerController {
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                   //client.invalidCommand("Error: " + e.getMessage());
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -2019,14 +1940,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/setposition requires only one parameter!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/setposition requires only one parameter!");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "pickupfromship" -> {
@@ -2044,7 +1963,6 @@ public class ServerController {
                             objOut.writeObject(newMessage);
                             objOut.flush();
                             objOut.reset();
-                            //client.viewTile(currentTile);
                         }catch (IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
                             objOut.writeObject(newMessage);
@@ -2055,14 +1973,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/pickupfromship doesn't support parameters!");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/pickupfromship doesn't support parameters!");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "pickupreservedtile" -> {
@@ -2079,7 +1995,6 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Index not valid. It must be either 1 or 2");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Index not valid. It must be either 1 or 2");
                             } else {
                                 try{
                                     PickUpReservedTileEvent event = new PickUpReservedTileEvent(player, index - 1);
@@ -2091,7 +2006,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    //client.viewTile(reservedTile);
                                 }catch (IllegalEventException e){
                                     newMessage = new Message("String",null,e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -2104,14 +2018,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/pickupreservedtile supports only one parameter.");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/pickupreservedtile supports only one parameter.");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activateengines" -> {
@@ -2123,14 +2035,12 @@ public class ServerController {
                             newMessage = new Message("String",null,"/activateengines needs an even number of row and column for engines.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/activateengines needs an even number of row and column for engines.");
                         }
                         else {
                             if(secondParameters.size() % 3 != 0){
                                 newMessage = new Message("String",null,"for each batteries specify the position and the quantity to remove.");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("for each batteries specify the position and the quantity to remove.");
                             }
                             else{
                                 List<List<Integer>> engines = new ArrayList<>();
@@ -2146,7 +2056,6 @@ public class ServerController {
                                         newMessage = new Message("String",null,"Invalid row or column.");
                                         objOut.writeObject(newMessage);
                                         objOut.flush();
-                                        //client.invalidCommand("Invalid row or column.");
                                         break;
                                     }
                                     List<Integer> engineRow = new ArrayList<>();
@@ -2155,7 +2064,6 @@ public class ServerController {
                                     engines.add(engineRow);
                                 }
                                 for (int j=0; j < secondParameters.size(); j += 3) {
-                                    //Getting positions and value of batteries
                                     String rowBatStr = secondParameters.get(j);
                                     String colBatStr = secondParameters.get(j+1);
                                     String valueBatStr = secondParameters.get(j + 2);
@@ -2168,14 +2076,12 @@ public class ServerController {
                                         newMessage = new Message("String",null,"Invalid row or column.");
                                         objOut.writeObject(newMessage);
                                         objOut.flush();
-                                        //client.invalidCommand("Invalid row or column.");
                                         break;
                                     } else {
                                         if (valueBat < 1 || valueBat > 3) {
                                             newMessage = new Message("String",null,"Invalid value. It must be between 1 and 3");
                                             objOut.writeObject(newMessage);
                                             objOut.flush();
-                                            //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                             break;
                                         } else {
                                             List<Integer> batteryRow = new ArrayList<>();
@@ -2202,14 +2108,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/activateengines needs two sets of parameters");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/activateengines needs two sets of parameters");
                     }
                 }
                 else {
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activatecannons" -> {
@@ -2221,14 +2125,12 @@ public class ServerController {
                             newMessage = new Message("String",null,"/activatecannons needs an even number of row and column for cannons.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("/activatecannons needs an even number of row and column for cannons.");
                         }
                         else{
                             if (secondParameters.size() % 3 != 0){
                                 newMessage = new Message("String",null,"for each batteries specify the position and the quantity to remove.");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("for each batteries specify the position and the quantity to remove.");
                             }
                             else{
                                 List<List<Integer>> cannons = new ArrayList<>();
@@ -2244,7 +2146,6 @@ public class ServerController {
                                         newMessage = new Message("String",null,"Invalid row or column.");
                                         objOut.writeObject(newMessage);
                                         objOut.flush();
-                                        //client.invalidCommand("Invalid row or column.");
                                         break;
                                     }
                                     List<Integer> cannonRow = new ArrayList<>();
@@ -2266,14 +2167,12 @@ public class ServerController {
                                         newMessage = new Message("String",null,"Invalid row or column.");
                                         objOut.writeObject(newMessage);
                                         objOut.flush();
-                                        //client.invalidCommand("Invalid row or column.");
                                         break;
                                     } else {
                                         if (valueBat < 1 || valueBat > 3) {
                                             newMessage = new Message("String",null,"Invalid value. It must be between 1 and 3");
                                             objOut.writeObject(newMessage);
                                             objOut.flush();
-                                            //client.invalidCommand("Invalid value. It must be between 1 and 3");
                                             break;
                                         } else {
                                             List<Integer> batteryRow = new ArrayList<>();
@@ -2301,14 +2200,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/activatecannons needs two sets of parameters");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/activatecannons needs two sets of parameters");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game!");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game!");
                 }
             } //ok
             case "activateshield" -> {
@@ -2320,13 +2217,11 @@ public class ServerController {
                             newMessage = new Message("String",null,"First set of /activateshield must have two parameters.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("First set of /activateshield must have two parameters.");
                         }
                         else if (secondParameters.size() != 2){
                             newMessage = new Message("String",null,"Second set of /activateshield must have two parameters.");
                             objOut.writeObject(newMessage);
                             objOut.flush();
-                            //client.invalidCommand("Second set of /activateshield must have two parameters.");
                         }
                         else{
                             String rowShieldStr = firstParameters.get(0);
@@ -2347,7 +2242,6 @@ public class ServerController {
                                     newMessage = new Message("String",null,"Invalid row or column.");
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
-                                    //client.invalidCommand("Invalid row or column.");
                                 }
                                 else{
                                     try{
@@ -2364,7 +2258,6 @@ public class ServerController {
                                 newMessage = new Message("String",null,"Invalid row or column.");
                                 objOut.writeObject(newMessage);
                                 objOut.flush();
-                                //client.invalidCommand("Invalid row or column");
                             }
                         }
                     }
@@ -2372,14 +2265,12 @@ public class ServerController {
                         newMessage = new Message("String",null,"/activateshield needs two sets of parameters");
                         objOut.writeObject(newMessage);
                         objOut.flush();
-                        //client.invalidCommand("/activateshield needs two sets of parameters");
                     }
                 }
                 else{
                     newMessage = new Message("String",null,"You are not connected to the game");
                     objOut.writeObject(newMessage);
                     objOut.flush();
-                    //client.invalidCommand("You are not connected to the game");
                 }
             } //ok
             case "removecargo" -> {

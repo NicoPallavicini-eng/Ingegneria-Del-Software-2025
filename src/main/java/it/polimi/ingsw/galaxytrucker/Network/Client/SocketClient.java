@@ -37,14 +37,11 @@ public class SocketClient {
             Message msg;
             try{
                 msg = (Message) objIn.readObject();
-                //showMessageFromServer(msg.getMessage());
                 referMethod(msg);
                 launchGUI(game, null,this); // TODO update - is now ok?ui = GUI.getInstance();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-
         } else {
             ui = new TUI();
             ui.printTitle();
@@ -174,9 +171,6 @@ public void referMethod(Message msg) throws RemoteException {
     }
 }
 
-public void showMessageFromServer(String message){
-    System.out.println("You recieved this : " + message);
-}
     public void viewCard(Game game) throws RemoteException{
         ui.viewCard(game);
     }
@@ -191,6 +185,7 @@ public void showMessageFromServer(String message){
     }
 
     public void defaultView(Game game, String nickname) throws RemoteException {
+        ui.updateGame(game);
         ui.viewTilePile(game);
         ui.printMyShip(game, nickname);
     }

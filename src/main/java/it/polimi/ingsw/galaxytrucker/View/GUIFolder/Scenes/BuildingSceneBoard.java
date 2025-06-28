@@ -211,7 +211,7 @@ public class BuildingSceneBoard extends MyScene {
             sceneManager.switchBuilding(this, "OthersShip");
         });
         travelButton.setOnAction(e -> {
-            sendMessageToServer("/done");
+            sendMessageToServer("/done", this.nickname);
             //sceneManager.next(this);
         });
         orangeAlienButton.setOnAction(e -> handleOrangeAlien());
@@ -360,7 +360,7 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos1Button() {
         if (!pos1Taken) {
-            sendMessageToServer("/setposition 1");
+            sendMessageToServer("/setposition 1", this.nickname);
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
             removeTileButton.setVisible(true);
@@ -383,7 +383,7 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos2Button() {
         if (!pos2Taken) {
-            sendMessageToServer("/setposition 2");
+            sendMessageToServer("/setposition 2", this.nickname);
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
             removeTileButton.setVisible(true);
@@ -407,7 +407,7 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos3Button() {
         if (!pos3Taken) {
-            sendMessageToServer("/setposition 3");
+            sendMessageToServer("/setposition 3", this.nickname);
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
             removeTileButton.setVisible(true);
@@ -431,7 +431,7 @@ public class BuildingSceneBoard extends MyScene {
 
     private void handlePos4Button() {
         if (!pos4Taken) {
-            sendMessageToServer("/setposition 4");
+            sendMessageToServer("/setposition 4", this.nickname);
             orangeAlienButton.setVisible(true);
             purpleAlienButton.setVisible(true);
             removeTileButton.setVisible(true);

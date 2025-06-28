@@ -35,20 +35,20 @@ public class MyScene {
         this.socketClient = sceneManager.getSocketClient();
     }
 
-    public  void sendMessageToServer(String message) {
+    public  void sendMessageToServer(String message, String nickname) {
         if (rmiClient != null) {
             try {
                 sceneManager.getServer().handleUserInput(sceneManager.getRmiClient(), message);
                 sceneManager.getServer().showMessage(sceneManager.getRmiClient() + message);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         else if (socketClient != null) {
             try {
                 socketClient.getServerSocket().sendMessageToServer(message, nickname);
             } catch (IOException e){
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         else {

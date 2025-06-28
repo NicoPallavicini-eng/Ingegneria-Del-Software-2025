@@ -160,7 +160,7 @@ public class SceneManager extends Application {
     }
 
     public void next(WaitingScene waitingScene) {
-        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, nickname, this);
+        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(this.game, nickname, this);
         primaryStage.setTitle("Building State - User Ship");
         primaryStage.setScene(buildingSceneUserShip.getScene());
         primaryStage.show();

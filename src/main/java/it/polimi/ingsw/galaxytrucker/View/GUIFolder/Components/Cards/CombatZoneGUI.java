@@ -1,6 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
 
@@ -18,13 +18,16 @@ public class CombatZoneGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    CombatZoneGUI(CombatZoneCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    CombatZoneGUI(CombatZoneCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
+
 
     public void doButtons() {
         activateCannonsButton = new Button("Activate Cannons");
@@ -35,22 +38,23 @@ public class CombatZoneGUI extends CardInteractive {
         removeCargoButton = new Button("Remove Cargo");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
+            travellingScene.handleCannons("/activatecannons");
+            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
         });
         activateShieldsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateshield");
+            travellingScene.sendMessageToServer("/activateshield", this.nickname);
         });
         chooseSubshipButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/choosesubship");
+            travellingScene.sendMessageToServer("/choosesubship", this.nickname);
         });
         ejectPeopleButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/ejectpeople");
+            travellingScene.sendMessageToServer("/ejectpeople", this.nickname);
         });
         activateEnginesButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateengines");
+            travellingScene.sendMessageToServer("/activateengines", this.nickname);
         });
         removeCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/removecargo");
+            travellingScene.sendMessageToServer("/removecargo", this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");
@@ -67,4 +71,5 @@ public class CombatZoneGUI extends CardInteractive {
         activateEnginesButton.setVisible(true);
         removeCargoButton.setVisible(true);
     }
+
 }

@@ -28,24 +28,17 @@ public class SocketServer {
         System.out.println("Socket port: " + listenSocket.getLocalPort());
         Socket clientSocket = null;
         while ((clientSocket = this.listenSocket.accept()) != null) {
-//            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
-//            OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
-            //BufferedOutputStream bufferedOut = new BufferedOutputStream(clientSocket.getOutputStream(), 64 * 1024);
             ObjectOutputStream objOut = new ObjectOutputStream(clientSocket.getOutputStream());
             objOut.flush();
-            //BufferedInputStream bufferedIn = new BufferedInputStream(, 64 * 1024);
             ObjectInputStream objIn = new ObjectInputStream(clientSocket.getInputStream());
-
-            //SocketClientHandler handler = new SocketClientHandler( clientSocket,this.serverController,this, new BufferedReader(socketRx), new PrintWriter(socketTx,true));
             SocketClientHandler handler = new SocketClientHandler(clientSocket,this.serverController,this,objIn,objOut);
             synchronized (this.clients) {
                 clients.add(handler);
                 serverController.setSocketPlayers(this.clients);
             }
-
             new Thread(() -> {
                 try {
-                    handler. runVirtualView();
+                    handler.runVirtualView();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (Exception e) {

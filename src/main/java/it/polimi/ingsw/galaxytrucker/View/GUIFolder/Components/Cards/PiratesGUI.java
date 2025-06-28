@@ -15,11 +15,13 @@ public class PiratesGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    PiratesGUI(PiratesCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    PiratesGUI(PiratesCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -29,13 +31,13 @@ public class PiratesGUI extends CardInteractive {
         chooseSubshipButton = new Button("Choose Subship");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
+            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
         });
         activateShieldsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateshield");
+            travellingScene.sendMessageToServer("/activateshield", this.nickname);
         });
         chooseSubshipButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/choosesubship");
+            travellingScene.sendMessageToServer("/choosesubship", this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");

@@ -14,11 +14,13 @@ public class StationGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    StationGUI(StationCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    StationGUI(StationCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -27,10 +29,10 @@ public class StationGUI extends CardInteractive {
         switchCargoButton = new Button("Switch Cargo");
         
         addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo");
+            travellingScene.sendMessageToServer("/addcargo", this.nickname);
         });
         switchCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/switchcargo");
+            travellingScene.sendMessageToServer("/switchcargo", this.nickname);
         });
 
         addCargoButton.getStyleClass().add("bottom-button");

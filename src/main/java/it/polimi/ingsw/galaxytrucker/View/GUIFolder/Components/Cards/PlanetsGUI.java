@@ -14,11 +14,13 @@ public class PlanetsGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    PlanetsGUI(PlanetsCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    PlanetsGUI(PlanetsCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -27,10 +29,10 @@ public class PlanetsGUI extends CardInteractive {
         choosePlanetButton = new Button("Choose Planet");
         
         addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo");
+            travellingScene.sendMessageToServer("/addcargo", this.nickname);
         });
         choosePlanetButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/chooseplanet");
+            travellingScene.sendMessageToServer("/chooseplanet", this.nickname);
         });
 
         addCargoButton.getStyleClass().add("bottom-button");

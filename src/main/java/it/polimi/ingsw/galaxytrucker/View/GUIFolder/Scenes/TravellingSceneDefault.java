@@ -120,7 +120,9 @@ public class TravellingSceneDefault extends MyScene {
 
         base.setScaleX(0.8);
         base.setScaleY(0.8);
-        boardPane.getChildren().add(base);
+        UserShipGrid userShipGrid = new UserShipGrid(userShip.getColor(), null);
+        Pane ship = new Pane(userShipGrid);
+        boardPane.getChildren().addAll(base,ship);
 
         //--------------------
 
@@ -128,7 +130,7 @@ public class TravellingSceneDefault extends MyScene {
         GameState gameState = game.getGameState();
         currentCard = ((TravellingState)gameState).getCurrentCard();
         guiCard = new Card(currentCard);
-        this.cardInteractive = new CardInteractive(currentCard, this);
+        this.cardInteractive = new CardInteractive(currentCard, this, nickname);
 
         drawCard = new Button("Draw"); // TODO remove, this is for testing
         drawCard.getStyleClass().add("action-button");
@@ -139,7 +141,7 @@ public class TravellingSceneDefault extends MyScene {
         StackPane.setAlignment(drawCard, Pos.BOTTOM_CENTER);
         StackPane.setAlignment(guiCard, Pos.TOP_CENTER);
 
-        cardPane.getChildren().addAll(guiCard, drawCard);
+        cardPane.getChildren().addAll(guiCard, cardInteractive);
 
         //--------------------
 
@@ -396,5 +398,9 @@ public class TravellingSceneDefault extends MyScene {
                 fillPos(circles.get(day), false, color);
                 break;
         }
+    }
+
+    public void handleCannons(String message){
+
     }
 }
