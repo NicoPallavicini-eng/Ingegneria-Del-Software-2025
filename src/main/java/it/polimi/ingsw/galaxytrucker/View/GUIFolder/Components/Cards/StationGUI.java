@@ -1,28 +1,22 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.StationCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class StationGUI extends CardInteractive {
+public class StationGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button addCargoButton;
     private Button switchCargoButton;
 
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
-
-    StationGUI(StationCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
-        doButtons();
+    StationGUI(TravellingSceneDefault travellingScene) {
+        this.travellingScene = travellingScene;
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         addCargoButton = new Button("Add Cargo");
         switchCargoButton = new Button("Switch Cargo");
         
@@ -38,5 +32,7 @@ public class StationGUI extends CardInteractive {
         
         addCargoButton.setVisible(true);
         switchCargoButton.setVisible(true);
+
+        box.getChildren().addAll(addCargoButton, switchCargoButton);
     }
 }

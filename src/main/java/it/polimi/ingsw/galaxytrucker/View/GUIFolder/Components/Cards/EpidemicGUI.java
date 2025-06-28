@@ -1,20 +1,15 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.EpidemicCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class EpidemicGUI extends CardInteractive {
+public class EpidemicGUI {
     private final TravellingSceneDefault travellingScene;
 
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
-
-    EpidemicGUI(EpidemicCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
+    EpidemicGUI(TravellingSceneDefault travellingScene) {
+        this.travellingScene = travellingScene;
     }
 }

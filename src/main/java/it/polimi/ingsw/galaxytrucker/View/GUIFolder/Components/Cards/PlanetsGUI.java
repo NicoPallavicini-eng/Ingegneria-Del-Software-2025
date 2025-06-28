@@ -1,28 +1,22 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class PlanetsGUI extends CardInteractive {
+public class PlanetsGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button addCargoButton;
     private Button choosePlanetButton;
 
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
-
-    PlanetsGUI(PlanetsCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
-        doButtons();
+    PlanetsGUI(TravellingSceneDefault travellingScene) {
+        this.travellingScene = travellingScene;
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         addCargoButton = new Button("Add Cargo");
         choosePlanetButton = new Button("Choose Planet");
         
@@ -38,5 +32,7 @@ public class PlanetsGUI extends CardInteractive {
 
         addCargoButton.setVisible(true);
         choosePlanetButton.setVisible(true);
+
+        box.getChildren().addAll(addCargoButton, choosePlanetButton);
     }
 }

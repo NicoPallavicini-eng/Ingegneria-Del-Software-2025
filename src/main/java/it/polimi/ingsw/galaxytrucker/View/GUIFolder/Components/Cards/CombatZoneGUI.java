@@ -1,10 +1,13 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class CombatZoneGUI extends CardInteractive {
+public class CombatZoneGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button activateCannonsButton;
@@ -14,19 +17,11 @@ public class CombatZoneGUI extends CardInteractive {
     private Button activateEnginesButton;
     private Button removeCargoButton;
 
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
-
-    CombatZoneGUI(CombatZoneCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
-        doButtons();
+    public CombatZoneGUI(TravellingSceneDefault travellingScene) {
+        this.travellingScene = travellingScene;
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         activateShieldsButton = new Button("Activate Shields");
         chooseSubshipButton = new Button("Choose Subship");
@@ -66,5 +61,14 @@ public class CombatZoneGUI extends CardInteractive {
         ejectPeopleButton.setVisible(true);
         activateEnginesButton.setVisible(true);
         removeCargoButton.setVisible(true);
+
+        HBox h1 = new HBox(activateCannonsButton, activateShieldsButton, chooseSubshipButton);
+        HBox h2 = new HBox(ejectPeopleButton, activateEnginesButton, removeCargoButton);
+        h1.setSpacing(10);
+        h2.setSpacing(10);
+        VBox v = new VBox(h1, h2);
+
+        box.getChildren().add(v);
+
     }
 }

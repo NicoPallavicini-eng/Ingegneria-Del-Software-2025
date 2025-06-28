@@ -1,27 +1,21 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
 import it.polimi.ingsw.galaxytrucker.Model.Cards.OpenSpaceCard;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
-public class OpenSpaceGUI extends CardInteractive {
+public class OpenSpaceGUI {
     private final TravellingSceneDefault travellingScene;
 
     private Button activateEnginesButton;
 
-    private Button doneButton;
-    private Button noChoiceButton;
-    private Button giveUpButton;
-    private Button inventoryButton;
-
-    OpenSpaceGUI(OpenSpaceCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
-        super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
-        this.travellingScene = travellingSceneDefault;
-        doButtons();
+    OpenSpaceGUI(TravellingSceneDefault travellingScene) {
+        this.travellingScene = travellingScene;
     }
 
-    public void doButtons() {
+    public void doButtons(HBox box) {
         activateEnginesButton = new Button("Activate Engines");
 
         activateEnginesButton.setOnAction(e -> {
@@ -31,5 +25,7 @@ public class OpenSpaceGUI extends CardInteractive {
         activateEnginesButton.getStyleClass().add("bottom-button");
 
         activateEnginesButton.setVisible(true);
+
+        box.getChildren().add(activateEnginesButton);
     }
 }

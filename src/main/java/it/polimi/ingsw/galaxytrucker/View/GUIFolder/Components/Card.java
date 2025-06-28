@@ -9,7 +9,6 @@ public class Card extends StackPane {
     private static final int CARD_WIDTH = 235;
     private final ImageView backgroundImage = new ImageView();
     private final ImageView cardImage;
-    private final Button overlayButton = new Button();
     private CardImage cardImageEnum;
     private final it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard;
 
@@ -26,12 +25,7 @@ public class Card extends StackPane {
         backgroundImage.setFitWidth(CARD_WIDTH);
         backgroundImage.setMouseTransparent(true);
 
-        overlayButton.setPrefHeight(CARD_HEIGHT);
-        overlayButton.setPrefWidth(CARD_WIDTH);
-        overlayButton.setOpacity(0); // invisible but active
-        overlayButton.getStyleClass().add("card-button");
-
-        getChildren().addAll(backgroundImage, cardImage, overlayButton);
+        getChildren().addAll(backgroundImage, cardImage);
     }
 
     public it.polimi.ingsw.galaxytrucker.Model.Cards.Card getLogicCard() {
@@ -48,9 +42,5 @@ public class Card extends StackPane {
 
     public void clearCardImage() {
         cardImage.setImage(null);
-    }
-
-    public Button getOverlayButton() {
-        return overlayButton;
     }
 }
