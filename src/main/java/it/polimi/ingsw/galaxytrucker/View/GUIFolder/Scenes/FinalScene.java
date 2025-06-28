@@ -29,7 +29,7 @@ public class FinalScene extends MyScene{
         claim = new Button("Claim");
         claim.getStyleClass().add("draw-button");
         claim.setOnMouseClicked(e -> {
-            sendMessageToServer("/claimreward");
+            sendMessageToServer("/claimreward", this.nickname);
         });
 
         root.getChildren().addAll(background, claim);

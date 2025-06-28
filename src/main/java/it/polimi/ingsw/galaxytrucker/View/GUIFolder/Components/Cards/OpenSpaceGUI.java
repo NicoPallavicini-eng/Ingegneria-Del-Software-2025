@@ -13,11 +13,13 @@ public class OpenSpaceGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    OpenSpaceGUI(OpenSpaceCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    OpenSpaceGUI(OpenSpaceCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -25,7 +27,7 @@ public class OpenSpaceGUI extends CardInteractive {
         activateEnginesButton = new Button("Activate Engines");
 
         activateEnginesButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateengines");
+            travellingScene.sendMessageToServer("/activateengines", this.nickname);
         });
 
         activateEnginesButton.getStyleClass().add("bottom-button");

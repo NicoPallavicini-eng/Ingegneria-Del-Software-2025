@@ -1,6 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.*;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import javafx.scene.control.Button;
 
@@ -15,11 +15,13 @@ public class MeteorsGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    MeteorsGUI(MeteorsCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    MeteorsGUI(MeteorsCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -29,13 +31,13 @@ public class MeteorsGUI extends CardInteractive {
         chooseSubshipButton = new Button("Choose Subship");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
+            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
         });
         activateShieldsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activateshield");
+            travellingScene.sendMessageToServer("/activateshield", this.nickname);
         });
         chooseSubshipButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/choosesubship");
+            travellingScene.sendMessageToServer("/choosesubship", this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");
@@ -46,4 +48,5 @@ public class MeteorsGUI extends CardInteractive {
         activateShieldsButton.setVisible(true);
         chooseSubshipButton.setVisible(true);
     }
+
 }

@@ -13,11 +13,13 @@ public class ShipGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    ShipGUI(ShipCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    ShipGUI(ShipCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -25,7 +27,7 @@ public class ShipGUI extends CardInteractive {
         ejectPeopleButton = new Button("Eject People");
 
         ejectPeopleButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/ejectpeople");
+            travellingScene.sendMessageToServer("/ejectpeople", this.nickname);
         });
 
         ejectPeopleButton.getStyleClass().add("bottom-button");

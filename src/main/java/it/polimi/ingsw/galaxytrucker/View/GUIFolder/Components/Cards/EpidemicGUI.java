@@ -12,8 +12,8 @@ public class EpidemicGUI extends CardInteractive {
     private Button giveUpButton;
     private Button inventoryButton;
 
-    EpidemicGUI(EpidemicCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    EpidemicGUI(EpidemicCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
     }

@@ -113,7 +113,7 @@ public class WaitingScene extends MyScene{
 
         result.ifPresent(name -> {
             try {
-                sendMessageToServer("/connect " + name);
+                sendMessageToServer("/connect " + name, null);
                 this.nickname = name;
                 connectButton.setDisable(true);  // Disable after success
                 nicknameFeedbackLabel.setText("Nickname set: " + nickname);
@@ -161,7 +161,7 @@ public class WaitingScene extends MyScene{
             try {
                 int number = Integer.parseInt(numberStr);
                 try {
-                    sendMessageToServer("/setnumberofplayers " + number);
+                    sendMessageToServer("/setnumberofplayers " + number, this.nickname);
                     this.playersNum = number;
                     setPlayersButton.setDisable(true);  // Disable after success
                     playersFeedbackLabel.setText("Number of players: " + number);

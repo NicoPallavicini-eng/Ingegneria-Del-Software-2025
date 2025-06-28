@@ -12,8 +12,8 @@ public class StardustGUI extends CardInteractive {
     private Button giveUpButton;
     private Button inventoryButton;
 
-    StardustGUI(StardustCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    StardustGUI(StardustCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
     }

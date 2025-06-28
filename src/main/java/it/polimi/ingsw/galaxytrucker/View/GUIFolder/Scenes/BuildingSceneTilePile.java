@@ -127,7 +127,7 @@ public class BuildingSceneTilePile extends MyScene {
     public void pickUpTile(TilePileTileView tile) {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
-            sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16));
+            sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16), this.nickname);
         }
         catch (IllegalGUIEventException e){
             errorPopUp(e);
@@ -141,7 +141,7 @@ public class BuildingSceneTilePile extends MyScene {
         int rotation = buildingSceneUserShip.getUserShipGrid().getHandTile().getRotation();
         Tile t = tile.getLogicTile();
         try {
-            sendMessageToServer("/putdowntile");
+            sendMessageToServer("/putdowntile", this.nickname);
         } catch (IllegalGUIEventException e){
             errorPopUp(e);
         }

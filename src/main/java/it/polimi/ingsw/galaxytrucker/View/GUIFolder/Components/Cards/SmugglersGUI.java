@@ -15,11 +15,13 @@ public class SmugglersGUI extends CardInteractive {
     private Button noChoiceButton;
     private Button giveUpButton;
     private Button inventoryButton;
+    private String nickname;
 
-    SmugglersGUI(SmugglersCard card, TravellingSceneDefault travellingSceneDefault) {
-        super(card, travellingSceneDefault);
+    SmugglersGUI(SmugglersCard card, TravellingSceneDefault travellingSceneDefault, String nickname) {
+        super(card, travellingSceneDefault, nickname);
         super.doMainButtons(doneButton, noChoiceButton, giveUpButton, inventoryButton);
         this.travellingScene = travellingSceneDefault;
+        this.nickname = nickname;
         doButtons();
     }
 
@@ -29,13 +31,13 @@ public class SmugglersGUI extends CardInteractive {
         removeCargoButton = new Button("Remove Cargo");
 
         activateCannonsButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/activatecannons");
+            travellingScene.sendMessageToServer("/activatecannons", this.nickname);
         });
         addCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/addcargo");
+            travellingScene.sendMessageToServer("/addcargo", this.nickname);
         });
         removeCargoButton.setOnAction(e -> {
-            travellingScene.sendMessageToServer("/removecargo");
+            travellingScene.sendMessageToServer("/removecargo", this.nickname);
         });
 
         activateCannonsButton.getStyleClass().add("bottom-button");

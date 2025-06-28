@@ -83,7 +83,7 @@ public class UserShipGrid extends Pane {
                     tile.getOverlayButton().setOnAction(e -> {
                         if (tile.isClickable() && !tile.isFull()) {
                             try {
-                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol);
+                                buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol, this.user.getNickname());
                             } catch (IllegalGUIEventException ex) {
                                 errorPopUp(ex);
                             }
@@ -91,7 +91,7 @@ public class UserShipGrid extends Pane {
                             try {
                                 Tile realTile = tile.getLogicTile();
                                 if (realTile == user.getShip().getLastPlacedTile()) {
-                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship"); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
+                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship", this.user.getNickname()); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
                                     update(user.getShip(), 0);
                                 }
                             } catch (IllegalGUIEventException ex) {
@@ -111,13 +111,13 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    buildingSceneUserShip.sendMessageToServer("/reservetile");
+                    buildingSceneUserShip.sendMessageToServer("/reservetile", this.user.getNickname());
                     update(user.getShip(), 0);
 //                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
 //                    handCell[0].clearTileImage();
 //                    tile.setFull(true);
                 } else if (tile.isClickable() && tile.isFull()) {
-                    buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1));
+                    buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1), this.user.getNickname());
                     update(user.getShip(), 0);
                 }
             });
@@ -155,10 +155,10 @@ public class UserShipGrid extends Pane {
         rotateRight.setVisible(false);
 
         rotateLeft.setOnAction(e -> {
-            buildingSceneUserShip.sendMessageToServer("/rotate left");
+            buildingSceneUserShip.sendMessageToServer("/rotate left", this.user.getNickname());
         });
         rotateRight.setOnAction(e -> {
-            buildingSceneUserShip.sendMessageToServer("/rotate right");
+            buildingSceneUserShip.sendMessageToServer("/rotate right", this.user.getNickname());
         });
 
         // Absolute positioning
