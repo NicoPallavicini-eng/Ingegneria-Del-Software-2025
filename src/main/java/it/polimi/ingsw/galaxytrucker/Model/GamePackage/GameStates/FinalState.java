@@ -11,7 +11,7 @@ import java.util.List;
 //calculates the rewards
 
 /**
- * This is Final State Class.When Deck is Empty, the Game arrive to Final State
+ * This is Final State Class. When Deck is Empty, the Game arrive to Final State
  */
 public class FinalState extends GameState implements Serializable {
     private List<Ship> activeShips = new ArrayList<>();

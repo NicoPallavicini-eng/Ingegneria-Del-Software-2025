@@ -46,7 +46,9 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         nextChallenge();
     }
     /**
-     * This function manages engines penalty
+     * This function manages engines penalty based on the cargo to lose
+     * If the player has less cargo than the cargo to lose, it removes all cargo and checks batteries.
+     * If the player has no batteries left, it removes all batteries and proceeds to the next challenge.
      */
     protected void enginesPenalty(){
         game.notifyObservers(game, "enginesPenalty");

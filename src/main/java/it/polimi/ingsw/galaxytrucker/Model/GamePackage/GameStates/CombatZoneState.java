@@ -17,12 +17,10 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-/*This Class handles the 2 subclasses CombatZoneLState and CombatZoneNotLState.
-it uses the attributes current penalty and current challenge for every phase of the card,
-when the challenge is completed a currentLoser is set and they have to endure the penalty
+/**
+ * This abstract class represents the state of the game during the combat zone phase.
+ * It handles the challenges and penalties that players face in this phase.
  */
-
-//todo view si deve vedere challenge corrente e penalty corrente atrimenti non si capisce
 public abstract class CombatZoneState extends TravellingState implements Serializable {
 
     protected Player currentLoser;
@@ -33,6 +31,13 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     protected boolean loserIsIllegal;
 
 
+    /**
+     * Constructor for CombatZoneState.
+     * Initializes the game state with the given game and CombatZoneCard.
+     *
+     * @param game The current game instance.
+     * @param card The CombatZoneCard associated with this state.
+     */
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
         currentCard = card;
@@ -40,7 +45,12 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     }
 
 
-
+    /**
+     * This function handle engines activation event.
+     * It checks if the current challenge is CANNONS, if the player is the current player,
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
         if(currentChallenge.equals(CombatZoneChallenge.CANNONS)){
             throw new IllegalEventException("not engine time");
@@ -56,6 +66,12 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function handle cannons activation event.
+     * It checks if the current challenge is ENGINES, if the player is the current player,
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(ActivateCannonsEvent event){
         if(currentChallenge.equals(CombatZoneChallenge.CANNONS)){
             throw new IllegalEventException("not cannon time");
@@ -72,6 +88,14 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function handles the event of a player giving up during the combat zone phase.
+     * It checks if the current challenge is PEOPLE, if the player is the current loser,
+     * and if the number of ejected crew members matches the required amount.
+     *
+     * @param event The EjectPeopleEvent containing the player who is giving up.
+     * @throws IllegalEventException If the event is not valid.
+     */
     public void handleEvent(NoChoiceEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
 
@@ -107,6 +131,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function computes the penalty for the current challenge based on the player's ship attributes.
+     * It determines the player with the minimum number of inhabitants.
+     * It sorts the list of active players and sets the current loser to the player with the minimum inhabitants.
+     */
     protected void peoplePenalty() {
         OptionalInt min = game.getListOfActivePlayers().stream()
                 .mapToInt(p -> p.getShip().getNumberOfInhabitants())
@@ -120,6 +149,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function computes the penalty for the current challenge based on the player's ship attributes.
+     * It determines the player with the minimum engine power.
+     * It sorts the list of active players and sets the current loser to the player with the minimum engine power.
+     */
     protected void enginesPenalty() {
         OptionalInt min = game.getListOfActivePlayers().stream()
                 .mapToInt(p -> p.getShip().getEnginePower())
@@ -133,6 +167,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function computes the penalty for the current challenge based on the player's ship attributes.
+     * It determines the player with the minimum firepower.
+     * It sorts the list of active players and sets the current loser to the player with the minimum firepower.
+     */
     protected void cannonsPenalty() {
         OptionalDouble min = game.getListOfActivePlayers().stream()
                 .mapToDouble(p -> p.getShip().getFirepower())
@@ -146,6 +185,14 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function handles the event of a player activating their shield during the combat zone phase.
+     * It checks if the current penalty is CANNONBALLS, if the player is the current loser,
+     * and if the selected shield can defend against the current cannonball.
+     *
+     * @param event The ActivateShieldEvent containing the player and shield details.
+     * @throws IllegalEventException If the event is not valid.
+     */
     public void handleEvent(ActivateShieldEvent event) {
         if (!currentPenalty.equals(CombatZonePenalty.CANNONBALLS)) {
             throw new IllegalEventException("Not time for activating shield");
@@ -163,6 +210,13 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function checks if the shield can defend against the cannonball based on its orientation and direction.
+     *
+     * @param shieldOrientation The orientation of the shield.
+     * @param direction The direction of the cannonball.
+     * @return true if the shield can defend against the cannonball, false otherwise.
+     */
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
         switch (shieldOrientation) {
             case NORTHEAST -> {
@@ -181,6 +235,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         return false;
     }
 
+    /**
+     * This function handles the cannonball storm event.
+     * It checks if the current loser has a functioning ship and if there are cannonballs left in the current card.
+     * If so, it processes the cannonball and recursively calls itself until all cannonballs are processed.
+     */
     public void cannonballStorm(){
         if(currentLoser.getShip().isShipBroken()){
             loserIsIllegal = true;
@@ -220,6 +279,10 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         return currentCannonball;
     }
 
+    /**
+     * This function initializes the CombatZoneState by notifying observers about the combat zone state
+     * and the current challenge.
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         super.disconnectionConsequences(p);
@@ -242,6 +305,13 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     protected void nextChallenge(){}
 
 
+    /**
+     * This function handles the event of a player choosing a sub-ship during the combat zone phase.
+     * It checks if the player is the current loser and if the loser is illegal.
+     * If valid, it processes the event and notifies observers about the legal ship.
+     *
+     * @param event The ChooseSubShipEvent containing the player and ship details.
+     */
     public void handleEvent(ChooseSubShipEvent event) {
         if(!event.player().equals(currentLoser) || !loserIsIllegal){
             throw new IllegalEventException("You have already a functioning spaceship");
