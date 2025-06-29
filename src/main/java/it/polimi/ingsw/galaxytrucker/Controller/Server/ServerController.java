@@ -3263,7 +3263,7 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect") || command.equals("disconnect"))) {
+        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect") || command.equals("disconnect")) {
             try{
                 executeCommand(command, firstParameters, secondParameters, client);
             }catch(NumberFormatException e){
