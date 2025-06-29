@@ -21,6 +21,9 @@ class JsonTiles{
     public String cargo;
     public String battery;
 
+    /**
+     * This is auxiliary class that stores Json Strings,is used by JsonParsing to build Tiles
+     */
     public JsonTiles(){
         engine ="{\"engine1\":{\n" +
                 "    \"north\":\"DOUBLE\",\n" +
@@ -1332,6 +1335,9 @@ class JsonTiles{
     }
 }
 
+/**
+ * CannonTileParse is used to translate the parameters from Json to actual CannonTile class
+ */
 class CannonTileParse{
     public boolean doublePower;
     public boolean activeState;
@@ -1341,6 +1347,9 @@ class CannonTileParse{
     public ConnectorType east;
 }
 
+/**
+ * ShieldTileParse is used to translate the parameters from Json to actual ShieldTile class
+ */
 class ShieldTileParse{
     public ShieldOrientation orientation;
     public boolean activeState;
@@ -1350,6 +1359,9 @@ class ShieldTileParse{
     public ConnectorType east;
 }
 
+/**
+ *  ShieldTileParse is used to translate the parameters from Json to actual ShieldTile class
+ */
 class CabinTileParse{
     public ConnectorType north;
     public ConnectorType west;
@@ -1362,6 +1374,9 @@ class CabinTileParse{
     public int orangeAdaptors;
 }
 
+/**
+ * EngineTileParse is used to translate the parameters from Json to actual EngineTile class
+ */
 //Da finire perchè c'è Direction
 class EngineTileParse{
     public boolean doublePower;
@@ -1371,6 +1386,10 @@ class EngineTileParse{
     public ConnectorType south;  // Qui usa il tipo enum
     public ConnectorType east;
 }
+
+/**
+ * BioadaptorTileParse is used to translate the parameters from Json to actual BioadaptorTile class
+ */
 class BioadaptorTileParse{
     public ConnectorType north;
     public ConnectorType west;
@@ -1379,6 +1398,9 @@ class BioadaptorTileParse{
     public AlienColor color;
 }
 
+/**
+ *  CargoTileParse is used to translate the parameters from Json to actual CargoTile class
+ */
 class CargoTileParse{
     public ConnectorType north;
     public ConnectorType west;
@@ -1389,6 +1411,9 @@ class CargoTileParse{
     public List<Integer> tileContent;
 }
 
+/**
+ * BatteryTilePars is used to translate the parameters from Json to actual BatteryTile class
+ */
 class BatteryTileParse{
     public int slotsNumber;
     public int slotsFilled;
@@ -1398,6 +1423,9 @@ class BatteryTileParse{
     public ConnectorType east;
 }
 
+/**
+ * TilePars is used to translate the parameters from Json to actual Tile class
+ */
 class TileParse {
     public ConnectorType northConnector;
     public ConnectorType westConnector;
@@ -1405,6 +1433,9 @@ class TileParse {
     public ConnectorType eastConnector;
 }
 
+/**
+ * JsonParsing is used to build different Tiles from Json(JsonCards)
+ */
 public class JsonParsing{
     private ArrayList<Tile> connectors;
     private ArrayList<CabinTile> cabins;
@@ -1416,6 +1447,10 @@ public class JsonParsing{
     private ArrayList<ShieldTile> shields;
     private ArrayList<BioadaptorTile> bioadaptors;
 
+    /**
+     * Returns a complete List of Tiles present in Game
+     * @return List<Tile>
+     */
     public List<Tile> getCompleteList(){ // NB main capsules not included in tilePile obv
         List<Tile> completeList = new ArrayList<>();
         completeList.addAll(connectors);
@@ -1434,62 +1469,153 @@ public class JsonParsing{
         return completeList;
     }
 
+    /**
+     * This function returns a full ArrayList of Tile
+     * @return ArrayList<Tile>
+     */
     public ArrayList<Tile> getConnectors(){
         return connectors;
     }
+
+    /**
+     * This function returns a full ArrayList of CabinTile
+     * @return ArrayList<CabinTile>
+     */
     public ArrayList<CabinTile> getCabins(){
         return cabins;
     }
+
+    /**
+     * This function returns a full ArrayList of main CabinTile
+     * @return ArrayList<CabinTile>
+     */
     public ArrayList<CabinTile> getMainCabins(){
         return mainCabins;
     }
+
+    /**
+     * This function returns a full ArrayList of BatteryTile
+     * @return ArrayList<BatteryTile>
+     */
     public ArrayList<BatteryTile> getBatteries(){
         return batteries;
     }
+
+    /**
+     * This function returns a full ArrayList of EngineTile
+     * @return ArrayList<EngineTile>
+     */
     public ArrayList<EngineTile> getEngines(){
         return engines;
     }
+
+    /**
+     * This function returns a full ArrayList of CargoTile
+     * @return ArrayList<CargoTile>
+     */
     public ArrayList<CargoTile> getCargos(){
         return cargos;
     }
+
+    /**
+     * This function returns a full ArrayList of CannonTile
+     * @return ArrayList<CannonTile>
+     */
     public ArrayList<CannonTile> getCannons(){
         return cannons;
     }
+
+    /**
+     * This function returns a full ArrayList of ShieldTile
+     * @return ArrayList<ShieldTile>
+     */
     public ArrayList<ShieldTile> getShields(){
         return shields;
     }
+
+    /**
+     * This function returns a full ArrayList of BioadaptorTile
+     * @return ArrayList<BioadaptorTile>
+     */
     public ArrayList<BioadaptorTile> getBioadaptors(){
         return bioadaptors;
     }
 
+    /**
+     * Sets connectors ArrayList in JsonParsing
+     * @param connectors
+     */
     public void setConnectors(ArrayList<Tile> connectors){
         this.connectors = connectors;
     }
+
+    /**
+     * Sets cabins ArrayList in JsonParsing
+     * @param cabins
+     */
     public void setCabins(ArrayList<CabinTile> cabins){
         this.cabins = cabins;
     }
+
+    /**
+     * Sets mainCabins ArrayList in JsonParsing
+     * @param mainCabins
+     */
     public void setMainCabins(ArrayList<CabinTile> mainCabins) {
         this.mainCabins = mainCabins;
     }
+
+    /**
+     * Sets batteries ArrayList in JsonParsing
+     * @param batteries
+     */
     public void setBatteries(ArrayList<BatteryTile> batteries){
         this.batteries = batteries;
     }
+
+    /**
+     * Sets engines ArrayList in JsonParsing
+     * @param engines
+     */
     public void setEngines(ArrayList<EngineTile> engines){
         this.engines = engines;
     }
+
+    /**
+     * Sets cargos ArrayList in JsonParsing
+     * @param cargos
+     */
     public void setCargos(ArrayList<CargoTile> cargos){
         this.cargos = cargos;
     }
+
+    /**
+     * Sets cannons ArrayList in JsonParsing
+     * @param cannons
+     */
     public void setCannons(ArrayList<CannonTile> cannons){
         this.cannons = cannons;
     }
+
+    /**
+     * Sets shields ArrayList in JsonParsing
+     * @param shields
+     */
     public void setShields(ArrayList<ShieldTile> shields){
         this.shields = shields;
     }
+
+    /**
+     * Sets bioadaptors ArrayList in JsonParsing
+     * @param bioadaptors
+     */
     public void setBioadaptors(ArrayList<BioadaptorTile> bioadaptors){
         this.bioadaptors = bioadaptors;
     }
 
+    /**
+     * Constructor of JsonParsing that converts JsonTiles Attributes into actual Tiles
+     */
     public JsonParsing(){
         JsonTiles jsonTiles = new JsonTiles();
         Gson gson = new Gson();
