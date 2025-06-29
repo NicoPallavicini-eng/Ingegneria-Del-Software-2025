@@ -15,15 +15,28 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The TUI class represents the Textual User Interface for the Galaxy Trucker game.
+ * It implements the UI interface and provides methods to interact with the game
+ * through a text-based interface.
+ */
 public class TUI implements UI {
     private Game game;
     private String nickname;
-
+    /**
+     * Starts the TUI. This method is not used in the TUI implementation.
+     *
+     * @param primaryStage The primary stage for the JavaFX application (not used).
+     */
     public void start(Stage primaryStage) {
         // not used
     }
-
+    /**
+     * Displays the specified deck of cards in the game.
+     *
+     * @param game  The game instance containing the deck.
+     * @param index The index of the deck to be displayed.
+     */
     public void viewDeck(Game game, int index){
         Deck deck = game.getDeck();
         if (index == 1){
@@ -46,11 +59,17 @@ public class TUI implements UI {
             System.out.println("Invalid deck index.");
         }
     }
-
+    /**
+     * Sets the nickname of the player.
+     *
+     * @param nickname The player's nickname.
+     */
     public void setNickname(String nickname){
         this.nickname = nickname;
     }
-
+    /**
+     * Prints the game title in a stylized format.
+     */
     public void printTitle() {
         System.out.println();
         System.out.println(AnsiColor.BLUE_CARDBOARD.fg() +
@@ -66,7 +85,11 @@ public class TUI implements UI {
                 "                                             ░ ░      " + AnsiColor.PURPLE_CARDBOARD.fg() + "                             ░                               " + AnsiColor.RESET);
         System.out.println();
     }
-
+    /**
+     * Displays the leaderboard of the game.
+     *
+     * @param game The game instance containing leaderboard data.
+     */
     public void viewLeaderboard(Game game){
         System.out.println("LeaderBoard: ");
         int i = 1;
@@ -81,15 +104,27 @@ public class TUI implements UI {
             }
         }
     }
-
+    /**
+     * Handles invalid commands and displays an error message.
+     *
+     * @param error The error message to be displayed.
+     */
     public void invalidCommand(String error) {
         System.out.println(error);
     }
-
+    /**
+     * Prints a message to the TUI.
+     *
+     * @param message The message to be printed.
+     */
     public void printMessage(String message){
         System.out.print(message);
     }
-
+    /**
+     * Displays the tile pile in the game.
+     *
+     * @param game The game instance containing tile pile data.
+     */
     public void viewTilePile(Game game){
         this.game = game;
         System.out.println("Tile pile: ");
@@ -152,7 +187,11 @@ public class TUI implements UI {
         printPileFooters();
         System.out.println();
     }
-
+    /**
+     * Displays all players' ships in the game.
+     *
+     * @param game The game instance containing ship data.
+     */
     public void printShips(Game game){
         this.game = game;
         for (Player player : game.getListOfPlayers()) {
@@ -160,11 +199,18 @@ public class TUI implements UI {
             printMyShip(game, player.getNickname());
         }
     }
-
+    /**
+     * Prints an empty line in the TUI.
+     */
     public void printVoid() {
         System.out.println();
     }
-
+    /**
+     * Displays the current player's ship.
+     *
+     * @param game     The game instance containing ship data.
+     * @param nickname The nickname of the current player.
+     */
     public void printMyShip(Game game, String nickname) {
         this.game = game;
         Ship ship = null;
@@ -179,7 +225,9 @@ public class TUI implements UI {
         printReservedAndHand(ship);
         printShipDetails(ship);
     }
-
+    /**
+     * Prints a guide for the game, including tile and connector descriptions.
+     */
     public void printGuide() {
         System.out.println("                                                 " + AnsiColor.CABIN_COLOR.fg() +
                 "⊱ ────── {.⋅ " + AnsiColor.RED.fg() + "༺✧༻" + AnsiColor.CABIN_COLOR.fg() + " ⋅.} ────── ⊰");
@@ -334,6 +382,11 @@ public class TUI implements UI {
         System.out.println();
     }
 
+    /**
+     * Displays the details of a specific ship.
+     *
+     * @param ship The ship to be displayed.
+     */
     public void printActualShip(Ship ship) {
         Color color = ship.getColor();
         if (color == Color.RED) {
@@ -763,6 +816,9 @@ public class TUI implements UI {
         return allRow;
     }
 
+    /**
+     * Prints a help message with available commands and their descriptions.
+     */
     public void printHelpMessage(){
         System.out.println(
                 "Help message: \n" +
@@ -810,7 +866,11 @@ public class TUI implements UI {
 
         );
     }
-
+    /**
+     * Updates the game instance in the TUI.
+     *
+     * @param game The updated game instance.
+     */
     @Override
     public void updateGame(Game game) {
         this.game = game;
@@ -995,7 +1055,11 @@ public class TUI implements UI {
         }
         return connectorList;
     }
-
+    /**
+     * Prints a single tile in the TUI.
+     *
+     * @param tile The tile to be printed.
+     */
     public void printTile(Tile tile){
         StringBuilder upperRow = new StringBuilder();
         StringBuilder middleRow = new StringBuilder();
@@ -1014,7 +1078,11 @@ public class TUI implements UI {
         System.out.println(String.join("", middleRow));
         System.out.println(String.join("", lowerRow));
     }
-
+    /**
+     * Displays the current card in the game.
+     *
+     * @param game The game instance containing the current card.
+     */
     public void viewCard(Game game){
         //need instanceof for current card.... or attribute currend card in every gamestate and whrere not needed set to null.
         if (game.getGameState() instanceof TravellingState){

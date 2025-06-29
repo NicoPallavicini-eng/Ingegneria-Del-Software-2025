@@ -12,6 +12,11 @@ import javafx.scene.layout.StackPane;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * Base class for all GUI scenes in the application.
+ * Provides common fields and methods for scene management, background handling,
+ * and communication with the server via RMI or sockets.
+ */
 public class MyScene {
     protected Scene scene;
     protected Game game;
@@ -24,7 +29,12 @@ public class MyScene {
     protected final VirtualClient rmiClient;
     protected final SocketClient socketClient;
 
-
+    /**
+     * Constructs a new MyScene with the given game and scene manager.
+     *
+     * @param game the game model
+     * @param sceneManager the scene manager for navigation
+     */
     public MyScene(Game game, SceneManager sceneManager) {
         this.game = game;
         this.background = new Background();
@@ -34,7 +44,13 @@ public class MyScene {
         this.rmiClient = sceneManager.getRmiClient();
         this.socketClient = sceneManager.getSocketClient();
     }
-
+    /**
+     * Sends a message to the server using either RMI or socket, depending on the client type.
+     *
+     * @param message the message to send
+     * @param nickname the user's nickname
+     * @throws IllegalEventException if no client connection is available
+     */
     public  void sendMessageToServer(String message, String nickname) {
         if (rmiClient != null) {
             try {

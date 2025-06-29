@@ -13,6 +13,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * GUI component representing the grid of tiles in the tile pile during the building stage.
+ * Displays all available tiles in a grid and allows interaction for picking up tiles.
+ */
 public class TilePileGrid extends Pane {
     private static final int ROWS = 10;
     private static final int COLS = 16;
@@ -24,7 +28,12 @@ public class TilePileGrid extends Pane {
     private final BuildingSceneTilePile buildingSceneTilePile;
 
     private final TilePileTileView[][] cells = new TilePileTileView[ROWS][COLS];
-
+    /**
+     * Constructs the grid displaying the tile pile.
+     *
+     * @param buildingSceneTilePile reference to the parent building scene
+     * @param tilePile the list of tiles to display in the pile
+     */
     public TilePileGrid(BuildingSceneTilePile buildingSceneTilePile, List<Tile> tilePile) {
         this.buildingSceneTilePile = buildingSceneTilePile;
         GridPane pile = new GridPane();
@@ -91,7 +100,11 @@ public class TilePileGrid extends Pane {
         }
         return null;
     }
-
+    /**
+     * Returns the index of the first empty cell in the grid.
+     *
+     * @return the row index of the first empty cell, or -1 if none found
+     */
     public int getFirstEmpty() {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -102,7 +115,12 @@ public class TilePileGrid extends Pane {
         }
         return -1;
     }
-
+    /**
+     * Returns the ImageView of the tile image for the given TilePileTileView.
+     *
+     * @param tile the tile view to search for
+     * @return the ImageView of the tile image, or null if not found
+     */
     public ImageView getTileImageView (ReservedTileView tile) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {

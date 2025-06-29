@@ -2,6 +2,10 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import javafx.scene.image.Image;
 
+/**
+ * Enum representing all possible tile images in the game.
+ * Each enum constant is associated with a file name and an image resource.
+ */
 public enum TileImage {
     connector1("GT-new_tiles_16_for web52.jpg", false),
     connector2("GT-new_tiles_16_for web55.jpg", false),
@@ -162,7 +166,12 @@ public enum TileImage {
 
     private final String fileName;
     private final Image image;
-
+    /**
+     * Constructs a TileImage enum constant with the specified file name and main cabin flag.
+     *
+     * @param fileName the name of the image file
+     * @param mainCabin true if the tile is a main cabin, false otherwise
+     */
     TileImage(String fileName, boolean mainCabin) {
         if (!mainCabin) {
             this.fileName = fileName;
@@ -172,15 +181,29 @@ public enum TileImage {
             this.image = new Image(getClass().getResource("/Images/tiles/" + fileName).toExternalForm());
         }
     }
-
+    /**
+     * Returns the JavaFX Image associated with this tile.
+     *
+     * @return the image for this tile
+     */
     public Image getImage() {
         return image;
     }
-
+    /**
+     * Returns the file name of the image associated with this tile.
+     *
+     * @return the image file name
+     */
     public String getFileName() {
         return fileName;
     }
-
+    /**
+     * Returns the TileImage enum constant corresponding to the given JSON name.
+     * The name is converted to uppercase before lookup.
+     *
+     * @param name the name from JSON
+     * @return the corresponding TileImage, or null if not found
+     */
     public static TileImage fromJsonName(String name) { // TODO capi
         try {
             return TileImage.valueOf(name.toUpperCase());

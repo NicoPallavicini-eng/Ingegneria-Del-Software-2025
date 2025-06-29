@@ -1,18 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * The PlanetsGUI class represents the graphical user interface for handling planet-related events in the game.
+ * It provides buttons and dialogs for user interactions to manage actions during planet events.
+ */
 public class PlanetsGUI {
     private final TravellingSceneDefault travellingScene;
     
@@ -20,11 +19,21 @@ public class PlanetsGUI {
     private Button choosePlanetButton;
     private String nickname;
 
+    /**
+     * Constructs a PlanetsGUI instance with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene The travelling scene associated with this PlanetsGUI.
+     * @param nickname        The nickname of the player.
+     */
     PlanetsGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes the buttons for planet-related actions and their event handlers.
+     *
+     * @param box The HBox container to which the buttons will be added.
+     */
     public void doButtons(HBox box) {
         addCargoButton = new Button("Add Cargo");
         choosePlanetButton = new Button("Choose Planet");

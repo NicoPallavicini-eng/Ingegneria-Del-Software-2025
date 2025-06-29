@@ -18,7 +18,11 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * GUI component representing the user's ship grid during the building phase.
+ * Displays the ship's floorplan, reserved slots, hand slot, and rotation controls.
+ * Handles user interactions for placing, picking up, reserving, and rotating tiles.
+ */
 public class UserShipGrid extends Pane {
     private static final int ROWS = 5;
     private static final int COLS = 7;
@@ -44,7 +48,12 @@ public class UserShipGrid extends Pane {
     private final ReservedTileView[] handCell = new ReservedTileView[1];
     private Button rotateLeft;
     private Button rotateRight;
-
+    /**
+     * Constructs the user's ship grid GUI component.
+     *
+     * @param color the color of the player's ship
+     * @param buildingSceneUserShip reference to the parent building scene
+     */
     public UserShipGrid(Color color, BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
         this.game = buildingSceneUserShip.getGame();
@@ -182,27 +191,44 @@ public class UserShipGrid extends Pane {
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
         update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
     }
-
+    /**
+     * Returns a list containing the rotate left and rotate right buttons.
+     *
+     * @return list of rotation buttons
+     */
     public List<Button> getRotates() {
         List<Button> rotates = new ArrayList<>();
         rotates.add(rotateLeft);
         rotates.add(rotateRight);
         return rotates;
     }
-
+    /**
+     * Returns a list containing the hand and reserved slot grid panes.
+     *
+     * @return list of grid panes for hand and reserved slots
+     */
     public List<GridPane> getResNHand() {
         List<GridPane> panes = new ArrayList<>();
         panes.add(handGrid);
         panes.add(resGrid);
         return panes;
     }
-
+    /**
+     * Updates the ship grid, reserved slots, and hand slot from the given ship state.
+     *
+     * @param ship the ship model to update from
+     * @param rotation the rotation to apply to the hand tile
+     */
     private void update(Ship ship, int rotation){
         buildGridFromShip(ship);
         buildReservedTilesFromShip(ship);
         setHandTile(ship.getTileInHand(), rotation);
     }
-
+    /**
+     * Updates the ship grid cells from the given ship's floorplan.
+     *
+     * @param ship the ship model to update from
+     */
     public void buildGridFromShip(Ship ship) {
         ArrayList<ArrayList<Tile>> floorplan = ship.getFloorplanArrayList();
         for (int row = 0; row < floorplan.size(); row++) {
@@ -217,7 +243,11 @@ public class UserShipGrid extends Pane {
             }
         }
     }
-
+    /**
+     * Updates the reserved slots from the given ship's reserved tiles.
+     *
+     * @param ship the ship model to update from
+     */
     public void buildReservedTilesFromShip(Ship ship) {
         List<Tile> reservedTiles = ship.getReservedTiles();
         for (int i = 0; i < reservedTiles.size(); i++) {
@@ -226,7 +256,12 @@ public class UserShipGrid extends Pane {
             resCells[i].setClickable(true);
         }
     }
-
+    /**
+     * Sets the hand tile view with the given tile and rotation.
+     *
+     * @param tile the tile to display in hand
+     * @param rotation the rotation to apply to the hand tile
+     */
     public void setHandTile (Tile tile, int rotation) {
         handCell[0].setLogicTile(tile);
         handCell[0].setClickable(true);
@@ -235,6 +270,11 @@ public class UserShipGrid extends Pane {
         updateRotateVisible(true);
     }
 
+    /**
+     * Sets the visibility of the rotate buttons.
+     *
+     * @param rotateVisible true to show rotate buttons, false to hide
+     */
     public void updateRotateVisible(boolean rotateVisible) {
         if (rotateVisible) {
             rotateLeft.setVisible(true);
@@ -245,10 +285,19 @@ public class UserShipGrid extends Pane {
         }
     }
 
+    /**
+     * Returns the hand tile view.
+     *
+     * @return the hand tile view
+     */
     public ReservedTileView getHandTile () {
         return handCell[0];
     }
-
+    /**
+     * Returns a list of all tile views in the ship grid.
+     *
+     * @return list of tile views
+     */
     public List<TileView> getTiles() {
         List<TileView> tiles = new ArrayList<>();
         for (int row = 0; row < cells.length; row++) {

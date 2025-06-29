@@ -1,31 +1,41 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.SlaversCard;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The SlaversGUI class represents the graphical user interface for interacting with
+ * the SlaversCard in the game. It provides buttons and dialogs for activating cannons
+ * and ejecting people, allowing the user to send commands to the server.
+ */
 public class SlaversGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button activateCannonsButton;
     private Button ejectPeopleButton;
     private String nickname;
-
+    /**
+     * Constructs a SlaversGUI instance.
+     *
+     * @param travellingScene the travelling scene associated with this GUI
+     * @param nickname the nickname of the player
+     */
     SlaversGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes and configures the buttons for activating cannons and ejecting people.
+     * Adds the buttons to the provided HBox and sets their event handlers.
+     *
+     * @param box the HBox to which the buttons will be added
+     */
     public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         ejectPeopleButton = new Button("Eject People");

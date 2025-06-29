@@ -9,6 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+/**
+ * GUI scene representing the final phase of the game.
+ * Displays a background and a claim button for the user to claim their reward.
+ */
 public class FinalScene extends MyScene{
     private Scene scene;
     private Game game;
@@ -19,7 +23,13 @@ public class FinalScene extends MyScene{
     private final int SCENE_HEIGHT = 760;
     private SceneManager sceneManager;
     private Button claim;
-
+    /**
+     * Constructs the final scene with the given game, user nickname, and scene manager.
+     *
+     * @param game the game model
+     * @param nickname the user's nickname
+     * @param sceneManager the scene manager for navigation
+     */
     public FinalScene(Game game, String nickname, SceneManager sceneManager) {
         super(game,sceneManager);
         this.game = game;
@@ -53,11 +63,19 @@ public class FinalScene extends MyScene{
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
     }
-
+    /**
+     * Returns the JavaFX scene for this final phase.
+     *
+     * @return the JavaFX scene
+     */
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Updates the game model reference.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
     }

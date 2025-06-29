@@ -19,6 +19,11 @@ import javafx.scene.layout.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * GUI scene representing the main building board during the building phase.
+ * Displays the board grid, deck cards, position buttons, and navigation controls.
+ * Handles user interactions for viewing decks, setting positions, and switching between sub-scenes.
+ */
 public class BuildingSceneBoard extends MyScene {
     private Scene scene;
     private Game game;
@@ -58,6 +63,13 @@ public class BuildingSceneBoard extends MyScene {
     private Button purpleAlienButton;
     private Button removeTileButton;
 
+    /**
+     * Constructs the building scene board with the given game, user nickname, and scene manager.
+     *
+     * @param game the game model
+     * @param nickname the user's nickname
+     * @param sceneManager the scene manager for navigation
+     */
     public BuildingSceneBoard(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
         this.game = game;
@@ -242,47 +254,91 @@ public class BuildingSceneBoard extends MyScene {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         sceneManager.setBoardScene(this);
     }
-
+    /**
+     * Returns the Player object for the given nickname.
+     *
+     * @param nickname the nickname to search for
+     * @return the Player object, or null if not found
+     */
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
     }
-
+    /**
+     * Sets the reference to the tile pile building scene.
+     *
+     * @param buildingSceneTilePile the tile pile scene
+     */
     public void setBuildingSceneTilePile(BuildingSceneTilePile buildingSceneTilePile) {
         this.buildingSceneTilePile = buildingSceneTilePile;
     }
-
+    /**
+     * Returns the tile pile building scene.
+     *
+     * @return the tile pile scene
+     */
     public BuildingSceneTilePile getBuildingSceneTilePile() {
         return buildingSceneTilePile;
     }
 
+    /**
+     * Sets the reference to the user's ship building scene.
+     *
+     * @param buildingSceneUserShip the user ship scene
+     */
     public void setBuildingSceneUserShip(BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
     }
-
+    /**
+     * Returns the user's ship building scene.
+     *
+     * @return the user ship scene
+     */
     public BuildingSceneUserShip getBuildingSceneUserShip() {
         return buildingSceneUserShip;
     }
-
+    /**
+     * Sets the reference to the other players' ships building scene.
+     *
+     * @param buildingSceneOthersShip the others' ships scene
+     */
     public void setBuildingSceneOthersShip(BuildingSceneOthersShip buildingSceneOthersShip) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
     }
-
+    /**
+     * Returns the other players' ships building scene.
+     *
+     * @return the others' ships scene
+     */
     public BuildingSceneOthersShip getBuildingSceneOthersShip() {
         return buildingSceneOthersShip;
     }
-
+    /**
+     * Returns the JavaFX scene for this board.
+     *
+     * @return the JavaFX scene
+     */
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Updates the game model reference.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
     }
 
     // Styling helper method with hover effect
+    /**
+     * Styles a button with the given color and adds a hover effect.
+     *
+     * @param button the button to style
+     * @param colorHex the color in hex format
+     */
     private void styleButton(Button button, String colorHex) {
         String baseStyle = "-fx-background-color: " + colorHex + "; -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
         String hoverStyle = "-fx-background-color: derive(" + colorHex + ", 20%); -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
@@ -291,7 +347,11 @@ public class BuildingSceneBoard extends MyScene {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
     }
-
+    /**
+     * Styles a button as a transparent circle with a hover effect.
+     *
+     * @param button the button to style
+     */
     private void transparentCircleButton(Button button) {
         double radius = 10; // px
 
@@ -320,7 +380,9 @@ public class BuildingSceneBoard extends MyScene {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
     }
-
+    /**
+     * Handles the Deck 1 button click event, toggling deck 1 visibility.
+     */
     private void handleD1Button() {
         if (!d1InView && !deck1.isVisible() && !deck2.isVisible() && !deck3.isVisible()) { // TODO link to other players' view status
             deck1.setVisible(true);
@@ -333,6 +395,9 @@ public class BuildingSceneBoard extends MyScene {
         }
     }
 
+    /**
+     * Handles the Deck 2 button click event, toggling deck 2 visibility.
+     */
     private void handleD2Button() {
         if (!d2InView && !deck1.isVisible() && !deck2.isVisible() && !deck3.isVisible()) { // TODO link to other players' view status
             deck2.setVisible(true);
@@ -344,7 +409,9 @@ public class BuildingSceneBoard extends MyScene {
             styleButton(d2Button, "#875f87"); // Purple normal
         }
     }
-
+    /**
+     * Handles the Deck 3 button click event, toggling deck 3 visibility.
+     */
     private void handleD3Button() {
         if (!d3InView && !deck1.isVisible() && !deck2.isVisible() && !deck3.isVisible()) { // TODO link to other players' view status
             Player player = checkPlayer(nickname);
@@ -357,7 +424,9 @@ public class BuildingSceneBoard extends MyScene {
             styleButton(d3Button, "#875f87"); // Purple normal
         }
     }
-
+    /**
+     * Handles the position 1 button click event, setting the user's position.
+     */
     private void handlePos1Button() {
         if (!pos1Taken) {
             sendMessageToServer("/setposition 1", this.nickname);
@@ -380,7 +449,9 @@ public class BuildingSceneBoard extends MyScene {
             pos1Taken = true;
         }
     }
-
+    /**
+     * Handles the position 2 button click event, setting the user's position.
+     */
     private void handlePos2Button() {
         if (!pos2Taken) {
             sendMessageToServer("/setposition 2", this.nickname);
@@ -405,6 +476,9 @@ public class BuildingSceneBoard extends MyScene {
         }
     }
 
+    /**
+     * Handles the position 3 button click event, setting the user's position.
+     */
     private void handlePos3Button() {
         if (!pos3Taken) {
             sendMessageToServer("/setposition 3", this.nickname);
@@ -429,6 +503,9 @@ public class BuildingSceneBoard extends MyScene {
         }
     }
 
+    /**
+     * Handles the position 4 button click event, setting the user's position.
+     */
     private void handlePos4Button() {
         if (!pos4Taken) {
             sendMessageToServer("/setposition 4", this.nickname);

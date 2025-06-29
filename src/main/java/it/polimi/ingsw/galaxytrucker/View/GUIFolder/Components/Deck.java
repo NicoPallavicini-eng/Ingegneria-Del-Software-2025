@@ -5,6 +5,10 @@ import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the GUI component for a deck of cards in the game.
+ * Manages the visual representation and grouping of cards for different subdecks.
+ */
 public class Deck extends StackPane {
     private static final int CARD_HEIGHT = 361;
     private static final int CARD_WIDTH = 235;
@@ -14,6 +18,11 @@ public class Deck extends StackPane {
     private static final List<Card> deck4 = new ArrayList<>();
     private static final List<Card> gameDeck = new ArrayList<>();
 
+    /**
+     * Constructs a new Deck GUI component based on the provided logical deck.
+     *
+     * @param deckCards the logical deck from the model containing all cards and subdecks
+     */
     public Deck(it.polimi.ingsw.galaxytrucker.Model.Cards.Deck deckCards) {
         List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> deck = deckCards.getGameDeck();
         List<it.polimi.ingsw.galaxytrucker.Model.Cards.Card> subDeck1 = deckCards.getSubDeck1();
@@ -56,23 +65,44 @@ public class Deck extends StackPane {
             }
         }
     }
-
+    /**
+     * Returns the list of all cards in the game deck.
+     *
+     * @return the list of cards in the game deck
+     */
     public List<Card> getGameDeck() {
         return gameDeck;
     }
-
+    /**
+     * Returns the list of cards in subdeck 1.
+     *
+     * @return the list of cards in subdeck 1
+     */
     public List<Card> getDeck1() {
         return deck1;
     }
-
+    /**
+     * Returns the list of cards in subdeck 2.
+     *
+     * @return the list of cards in subdeck 2
+     */
     public List<Card> getDeck2() {
         return deck2;
     }
 
+    /**
+     * Returns the list of cards in subdeck 3.
+     *
+     * @return the list of cards in subdeck 3
+     */
     public List<Card> getDeck3() {
         return deck3;
     }
-
+    /**
+     * Returns the list of cards in subdeck 4.
+     *
+     * @return the list of cards in subdeck 4
+     */
     public List<Card> getDeck4() {
         return deck4;
     }
