@@ -47,9 +47,9 @@ public class WaitingScene extends MyScene{
         // Disabled until conditions met
         nextButton.setOnAction(e -> {
             if (isFirstPlayer) {
-                if ( true /* playersNum == game.getListOfPlayers().size() */) {
+                if ( true || playersNum == game.getListOfPlayers().size() ) {
                     // TODO link with building state here
-                    //sceneManager.updateGame(this.game, this);
+                    sceneManager.updateGame(this.game, this);
                     sceneManager.next(this);
                 } else {
                     // TODO update for others too
@@ -119,19 +119,9 @@ public class WaitingScene extends MyScene{
                 connectButton.setDisable(true);  // Disable after success
                 nicknameFeedbackLabel.setText("Nickname set: " + nickname);
                 sceneManager.setNickname(nickname);
-            } catch(IllegalGUIEventException e){
-                javafx.application.Platform.runLater(() -> {
-                    javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-                    errorAlert.setTitle("Error");
-                    errorAlert.setHeaderText("Connection Error");
-                    errorAlert.setContentText(e.getMessage());
-
-                    Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
-                    errorStage.getIcons().clear();
-                    errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
-                    errorAlert.showAndWait();
-                });
                 connectButton.setDisable(false);
+            } catch (IllegalGUIEventException e){
+                System.out.println(e.getMessage());
             }
 
             synchronized(game.getListOfPlayers()) {
@@ -168,17 +158,7 @@ public class WaitingScene extends MyScene{
                     playersFeedbackLabel.setText("Number of players: " + number);
                     playersSet = true;
                 } catch (IllegalGUIEventException e) {
-                    javafx.application.Platform.runLater(() -> {
-                        javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-                        errorAlert.setTitle("Error");
-                        errorAlert.setHeaderText("Setting Players Error");
-                        errorAlert.setContentText(e.getMessage());
-
-                        Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
-                        errorStage.getIcons().clear();
-                        errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
-                        errorAlert.showAndWait();
-                    });
+                    System.out.println(e.getMessage());
                     setPlayersButton.setDisable(false);
                 }
                 nextButton.setDisable(false);

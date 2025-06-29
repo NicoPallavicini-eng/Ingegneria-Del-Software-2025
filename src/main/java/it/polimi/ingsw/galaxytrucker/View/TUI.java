@@ -82,6 +82,10 @@ public class TUI implements UI {
         }
     }
 
+    public void invalidCommand(String error) {
+        System.out.println(error);
+    }
+
     public void printMessage(String message){
         System.out.print(message);
     }
@@ -811,6 +815,8 @@ public class TUI implements UI {
     public void updateGame(Game game) {
         this.game = game;
     }
+
+    public void nextScene(Game game, String message){}
 
     private void printVoidTile(int i,int j){
         String voidTile = "       ";

@@ -82,6 +82,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
         System.exit(0);
     }
 
+    public void close(){
+        System.exit(0);
+    }
+
     @Override
     public void setNickname(String nickname) throws RemoteException{
         this.nickname = nickname;
@@ -94,7 +98,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     }
     @Override
     public void invalidCommand(String error) throws RemoteException {
-        System.out.println(error);
+        ui.invalidCommand(error);
     }
 
     @Override
@@ -168,5 +172,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualClient, Run
     @Override
     public void updateGame(Game game) throws RemoteException {
         ui.updateGame(game);
+    }
+
+    @Override
+    public void next(Game game, String message) throws RemoteException {
+        ui.updateGame(game);
+        ui.nextScene(game,message);
     }
 }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Cards.Card;
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.ConnectorType;
 import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
@@ -13,11 +14,14 @@ import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.BuildingSceneUserShip;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.WaitingScene;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -87,16 +91,24 @@ public class GUI extends Application implements UI, Serializable {
         stage.setOnCloseRequest(e -> {
             if (rmiClient != null){
                 try{
+                    rmiClient.getServer().showMessage(rmiClient + "/disconnect");
                     rmiClient.getServer().handleUserInput(rmiClient, "/disconnect");
+                    String disconnectionMessage = "/disconnect";
+                    System.setIn(new ByteArrayInputStream(disconnectionMessage.getBytes()));
+                    rmiClient.close();
                 } catch (RemoteException ex) {
                     throw new RuntimeException(ex);
                 }
             } else if (socketClient != null){
                 try{
                     socketClient.getServerSocket().sendMessageToServer("/disconnect", null);
+                    String disconnectionMessage = "/disconnect";
+                    System.setIn(new ByteArrayInputStream(disconnectionMessage.getBytes()));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+            } else{
+                throw new RuntimeException("No client connection available.");
             }
         });
 
@@ -138,6 +150,18 @@ public class GUI extends Application implements UI, Serializable {
             messageFromServer.showAndWait();
         });
         // TODO: Show message (popup, status bar, etc.)
+    }
+
+    @Override
+    public void invalidCommand(String error){
+        javafx.application.Platform.runLater(() -> {
+            javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText("Invalid Command");
+            errorAlert.setContentText(error);
+            errorAlert.showAndWait();
+        });
+        throw new IllegalGUIEventException(error);
     }
 
     @Override
@@ -252,5 +276,22 @@ public class GUI extends Application implements UI, Serializable {
         this.game = gameSend;
 //        while(!started);
         this.sceneManager.updateGame(game, null);
+    }
+
+    @Override
+    public void nextScene(Game game, String message){
+        updateGame(game);
+        /*
+        switch (message){
+            case "buildingState" -> {
+                WaitingScene wait = new WaitingScene(game, sceneManager);
+                sceneManager.next(wait);
+            }
+            case "finalState" -> {
+                TravellingSceneDefault travelling = new TravellingSceneDefault(game, null, sceneManager);
+                sceneManager.next(travelling);
+            }
+        }
+         */
     }
 }

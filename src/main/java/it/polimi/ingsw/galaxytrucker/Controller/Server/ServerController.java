@@ -76,6 +76,17 @@ public class ServerController {
                                 }
                             }
                         }
+                        case "buildingState" -> {
+                            for (VirtualClient rmiClient : rmiClients){
+                                if (rmiClient != null){
+                                    try{
+                                        rmiClient.next(game, "buildingState");
+                                    } catch (RemoteException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
                         case "gamestate" -> {
                             if  (gameState instanceof TravellingState){
                                 for (VirtualClient rmiClient : rmiClients) {

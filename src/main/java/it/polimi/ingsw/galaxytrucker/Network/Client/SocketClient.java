@@ -127,12 +127,13 @@ public void referMethod(Message msg) throws RemoteException {
 
             }case "disconnect" ->{
                 flag = false;
+                System.exit(0); //TODO: Capire se va bene...
             }
             case "NewGame" -> {
                 this.game = msg.getGame();
             }
             default -> {
-                System.out.println(line);
+                ui.printMessage(line);
             }
         }
     }else{
