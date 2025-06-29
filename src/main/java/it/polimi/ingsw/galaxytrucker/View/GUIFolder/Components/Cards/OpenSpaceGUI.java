@@ -1,29 +1,39 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.OpenSpaceCard;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The OpenSpaceGUI class represents the graphical user interface for handling open space cards in the game.
+ * It provides buttons and dialogs for user interactions to manage actions during open space events.
+ */
 public class OpenSpaceGUI {
     private final TravellingSceneDefault travellingScene;
 
     private Button activateEnginesButton;
     private String nickname;
-
+    /**
+     * Constructs an OpenSpaceGUI instance with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene The travelling scene associated with this OpenSpaceGUI.
+     * @param nickname        The nickname of the player.
+     */
     OpenSpaceGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
 
+    /**
+     * Initializes the buttons for open space-related actions and their event handlers.
+     *
+     * @param box The HBox container to which the buttons will be added.
+     */
     public void doButtons(HBox box) {
         activateEnginesButton = new Button("Activate Engines");
 

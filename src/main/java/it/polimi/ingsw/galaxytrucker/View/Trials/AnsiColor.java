@@ -1,5 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.View.Trials;
 
+/**
+ * The AnsiColor enum represents ANSI color codes for foreground and background text styling.
+ * It provides methods to generate ANSI escape codes for text formatting in the terminal.
+ */
 public enum AnsiColor {
     // Main Structures
     RED(196),
@@ -29,18 +33,34 @@ public enum AnsiColor {
     RED_CARDBOARD(88);
 
     private final int code;
-
+    /**
+     * Constructs an AnsiColor with the specified ANSI code.
+     *
+     * @param code The ANSI code for the color.
+     */
     AnsiColor(int code) {
         this.code = code;
     }
-
+    /**
+     * Generates the ANSI escape code for the foreground color.
+     *
+     * @return The ANSI escape code for the foreground color.
+     */
     public String fg() {
         return "\u001B[38;5;" + code + "m";
     }
 
+    /**
+     * Generates the ANSI escape code for the background color.
+     *
+     * @return The ANSI escape code for the background color.
+     */
     public String bg() {
         return "\u001B[48;5;" + code + "m";
     }
 
+    /**
+     * The ANSI escape code to reset text formatting.
+     */
     public static final String RESET = "\u001B[0m";
 }

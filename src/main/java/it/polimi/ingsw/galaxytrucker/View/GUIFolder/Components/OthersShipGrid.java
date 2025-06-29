@@ -16,6 +16,10 @@ import java.util.Objects;
 
 import static it.polimi.ingsw.galaxytrucker.Model.Color.BLUE;
 
+/**
+ * GUI component representing the ship grids of other players during the building stage.
+ * Displays three ships with their tiles, reserved slots, and hand slots.
+ */
 public class OthersShipGrid extends Pane {
     private static final int ROWS = 5;
     private static final int COLS = 7;
@@ -42,7 +46,13 @@ public class OthersShipGrid extends Pane {
     private final OthersShipReservedTileView[] handCell1 = new OthersShipReservedTileView[1];
     private final OthersShipReservedTileView[] handCell2 = new OthersShipReservedTileView[1];
     private final OthersShipReservedTileView[] handCell3 = new OthersShipReservedTileView[1];
-
+    /**
+     * Constructs the grid displaying other players' ships.
+     *
+     * @param color the color of the current player
+     * @param buildingSceneOthersShip reference to the parent building scene
+     * @param players the list of players in the game
+     */
     public OthersShipGrid(Color color, BuildingSceneOthersShip buildingSceneOthersShip, List<Player> players) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
         // --- BACKGROUND ---

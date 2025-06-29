@@ -12,7 +12,10 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-
+/**
+ * The CombatZoneGUI class represents the graphical user interface for the combat zone in the game.
+ * It provides buttons and dialogs for user interactions related to combat actions.
+ */
 public class CombatZoneGUI {
     private final TravellingSceneDefault travellingScene;
     
@@ -24,11 +27,21 @@ public class CombatZoneGUI {
     private Button removeCargoButton;
     private String nickname;
 
+    /**
+     * Constructs a CombatZoneGUI instance with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene The travelling scene associated with this combat zone.
+     * @param nickname        The nickname of the player.
+     */
     public CombatZoneGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes the buttons for combat actions and their event handlers.
+     *
+     * @param box The HBox container to which the buttons will be added.
+     */
     public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         activateShieldsButton = new Button("Activate Shields");

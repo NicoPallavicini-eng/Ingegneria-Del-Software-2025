@@ -12,18 +12,30 @@ import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * The ShipGUI class represents the graphical user interface for handling ship-related events in the game.
+ * It provides buttons and dialogs for user interactions to manage actions during ship events.
+ */
 public class ShipGUI {
     private final TravellingSceneDefault travellingScene;
 
     private Button ejectPeopleButton;
     private String nickname;
-
+    /**
+     * Constructs a ShipGUI instance with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene The travelling scene associated with this ShipGUI.
+     * @param nickname        The nickname of the player.
+     */
     ShipGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes the buttons for ship-related actions and their event handlers.
+     *
+     * @param box The HBox container to which the buttons will be added.
+     */
     public void doButtons(HBox box) {
         ejectPeopleButton = new Button("Eject People");
 

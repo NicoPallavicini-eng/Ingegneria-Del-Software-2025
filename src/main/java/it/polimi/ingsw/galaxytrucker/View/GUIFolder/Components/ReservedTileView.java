@@ -7,8 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
-
-// used for reserved tiles and hand
+/**
+ * GUI component representing a reserved tile or hand slot on the player's ship.
+ * Displays a background, an optional tile image, and a transparent button for interaction.
+ */
 public class ReservedTileView extends StackPane {
     private static final int TILE_SIZE = 110;
     private final ImageView backgroundImage = new ImageView();
@@ -19,7 +21,10 @@ public class ReservedTileView extends StackPane {
     private int rotation = 0; // 0, 90, 180, 270 only
     private TileImage tileImageEnum;
     private Tile logicTile;
-
+    /**
+     * Constructs a new reserved tile view for the player's ship.
+     * Initializes the background, tile image, and overlay button.
+     */
     public ReservedTileView() {
         // Set up the top tile image (initially empty)
         tileImage = new ImageView();
@@ -39,11 +44,19 @@ public class ReservedTileView extends StackPane {
         // Stack background and tile
         getChildren().addAll(backgroundImage, tileImage, overlayButton);
     }
-
+    /**
+     * Returns the logical tile associated with this view.
+     *
+     * @return the logical tile, or null if none
+     */
     public Tile getLogicTile() {
         return logicTile;
     }
-
+    /**
+     * Sets the logical tile for this view and updates the displayed image.
+     *
+     * @param tile the logical tile to associate
+     */
     public void setLogicTile(Tile tile) {
         this.logicTile = tile;
         if (logicTile != null) {
@@ -53,35 +66,68 @@ public class ReservedTileView extends StackPane {
             tileImage.setImage(null);
         }
     }
-
+    /**
+     * Returns the image view displaying the tile image.
+     *
+     * @return the tile image view
+     */
     public ImageView getTileImage() {
         return this.tileImage;
     }
 
+    /**
+     * Clears the tile image from this reserved slot.
+     */
     public void clearTileImage() {
         tileImage.setImage(null);
     }
-
+    /**
+     * Returns the transparent overlay button for this tile view.
+     * Can be used to add event handlers for user interaction.
+     *
+     * @return the overlay button
+     */
     public Button getOverlayButton() {
         return overlayButton;
     }
-
+    /**
+     * Returns whether this tile view is currently clickable.
+     *
+     * @return true if clickable, false otherwise
+     */
     public boolean isClickable() {
         return isClickable;
     }
-
+    /**
+     * Sets whether this tile view is clickable.
+     *
+     * @param clickable true to make clickable, false otherwise
+     */
     public void setClickable(boolean clickable) {
         isClickable = clickable;
     }
 
+    /**
+     * Returns whether this tile view currently contains a tile.
+     *
+     * @return true if full, false otherwise
+     */
     public boolean isFull() {
         return isFull;
     }
-
+    /**
+     * Sets whether this tile view contains a tile.
+     *
+     * @param full true if full, false otherwise
+     */
     public void setFull(boolean full) {
         isFull = full;
     }
-
+    /**
+     * Rotates the tile image in the specified direction.
+     *
+     * @param direction the direction to rotate (LEFT or RIGHT)
+     */
     public void rotate(Side direction) {
         if (direction == Side.LEFT) {
             rotation = (rotation + 270) % 360;
@@ -91,16 +137,26 @@ public class ReservedTileView extends StackPane {
 
         tileImage.setRotate(rotation);
     }
-
+    /**
+     * Resets the tile image rotation to 0 degrees.
+     */
     public void resetRotation() {
         rotation = 0;
         tileImage.setRotate(0);
     }
-
+    /**
+     * Returns the current rotation of the tile image.
+     *
+     * @return the rotation in degrees (0, 90, 180, 270)
+     */
     public int getRotation() {
         return rotation;
     }
-
+    /**
+     * Sets the rotation of the tile image.
+     *
+     * @param rotation the rotation in degrees (0, 90, 180, 270)
+     */
     public void setRotation(int rotation) {
         this.rotation = rotation;
         tileImage.setRotate(rotation);

@@ -20,6 +20,11 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * GUI scene representing the tile pile during the building phase.
+ * Displays all available tiles, navigation buttons, and handles user interactions
+ * for picking up and putting down tiles.
+ */
 public class BuildingSceneTilePile extends MyScene {
     private Scene scene;
     private Game game;
@@ -43,6 +48,13 @@ public class BuildingSceneTilePile extends MyScene {
     private HBox buttonBox;
     private StackPane rootWithBackground;
 
+    /**
+     * Constructs the tile pile scene with the given game, user nickname, and scene manager.
+     *
+     * @param game the game model
+     * @param nickname the user's nickname
+     * @param sceneManager the scene manager for navigation
+     */
     public BuildingSceneTilePile(Game game, String nickname, SceneManager sceneManager) {
         super(game,sceneManager);
         this.game = game;
@@ -95,35 +107,69 @@ public class BuildingSceneTilePile extends MyScene {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         this.sceneManager.setTilePileScene(this);
     }
-
+    /**
+     * Sets the reference to the user's ship building scene.
+     *
+     * @param buildingSceneUserShip the user ship scene
+     */
     public void setBuildingSceneUserShip (BuildingSceneUserShip buildingSceneUserShip) {
         this.buildingSceneUserShip = buildingSceneUserShip;
     }
-
+    /**
+     * Returns the user's ship building scene.
+     *
+     * @return the user ship scene
+     */
     public BuildingSceneUserShip getBuildingSceneUserShip() {
         return buildingSceneUserShip;
     }
-
+    /**
+     * Sets the reference to the other players' ships building scene.
+     *
+     * @param buildingSceneOthersShip the others' ships scene
+     */
     public void setBuildingSceneOthersShip (BuildingSceneOthersShip buildingSceneOthersShip) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
     }
-
+    /**
+     * Returns the other players' ships building scene.
+     *
+     * @return the others' ships scene
+     */
     public BuildingSceneOthersShip getBuildingSceneOthersShip() {
         return buildingSceneOthersShip;
     }
-
+    /**
+     * Sets the reference to the board building scene.
+     *
+     * @param buildingSceneBoard the board scene
+     */
     public void setBuildingSceneBoard(BuildingSceneBoard buildingSceneBoard) {
         this.buildingSceneBoard = buildingSceneBoard;
     }
+    /**
+     * Returns the board building scene.
+     *
+     * @return the board scene
+     */
 
     public BuildingSceneBoard getBuildingSceneBoard() {
         return buildingSceneBoard;
     }
-
+    /**
+     * Returns the JavaFX scene for this tile pile.
+     *
+     * @return the JavaFX scene
+     */
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Handles picking up a tile from the pile.
+     * Sends a message to the server to pick up the specified tile.
+     *
+     * @param tile the tile view to pick up
+     */
     public void pickUpTile(TilePileTileView tile) {
         int index = tilePile.indexOf(tile.getLogicTile());
         try {
@@ -133,7 +179,12 @@ public class BuildingSceneTilePile extends MyScene {
             System.out.println(e.getMessage());
         }
     }
-
+    /**
+     * Handles putting down a tile from the user's hand back to the pile.
+     * Sends a message to the server to put down the tile.
+     *
+     * @param tile the reserved tile view to put down
+     */
     public void putDownTile(ReservedTileView tile) {
         int index = tilePileGrid.getFirstEmpty();
         tile.setFull(false);
@@ -147,11 +198,19 @@ public class BuildingSceneTilePile extends MyScene {
         }
     }
 
+    /**
+     * Updates the game model reference and refreshes the tile pile.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
         update();
     }
 
+    /**
+     * Refreshes the tile pile grid and updates the center content.
+     */
     public void update() {
         this.tilePile = game.getTilePile().getTilePile();
         this.tilePileGrid = new TilePileGrid(this, tilePile);

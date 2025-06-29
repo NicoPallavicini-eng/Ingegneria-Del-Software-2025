@@ -27,6 +27,11 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * The GUI class represents the graphical user interface for the Galaxy Trucker game.
+ * It extends the JavaFX Application class and implements the UI and Serializable interfaces.
+ * This class manages the game's main window, scenes, and interactions with the server.
+ */
 public class GUI extends Application implements UI, Serializable {
 
     // Static fields used for initialization before launch()
@@ -45,6 +50,13 @@ public class GUI extends Application implements UI, Serializable {
     private static Boolean started;
 
     // Called from outside to launch the GUI
+    /**
+     * Launches the GUI application with the specified game and clients.
+     *
+     * @param game        The game instance to be used in the GUI.
+     * @param rmiClient   The RMI client for server communication.
+     * @param socketClient The Socket client for server communication.
+     */
     public static void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) {
         staticGame = game;
         staticRmiClient = rmiClient;
@@ -71,10 +83,18 @@ public class GUI extends Application implements UI, Serializable {
         }
     }
 
+    /**
+     * Default constructor required by JavaFX.
+     */
     public GUI() {
         // JavaFX requires a no-args constructor
     }
 
+    /**
+     * Starts the JavaFX application and initializes the primary stage.
+     *
+     * @param primaryStage The primary stage for the JavaFX application.
+     */
     @Override
     public void start(Stage primaryStage) {
         instance = this;
@@ -120,26 +140,37 @@ public class GUI extends Application implements UI, Serializable {
             staticSocketClient.setGUI(this);
         }
     }
-
+    /**
+     * Retrieves the singleton instance of the GUI.
+     *
+     * @return The current instance of the GUI.
+     */
     public static GUI getInstance() {
         return instance;
     }
 
+    /**
+     * Sets the nickname of the player.
+     *
+     * @param nickname The player's nickname.
+     */
     @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
     @Override
-    public void printTitle() {
-        // TODO: Display the game title in GUI
-    }
+    public void printTitle() {}
 
     @Override
-    public void viewLeaderboard(Game game) {
-        // TODO: Show leaderboard in GUI
-    }
+    public void viewLeaderboard(Game game) {}
 
+
+    /**
+     * Displays a message in the GUI.
+     *
+     * @param message The message to be displayed.
+     */
     @Override
     public void printMessage(String message) {
         javafx.application.Platform.runLater(() -> {
@@ -152,6 +183,11 @@ public class GUI extends Application implements UI, Serializable {
         // TODO: Show message (popup, status bar, etc.)
     }
 
+    /**
+     * Handles invalid commands and displays an error message.
+     *
+     * @param error The error message to be displayed.
+     */
     @Override
     public void invalidCommand(String error){
         javafx.application.Platform.runLater(() -> {
@@ -164,11 +200,20 @@ public class GUI extends Application implements UI, Serializable {
         throw new IllegalGUIEventException(error);
     }
 
+    /**
+     * Displays the tile pile in the GUI.
+     *
+     * @param game The game instance containing tile pile data.
+     */
     @Override
     public void viewTilePile(Game game) {
         sceneManager.updateGame(game, null);
     }
-
+    /**
+     * Displays all ships graphically in the GUI.
+     *
+     * @param game The game instance containing ship data.
+     */
     @Override
     public void printShips(Game game) {
         sceneManager.updateGame(game, null);
@@ -179,40 +224,40 @@ public class GUI extends Application implements UI, Serializable {
     public void printVoid() {
         // Optional: Possibly empty or GUI spacing logic
     }
-
+    /**
+     * Displays the current player's ship in the GUI.
+     *
+     * @param game     The game instance containing ship data.
+     * @param nickname The nickname of the current player.
+     */
     @Override
     public void printMyShip(Game game, String nickname) {
         sceneManager.updateGame(game, null);
-        // TODO: Show current player's ship
     }
 
     @Override
-    public void printGuide() {
-        // TODO: Show guide/help dialog or panel
-    }
+    public void printGuide() {}
 
     @Override
-    public void printActualShip(Ship ship) {
-        // TODO: Show ship details if needed
-    }
+    public void printActualShip(Ship ship) {}
 
     @Override
-    public void printTile(Tile tile) {
-        // TODO: Render a single tile visually
-    }
+    public void printTile(Tile tile) {}
 
+    /**
+     * Displays the cards in the GUI.
+     *
+     * @param game The game instance containing card data.
+     */
     @Override
     public void viewCard(Game game) {
         BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(game, game.getListOfActivePlayers().getFirst().getNickname(), sceneManager);
         sceneManager.updateGame(game, null);
         sceneManager.next(buildingSceneUserShip);
-        // TODO: Show cards info
     }
 
     @Override
-    public void viewDeck(Game game, int index) {
-        // TODO: view deck
-    }
+    public void viewDeck(Game game, int index) {}
 
     // PRIVATE HELPER METHODS (not in interface)
 
@@ -270,28 +315,26 @@ public class GUI extends Application implements UI, Serializable {
     public void printHelpMessage() {
         // TODO: Show help dialog/popup in GUI
     }
+    /**
+     * Updates the game state in the GUI.
+     *
+     * @param gameSend The updated game instance.
+     */
 
     @Override
     public void updateGame(Game gameSend) {
         this.game = gameSend;
-//        while(!started);
         this.sceneManager.updateGame(game, null);
     }
+    /**
+     * Advances to the next scene in the GUI based on the game state and message.
+     *
+     * @param game    The game instance.
+     * @param message The message indicating the next scene.
+     */
 
     @Override
     public void nextScene(Game game, String message){
         updateGame(game);
-        /*
-        switch (message){
-            case "buildingState" -> {
-                WaitingScene wait = new WaitingScene(game, sceneManager);
-                sceneManager.next(wait);
-            }
-            case "finalState" -> {
-                TravellingSceneDefault travelling = new TravellingSceneDefault(game, null, sceneManager);
-                sceneManager.next(travelling);
-            }
-        }
-         */
     }
 }

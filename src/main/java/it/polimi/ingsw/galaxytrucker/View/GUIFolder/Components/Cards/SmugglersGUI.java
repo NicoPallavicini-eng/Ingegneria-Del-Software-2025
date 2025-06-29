@@ -1,18 +1,17 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.SmugglersCard;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * GUI component for handling Smugglers card actions in the game.
+ * Provides buttons and dialogs for activating cannons, adding cargo, and removing cargo.
+ */
 public class SmugglersGUI {
     private final TravellingSceneDefault travellingScene;
     
@@ -21,11 +20,22 @@ public class SmugglersGUI {
     private Button removeCargoButton;
     private String nickname;
 
+    /**
+     * Constructs a SmugglersGUI with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene the scene to interact with the server
+     * @param nickname the player's nickname
+     */
     SmugglersGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes and adds the action buttons to the provided HBox.
+     * Each button opens a dialog to collect user input and sends a message to the server.
+     *
+     * @param box the HBox to which the buttons will be added
+     */
     public void doButtons(HBox box) {
         activateCannonsButton = new Button("Activate Cannons");
         addCargoButton = new Button("Add Cargo");

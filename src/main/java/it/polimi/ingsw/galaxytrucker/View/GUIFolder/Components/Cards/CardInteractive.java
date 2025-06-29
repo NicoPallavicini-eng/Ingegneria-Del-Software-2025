@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * The ANSI escape code to reset text formatting.
+ */
 public class CardInteractive extends Pane {
     private static final int HEIGHT = 500; // TODO check
     private static final int WIDTH = 350; // TODO check
@@ -37,6 +40,13 @@ public class CardInteractive extends Pane {
     private HBox highButtonBox;
     private String nickname;
 
+    /**
+     * Constructs a CardInteractive instance with the specified card, travelling scene, and player nickname.
+     *
+     * @param card             The card instance to be displayed.
+     * @param travellingScene  The travelling scene associated with this card.
+     * @param nickname         The nickname of the player.
+     */
     public CardInteractive(Card card, TravellingSceneDefault travellingScene, String nickname) {
         this.card = card;
         this.nickname = nickname;
@@ -107,7 +117,9 @@ public class CardInteractive extends Pane {
 
         getChildren().addAll(lowButtonBox, highButtonBox, card);
     }
-
+    /**
+     * Initializes the main buttons for user interaction and their event handlers.
+     */
     public void doMainButtons() {
         doneButton = new Button("Done");
         noChoiceButton = new Button("No Choice");

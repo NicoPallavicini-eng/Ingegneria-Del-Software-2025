@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * GUI scene representing the default travelling phase.
+ * Displays the board, current card, user's ship, and navigation controls.
+ * Handles user interactions for viewing other ships and progressing through the phase.
+ */
 public class TravellingSceneDefault extends MyScene {
     private Scene scene;
     private Game game;
@@ -76,7 +82,14 @@ public class TravellingSceneDefault extends MyScene {
     private HBox buttonBox;
     private Button finish;
     private UserShipGrid userShipGrid;
-
+    /**
+     * Constructs the travelling scene with the given game, user nickname, scene manager, and user ship grid.
+     *
+     * @param game the game model
+     * @param nickname the user's nickname
+     * @param sceneManager the scene manager for navigation
+     * @param userShipGrid the user's ship grid component
+     */
     public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager, UserShipGrid userShipGrid) {
         super(game, sceneManager);
         this.game = game;
@@ -327,7 +340,11 @@ public class TravellingSceneDefault extends MyScene {
         circle.setStroke(javafx.scene.paint.Color.WHITE);
         circle.setStrokeWidth(1);
     }
-
+    /**
+     * Returns the JavaFX scene for this travelling phase.
+     *
+     * @return the JavaFX scene
+     */
     public Scene getScene() {
         return scene;
     }
@@ -344,18 +361,31 @@ public class TravellingSceneDefault extends MyScene {
 //        cardInteractive = new CardInteractive(guiCard, this, nickname);
 //        cardPane.getChildren().addFirst(cardInteractive);
 //    }
-
+    /**
+     * Returns the Player object for the given nickname.
+     *
+     * @param nickname the nickname to search for
+     * @return the Player object, or null if not found
+     */
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
     }
-
+    /**
+     * Updates the game model reference.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
     }
-
+    /**
+     * Sets the reference to the other ships travelling scene.
+     *
+     * @param travellingSceneOthersShip the others' ships scene
+     */
     public void setTravellingSceneOthersShip(TravellingSceneOthersShip travellingSceneOthersShip) {
         this.travellingSceneOthersShip = travellingSceneOthersShip;
     }
@@ -374,7 +404,12 @@ public class TravellingSceneDefault extends MyScene {
             styleCircle(circle, null);
         }
     }
-
+    /**
+     * Sets the day position for a player and updates the corresponding circle.
+     *
+     * @param day the new day index
+     * @param player the player whose position to update
+     */
     public void setDay(int day, Player player) {
         Color color = player.getShip().getColor();
         switch (color) {
@@ -405,6 +440,11 @@ public class TravellingSceneDefault extends MyScene {
                 break;
         }
     }
+    /**
+     * Returns the scene manager for this scene.
+     *
+     * @return the scene manager
+     */
     public SceneManager getSceneManager() {
         return this.sceneManager;
     }

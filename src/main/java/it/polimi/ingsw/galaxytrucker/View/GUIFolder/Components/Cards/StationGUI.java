@@ -1,30 +1,41 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Cards.StationCard;
-import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
+
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
 import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * GUI component for handling Station card actions in the game.
+ * Provides buttons and dialogs for adding cargo and switching cargo.
+ */
 public class StationGUI {
     private final TravellingSceneDefault travellingScene;
     
     private Button addCargoButton;
     private Button switchCargoButton;
     private String nickname;
-
+    /**
+     * Constructs a StationGUI with the specified travelling scene and player nickname.
+     *
+     * @param travellingScene the scene to interact with the server
+     * @param nickname the player's nickname
+     */
     StationGUI(TravellingSceneDefault travellingScene, String nickname) {
         this.travellingScene = travellingScene;
         this.nickname = nickname;
     }
-
+    /**
+     * Initializes and adds the action buttons to the provided HBox.
+     * Each button opens a dialog to collect user input and sends a message to the server.
+     *
+     * @param box the HBox to which the buttons will be added
+     */
     public void doButtons(HBox box) {
         addCargoButton = new Button("Add Cargo");
         switchCargoButton = new Button("Switch Cargo");

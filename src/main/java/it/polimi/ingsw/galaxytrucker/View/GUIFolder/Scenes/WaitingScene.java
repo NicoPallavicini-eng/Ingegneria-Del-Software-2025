@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
+/**
+ * GUI scene representing the waiting room before the game starts.
+ * Allows users to connect, set their nickname, set the number of players, and proceed to the next phase.
+ */
 public class WaitingScene extends MyScene{
 
     private boolean isFirstPlayer;
@@ -37,7 +41,12 @@ public class WaitingScene extends MyScene{
     private Button nextButton;
     private boolean ownerProceeded = false;
     private int playersNum;
-
+    /**
+     * Constructs the waiting scene with the given game and scene manager.
+     *
+     * @param game the game model
+     * @param sceneManager the scene manager for navigation
+     */
     public WaitingScene(Game game, SceneManager sceneManager) {
        super(game, sceneManager);
 
@@ -168,11 +177,20 @@ public class WaitingScene extends MyScene{
             }
         });
     }
+    /**
+     * Returns the JavaFX scene for this waiting room.
+     *
+     * @return the JavaFX scene
+     */
 
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Updates the game model reference.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
     }

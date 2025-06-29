@@ -2,6 +2,10 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
 import javafx.scene.image.Image;
 
+/**
+ * Enum representing the different card images used in the GUI.
+ * Each enum constant holds the file name, image, and level of the card.
+ */
 public enum CardImage {
     openSpaceCard1("GT-cards_I_IT_4.jpg", 1),
     openSpaceCard2("GT-cards_I_IT_5.jpg", 1),
@@ -47,7 +51,12 @@ public enum CardImage {
     private final String fileName;
     private final Image image;
     private final int level;
-
+    /**
+     * Constructs a CardImage enum constant.
+     *
+     * @param fileName the file name of the image
+     * @param lev the level of the card (1 or 2)
+     */
     CardImage(String fileName, int lev) {
         if (lev == 1) {
             this.fileName = fileName;
@@ -60,14 +69,28 @@ public enum CardImage {
         }
     }
 
+    /**
+     * Returns the level of the card.
+     *
+     * @return the card level
+     */
     public int getLevel() {
         return level;
     }
-
+    /**
+     * Returns the JavaFX Image object for the card.
+     *
+     * @return the card image
+     */
     public Image getImage() {
         return image;
     }
 
+    /**
+     * Returns the file name of the card image.
+     *
+     * @return the file name
+     */
     public String getFileName() {
         return fileName;
     }

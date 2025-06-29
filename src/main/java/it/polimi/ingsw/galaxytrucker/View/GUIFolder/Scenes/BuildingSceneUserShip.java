@@ -21,6 +21,11 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
+/**
+ * GUI scene representing the user's ship during the building phase.
+ * Displays the user's ship grid, navigation buttons, and handles user interactions
+ * for placing, rotating, and managing tiles on the ship.
+ */
 public class BuildingSceneUserShip extends MyScene {
     private Scene scene;
     private Game game;
@@ -45,7 +50,13 @@ public class BuildingSceneUserShip extends MyScene {
     private HBox buttonBox;
     private StackPane rootWithBackground;
     private BorderPane layout;
-
+    /**
+     * Constructs the user ship scene with the given game, user nickname, and scene manager.
+     *
+     * @param game the game model
+     * @param nickname the user's nickname
+     * @param sceneManager the scene manager for navigation
+     */
     public BuildingSceneUserShip(Game game, String nickname, SceneManager sceneManager) {
         super(game, sceneManager);
         this.game = game;
@@ -107,79 +118,152 @@ public class BuildingSceneUserShip extends MyScene {
         this.sceneManager.setUserShipScene(this, userShipGrid);
     }
 
+    /**
+     * Returns the game model.
+     *
+     * @return the game model
+     */
     public Game getGame(){
         return game;
     }
-
+    /**
+     * Returns the user/player object.
+     *
+     * @return the user/player
+     */
     public Player getUser(){
         return user;
     }
 
+    /**
+     * Returns the Player object for the given nickname.
+     *
+     * @param nickname the nickname to search for
+     * @return the Player object, or null if not found
+     */
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
         return playerOptional.orElse(null);
     }
-
+    /**
+     * Sets the tile in hand and updates the hand tile view.
+     *
+     * @param tile the tile to set in hand
+     * @param rotation the rotation to apply to the hand tile
+     */
     public void setInHand(Tile tile, int rotation) {
         userShipGrid.setHandTile(tile, rotation);
         rotateVisible = true;
         userShipGrid.updateRotateVisible(rotateVisible);
     }
-
+    /**
+     * Returns whether the rotate buttons are visible.
+     *
+     * @return true if rotate buttons are visible, false otherwise
+     */
     public boolean getRotateVisible() {
         return rotateVisible;
     }
-
+    /**
+     * Sets the visibility of the rotate buttons.
+     *
+     * @param rotateVisible true to show rotate buttons, false to hide
+     */
     public void setRotateVisible(boolean rotateVisible) {
         this.rotateVisible = rotateVisible;
     }
 
+    /**
+     * Empties the hand tile view and disables it.
+     */
     public void emptyHand() {
         userShipGrid.getHandTile().setLogicTile(null);
         userShipGrid.getHandTile().setClickable(false);
         userShipGrid.updateRotateVisible(false);
     }
-
+    /**
+     * Returns the user ship grid component.
+     *
+     * @return the user ship grid
+     */
     public UserShipGrid getUserShipGrid() {
         return userShipGrid;
     }
-
+    /**
+     * Sets the reference to the other players' ships building scene.
+     *
+     * @param buildingSceneOthersShip the others' ships scene
+     */
     public void setBuildingSceneOthersShip(BuildingSceneOthersShip buildingSceneOthersShip) {
         this.buildingSceneOthersShip = buildingSceneOthersShip;
     }
-
+    /**
+     * Returns the other players' ships building scene.
+     *
+     * @return the others' ships scene
+     */
     public BuildingSceneOthersShip getBuildingSceneOthersShip() {
         return buildingSceneOthersShip;
     }
-
+    /**
+     * Sets the reference to the tile pile building scene.
+     *
+     * @param buildingSceneTilePile the tile pile scene
+     */
     public void setBuildingSceneTilePile(BuildingSceneTilePile buildingSceneTilePile) {
         this.buildingSceneTilePile = buildingSceneTilePile;
     }
-
+    /**
+     * Returns the tile pile building scene.
+     *
+     * @return the tile pile scene
+     */
     public BuildingSceneTilePile getBuildingSceneTilePile() {
         return buildingSceneTilePile;
     }
-
+    /**
+     * Sets the reference to the board building scene.
+     *
+     * @param buildingSceneBoard the board scene
+     */
     public void setBuildingSceneBoard(BuildingSceneBoard buildingSceneBoard) {
         this.buildingSceneBoard = buildingSceneBoard;
     }
-
+    /**
+     * Returns the board building scene.
+     *
+     * @return the board scene
+     */
     public BuildingSceneBoard getBuildingSceneBoard() {
         return buildingSceneBoard;
     }
-
+    /**
+     * Returns the JavaFX scene for this user ship.
+     *
+     * @return the JavaFX scene
+     */
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Updates the game model reference and refreshes the user ship grid.
+     *
+     * @param game the new game model
+     */
     public void updateGame(Game game) {
         this.game = game;
         update();
 
     }
 
+    /**
+     * Enables alien selection mode, allowing the user to select a tile for alien placement.
+     *
+     * @param message the message to send to the server on selection
+     * @param game the current game model
+     */
     public void enableAlienSelection(String message, Game game){
         this.game = game;
         this.userShip = user.getShip();
@@ -193,6 +277,12 @@ public class BuildingSceneUserShip extends MyScene {
         });
     }
 
+    /**
+     * Enables tile removal mode, allowing the user to select a tile to remove.
+     *
+     * @param message the message to send to the server on removal
+     * @param game the current game model
+     */
     public void removeTile(String message, Game game){
         this.game = game;
         this.userShip = user.getShip();
@@ -212,6 +302,9 @@ public class BuildingSceneUserShip extends MyScene {
                     });
             });
     }
+    /**
+     * Updates the user/player and user ship grid from the current game state.
+     */
 
     public void update(){
         this.user = game.getListOfActivePlayers()
