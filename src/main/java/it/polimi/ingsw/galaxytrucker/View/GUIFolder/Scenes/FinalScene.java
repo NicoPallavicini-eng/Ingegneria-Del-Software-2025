@@ -3,6 +3,7 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -30,7 +31,11 @@ public class FinalScene extends MyScene{
         claim = new Button("Claim");
         styleButton(claim, "#875f87");
         claim.setOnMouseClicked(e -> {
-            sendMessageToServer("/claimreward", this.nickname);
+            try {
+                sendMessageToServer("/claimreward", this.nickname);
+            } catch (IllegalGUIEventException ex){
+                System.out.println(ex.getMessage());
+            }
         });
 
         root.getChildren().addAll(background, claim);
