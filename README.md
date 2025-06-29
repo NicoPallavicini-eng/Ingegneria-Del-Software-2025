@@ -22,7 +22,7 @@
 | RMI Support                  |   ✅   |
 | Text-Based UI (TUI)          |   ✅   |
 | Graphical UI (GUI)           |   ✅   |
-| Test Flight Mode             |   🛠️   |
+| Test Flight Mode             |   ❌   |
 | Disconnection Resilience     |   ✅   |
 | Multiple Matches             |   ❌   |
 | Persistence (Save System)    |   ❌   |
@@ -30,8 +30,6 @@
 #### Legend
 - ❌ Not Implemented
 - ✅ Implemented
-- 🛠️ In progress
-- 🔬 Testing
 
 ## Documentation
 ### Test Coverage
