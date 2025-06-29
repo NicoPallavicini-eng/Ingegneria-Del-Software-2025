@@ -467,6 +467,7 @@ public class EventHandler implements Serializable {
             }
             if (!present) {
                 event.player().getShip().setTravelDays(place);
+                event.player().getShip().moveReservedToDiscard();
             } else {
                 throw new IllegalEventException("You can't your position is occupied");
             }

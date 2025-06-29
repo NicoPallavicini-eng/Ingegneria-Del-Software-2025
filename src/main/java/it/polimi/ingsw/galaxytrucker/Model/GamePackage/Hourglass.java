@@ -77,6 +77,9 @@ public class Hourglass implements Serializable {
      * @param winner
      */
     public void disconnectionTimer(Game game, Player winner){
+        if(!someoneHasReconnected) {
+            return;
+        }
         someoneHasReconnected = false;
         scheduler.schedule(() -> {
             if(!someoneHasReconnected) {
