@@ -119,7 +119,7 @@ public class WaitingScene extends MyScene{
                 connectButton.setDisable(true);  // Disable after success
                 nicknameFeedbackLabel.setText("Nickname set: " + nickname);
                 sceneManager.setNickname(nickname);
-                connectButton.setDisable(false);
+                connectButton.setDisable(true);
             } catch (IllegalGUIEventException e){
                 System.out.println(e.getMessage());
             }
