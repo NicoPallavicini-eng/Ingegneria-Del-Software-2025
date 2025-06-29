@@ -155,6 +155,10 @@ public class SceneManager extends Application {
         this.nickname = nickname;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
