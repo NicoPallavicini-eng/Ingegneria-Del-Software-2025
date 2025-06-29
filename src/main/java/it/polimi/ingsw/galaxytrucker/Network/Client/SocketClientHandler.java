@@ -103,8 +103,6 @@ public class SocketClientHandler {
      * @throws IOException if an I/O error occurs while writing to the output stream
      */
     public void sendMessageToClient(String message) throws IOException {
-        //output.println(message);
-        //output.flush();
         Message obj = new Message("String",null,message);
         objOut.writeObject(obj);
         objOut.flush();

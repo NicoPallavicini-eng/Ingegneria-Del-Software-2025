@@ -215,10 +215,10 @@ public class ServerController {
                                 for (VirtualClient rmiClient : rmiClients) {
                                     if (rmiClient != null) {
                                         try {
-                                            rmiClient.printMessage("\nGame is over, the final state has been reached");
-                                            rmiClient.printMessage("\nStandings:\n");
+                                            rmiClient.printMessage("\nGame is over, the final state has been reached\n"+
+                                                    "Standings:");
                                             for(Player player : game.getListOfPlayers()){
-                                                rmiClient.printMessage(player.getNickname() +"\t credits: " + player.getShip().getCredits() + "\n");
+                                                rmiClient.printMessage("\n"+ player.getNickname() +"\t credits: " + player.getShip().getCredits());
                                             }
                                             Player winner = ((FinalState)gameState).getDisconnectionWinner();
                                             if(winner!=null){
@@ -806,7 +806,6 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        System.out.println("Sono dentro newCard!");
                                         Message msg = new Message("String", null, "\nNew card drawn\n");
                                         msg.setNickname(socketClient.getNickname());
                                         ObjectOutputStream objOut = socketClient.getObjOut();
@@ -829,7 +828,7 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached");
+                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached\n");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
@@ -840,7 +839,7 @@ public class ServerController {
                                         objOut.flush();
                                         objOut.reset();
                                         for(Player player : game.getListOfPlayers()){
-                                            msg = new Message("String", game,player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            msg = new Message("String", game,"\n" + player.getNickname() +"\t credits: " + player.getShip().getCredits());
                                             objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
@@ -1800,6 +1799,7 @@ public class ServerController {
                         try{
                             DisconnectEvent event = new DisconnectEvent(player);
                             game.getGameState().handleEvent(event,game);
+                            /*
                             newMessage = new Message("String", null, "setNickname");
                             newMessage.setNickname(null);
                             objOut.writeObject(newMessage);
@@ -1807,11 +1807,13 @@ public class ServerController {
                             newMessage = new Message("String",null,"disconnect");
                             objOut.writeObject(newMessage);
                             objOut.flush();
+                             */
                         }catch(IllegalEventException e){
                             newMessage = new Message("String",null,e.getMessage());
                             newMessage.setNickname(msg.getNickname());
                             objOut.writeObject(newMessage);
                             objOut.flush();
+
                         }
                     }
                     else {
