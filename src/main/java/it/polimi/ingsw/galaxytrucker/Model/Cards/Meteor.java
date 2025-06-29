@@ -17,12 +17,28 @@ import static it.polimi.ingsw.galaxytrucker.Model.Cards.RowOrColumn.ROW;
 import static it.polimi.ingsw.galaxytrucker.Model.Direction.*;
 import static it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation.*;
 
+/**
+ * This record is used to create Meteor
+ * @param bigMeteor
+ * @param direction
+ * @param rowOrColumn
+ * @param diceRoll
+ */
 public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn, int diceRoll) implements Serializable {
 
+    /**
+     * @param bigMeteor
+     * @param direction
+     * @param rowOrColumn
+     */
     public Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrColumn) {
         this(bigMeteor, direction, rowOrColumn, rollTwoDice());
     }
 
+    /**
+     * This function generate two roll dices and return their sum
+     * @return int
+     */
     public static int rollTwoDice() {
         Random rand = new Random();
 
@@ -34,6 +50,10 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
         return die1 + die2;
     }
 
+    /**
+     * This function decides whether Cannonball hit Ship or not
+     * @param ship
+     */
     public void getHit(Ship ship) {
         if (this.rowOrColumn == ROW) {
             if (diceRoll >= 5 && diceRoll <= 9 && !ship.getRowListTiles(diceRoll-5).isEmpty()) {
@@ -46,6 +66,11 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
         }
     }
     //TODO i think diceroll is ok now
+    /**
+     * This function checks Active Cannons on specific Row(diceroll).If Meteor is not in North,it also checks adjacent Rows,and if there is not,removes first element of Row.
+     * @param ship
+     * @param diceRoll
+     */
     public void checkForCannonOrRemoveRow(Ship ship, int diceRoll) {
         diceRoll -= 5;
         if (this.bigMeteor) {
@@ -97,6 +122,11 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             }
         }
     }
+    /**
+     * This function checks Active Cannons on specific Column(diceroll),and if there is not,removes first element of Column
+     * @param ship
+     * @param diceRoll
+     */
 
     public void checkForCannonOrRemoveColumn(Ship ship, int diceRoll) {
         diceRoll -= 4;

@@ -7,11 +7,19 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import java.io.Serializable;
 
 
+/**
+ * Abstract Class Card is used to represent different Cards,that there is during the Game
+ */
 public abstract class Card implements Serializable {
     private final boolean levelTwo;
     private boolean used;
     private String name;
 
+    /**
+     * Constructor of Card,with some defaukt values
+     * @param levelTwo
+     * @param used
+     */
     public Card(boolean levelTwo, boolean used) {
         this.levelTwo = levelTwo;
         this.used = false;
@@ -21,20 +29,35 @@ public abstract class Card implements Serializable {
 
     public String getName() { return name; }
 
+    /**
+     * This function tells whether Card is used during a Game or not
+     * @return boolean
+     */
     public boolean isUsed() {
         return used;
     }
 
+    /**This function update used parameter
+     * @param used
+     */
     public void updateUsed(boolean used) {
         this.used = used;
     }
 
+    /**This function tells you whether the Card is level 2 or not
+     * @return boolean
+     */
     public boolean isLevelTwo() {
         return levelTwo;
     }
 
     public void process () {}
 
+    /**
+     * This function is used to create a specific state,that depends on the type of the Card
+     * @param game
+     * @return GameState
+     */
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }
