@@ -53,7 +53,8 @@ You can download the Jar to launch the game [here](Deliverables%2FJAR).
 ```bash
 netsh advfirewall set allprofiles state off
 ```
-3. Launch jar file using the following command (**pay attention to your directory**): 
+3. Open prompt normally and continue there
+4. Launch jar file using the following command (**pay attention to your directory**): 
 ```bash
 java -jar pathToServerLauncher\ServerLauncher.jar
 ```
@@ -68,13 +69,14 @@ netsh advfirewall set allprofiles state on
 ```bash
 netsh advfirewall set allprofiles state off
 ```
-3. Launch jar file using the following command (**pay attention to your directory**):
+3. Open prompt normally (not as administrator) and continue there
+4. Launch jar file using the following command (**pay attention to your directory**):
 ```bash
 java -jar pathToClientLauncher\ClientLauncher.jar
 ```
-4. Select the communication protocol and the UI preferred.
-5. Insert Server Ip address or press -1 for localhost.
-6. When finished playing, remember to reactivate your security settings:
+5. Select the communication protocol and the UI preferred.
+6. Insert Server Ip address or press -1 for localhost.
+7. When finished playing, remember to reactivate your security settings:
 ```bash
 netsh advfirewall set allprofiles state on
 ```
