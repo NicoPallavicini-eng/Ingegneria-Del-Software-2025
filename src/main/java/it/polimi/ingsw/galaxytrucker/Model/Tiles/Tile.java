@@ -124,6 +124,9 @@ public class Tile implements Serializable {
         return facingUp;
     }
 
+    /**This function set visibility of Tile during Building Phase
+     * @param facingUp
+     */
     public void setFacingUp(boolean facingUp) {
         this.facingUp = facingUp;
     }
