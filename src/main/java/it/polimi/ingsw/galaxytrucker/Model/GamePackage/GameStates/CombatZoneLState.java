@@ -9,14 +9,24 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 
 import java.io.Serializable;
 
+/**
+ * This class represent one of the two types of CombatZone Card
+ */
 public class CombatZoneLState extends CombatZoneState implements Serializable {
     protected CombatZoneCardL currentCard;
 
+    /**
+     * @param game
+     * @param card
+     */
     public CombatZoneLState(Game game, CombatZoneCardL card) {
         super(game, card);
         currentCard = card;
     }
 
+    /**
+     * This function initialize CombatZoneLState
+     */
     public void init(){
         super.init();
         game.notifyObservers(game, "combatZoneL");
@@ -26,6 +36,9 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         peoplePenalty();
     }
 
+    /**
+     * This function manages people penalty
+     */
     protected void peoplePenalty(){
         super.peoplePenalty();
         game.notifyObservers(game, "peoplePenalty");
@@ -33,6 +46,9 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         nextChallenge();
     }
 
+    /**
+     * This function manages engines penalty
+     */
     protected void enginesPenalty(){
         super.enginesPenalty();
         game.notifyObservers(game, "enginePenalty");
@@ -44,6 +60,10 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
 
     }
 
+    /**
+     * EjectPeopleEvent is possible during CombatZoneLState
+     * @param event
+     */
     public void handleEvent(EjectPeopleEvent event) {
         if (!currentChallenge.equals(CombatZonePenalty.PEOPLE)) {
             throw new IllegalEventException("not people ejecting phase");
@@ -64,11 +84,17 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
         }
     }
 
+    /**
+     * This function manages cannons penalty
+     */
     protected void cannonsPenalty() {
         super.cannonsPenalty();
         cannonballStorm();
     }
 
+    /**
+     * this function change a challenge of this State
+     */
     protected void nextChallenge(){
         super.init();
         currentLoser = null;

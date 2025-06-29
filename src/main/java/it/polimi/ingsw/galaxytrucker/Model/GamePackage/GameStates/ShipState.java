@@ -13,24 +13,35 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import java.io.Serializable;
 import java.util.List;
 
-/*each player in order has to choose whether to eject people if they have enough or noaction
+/**
+ * each player in order has to choose whether to eject people if they have enough or noaction
  */
-
 public class ShipState extends TravellingState implements Serializable {
 
     private ShipCard currentCard;
 
+    /**
+     * @param game
+     * @param card
+     */
     public ShipState(Game game, ShipCard card) {
         super(game, card);
         currentCard = card;
 
     }
 
+    /**
+     * This function initialize ShipState
+     */
     public void init(){
         super.init();
         game.notifyObservers(game, "ship");
     }
 
+    /**
+     * EjectPeopleEvent is possibile during Ship State
+     * @param event
+     */
     public void handleEvent(EjectPeopleEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
@@ -51,7 +62,10 @@ public class ShipState extends TravellingState implements Serializable {
             next();
         }
     }
-
+    /**
+     * NoChoiceEvent is possibile during Ship State
+     * @param event
+     */
     public void handleEvent(NoChoiceEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
@@ -61,6 +75,9 @@ public class ShipState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function manages the turn of Players
+     */
     protected void nextPlayer(){
         super.nextPlayer();
         if(currentPlayer == null){
@@ -68,6 +85,10 @@ public class ShipState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p Player
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         super.disconnectionConsequences(p);

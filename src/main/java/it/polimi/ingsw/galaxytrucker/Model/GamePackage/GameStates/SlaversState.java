@@ -9,13 +9,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/*Following the turns all player decide whether to activate cannons or noaction,
-their firepower then is confronted with the pirates' one to decide who wins
-when the slavers are defeated or all players are defeated the reckoningPhase starts
-it ends when all defeated players have ejected their people
-and the slayer has decided whether they want to claim the reward or not
+/**
+ * Following the turns all player decide whether to activate cannons or noaction,
+ * their firepower then is confronted with the pirates' one to decide who wins
+ * when the slavers are defeated or all players are defeated the reckoningPhase starts
+ * it ends when all defeated players have ejected their people
+ * and the slayer has decided whether they want to claim the reward or not
  */
 public class SlaversState extends TravellingState implements Serializable {
+    /**
+     * @param game
+     * @param card
+     */
     public SlaversState(Game game, SlaversCard card) {
         super(game, card);
         currentCard = card;
@@ -27,6 +32,9 @@ public class SlaversState extends TravellingState implements Serializable {
     private List<Player> defeatedPlayers;
     private boolean reckoningPhase = false;
 
+    /**
+     * this function initialize Slavers State
+     */
     public void init(){
         currentPlayer = game.getListOfActivePlayers().get(0);
         defeatedPlayers = new ArrayList<>();
@@ -34,6 +42,10 @@ public class SlaversState extends TravellingState implements Serializable {
         game.notifyObservers(game, "slavers");
     }
 
+    /**
+     * ActivateCannonsEvent is possible during Slavers State
+     * @param event
+     */
     public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
@@ -56,7 +68,10 @@ public class SlaversState extends TravellingState implements Serializable {
             }
         }
     }
-
+    /**
+     * ClaimRewardEvent is possible during Slavers State
+     * @param event
+     */
     public void handleEvent(ClaimRewardEvent event){
         if(!event.player().equals(slaversSlayer)){
             throw new IllegalEventException("You have not slain the slavers");
@@ -72,6 +87,10 @@ public class SlaversState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * NoChoiceEvent is possible during Slavers State
+     * @param event
+     */
     public void handleEvent(NoChoiceEvent event){
         if(reckoningPhase){
             if(!event.player().equals(slaversSlayer)){
@@ -105,6 +124,10 @@ public class SlaversState extends TravellingState implements Serializable {
 
     }
 
+    /**
+     * EjectPeopleEvent is possible during Slavers State
+     * @param event
+     */
     public void handleEvent(EjectPeopleEvent event){
         if(!defeatedPlayers.contains(event.player()) || handledPlayers.contains(event.player())){
             throw new IllegalEventException("You don't have to give up your crew");
@@ -122,6 +145,9 @@ public class SlaversState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function manages the turn of Players
+     */
     @Override
     protected void nextPlayer() {
         super.nextPlayer();
@@ -130,12 +156,18 @@ public class SlaversState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function checks if it can change State
+     */
     private void checkNext(){
         if(handledPlayers.containsAll(game.getListOfActivePlayers())){
             next();
         }
     }
 
+    /**
+     * This function find Players that were defeated and add them to the list of defeated Players
+     */
     private void reckoning(){
        reckoningPhase = true;
        currentPlayer = null;
@@ -157,7 +189,10 @@ public class SlaversState extends TravellingState implements Serializable {
 //        }
        checkNext();
     }
-
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p Player
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         List<Player> connectedPlayers = game.getListOfPlayers().stream().filter(player->player.getOnlineStatus()).toList();
@@ -178,6 +213,10 @@ public class SlaversState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function return slaversSlayer
+     * @return Player
+     */
     public Player getSlaversSlayer() {
         return slaversSlayer;
     }

@@ -15,16 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/* This phase starts when the desired number of players has connected to the game:
-At first the players can build their ship by picking up tiles and placing them on their ship,
-then they finish this phase by setting their position,
-if the hourglass expires setting their position is the only available option.
-After all positions have been set (all players in finishedBuildingPlayers) the legality check starts
-the check populates the playerWithLegalShips list,
-the players with illegal ships can join the list by removing tiles from their ship.
-When the list is full the players enter the population phase,
-in which they can place aliens and signal "done".
-Once all players have placed their aliens next() is called.
+/**
+ * This phase starts when the desired number of players has connected to the game:
+ * At first the players can build their ship by picking up tiles and placing them on their ship,
+ * then they finish this phase by setting their position,
+ * if the hourglass expires setting their position is the only available option.
+ * After all positions have been set (all players in finishedBuildingPlayers) the legality check starts
+ * the check populates the playerWithLegalShips list,
+ * the players with illegal ships can join the list by removing tiles from their ship.
+ * When the list is full the players enter the population phase,
+ * in which they can place aliens and signal "done".
+ * Once all players have placed their aliens next() is called.
  */
 public class BuildingState extends GameState implements Serializable {
     private ArrayList<Player> finishedBuildingPlayers;
@@ -34,14 +35,24 @@ public class BuildingState extends GameState implements Serializable {
     // first for orange and second for purple
     private Map<Player, Boolean[]> placedAliens;
 
+    /**
+     * @param game
+     */
     public BuildingState( Game game ) {
         this.game = game;
     }
 
+    /**
+     * This function return Game
+     * @return Game
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * This function change the Game State of Game
+     */
     public void next() {
         for(Player p : game.getListOfActivePlayers()){
             p.getShip().fill();
@@ -54,6 +65,9 @@ public class BuildingState extends GameState implements Serializable {
 
     }
 
+    /**
+     * This function initialize Building State
+     */
     public void init(){
         finishedBuildingPlayers = new ArrayList<>();
         playersWithLegalShips = new ArrayList<>();
@@ -68,6 +82,10 @@ public class BuildingState extends GameState implements Serializable {
     }
 
 
+    /**
+     * This function is used for Testing building State
+     * @param ship
+     */
     public void handleEvent(Ship ship){
 
         CabinTile cabin1 = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.NONE,ConnectorType.SINGLE,ConnectorType.NONE, CabinInhabitants.NONE,false, Color.NONE,1,0);
@@ -107,6 +125,10 @@ public class BuildingState extends GameState implements Serializable {
         shieldTile.setFacingUp(true);
         tile.setFacingUp(true);
     }
+
+    /**ChooseSubshipEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(ChooseSubShipEvent event){
         if(!playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("You have already a functioning spaceship");
@@ -123,6 +145,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
+    /**SetPositionEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(SetPositionEvent event) {
         if(finishedBuildingPlayers.contains(event.player())){
             throw new IllegalEventException("You have already placed your rocket");
@@ -156,6 +181,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
+    /**RemoveTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(RemoveTileEvent event) {
         if(!finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
             throw new IllegalEventException("You have to wait for all rockets to be placed");
@@ -178,6 +206,10 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * PickUpTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PickUpTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer pick up any tiles");
@@ -187,6 +219,10 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * PutDownTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PutDownTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer put down any tiles");
@@ -195,7 +231,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event,this.game);
         }
     }
-
+    /**
+     * PickUpFromShipEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PickUpFromShipEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer pick up any tiles");
@@ -204,7 +243,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * PickUpReservedTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PickUpReservedTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer pick up any tiles");
@@ -213,7 +255,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * PlaceTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PlaceTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer place any tiles");
@@ -222,7 +267,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * ReserveTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(ReserveTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer reserve any tiles");
@@ -231,7 +279,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * RotateTileEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(RotateTileEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer rotate any tiles");
@@ -240,7 +291,10 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * PlaceOrangeAlienEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PlaceOrangeAlienEvent event) {
         if(!playersWithLegalShips.contains(event.player())){
             throw new IllegalEventException("You can't populate your ship until it is a legal ship ready to takeoff");
@@ -256,7 +310,10 @@ public class BuildingState extends GameState implements Serializable {
             checkNext();
         }
     }
-
+    /**
+     * PlacePurpleAlienEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(PlacePurpleAlienEvent event) {
         if(!playersWithLegalShips.contains(event.player())){
             throw new IllegalEventException("You can't populate your ship until it is a legal ship ready to takeoff");
@@ -272,7 +329,10 @@ public class BuildingState extends GameState implements Serializable {
             checkNext();
         }
     }
-
+    /**
+     * DoneEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(DoneEvent event) {
         if(!playersWithLegalShips.contains(event.player())){
             throw new IllegalEventException("You can't populate your ship until it is a legal ship ready to takeoff");
@@ -282,7 +342,10 @@ public class BuildingState extends GameState implements Serializable {
             checkNext();
         }
     }
-
+    /**
+     * FlipHourglassEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(FlipHourglassEvent event,Game game) {
         if (timeIsUp) {
             throw new IllegalEventException("Hourglass flipping phase is over");
@@ -291,13 +354,19 @@ public class BuildingState extends GameState implements Serializable {
             EventHandler.handleEvent(event, game);
         }
     }
-
+    /**
+     * ViewDeckEvent is possible during Building State
+     * @param event
+     */
     public void handleEvent(ViewDeckEvent event) {
         if(finishedBuildingPlayers.contains(event.player()) || timeIsUp){
             throw new IllegalEventException("You can no longer view deck");
         }
     }
 
+    /**
+     * This function checks if you can change a Game State
+     */
     private void checkNext(){
         boolean flag = false;
         for(Player player : game.getListOfActivePlayers()){
@@ -311,11 +380,18 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * This function notify observers when time is finished
+     */
     public void timeUp(){
         timeIsUp = true;
         game.notifyObservers(game, "timeisup");
     }
 
+    /**
+     * This function manage disconnection of Player
+     * @param p Player
+     */
     protected void disconnectionConsequences(Player p){
         super.disconnectionConsequences(p);
         if(finishedBuildingPlayers.containsAll(game.getListOfActivePlayers())) {
@@ -331,27 +407,51 @@ public class BuildingState extends GameState implements Serializable {
         checkNext();
     }
 
+    /**
+     * ConnectEvent is allowed during Building State
+     * @param event
+     * @param game
+     */
     public void handleEvent(ConnectEvent event, Game game) {
         super.handleEvent(event, game);
         game.updateListOfActivePlayers();
     }
 
+    /**
+     * This function return array list of players that finished building their Ship
+     * @return ArrayList<Player>
+     */
     public ArrayList<Player> getFinishedBuildingPlayers() {
         return finishedBuildingPlayers;
     }
 
+    /**
+     * This function return array list of Players with Legal Ships
+     * @return ArrayList<Player>
+     */
     public ArrayList<Player> getPlayersWithLegalShips() {
         return playersWithLegalShips;
     }
-
+    /**
+     * This function return array list of Players with illegal Ships
+     * @return ArrayList<Player>
+     */
     public ArrayList<Player> getPlayersWithIllegalShips() {
         return playersWithIllegalShips;
     }
 
+    /**
+     * This function tells you whether time is ginsihed or not
+     * @return boolean
+     */
     public boolean isTimeIsUp() {
         return timeIsUp;
     }
 
+    /**
+     * This function return placed Aliens
+     * @return Map<Player, Boolean[]>
+     */
     public Map<Player, Boolean[]> getPlacedAliens() {
         return placedAliens;
     }

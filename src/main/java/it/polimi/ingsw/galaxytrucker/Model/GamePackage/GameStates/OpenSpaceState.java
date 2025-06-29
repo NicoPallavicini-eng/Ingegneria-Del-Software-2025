@@ -12,25 +12,38 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Ship;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/*Each player in order has to choose the engines to activate.
-then the rockets are moved foward according to the engine power of their ship
- */
 
+/**
+ * Each player in order has to choose the engines to activate.
+ * then the rockets are moved foward according to the engine power of their ship
+ */
 public class OpenSpaceState extends TravellingState implements Serializable {
     private OpenSpaceCard currentCard;
     //private ArrayList<Player> handledPlayers;
 
+    /**
+     * @param game
+     * @param card
+     */
     public OpenSpaceState(Game game, OpenSpaceCard card) {
         super(game, card);
         currentCard = card;
     }
 
+    /**
+     * This function initialize OpenSpaceState
+     */
     public void init(){
         super.init();
         handledPlayers = new ArrayList<>();
         game.notifyObservers(game, "openSpace");
     }
 
+    /**
+     * ActivateEnginesEvent is possible during OpenSpaceState
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         if (!event.player().equals(currentPlayer)) {
@@ -52,7 +65,11 @@ public class OpenSpaceState extends TravellingState implements Serializable {
             }
         }
     }
-
+    /**
+     * NoChoiceEvent is possible during OpenSpaceState
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(NoChoiceEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
         if (!event.player().equals(currentPlayer)) {
@@ -78,7 +95,10 @@ public class OpenSpaceState extends TravellingState implements Serializable {
             }
         }
     }
-
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p Player
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         super.disconnectionConsequences(p);

@@ -16,11 +16,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-/*The metheors are cycled and for every one of them all players have to defend or nochoice
-then the players undergo the hit if they are not defended.
-A check is made to ensure that an action made from the player actually defends them
- */
 
+
+/**
+ * The metheors are cycled and for every one of them all players have to defend or nochoice
+ * then the players undergo the hit if they are not defended.
+ * A check is made to ensure that an action made from the player actually defends them
+ */
 public class MeteorsState extends TravellingState implements Serializable {
     private MeteorsCard currentCard;
     private ArrayList<Player> handledPlayers;
@@ -32,6 +34,9 @@ public class MeteorsState extends TravellingState implements Serializable {
         currentCard = card;
     }
 
+    /**
+     * This function is used to initialize MeteorState
+     */
     public void init(){
         super.init();
         handledPlayers = new ArrayList<>();
@@ -42,6 +47,12 @@ public class MeteorsState extends TravellingState implements Serializable {
         playersWithIllegalShips = new ArrayList<>();
     }
 
+    /**
+     * This function represent an auxiliary function that checks if Shiled defends from Meteor
+     * @param shieldOrientation
+     * @param direction
+     * @return
+     */
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
         switch (shieldOrientation) {
             case NORTHEAST -> {
@@ -60,6 +71,10 @@ public class MeteorsState extends TravellingState implements Serializable {
         return false;
     }
 
+    /**
+     * ActivateShieldEvent is possible to call in Meteor State
+     * @param event
+     */
     public void handleEvent(ActivateShieldEvent event){
         if(playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("Your ship is broken, fix it before defending");
@@ -82,7 +97,10 @@ public class MeteorsState extends TravellingState implements Serializable {
             checkNext();
         }
     }
-
+    /**
+     * ActivateCannonsEvent is possible to call in Meteor State
+     * @param event
+     */
     public void handleEvent(ActivateCannonsEvent event){
         if(playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("Your ship is broken, fix it before defending");
@@ -119,7 +137,10 @@ public class MeteorsState extends TravellingState implements Serializable {
             checkNext();
         }
     }
-
+    /**
+     * NoChoiceEvent is possible to call in Meteor State
+     * @param event
+     */
     public void handleEvent(NoChoiceEvent event){
         if(playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("Your ship is broken, fix it before defending");
@@ -133,6 +154,9 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * Checks if all Player were handled,and if so,process Meteor
+     */
     private void checkNext() {
         if (handledPlayers.containsAll(game.getListOfActivePlayers())) {
             for (Player player : game.getListOfActivePlayers()) {
@@ -157,6 +181,9 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function checks if it is possible to change card
+     */
     private void checkNextCard(){
         if(playersWithIllegalShips.isEmpty() && currentMeteor == null){
             next();
@@ -166,6 +193,10 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * ChooseSubShipEvent is possible to call in Meteor State
+     * @param event
+     */
     public void handleEvent(ChooseSubShipEvent event) {
         if(!playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("You have already a functioning spaceship");
@@ -182,17 +213,29 @@ public class MeteorsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         super.disconnectionConsequences(p);
         checkNext();
     }
 
+    /**
+     * This function return an array list of players that were handled during Meteor State
+     * @return ArrayList<Player>
+     */
     @Override
     public ArrayList<Player> getHandledPlayers() {
         return handledPlayers;
     }
 
+    /**
+     * This function return a current Meteor
+     * @return Meteor
+     */
     public Meteor getCurrentMeteor() {
         return currentMeteor;
     }

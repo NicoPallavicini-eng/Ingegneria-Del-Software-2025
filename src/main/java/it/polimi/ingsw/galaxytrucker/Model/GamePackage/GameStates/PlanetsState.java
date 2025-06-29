@@ -9,12 +9,14 @@ import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
 import java.io.Serializable;
 import java.util.*;
 
-/*Each player chooses a planet or noaction.
-once everyone has made a choice the cargoLoadingPhase starts
-in this phase players can add, remove, switch cargo until they signal done
-The satisfied players list hold the players that have signaled noAction or Done
- */
 
+
+/**
+ * Each player chooses a planet or noaction.
+ * once everyone has made a choice the cargoLoadingPhase starts
+ * in this phase players can add, remove, switch cargo until they signal done
+ * The satisfied players list hold the players that have signaled noAction or Done
+ */
 public class PlanetsState extends TravellingState implements Serializable {
     private PlanetsCard currentCard;
     private List<Planet> planets;
@@ -22,11 +24,18 @@ public class PlanetsState extends TravellingState implements Serializable {
     private List<Player> satisfiedPlayers;
     private boolean cargoLoadingPhase = false;
 
+    /**
+     * @param game
+     * @param card
+     */
     public PlanetsState(Game game, PlanetsCard card) {
         super(game, card);
         currentCard = card;
     }
 
+    /**
+     * This function manages the turn of Players
+     */
     public void nextPlayer(){
         super.nextPlayer();
         if(currentPlayer == null){
@@ -35,6 +44,9 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function initialize Planet State
+     */
     @Override
     public void init(){
         super.init();
@@ -43,7 +55,10 @@ public class PlanetsState extends TravellingState implements Serializable {
         satisfiedPlayers = new ArrayList<>();
         game.notifyObservers(game, "planets");
     }
-
+    /**
+     * ChoosePlanetEventis possible during Planet State
+     * @param event
+     */
     public void handleEvent(ChoosePlanetEvent event){
         int index = event.planetIndex() - 1;
         if(!event.player().equals(currentPlayer) ){
@@ -62,7 +77,10 @@ public class PlanetsState extends TravellingState implements Serializable {
             nextPlayer();
         }
     }
-
+    /**
+     * NoChoiceEvent  possible during Planet State
+     * @param event
+     */
     public void handleEvent(NoChoiceEvent event){
         if(!event.player().equals(currentPlayer) ){
             throw new IllegalEventException("It is not your turn to land");
@@ -80,6 +98,9 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * This function manages Players that decided to land.This card deduce from each Player Travel Days of Planet Card
+     */
     private void loseDays(){
         List<Player> turns = new LinkedList<>(chosenPlanets.keySet());
         Collections.reverse(turns);
@@ -88,7 +109,10 @@ public class PlanetsState extends TravellingState implements Serializable {
             game.notifyObservers(game, "loseDays"); //TODO: DO it
         }
     }
-
+    /**
+     * AddCargoEvent possible during Planet State
+     * @param event
+     */
     public void handleEvent(AddCargoEvent event){
         if(!cargoLoadingPhase){
             throw new IllegalEventException("Wait for everyone to choose a planet");
@@ -108,7 +132,10 @@ public class PlanetsState extends TravellingState implements Serializable {
             }
         }
     }
-
+    /**
+     * RemoveCargoEvent possible during Planet State
+     * @param event
+     */
     public void handleEvent(RemoveCargoEvent event){
         if(!cargoLoadingPhase){
             throw new IllegalEventException("Wait for everyone to choose a planet");
@@ -125,7 +152,10 @@ public class PlanetsState extends TravellingState implements Serializable {
 
         }
     }
-
+    /**
+     * SwitchCargoEvent possible during Planet State
+     * @param event
+     */
     public void handleEvent(SwitchCargoEvent event){
         if(!cargoLoadingPhase){
             throw new IllegalEventException("Wait for everyone to choose a planet");
@@ -137,7 +167,10 @@ public class PlanetsState extends TravellingState implements Serializable {
             EventHandler.handleEvent(event);
         }
     }
-
+    /**
+     * DoneEvent possible during Planet State,it is used for notify Planet State ,that Player that landed has finished his operations with Cargo
+     * @param event
+     */
     public void handleEvent(DoneEvent event){
         if(!cargoLoadingPhase){
             throw new IllegalEventException("Wait for everyone to choose a planet");
@@ -155,7 +188,10 @@ public class PlanetsState extends TravellingState implements Serializable {
             }
         }
     }
-
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p Player
+     */
     protected void disconnectionConsequences(Player p){
         List<Player> connectedPlayers = game.getListOfPlayers().stream().filter(player->player.getOnlineStatus()).toList();
         if(connectedPlayers.size() == 1){
@@ -174,10 +210,16 @@ public class PlanetsState extends TravellingState implements Serializable {
         }
     }
 
+    /**
+     * @return Map<Player, Planet>
+     */
     public Map<Player, Planet> getChosenPlanets() {
         return chosenPlanets;
     }
 
+    /**
+     * @return List<Player>
+     */
     public List<Player> getSatisfiedPlayers() {
         return satisfiedPlayers;
     }

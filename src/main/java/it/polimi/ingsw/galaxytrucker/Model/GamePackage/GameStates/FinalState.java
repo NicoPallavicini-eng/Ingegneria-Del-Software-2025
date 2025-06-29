@@ -10,13 +10,19 @@ import java.util.List;
 
 //calculates the rewards
 
+/**
+ * This is Final State Class.When Deck is Empty, the Game arrive to Final State
+ */
 public class FinalState extends GameState implements Serializable {
     private List<Ship> activeShips = new ArrayList<>();
     private List<Ship> gaveUpShips = new ArrayList<>();
     private List<Ship> ships = new  ArrayList<>();
     private final Player disconnectionWinner;
 
-
+    /**
+     * Constructor of Final State
+     * @param game
+     */
     public FinalState(Game game) {
         this.game = game;
         disconnectionWinner = null;
@@ -27,16 +33,26 @@ public class FinalState extends GameState implements Serializable {
         this.disconnectionWinner = disconnectionWinner;
     }
 
+    /**
+     * This function return game
+     * @return Game
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * This function sets the next Game Set to null
+     */
     @Override
     public void next() {
         getGame().setGameState(null);
     }
 
 
+    /**
+     * This function initialize Final State
+     */
     public void init(){
         for(Player p : game.getListOfActivePlayers()){
             Ship s = p.getShip();
@@ -52,6 +68,9 @@ public class FinalState extends GameState implements Serializable {
         process();
     }
 
+    /**
+     * This function processes the Final State rewarding
+     */
     private void process() {
         computeFinishOrderReward();
         computeBLSReward();
@@ -61,6 +80,9 @@ public class FinalState extends GameState implements Serializable {
         game.notifyObservers(game, "final");
     }
 
+    /**
+     * This function assign credits to player in order of their positions on Leaderboard
+     */
     private void computeFinishOrderReward() {
         int i=0;
         for(Ship ship : activeShips){
@@ -71,6 +93,9 @@ public class FinalState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * This function assign credits to the Player with Less Exposes Connectors
+     */
     private void computeBLSReward() {
         if(!ships.isEmpty()){
             int min = ships.stream().
@@ -84,6 +109,9 @@ public class FinalState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * This function compute the value of Goods for each Ship,and assign credits
+     */
     private void computeSaleOfGoods() {
         if (!activeShips.isEmpty()) {
             activeShips.stream().
@@ -105,6 +133,9 @@ public class FinalState extends GameState implements Serializable {
         }
     }
 
+    /**
+     * This function computes the number of pieces lost during the Game,and reduce credit proportionally to Lost Tiles of each Ship
+     */
     private void computeLosses() {
         if(!ships.isEmpty()){
             ships.stream().forEach(s -> s.setCredits(s.getCredits() - s.getLostTiles()));
