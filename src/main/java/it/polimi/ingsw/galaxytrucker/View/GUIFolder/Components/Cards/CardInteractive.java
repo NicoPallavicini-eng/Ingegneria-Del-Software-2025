@@ -101,8 +101,8 @@ public class CardInteractive extends Pane {
         lowButtonBox.setLayoutY(600);
         lowButtonBox.setAlignment(Pos.CENTER);
 
-        card.setLayoutX(50);
-        card.setLayoutY(150);
+        card.setLayoutX(60);
+        card.setLayoutY(160);
 
         getChildren().addAll(lowButtonBox, highButtonBox, card);
     }
@@ -121,7 +121,6 @@ public class CardInteractive extends Pane {
         giveUpButton.setOnAction(e -> {
             travellingScene.sendMessageToServer("/giveup", this.nickname);
             travellingScene.getSceneManager().next(travellingScene);
-
         });
 
         doneButton.getStyleClass().add("bottom-button");
@@ -140,5 +139,6 @@ public class CardInteractive extends Pane {
         giveUpButton.setLayoutY(400);
 
         lowButtonBox.getChildren().addAll(doneButton, noChoiceButton, giveUpButton);
+        lowButtonBox.setAlignment(Pos.CENTER);
     }
 }

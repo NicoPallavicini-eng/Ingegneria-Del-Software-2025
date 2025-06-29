@@ -4,6 +4,7 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Network.Client.SocketClient;
 import it.polimi.ingsw.galaxytrucker.Network.Client.VirtualClient;
 import it.polimi.ingsw.galaxytrucker.Network.Server.VirtualServer;
+import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.UserShipGrid;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ public class SceneManager extends Application {
     private final SocketClient socketClient;
     private String nickname;
     private final VirtualServer server;
+    private UserShipGrid userShipGrid;
 
     public SceneManager(Game game, Stage stage, VirtualClient rmiClient, SocketClient socketClient) {
         this.game = game;
@@ -103,19 +105,20 @@ public class SceneManager extends Application {
         return finalScene;
     }
 
-    public void setUserShipScene(BuildingSceneUserShip userShipScene) {
+    public void setUserShipScene(BuildingSceneUserShip userShipScene, UserShipGrid userShipGrid) {
         this.userShipScene = userShipScene;
+        this.userShipGrid = userShipGrid;
     }
 
     public void setTilePileScene(BuildingSceneTilePile tilePileScene) {
         this.tilePileScene = tilePileScene;
-//        this.userShipScene.setBuildingSceneTilePile(tilePileScene);
-//        if (this.othersShipScene != null) {
-//            this.othersShipScene.setBuildingSceneTilePile(tilePileScene);
-//        }
-//        if (this.boardScene != null) {
-//            this.boardScene.setBuildingSceneTilePile(tilePileScene);
-//        }
+        this.userShipScene.setBuildingSceneTilePile(tilePileScene);
+        if (this.othersShipScene != null) {
+            this.othersShipScene.setBuildingSceneTilePile(tilePileScene);
+        }
+        if (this.boardScene != null) {
+            this.boardScene.setBuildingSceneTilePile(tilePileScene);
+        }
     }
 
     public void setOthersShipScene(BuildingSceneOthersShip othersShipScene) {
@@ -171,7 +174,7 @@ public class SceneManager extends Application {
     }
 
     public void next(BuildingSceneUserShip buildingSceneUserShip) {
-        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this);
+        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this, userShipGrid);
         Platform.runLater(() -> {
             primaryStage.setTitle("Travelling State - Default");
             primaryStage.setScene(travellingSceneDefault.getScene());
@@ -180,21 +183,21 @@ public class SceneManager extends Application {
     }
 
     public void next(BuildingSceneTilePile buildingSceneTilePile) {
-        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this);
+        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this, userShipGrid);
         primaryStage.setTitle("Travelling State - Default");
         primaryStage.setScene(travellingSceneDefault.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingSceneBoard buildingSceneBoard) {
-        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this);
+        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this, userShipGrid);
         primaryStage.setTitle("Travelling State - Default");
         primaryStage.setScene(travellingSceneDefault.getScene());
         primaryStage.show();
     }
 
     public void next(BuildingSceneOthersShip buildingSceneOthersShip) {
-        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this);
+        TravellingSceneDefault travellingSceneDefault = new TravellingSceneDefault(game, nickname, this, userShipGrid);
         primaryStage.setTitle("Travelling State - Default");
         primaryStage.setScene(travellingSceneDefault.getScene());
         primaryStage.show();
@@ -225,7 +228,7 @@ public class SceneManager extends Application {
 
     public void switchTravelling(TravellingSceneOthersShip travellingSceneOthersShip) {
         TravellingSceneDefault travellingSceneDefault;
-        travellingSceneDefault = Objects.requireNonNullElseGet(this.travellingSceneDefault, () -> new TravellingSceneDefault(game, nickname, this));
+        travellingSceneDefault = Objects.requireNonNullElseGet(this.travellingSceneDefault, () -> new TravellingSceneDefault(game, nickname, this, userShipGrid));
         travellingSceneDefault.setTravellingSceneOthersShip(travellingSceneOthersShip);
         primaryStage.setTitle("Travelling State - Default");
         primaryStage.setScene(travellingSceneDefault.getScene());

@@ -75,13 +75,15 @@ public class TravellingSceneDefault extends MyScene {
     private Button drawCard;
     private HBox buttonBox;
     private Button finish;
+    private UserShipGrid userShipGrid;
 
-    public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager) {
+    public TravellingSceneDefault(Game game, String nickname, SceneManager sceneManager, UserShipGrid userShipGrid) {
         super(game, sceneManager);
         this.game = game;
         this.nickname = nickname;
         this.sceneManager = sceneManager;
         this.gameDeck = game.getDeck();
+        this.userShipGrid = userShipGrid;
 
         deck = new Deck(gameDeck);
 
@@ -132,19 +134,23 @@ public class TravellingSceneDefault extends MyScene {
         guiCard = new Card(currentCard);
         cardInteractive = new CardInteractive(guiCard, this, nickname);
 
-        drawCard = new Button("Draw"); // TODO remove, this is for testing
-        drawCard.getStyleClass().add("action-button");
-        drawCard.setOnAction(event -> {
-            drawCard();
-        });
-
         cardPane.setPrefSize(350, 500);
 
-        cardPane.getChildren().addAll(cardInteractive, drawCard);
+        cardPane.getChildren().addAll(cardInteractive);
 
         //--------------------
 
-        shipPane = new Pane(); // TODO do
+        shipPane = new Pane();
+        List<Button> rotates = userShipGrid.getRotates();
+        List<GridPane> panes = userShipGrid.getResNHand();
+        userShipGrid.getChildren().removeAll(rotates.getFirst(), rotates.getLast(), panes.getFirst(), panes.getLast());
+        userShipGrid.setLayoutX(- 220);
+        userShipGrid.setLayoutY(- 145);
+        userShipGrid.setScaleX(0.5);
+        userShipGrid.setScaleY(0.5);
+        shipPane.getChildren().add(userShipGrid);
+        shipPane.setMouseTransparent(true);
+        shipPane.setPrefSize(350, 500);
 
         //--------------------
 
@@ -326,18 +332,18 @@ public class TravellingSceneDefault extends MyScene {
         return scene;
     }
 
-    public void drawCard() {
-        cardPane.getChildren().remove(cardInteractive);
-        currentCardNum++;
-        if (currentCardNum == 11) {
-            cardPane.getChildren().remove(drawCard);
-            buttonBox.getChildren().add(finish);
-        }
-        guiCard = deck.getGameDeck().get(currentCardNum);
-        currentCard = guiCard.getLogicCard();
-        cardInteractive = new CardInteractive(guiCard, this, nickname);
-        cardPane.getChildren().addFirst(cardInteractive);
-    }
+//    public void drawCard() {
+//        cardPane.getChildren().remove(cardInteractive);
+//        currentCardNum++;
+//        if (currentCardNum == 11) {
+//            cardPane.getChildren().remove(drawCard);
+//            buttonBox.getChildren().add(finish);
+//        }
+//        guiCard = deck.getGameDeck().get(currentCardNum);
+//        currentCard = guiCard.getLogicCard();
+//        cardInteractive = new CardInteractive(guiCard, this, nickname);
+//        cardPane.getChildren().addFirst(cardInteractive);
+//    }
 
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()

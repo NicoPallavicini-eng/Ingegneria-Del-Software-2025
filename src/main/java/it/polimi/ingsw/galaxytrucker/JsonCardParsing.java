@@ -480,8 +480,8 @@ public class JsonCardParsing {
         completeList.addAll(planetsCards);
         completeList.addAll(meteorsCards);
         completeList.addAll(epidemicCards);
-        //completeList.addAll(combatZoneLCards);
-        //completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
         completeList.addAll(openSpaceCards);
         completeList.addAll(stardustCards);
         completeList.addAll(smugglersCards);

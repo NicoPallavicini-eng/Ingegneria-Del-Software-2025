@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.SceneManager;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Background;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 public class FinalScene extends MyScene{
@@ -27,7 +28,7 @@ public class FinalScene extends MyScene{
         this.root = new StackPane();
 
         claim = new Button("Claim");
-        claim.getStyleClass().add("bottom-button");
+        styleButton(claim, "#875f87");
         claim.setOnMouseClicked(e -> {
             sendMessageToServer("/claimreward", this.nickname);
         });
@@ -36,6 +37,16 @@ public class FinalScene extends MyScene{
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         sceneManager.setFinalScene(this);
+    }
+
+    // Styling helper method with hover effect
+    private void styleButton(Button button, String colorHex) {
+        String baseStyle = "-fx-background-color: " + colorHex + "; -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
+        String hoverStyle = "-fx-background-color: derive(" + colorHex + ", 20%); -fx-text-fill: white; -fx-font-size: 21px; -fx-padding: 12 24 12 24; -fx-background-radius: 5;";
+        button.setStyle(baseStyle);
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setStyle(hoverStyle));
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setStyle(baseStyle));
     }
 
     public Scene getScene() {

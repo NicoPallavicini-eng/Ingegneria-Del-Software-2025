@@ -35,6 +35,9 @@ public class UserShipGrid extends Pane {
     private final BuildingSceneUserShip buildingSceneUserShip;
     private Game game;
     private Player user;
+    private GridPane resGrid;
+    private GridPane handGrid;
+    private GridPane grid;
 
     private final TileView[][] cells = new TileView[ROWS][COLS];
     private final ReservedTileView[] resCells = new ReservedTileView[RES_SLOTS];
@@ -55,19 +58,19 @@ public class UserShipGrid extends Pane {
         bgView.setX(0);
         bgView.setY(0);
 
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setHgap(0);
         grid.setVgap(0);
         grid.setLayoutX(LEFT_BORDER);
         grid.setLayoutY(TOP_BORDER);
 
-        GridPane resGrid = new GridPane();
+        resGrid = new GridPane();
         resGrid.setHgap(13);
         resGrid.setVgap(0);
         resGrid.setLayoutX(RESERVED_LEFT_BORDER);
         resGrid.setLayoutY(RESERVED_TOP_BORDER);
 
-        GridPane handGrid = new GridPane();
+        handGrid = new GridPane();
         handGrid.setLayoutX(HAND_LEFT_BORDER);
         handGrid.setLayoutY(RESERVED_TOP_BORDER);
 
@@ -169,6 +172,20 @@ public class UserShipGrid extends Pane {
         this.setPrefSize(TOT_WIDTH, TOT_HEIGHT);
         this.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
         update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+    }
+
+    public List<Button> getRotates() {
+        List<Button> rotates = new ArrayList<>();
+        rotates.add(rotateLeft);
+        rotates.add(rotateRight);
+        return rotates;
+    }
+
+    public List<GridPane> getResNHand() {
+        List<GridPane> panes = new ArrayList<>();
+        panes.add(handGrid);
+        panes.add(resGrid);
+        return panes;
     }
 
     private void update(Ship ship, int rotation){

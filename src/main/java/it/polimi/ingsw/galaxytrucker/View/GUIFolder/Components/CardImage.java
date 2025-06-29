@@ -38,7 +38,7 @@ public enum CardImage {
     smugglersCard2("GT-cards_II_IT_1.jpg", 2),
     piratesCard1("GT-cards_I_IT_2.jpg", 1),
     piratesCard2("GT-cards_II_IT_2.jpg", 2),
-    stardustCard1("GT-cards_I_IT_3.jpg", 1),
+    stardustCard1("GT-cards_I_IT_3.jpg", 1), // TODO undertsnad why this card isnt view properly
     stardustCard2("GT-cards_II_IT_3.jpg", 2),
     combatZoneCardL("GT-cards_I_IT_15.jpg", 1),
     combatZoneCardNotL("GT-cards_II_IT_15.jpg", 2),

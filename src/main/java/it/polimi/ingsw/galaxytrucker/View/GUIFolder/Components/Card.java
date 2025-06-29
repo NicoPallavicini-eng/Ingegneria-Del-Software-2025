@@ -1,5 +1,6 @@
 package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components;
 
+import it.polimi.ingsw.galaxytrucker.Model.Cards.CombatZoneCard;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -14,6 +15,9 @@ public class Card extends StackPane {
 
     public Card(it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard) {
         this.logicCard = logicCard;
+        if (logicCard instanceof CombatZoneCard) {
+            System.out.println("the bitch is here");
+        }
         this.cardImageEnum = CardImage.valueOf(logicCard.getName());
 
         cardImage = new ImageView(cardImageEnum.getImage());

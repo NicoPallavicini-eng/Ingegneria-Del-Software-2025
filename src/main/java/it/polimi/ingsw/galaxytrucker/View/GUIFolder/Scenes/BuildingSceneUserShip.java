@@ -41,7 +41,6 @@ public class BuildingSceneUserShip extends MyScene {
     private Button viewOthersButton;
     private Button viewTilePileButton;
     private Button viewBoardButton;
-    private Button travelButton;
     private Button hourglassButton;
     private HBox buttonBox;
     private StackPane rootWithBackground;
@@ -68,13 +67,11 @@ public class BuildingSceneUserShip extends MyScene {
         viewOthersButton = new Button("View Others' Ships");
         viewTilePileButton = new Button("View Tile Pile");
         viewBoardButton = new Button("View Board");
-        travelButton = new Button("Travel");
         hourglassButton = new Button("Hourglass");
         viewOthersButton.getStyleClass().add("bottom-button");
         viewTilePileButton.getStyleClass().add("bottom-button");
         viewBoardButton.getStyleClass().add("bottom-button");
         hourglassButton.getStyleClass().add("bottom-button");
-        travelButton.getStyleClass().add("next-button");
 
         viewOthersButton.setOnAction(e -> {
             sendMessageToServer("/viewships", this.nickname);
@@ -93,11 +90,8 @@ public class BuildingSceneUserShip extends MyScene {
                 ex.printStackTrace();
             }
         });
-        travelButton.setOnAction(e -> {
-            sceneManager.next(this);
-        });
 
-        buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, hourglassButton, travelButton);
+        buttonBox = new HBox(100, viewOthersButton, viewTilePileButton, viewBoardButton, hourglassButton);
         buttonBox.setPadding(new Insets(20));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -110,7 +104,7 @@ public class BuildingSceneUserShip extends MyScene {
 
         scene = new Scene(rootWithBackground, SCENE_WIDTH, SCENE_HEIGHT); // default sizing for now
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        this.sceneManager.setUserShipScene(this);
+        this.sceneManager.setUserShipScene(this, userShipGrid);
     }
 
     public Game getGame(){

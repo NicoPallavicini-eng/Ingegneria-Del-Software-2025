@@ -3,12 +3,14 @@ package it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Cards;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.PlanetsCard;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Components.Card;
 import it.polimi.ingsw.galaxytrucker.View.GUIFolder.Scenes.TravellingSceneDefault;
+import it.polimi.ingsw.galaxytrucker.View.IllegalGUIEventException;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PlanetsGUI {
@@ -28,30 +30,96 @@ public class PlanetsGUI {
         choosePlanetButton = new Button("Choose Planet");
         
         addCargoButton.setOnAction(e -> {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setContentText("cargo row:");
-            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            Optional<String> row = dialog.showAndWait();
-            dialog.setContentText("cargo column:");
-            Stage dialogStage2 = (Stage) dialog.getDialogPane().getScene().getWindow();
-            Optional<String> col = dialog.showAndWait();
-            dialog.setContentText("cargo num:");
-            Stage dialogStage3 = (Stage) dialog.getDialogPane().getScene().getWindow();
-            Optional<String> num = dialog.showAndWait();
+            Dialog<List<String>> dialog = new Dialog<>();
+            dialog.setTitle("Enter Cargo Info");
+            dialog.setHeaderText("Fill all fields below:");
 
-            String msg = "/addcargo " + row + "," + col + "," + num;
+            ButtonType confirmButton = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
 
-            travellingScene.sendMessageToServer(msg, this.nickname);
+            TextField cargoRow = new TextField();
+            TextField cargoCol = new TextField();
+            TextField batteryNum = new TextField();
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+
+            grid.add(new Label("Cargo Row:"), 0, 0);
+            grid.add(cargoRow, 1, 0);
+            grid.add(new Label("Cargo Column:"), 0, 1);
+            grid.add(cargoCol, 1, 1);
+            grid.add(new Label("People Number:"), 0, 2);
+            grid.add(batteryNum, 1, 2);
+
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == confirmButton) {
+                    return List.of(
+                            cargoRow.getText(),
+                            cargoCol.getText(),
+                            batteryNum.getText()
+                    );
+                }
+                return null;
+            });
+
+            Optional<List<String>> result = dialog.showAndWait();
+
+            result.ifPresent(inputs -> {
+                String row = inputs.get(0);
+                String col = inputs.get(1);
+                String num = inputs.get(2);
+
+                String msg = "/addcargo " + row + "," + col + "," + num;
+                try {
+                    travellingScene.sendMessageToServer(msg, this.nickname);
+                } catch(IllegalGUIEventException g){
+                    System.out.println(g.getMessage());
+                }
+            });
         });
         choosePlanetButton.setOnAction(e -> {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setContentText("planet num:");
-            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            Optional<String> row = dialog.showAndWait();
+            Dialog<List<String>> dialog = new Dialog<>();
+            dialog.setTitle("Enter Planet Number");
+            dialog.setHeaderText("Fill all fields below:");
 
-            String msg = "/chooseplanet " + row;
+            ButtonType confirmButton = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
 
-            travellingScene.sendMessageToServer(msg, this.nickname);
+            TextField num = new TextField();
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+
+            grid.add(new Label("Cargo Row:"), 0, 0);
+            grid.add(num, 1, 0);
+
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == confirmButton) {
+                    return List.of(
+                            num.getText()
+                    );
+                }
+                return null;
+            });
+
+            Optional<List<String>> result = dialog.showAndWait();
+
+            result.ifPresent(inputs -> {
+                String row = inputs.getFirst();
+
+                String msg = "/chooseplanet " + row;
+                try {
+                    travellingScene.sendMessageToServer(msg, this.nickname);
+                } catch(IllegalGUIEventException g){
+                    System.out.println(g.getMessage());
+                }
+            });
         });
 
         addCargoButton.getStyleClass().add("bottom-button");
