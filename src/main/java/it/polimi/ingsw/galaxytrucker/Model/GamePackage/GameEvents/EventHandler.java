@@ -1,6 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents;
 
 
+
 import it.polimi.ingsw.galaxytrucker.Model.Color;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
@@ -1068,7 +1069,7 @@ public class EventHandler implements Serializable {
             return;
         }
         game.sortListOfActivePlayers();
-        int maxDays = game.getListOfActivePlayers().get(0).getShip().getTravelDays();
+        Integer maxDays = game.getListOfActivePlayers().get(0).getShip().getTravelDays();
         for(Ship ship : game.getListOfActivePlayers().stream().map(Player::getShip).toList()){
             if(ship.getTravelDays() + game.getLapLenght() < maxDays){
                 ship.setTravelDays(null);

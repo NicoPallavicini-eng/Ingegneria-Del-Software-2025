@@ -14,11 +14,17 @@ public class FinalState extends GameState implements Serializable {
     private List<Ship> activeShips = new ArrayList<>();
     private List<Ship> gaveUpShips = new ArrayList<>();
     private List<Ship> ships = new  ArrayList<>();
-
+    private final Player disconnectionWinner;
 
 
     public FinalState(Game game) {
         this.game = game;
+        disconnectionWinner = null;
+    }
+
+    public FinalState(Game game, Player disconnectionWinner) {
+        this.game = game;
+        this.disconnectionWinner = disconnectionWinner;
     }
 
     public Game getGame() {
@@ -105,5 +111,7 @@ public class FinalState extends GameState implements Serializable {
         }
     }
 
-
+    public Player getDisconnectionWinner() {
+        return disconnectionWinner;
+    }
 }

@@ -54,7 +54,7 @@ public class Hourglass implements Serializable {
         someoneHasReconnected = false;
         scheduler.schedule(() -> {
             if(!someoneHasReconnected) {
-                game.setGameState(new FinalState(game));
+                game.setGameState(new FinalState(game, winner));
                 game.getGameState().init();
                 throw new IllegalEventException(winner + "has won for disconnections");
             }

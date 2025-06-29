@@ -205,6 +205,10 @@ public class ServerController {
                                             for(Player player : game.getListOfPlayers()){
                                                 rmiClient.printMessage(player.getNickname() +"\t credits: " + player.getShip().getCredits() + "\n");
                                             }
+                                            Player winner = ((FinalState)gameState).getDisconnectionWinner();
+                                            if(winner!=null){
+                                                rmiClient.printMessage("\n" + winner + " has won for disconnections");
+                                            }
                                         } catch (RemoteException e) {
                                             throw new RuntimeException(e);
                                         }
@@ -824,6 +828,15 @@ public class ServerController {
                                         objOut.reset();
                                         for(Player player : game.getListOfPlayers()){
                                             msg = new Message("String", game,player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            objOut = socketClient.getObjOut();
+                                            objOut.writeObject(msg);
+                                            objOut.flush();
+                                            objOut.reset();
+                                        }
+
+                                        Player winner = ((FinalState)gameState).getDisconnectionWinner();
+                                        if(winner!=null){
+                                            msg = new Message("String", game,"\n" + winner + " has won for disconnections");
                                             objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();

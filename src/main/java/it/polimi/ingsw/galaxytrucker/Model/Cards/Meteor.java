@@ -105,13 +105,19 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getRowListTiles(diceRoll).getFirst();
             ConnectorType c;
-            if (this.direction == WEST) {
-                c = firstTile.getConnectors().get(1);
-            } else {//east
-                c = firstTile.getConnectors().get(3);
+            Tile hitTile;
+            if(direction == WEST) {
+                hitTile = ship.getRowListTiles(diceRoll).getFirst();
+                c = hitTile.getConnectors().get(1);
+
             }
+            else{//east
+                hitTile = ship.getRowListTiles(diceRoll).getLast();
+                c = hitTile.getConnectors().get(3);
+            }
+
+
             if (c != ConnectorType.NONE
                     && c != ConnectorType.CANNON_SINGLE
                     && c != ConnectorType.CANNON_DOUBLE
@@ -161,13 +167,19 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
                     }
                 }
             }
-            Tile firstTile = ship.getColumnListTiles(diceRoll).getFirst();
+
             ConnectorType c;
-            if (this.direction == NORTH) {
-                c = firstTile.getConnectors().get(0);
-            } else { //south
-                c = firstTile.getConnectors().get(2);
+            Tile hitTile;
+            if(direction == NORTH) {
+                hitTile = ship.getColumnListTiles(diceRoll).getFirst();
+                c = hitTile.getConnectors().get(0);
+
             }
+            else{//south
+                hitTile = ship.getColumnListTiles(diceRoll).getLast();
+                c = hitTile.getConnectors().get(2);
+            }
+
             if (c != ConnectorType.NONE
                     && c != ConnectorType.CANNON_SINGLE
                     && c != ConnectorType.CANNON_DOUBLE

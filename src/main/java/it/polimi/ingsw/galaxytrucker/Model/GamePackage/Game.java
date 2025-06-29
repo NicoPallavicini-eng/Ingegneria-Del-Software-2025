@@ -14,6 +14,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilePile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +77,12 @@ public class Game implements Serializable, Observable {
             if(listOfActivePlayers.isEmpty()){
                 return;
             }
-            listOfActivePlayers.sort((p1, p2) -> p2.getShip().getTravelDays() - p1.getShip().getTravelDays());
+            listOfActivePlayers.sort(
+                    Comparator.comparing(
+                            p -> p.getShip().getTravelDays(),
+                            Comparator.nullsLast(Comparator.reverseOrder())
+                    )
+            );
         }
     }
 

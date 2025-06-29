@@ -72,7 +72,7 @@ public class TUI implements UI {
         int i = 1;
         for (Player player : game.getListOfPlayers()) {
             if(player.getShip().getTravelDays() == null){
-                System.out.println(player.getNickname() + ": has not finished yet");
+                System.out.println(player.getNickname() + ": not on the board");
                 i++;
             }else {
                 System.out.println(i + ": " + player.getNickname() + ", " + player.getShip().getColor() +
