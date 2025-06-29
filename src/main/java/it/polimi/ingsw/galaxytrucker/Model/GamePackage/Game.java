@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Controller.Server.Observer;
 import it.polimi.ingsw.galaxytrucker.JsonCardParsing;
 import it.polimi.ingsw.galaxytrucker.JsonParsing;
 import it.polimi.ingsw.galaxytrucker.Model.Cards.Deck;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.BuildingState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
 import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.WaitingState;
 import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
@@ -22,7 +23,7 @@ public class Game implements Serializable, Observable {
     private final List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers = -1;
     private GameState gameState = new WaitingState(this);
-    private Hourglass hourglass;
+    private Hourglass hourglass = new Hourglass(new BuildingState(this));
     private TilePile tilePile;  
     private Deck deck;
     private final int lapLenght = 24;
