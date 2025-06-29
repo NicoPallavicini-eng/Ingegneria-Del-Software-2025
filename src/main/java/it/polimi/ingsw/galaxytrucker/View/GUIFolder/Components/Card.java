@@ -15,9 +15,6 @@ public class Card extends StackPane {
 
     public Card(it.polimi.ingsw.galaxytrucker.Model.Cards.Card logicCard) {
         this.logicCard = logicCard;
-        if (logicCard instanceof CombatZoneCard) {
-            System.out.println("the bitch is here");
-        }
         this.cardImageEnum = CardImage.valueOf(logicCard.getName());
 
         cardImage = new ImageView(cardImageEnum.getImage());

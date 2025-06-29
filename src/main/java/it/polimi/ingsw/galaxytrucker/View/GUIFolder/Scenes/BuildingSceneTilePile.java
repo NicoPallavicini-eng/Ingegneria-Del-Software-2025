@@ -130,7 +130,7 @@ public class BuildingSceneTilePile extends MyScene {
             sendMessageToServer("/pickuptile " + (index / 16) + "," + (index % 16), this.nickname);
         }
         catch (IllegalGUIEventException e){
-            errorPopUp(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -143,7 +143,7 @@ public class BuildingSceneTilePile extends MyScene {
         try {
             sendMessageToServer("/putdowntile", this.nickname);
         } catch (IllegalGUIEventException e){
-            errorPopUp(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -158,19 +158,6 @@ public class BuildingSceneTilePile extends MyScene {
         Platform.runLater(() -> {
             centerContent = new StackPane(tilePileGrid);
             this.layout.setCenter(centerContent);
-        });
-    }
-
-    private void errorPopUp(IllegalGUIEventException e){
-        javafx.application.Platform.runLater(() -> {
-            javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-            errorAlert.setTitle("Error");
-            errorAlert.setContentText(e.getMessage());
-
-            Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
-            errorStage.getIcons().clear();
-            errorStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png"))));
-            errorAlert.showAndWait();
         });
     }
 }

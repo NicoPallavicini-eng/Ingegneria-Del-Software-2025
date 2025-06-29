@@ -88,18 +88,15 @@ public class UserShipGrid extends Pane {
                             try {
                                 buildingSceneUserShip.sendMessageToServer("/placetile " + finalRow + "," + finalCol, this.user.getNickname());
                             } catch (IllegalGUIEventException ex) {
-                                errorPopUp(ex);
+                                System.out.println(ex.getMessage());
                             }
                         } else if (tile.isClickable()) {
                             try {
-                                Tile realTile = tile.getLogicTile();
-                                buildingSceneUserShip.sendMessageToServer("GAME", buildingSceneUserShip.getUser().getNickname());
-//                                if (realTile == buildingSceneUserShip.getUser().getShip().getLastPlacedTile()) {
-                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship", this.user.getNickname()); //TODO non capisco neanche qui... Devo premere sul tile in hand o sulla tile della ship?
+                                    buildingSceneUserShip.sendMessageToServer("/pickupfromship", this.user.getNickname());
                                     update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
-//                                }
+
                             } catch (IllegalGUIEventException ex) {
-                                errorPopUp(ex);
+                                System.out.println(ex.getMessage());
                             }
                         }
                     });
@@ -115,15 +112,19 @@ public class UserShipGrid extends Pane {
             int finalSlot = slot;
             tile.getOverlayButton().setOnAction(e -> {
                 if (tile.isClickable() && !tile.isFull()) {
-                    buildingSceneUserShip.sendMessageToServer("/reservetile", this.user.getNickname());
-                    update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
-
-//                    setResTile(finalSlot, handCell[0].getLogicTile(), handCell[0].getRotation());
-//                    handCell[0].clearTileImage();
-//                    tile.setFull(true);
+                    try {
+                        buildingSceneUserShip.sendMessageToServer("/reservetile", this.user.getNickname());
+                        update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+                    } catch (IllegalGUIEventException ex) {
+                        System.out.println(ex.getMessage());
+                    }
                 } else if (tile.isClickable()) {
-                    buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot+1), this.user.getNickname());
-                    update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+                    try {
+                        buildingSceneUserShip.sendMessageToServer("/pickupreservedtile " + (finalSlot + 1), this.user.getNickname());
+                        update(user.getShip(), (user.getShip().getTileInHand()) != null ? user.getShip().getTileInHand().getRotation() : 0);
+                    } catch (IllegalGUIEventException ex) {;
+                        System.out.println(ex.getMessage());
+                    }
                 }
             });
             resCells[slot] = tile;
@@ -134,14 +135,14 @@ public class UserShipGrid extends Pane {
         tile.setPrefSize(RESERVED_TILE_SIZE, RESERVED_TILE_SIZE);
         tile.getOverlayButton().setOnAction(e -> {
             if (tile.isClickable() && tile.isFull()) {
-                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile); //TODO: NON HO CAPITO :) COSA FA?
+                buildingSceneUserShip.getBuildingSceneTilePile().putDownTile(tile);
             }
         });
         handCell[0] = tile;
         handGrid.add(tile, 0, 0);
 
         // --- MAIN CABIN ---
-        Optional<Tile> mainCabin = user.getShip().getTileOnFloorPlan(2, 3); // TODO check correctness
+        Optional<Tile> mainCabin = user.getShip().getTileOnFloorPlan(2, 3);
 
         cells[2][3].setLogicTile(mainCabin.orElse(null));
         cells[2][3].setFull(true);
@@ -160,10 +161,18 @@ public class UserShipGrid extends Pane {
         rotateRight.setVisible(false);
 
         rotateLeft.setOnAction(e -> {
-            buildingSceneUserShip.sendMessageToServer("/rotate left", this.user.getNickname());
+            try {
+                buildingSceneUserShip.sendMessageToServer("/rotate left", this.user.getNickname());
+            } catch (IllegalGUIEventException ex) {
+                System.out.println(ex.getMessage());
+            }
         });
         rotateRight.setOnAction(e -> {
-            buildingSceneUserShip.sendMessageToServer("/rotate right", this.user.getNickname());
+            try {
+                buildingSceneUserShip.sendMessageToServer("/rotate right", this.user.getNickname());
+            } catch (IllegalGUIEventException ex) {
+                System.out.println(ex.getMessage());
+            }
         });
 
         // Absolute positioning
@@ -217,38 +226,6 @@ public class UserShipGrid extends Pane {
             resCells[i].setClickable(true);
         }
     }
-    /**
-     * Sets a tile image at the specified logical row and column.
-     */
-    public void setTile (int row, int col, Tile logicTile, int rotation) {
-        if (row >= 0 && row < ROWS && col >= 0 && col < COLS &&
-            !((row == 0 && (col == 0 || col == 1 || col == 3 || col == 5 || col == 6)) ||
-            (row == 1 && (col == 0 || col == 6)) ||
-            (row == 4 && col == 3) || (row == 2 && col == 3)) &&
-            cells[row][col].getLogicTile() == null) {
-            cells[row][col].setLogicTile(logicTile);
-            cells[row][col].setFull(true);
-            cells[row][col].setRotation(logicTile.getRotation());
-            updateRotateVisible(false);
-            cells[row][col].setClickable(true); // TODO setup logic of last picked up cell
-        } else {
-            // TODO print error: "hand already filled" or other errors
-        }
-        // TODO add conformity checks
-    }
-
-    public void setResTile (int slot, Tile tile, int rotation) {
-        if (slot >= 0 && slot < RES_SLOTS && resCells[slot].getLogicTile() == null) {
-            resCells[slot].setLogicTile(tile);
-            resCells[slot].setFull(true);
-            resCells[slot].setRotation(rotation);
-            updateRotateVisible(false);
-            resCells[slot].setClickable(true); // TODO setup the putdown n all
-        } else {
-            // TODO print error: "slot already filled" or other errors
-        }
-        // TODO add conformity checks
-    }
 
     public void setHandTile (Tile tile, int rotation) {
         handCell[0].setLogicTile(tile);
@@ -270,57 +247,6 @@ public class UserShipGrid extends Pane {
 
     public ReservedTileView getHandTile () {
         return handCell[0];
-    }
-
-//    public Tile pickUpFromShip(TileView tile) { TODO understand if necessary (prob no)
-//        Tile ret;
-//        if (tile.getLogicTile() != null) {
-//            ret = tile.getLogicTile();
-//            tile.setLogicTile(null);
-//        } else {
-//            ret = null;
-//            // TODO print error: "no tile present"
-//        }
-//        return ret;
-//        // TODO add conformity checks
-//    }
-
-    public Tile pickUpReserved(ReservedTileView tile) {
-        Tile ret;
-        if (tile.getLogicTile() != null) {
-            ret = tile.getLogicTile();
-            tile.setLogicTile(null);
-        } else {
-            ret = null;
-            // TODO print error: "no tile present"
-        }
-        return ret;
-        // TODO add conformity checks
-    }
-
-    public void reserveTile(int slot, ReservedTileView tile) {
-        resCells[slot] = tile;
-        handCell[0] = null;
-        // TODO add conformity checks
-    }
-
-    public void placeTileOnShip(int row, int column, TileView tile) {
-        cells[row][column] = tile;
-        handCell[0] = null;
-        // TODO add conformity checks
-    }
-
-    private void errorPopUp(IllegalGUIEventException e){
-        javafx.application.Platform.runLater(() -> {
-            javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-            errorAlert.setTitle("Error");
-            errorAlert.setContentText(e.getMessage());
-
-            Stage errorStage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
-            errorStage.getIcons().clear();
-            errorStage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/misc/window_simple_icon.png")));
-            errorAlert.showAndWait();
-        });
     }
 
     public List<TileView> getTiles() {
