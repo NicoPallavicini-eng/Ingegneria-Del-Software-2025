@@ -61,7 +61,7 @@ public class Deck implements Serializable {
     /**
      * This function create a valid Game Deck,it also create sub Desk that is possible to visualize
      */
-    public void assembleGameDeck() { // TODO implement CardNumber logic for also tut
+    public void assembleGameDeck() {
         Collections.shuffle(allCardsLev1);
         Collections.shuffle(allCardsLev2);
 

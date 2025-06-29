@@ -15,14 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//todo view devo veder quale cannonball sta arrivando
+/*Players fight pirates according to their travel order,
+once pirates have been slain or all player have been defeated
+the reckoning phase starts for all defeated players
+lastly the player that defeated pirates can loot them if they wish in the claiming phase
+*/
 
-/**
- * Players fight pirates according to their travel order,
- * once pirates have been slain or all player have been defeated
- * the reckoning phase starts for all defeated players
- * lastly the player that defeated pirates can loot them if they wish in the claiming phase
- */
+
 public class PiratesState extends TravellingState implements Serializable {
     private PiratesCard currentCard;
     private Player piratesSlayer;
@@ -34,18 +33,11 @@ public class PiratesState extends TravellingState implements Serializable {
     private List<Player> defendedPlayers;
     private List<Player> playersWithIllegalShips;
 
-    /**
-     * @param game
-     * @param card
-     */
     public PiratesState(Game game, PiratesCard card) {
         super(game, card);
         currentCard = card;
     }
 
-    /**
-     * This function initialize PirateState
-     */
     public void init(){
         super.init();
         defeatedPlayers = new ArrayList<>();
@@ -54,10 +46,6 @@ public class PiratesState extends TravellingState implements Serializable {
         game.notifyObservers(game, "pirates");
     }
 
-    /**
-     * ActivateCannonsEvent is possible during Pirate State
-     * @param event
-     */
     public void handleEvent(ActivateCannonsEvent event){
         if(!event.player().equals(currentPlayer)){
             throw new IllegalEventException("It is not your turn");
@@ -81,9 +69,6 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
-    /**
-     * This function manages the turns of Players
-     */
     @Override
     protected void nextPlayer(){
         super.nextPlayer();
@@ -92,10 +77,7 @@ public class PiratesState extends TravellingState implements Serializable {
             consequences();
         }
     }
-    /**
-     * ClaimRewardEvent is possible during Pirate State
-     * @param event
-     */
+
     public void handleEvent(ClaimRewardEvent event){
         if(!event.player().equals(piratesSlayer)){
             throw new IllegalEventException("You have not slain the pirates");
@@ -109,10 +91,7 @@ public class PiratesState extends TravellingState implements Serializable {
             next();
         }
     }
-    /**
-     * NoChoiceEvent is possible during Pirate State
-     * @param event
-     */
+
     public void handleEvent(NoChoiceEvent event){
         if(playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("Fix your ship first");
@@ -163,9 +142,6 @@ public class PiratesState extends TravellingState implements Serializable {
 
     }
 
-    /**
-     * This Functions manages the Cannonball Shots to defeated Players
-     */
     private void consequences(){
         if(!playersWithIllegalShips.isEmpty()){
             reckoningPhase = false;
@@ -196,12 +172,6 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
-    /**
-     * This function represent an auxiliary function that checks if Shiled defends from Cannonball
-     * @param shieldOrientation
-     * @param direction
-     * @return
-     */
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
         switch (shieldOrientation) {
             case NORTHEAST -> {
@@ -219,10 +189,7 @@ public class PiratesState extends TravellingState implements Serializable {
         }
         return false;
     }
-    /**
-     * ActivateShieldEvent is possible during Pirate State
-     * @param event
-     */
+
     public void handleEvent(ActivateShieldEvent event){
         if(playersWithIllegalShips.contains(event.player())){
             throw new IllegalEventException("Fix your ship first");
@@ -249,10 +216,6 @@ public class PiratesState extends TravellingState implements Serializable {
         }
     }
 
-    /**
-     * This function return a Pirate Slayer
-     * @return Player
-     */
     public Player getPiratesSlayer() {
         return piratesSlayer;
     }
@@ -273,10 +236,6 @@ public class PiratesState extends TravellingState implements Serializable {
         return defendedPlayers;
     }
 
-    /**
-     * This function handles Player,that disconnected from Game
-     * @param p Player
-     */
     protected void disconnectionConsequences(Player p){
         List<Player> connectedPlayers = game.getListOfPlayers().stream().filter(player->player.getOnlineStatus()).toList();
         if(connectedPlayers.size() == 1){
@@ -302,10 +261,7 @@ public class PiratesState extends TravellingState implements Serializable {
             super.disconnectionConsequences(p);
         }
     }
-    /**
-     * ChooseSubShipEvent is possible during Pirate State
-     * @param event
-     */
+
     public void handleEvent(ChooseSubShipEvent event) {
         if(!shipLegalityPhase) {
             throw new IllegalEventException("Not legal to remove in this phase");
