@@ -17,11 +17,11 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-/*This Class handles the 2 subclasses CombatZoneLState and CombatZoneNotLState.
-it uses the attributes current penalty and current challenge for every phase of the card,
-when the challenge is completed a currentLoser is set and they have to endure the penalty
+/**
+ * This Class handles the 2 subclasses CombatZoneLState and CombatZoneNotLState.
+ * it uses the attributes current penalty and current challenge for every phase of the card,
+ * when the challenge is completed a currentLoser is set and they have to endure the penalty
  */
-
 //todo view si deve vedere challenge corrente e penalty corrente atrimenti non si capisce
 public abstract class CombatZoneState extends TravellingState implements Serializable {
 
@@ -33,6 +33,10 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     protected boolean loserIsIllegal;
 
 
+    /**
+     * @param game
+     * @param card
+     */
     public CombatZoneState(Game game, CombatZoneCard card) {
         super(game, card);
         currentCard = card;
@@ -40,7 +44,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
     }
 
 
-
+    /**
+     * ActivateEnginesEvent is possible during CombatZoneState
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(ActivateEnginesEvent event)throws IllegalEventException {
         if(currentChallenge.equals(CombatZoneChallenge.CANNONS)){
             throw new IllegalEventException("not engine time");
@@ -55,8 +63,12 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
             }
         }
     }
-
-    public void handleEvent(ActivateCannonsEvent event){
+    /**
+     * ActivateCannonsEvent is possible during CombatZoneState
+     * @param event
+     * @throws IllegalEventException
+     */
+    public void handleEvent(ActivateCannonsEvent event) throws IllegalEventException{
         if(currentChallenge.equals(CombatZoneChallenge.CANNONS)){
             throw new IllegalEventException("not cannon time");
         }
@@ -71,7 +83,11 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
             }
         }
     }
-
+    /**
+     * NoChoiceEvent is possible during CombatZoneState
+     * @param event
+     * @throws IllegalEventException
+     */
     public void handleEvent(NoChoiceEvent event)throws IllegalEventException {
         Ship ship = event.player().getShip();
 
@@ -106,7 +122,9 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
             throw new IllegalEventException("nobody asked");
         }
     }
-
+    /**
+     * This function manages people penalty
+     */
     protected void peoplePenalty() {
         OptionalInt min = game.getListOfActivePlayers().stream()
                 .mapToInt(p -> p.getShip().getNumberOfInhabitants())
@@ -119,7 +137,9 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
             }
         }
     }
-
+    /**
+     * This function manages engines penalty
+     */
     protected void enginesPenalty() {
         OptionalInt min = game.getListOfActivePlayers().stream()
                 .mapToInt(p -> p.getShip().getEnginePower())
@@ -132,7 +152,9 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
             }
         }
     }
-
+    /**
+     * This function manages cannons penalty
+     */
     protected void cannonsPenalty() {
         OptionalDouble min = game.getListOfActivePlayers().stream()
                 .mapToDouble(p -> p.getShip().getFirepower())
@@ -146,7 +168,13 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
-    public void handleEvent(ActivateShieldEvent event) {
+    /**
+     * ActivateShieldEvent is possible during CombatZoneState
+     * @param event
+     * @throws IllegalEventException
+     */
+
+    public void handleEvent(ActivateShieldEvent event) throws IllegalEventException {
         if (!currentPenalty.equals(CombatZonePenalty.CANNONBALLS)) {
             throw new IllegalEventException("Not time for activating shield");
         } else if (!currentLoser.equals(event.player())) {
@@ -163,6 +191,12 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function checks whether shield defend or not
+     * @param shieldOrientation
+     * @param direction
+     * @return
+     */
     private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
         switch (shieldOrientation) {
             case NORTHEAST -> {
@@ -181,6 +215,9 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         return false;
     }
 
+    /**
+     * This function shoot Cannonball to current Looser
+     */
     public void cannonballStorm(){
         if(currentLoser.getShip().isShipBroken()){
             loserIsIllegal = true;
@@ -199,27 +236,51 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function returns a current looser
+     * @return Player
+     */
     public Player getCurrentLoser() {
         return currentLoser;
     }
 
+    /**
+     * This function returns Current Challenge
+     * @return CombatZoneChallenge
+     */
     public CombatZoneChallenge getCurrentChallenge() {
         return currentChallenge;
     }
 
+    /**
+     * This function return a actual Combat Zone Penality
+     * @return CombatZonePenalty
+     */
     public CombatZonePenalty getCurrentPenalty() {
         return currentPenalty;
     }
 
+    /**
+     * This function return a current Card
+     * @return CombatZoneCard
+     */
     @Override
     public CombatZoneCard getCurrentCard() {
         return currentCard;
     }
 
+    /**
+     * This function return a current Cannonball
+     * @return Cannonball
+     */
     public Cannonball getCurrentCannonball() {
         return currentCannonball;
     }
 
+    /**
+     * This function manages disconnection of a Player during Combat Zone Card
+     * @param p Player
+     */
     @Override
     protected void disconnectionConsequences(Player p) {
         super.disconnectionConsequences(p);
@@ -231,6 +292,9 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function decides which method of penalty to call
+     */
     protected void penalty(){
         switch(currentChallenge){
             case PEOPLE -> peoplePenalty();
@@ -239,10 +303,18 @@ public abstract class CombatZoneState extends TravellingState implements Seriali
         }
     }
 
+    /**
+     * This function change a challenge
+     */
     protected void nextChallenge(){}
 
 
-    public void handleEvent(ChooseSubShipEvent event) {
+    /**
+     * ChooseSubShipEvent is possible during CombatZoneState
+     * @param event
+     * @throws IllegalEventException
+     */
+    public void handleEvent(ChooseSubShipEvent event) throws IllegalEventException {
         if(!event.player().equals(currentLoser) || !loserIsIllegal){
             throw new IllegalEventException("You have already a functioning spaceship");
         }

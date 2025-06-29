@@ -8,16 +8,26 @@ import it.polimi.ingsw.galaxytrucker.Model.Tiles.BatteryTile;
 
 import java.io.Serializable;
 
+/**
+ * This class represent one of the two types of CombatZone Card
+ */
 public class CombatZoneNotLState extends CombatZoneState implements Serializable {
 
     private CombatZoneCardNotL card;
     private int cargoToLose;
 
+    /**
+     * @param game
+     * @param card
+     */
     public CombatZoneNotLState(Game game, CombatZoneCardNotL card) {
         super(game, card);
         currentCard = card;
     }
 
+    /**
+     * This function initialize CombatZoneNotLState
+     */
     public void init(){
         super.init();
         game.notifyObservers(game, "combatZoneNotL");
@@ -26,14 +36,18 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         currentPenalty = CombatZonePenalty.DAYS;
         cargoToLose = currentCard.getCargoLost();
     }
-
+    /**
+     * This function manages cannons penalty
+     */
     protected void cannonsPenalty(){
         game.notifyObservers(game, "cannonsPenalty");
         super.cannonsPenalty();
         EventHandler.moveBackward(currentLoser.getShip(), currentCard.getDaysLost(), game);
         nextChallenge();
     }
-
+    /**
+     * This function manages engines penalty
+     */
     protected void enginesPenalty(){
         game.notifyObservers(game, "enginesPenalty");
         super.enginesPenalty();
@@ -56,13 +70,17 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         }
     }
 
-
+    /**
+     * This function manages people penalty
+     */
     protected void peoplePenalty(){
         game.notifyObservers(game, "peoplePenalty");
         super.peoplePenalty();
         cannonballStorm();
     }
-
+    /**
+     * this function change a challenge of this State
+     */
     protected void nextChallenge(){
         super.init();
         currentLoser = null;

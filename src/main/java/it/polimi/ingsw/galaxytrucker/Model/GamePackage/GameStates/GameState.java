@@ -9,12 +9,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-/*superclass of all the gamestates,
-it defines the handleEvent methods that are overloaded.
-Usually these methods are overriden in the gamestates in which they are available,
-unless they are always available, like connect and disconnect
- */
 
+/**
+ * superclass of all the gamestates,
+ * it defines the handleEvent methods that are overloaded.
+ * Usually these methods are overriden in the gamestates in which they are available,
+ * unless they are always available, like connect and disconnect
+ */
 public abstract class GameState implements Serializable {
     protected Game game;
 
@@ -22,7 +23,14 @@ public abstract class GameState implements Serializable {
          throw new IllegalEventException("The player used a command not available in this phase of the game.");
     }
 
+    /**
+     * This function is used to change GameState
+     */
     public void next(){};
+
+    /**
+     * This function is used to initialize Game state
+     */
     public void init(){};
 
     public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {

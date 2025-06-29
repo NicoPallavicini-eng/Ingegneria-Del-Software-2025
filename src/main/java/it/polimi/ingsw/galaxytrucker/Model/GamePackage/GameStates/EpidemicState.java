@@ -14,22 +14,35 @@ import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 
 // all is done indipendently
 
+/**
+ * Epidemic State eliminates from eache cabin an Inhabitant,if it's connected to other Cabins
+ */
 public class EpidemicState extends TravellingState implements Serializable {
     private EpidemicCard currentCard;
     private ArrayList<Thread> threads;
 
 
+    /**
+     * @param game
+     * @param card
+     */
     public EpidemicState(Game game, EpidemicCard card) {
         super(game, card);
         currentCard = card;
     }
 
+    /**
+     * This function initialize Epidemic State
+     */
     public void init(){
         threads = new ArrayList<>();
         process();
         game.notifyObservers(game, "epidemic");
     }
 
+    /**
+     * This function process an Epidemic State,it eliminate oneInhabitants from Cabins that are connected to other Cabins
+     */
     public void process(){
         for(Player player : game.getListOfActivePlayers()){
             Thread t = new Thread(() -> {
@@ -66,7 +79,10 @@ public class EpidemicState extends TravellingState implements Serializable {
         next();
     }
 
-    // Helper method to update inhabitants
+    /**
+     * Helper method to update inhabitants
+     * @param cabin
+     */
     private void updateInhabitants(CabinTile cabin) {
         if (cabin.getInhabitants() == ONE) {
             cabin.updateInhabitants(NONE);
