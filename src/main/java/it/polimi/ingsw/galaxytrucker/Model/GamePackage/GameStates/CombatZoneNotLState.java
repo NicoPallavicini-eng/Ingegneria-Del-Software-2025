@@ -20,19 +20,22 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
 
     public void init(){
         super.init();
+        game.notifyObservers(game, "combatZoneNotL");
+        game.notifyObservers(game, "combatCannonChallenge");
         currentChallenge = CombatZoneChallenge.CANNONS;
         currentPenalty = CombatZonePenalty.DAYS;
         cargoToLose = currentCard.getCargoLost();
-        game.notifyObservers(game, "combatZoneNotL");
     }
 
     protected void cannonsPenalty(){
+        game.notifyObservers(game, "cannonsPenalty");
         super.cannonsPenalty();
         EventHandler.moveBackward(currentLoser.getShip(), currentCard.getDaysLost(), game);
         nextChallenge();
     }
 
     protected void enginesPenalty(){
+        game.notifyObservers(game, "enginesPenalty");
         super.enginesPenalty();
         Player p = currentLoser;
         long available = p.getShip().getListOfCargo().stream()
@@ -55,6 +58,7 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
 
 
     protected void peoplePenalty(){
+        game.notifyObservers(game, "peoplePenalty");
         super.peoplePenalty();
         cannonballStorm();
     }
@@ -64,10 +68,12 @@ public class CombatZoneNotLState extends CombatZoneState implements Serializable
         currentLoser = null;
         switch(currentChallenge){
             case CANNONS -> {
+                game.notifyObservers(game, "combatEnginesChallenge");
                 currentChallenge = CombatZoneChallenge.ENGINES;
                 currentPenalty = CombatZonePenalty.CARGO;
             }
             case ENGINES -> {
+                game.notifyObservers(game, "combatPeopleChallenge");
                 currentChallenge = CombatZoneChallenge.PEOPLE;
                 currentPenalty = CombatZonePenalty.CANNONBALLS;
                 peoplePenalty();}
