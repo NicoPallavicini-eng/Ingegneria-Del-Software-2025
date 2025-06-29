@@ -14,9 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class handles various game events related to the player's actions in the game.
+ * It processes events such as connecting players, disconnecting players, placing tiles,
+ * activating engines, cannons, and shields, and managing aliens and cargo.
+ */
 public class EventHandler implements Serializable {
 
-    // ez skip
+    /**
+     * Handles the ChooseSubShipEvent, which allows a player to choose a sub-ship
+     * by selecting a tile on their ship's floor plan.
+     *
+     * @param event The ChooseSubShipEvent containing the player's choice.
+     */
     public static void handleEvent(ChooseSubShipEvent event) {
         Ship ship = event.player().getShip();
         Optional<Tile> optionalTile = ship.getTileOnFloorPlan(event.row(), event.col());
@@ -118,11 +128,13 @@ public class EventHandler implements Serializable {
 
     }
 
-    /*
-    public record ConnectEvent(String nickname, String IP) implements GameEvent
-    */
-    //istances a new player and adds it to the list of players in game
-    // public static void handleEvent(ConnectEvent event, Game game){
+    /**
+     * Handles the ConnectEvent, which is triggered when a player connects to the game.
+     * It creates a new Player and Ship, assigns a color, and adds the player to the game.
+     *
+     * @param event The ConnectEvent containing the player's IP and nickname.
+     * @param game  The current game instance.
+     */
     public static void handleEvent(ConnectEvent event, Game game) {
         boolean finished = false;
         synchronized(game.getListOfPlayers()){
@@ -142,6 +154,11 @@ public class EventHandler implements Serializable {
         }
     }
 
+    /**
+     * Builds a test ship with predefined tiles for testing purposes.
+     *
+     * @param ship The ship to build the test tiles on.
+     */
     private static void handleEvent(Ship ship){
         //CabinTile centralCabin = new CabinTile(ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL,ConnectorType.UNIVERSAL, CabinInhabitants.NONE,true,Color.RED,0,0);
 
@@ -183,13 +200,10 @@ public class EventHandler implements Serializable {
         tile.setFacingUp(true);
     }
 
-    /*
-    public record DisconnectEvent(Player player) implements GameEvent
-        removes it from the list of players and ends game
-        to change if we implement disconnection resilience
-     */
-    //FATTO
-    public static void handleEvent(DisconnectEvent event, Game game) {
+    /**
+     * Handles the DisconnectEvent, which is triggered when a player disconnects from the game.
+    */
+     public static void handleEvent(DisconnectEvent event, Game game) {
         Player player = event.player();
         player.setOnlineStatus(false);
         synchronized (game.getListOfActivePlayers()) {
@@ -197,8 +211,11 @@ public class EventHandler implements Serializable {
         }
     }
 
-    // evitabile
-    //FATTO
+    /**
+     * Handles the PickUpTileEvent, which is triggered when a player picks up a tile from the tile pile.
+     * @param event
+     * @param game
+     */
     public static void handleEvent(PickUpTileEvent event, Game game) {
         List<Tile> pile = game.getTilePile().getTilePile();
         synchronized(pile) {
@@ -220,12 +237,12 @@ public class EventHandler implements Serializable {
             pile.set(event.index(), null);
         }
     }
-    /*
-    public record RotateTileEvent(Player player, boolean right) implements GameEvent
-     */
 
-    //checks tile in hand not null and rotates
-    //FATTO
+
+    /**
+     * Handles the RotateTileEvent, which is triggered when a player rotates a tile in their hand.
+     * @param event
+     */
     public static void handleEvent(RotateTileEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -242,8 +259,11 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //checks that it is not null
-    //FATTO
+    /**
+     * Handles the PutDownTileEvent, which is triggered when a player puts down a tile from their hand back into the tile pile.
+     * @param event
+     * @param game
+     */
     public static void handleEvent(PutDownTileEvent event, Game game) {
         Ship ship = event.player().getShip();
         List<Tile> pile = game.getTilePile().getTilePile();
@@ -262,8 +282,10 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //checks correct tile and life support
-    //FATTO
+    /**
+     * Handles the PlaceOrangeAlienEvent, which is triggered when a player places an orange alien in a cabin tile.
+     * @param event
+     */
     public static void handleEvent(PlaceOrangeAlienEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -310,8 +332,10 @@ public class EventHandler implements Serializable {
 
     }
 
-    //checks correct tile and life support
-    //FATTO
+    /**
+     * Handles the PlacePurpleAlienEvent, which is triggered when a player places a purple alien in a cabin tile.
+     * @param event
+     */
     public static void handleEvent(PlacePurpleAlienEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -358,7 +382,10 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the PlaceTileEvent, which is triggered when a player places a tile on their ship's floor plan.
+     * @param event The PlaceTileEvent containing the player's action.
+     */
     public static void handleEvent(PlaceTileEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -375,8 +402,10 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //checks for available spots and tile in hand not null
-    //FATTO
+    /**
+     * Handles the SwitchCargoEvent, which is triggered when a player switches cargo between two positions on their ship.
+     * @param event The SwitchCargoEvent containing the player's action.
+     */
     public static void handleEvent(ReserveTileEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -392,8 +421,13 @@ public class EventHandler implements Serializable {
         }
     }
 
-    // gira
-    //FATTO
+    /**
+     * Handles the FlipHourglassEvent, which is triggered when a player flips the hourglass.
+     * It updates the game state and notifies observers.
+     *
+     * @param event The FlipHourglassEvent containing the player's action.
+     * @param game  The current game instance.
+     */
     public static void handleEvent(FlipHourglassEvent event, Game game) {
         synchronized (game.getHourglass()) {
             game.getHourglass().flip();
@@ -402,7 +436,13 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the SetPositionEvent, which is triggered when a player sets their position in the game.
+     * It checks if the position is occupied and updates the player's ship accordingly.
+     *
+     * @param event The SetPositionEvent containing the player's action.
+     * @param game  The current game instance.
+     */
     public static void handleEvent(SetPositionEvent event, Game game) {
         int position = event.position();
         int place = 0;
@@ -433,8 +473,12 @@ public class EventHandler implements Serializable {
         }
     }
 
-    // picks up the last placed
-    //FATTO
+    /**
+     * Handles the PickUpFromShipEvent, which is triggered when a player picks up a tile from their ship's last placed tile.
+     * It checks if the last placed tile is available and sets it in the player's hand.
+     *
+     * @param event The PickUpFromShipEvent containing the player's action.
+     */
     public static void handleEvent(PickUpFromShipEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -450,7 +494,12 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the PickUpReservedTileEvent, which is triggered when a player picks up a reserved tile from their ship.
+     * It checks if the index is valid and sets the reserved tile in the player's hand.
+     *
+     * @param event The PickUpReservedTileEvent containing the player's action.
+     */
     public static void handleEvent(PickUpReservedTileEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -464,8 +513,10 @@ public class EventHandler implements Serializable {
         }
     }
 
-    /*
-    public record ActivateEnginesEvent(Player player, List<List<Integer>> engines, List<List<Integer>> batteries) implements GameEvent
+    /**
+     * Handles the ActivateEnginesEvent, which is triggered when a player activates engines on their ship.
+     * @param event
+     * @throws IllegalEventException
      */
     public static void handleEvent(ActivateEnginesEvent event) throws IllegalEventException {
         Ship ship = event.player().getShip();
@@ -566,9 +617,12 @@ public class EventHandler implements Serializable {
         }
     }
 
-    /*
-    <Pair<Pair<Integer,Integer>, Integer>
-    public record ActivateCannonsEvent(Player player, ArrayList<Pair<Integer, Integer>> cannons, ArrayList<Pair<Integer, Integer>> batteries) implements GameEvent
+    /**
+     * Handles the ActivateCannonsEvent, which is triggered when a player activates cannons on their ship.
+     * It checks the selected cannons and batteries, updates their states, and throws exceptions if any conditions are not met.
+     *
+     * @param event The ActivateCannonsEvent containing the player's action.
+     * @throws IllegalEventException If any of the conditions for activating cannons or batteries are not met.
      */
     public static void handleEvent(ActivateCannonsEvent event) throws IllegalEventException {
         Ship ship = event.player().getShip();
@@ -672,8 +726,12 @@ public class EventHandler implements Serializable {
         }
     }
 
-    /*
-    public record ActivateShieldEvent(Pair<Integer,Integer> shield, Pair<Integer,Integer> battery) implements GameEvent
+    /**
+     * Handles the ActivateShieldEvent, which is triggered when a player activates a shield on their ship.
+     * It checks the selected shield and battery tiles, updates their states, and throws exceptions if any conditions are not met.
+     *
+     * @param event The ActivateShieldEvent containing the player's action.
+     * @throws IllegalEventException If any of the conditions for activating the shield or battery are not met.
      */
     public static void handleEvent(ActivateShieldEvent event) throws IllegalEventException {
         Ship ship = event.player().getShip();
@@ -727,7 +785,13 @@ public class EventHandler implements Serializable {
             }
     }
 
-    //FATTO
+    /**
+     * Handles the RemoveCargoEvent, which is triggered when a player removes a cargo from a cargo tile.
+     * It checks if the cargo tile exists, if the resource is present, and removes it accordingly.
+     *
+     * @param event The RemoveCargoEvent containing the player's action.
+     * @throws IllegalEventException If the tile is not a CargoTile or if the resource is not present.
+     */
     public static void handleEvent(RemoveCargoEvent event) throws IllegalEventException {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -764,7 +828,13 @@ public class EventHandler implements Serializable {
 
     }
 
-    //FATTO
+    /**
+     * Handles the AddCargoEvent, which is triggered when a player adds a cargo to a cargo tile.
+     * It checks if the cargo tile exists, if the resource fits, and adds it accordingly.
+     *
+     * @param event The AddCargoEvent containing the player's action.
+     * @throws IllegalEventException If the tile is not a CargoTile or if the resource does not fit.
+     */
     public static void handleEvent(AddCargoEvent event) throws IllegalEventException {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -806,7 +876,13 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the SwitchCargoEvent, which is triggered when a player switches cargo between two cargo tiles.
+     * It checks if both tiles are CargoTiles, if the resource is present in the first tile, and if the second tile has enough space.
+     *
+     * @param event The SwitchCargoEvent containing the player's action.
+     * @throws IllegalEventException If any of the conditions for switching cargo are not met.
+     */
     public static void handleEvent(SwitchCargoEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -877,7 +953,13 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the EjectPeopleEvent, which is triggered when a player ejects people from their ship.
+     * It checks if the cabins exist, if the number of people to eject is valid, and updates the cabin states accordingly.
+     *
+     * @param event The EjectPeopleEvent containing the player's action.
+     * @throws IllegalEventException If any of the conditions for ejecting people are not met.
+     */
     public static void handleEvent(EjectPeopleEvent event) throws IllegalEventException {
         int counter = 0;
         int row = 0;
@@ -993,12 +1075,21 @@ public class EventHandler implements Serializable {
         }
     }
 
-    //FATTO
+    /**
+     * Handles the GiveUpEvent, which is triggered when a player gives up in the game.
+     * It sets the travel days of the player's ship to null, indicating that they have given up.
+     *
+     * @param event The GiveUpEvent containing the player's action.
+     */
     public static void handleEvent(GiveUpEvent event) {
         Ship ship = event.player().getShip();
         ship.setTravelDays(null);
     }
 
+    /**
+     * Handles the RemoveBatteriesEvent, which is triggered when a player removes batteries from their ship.
+     * @param event
+     */
     public static void handleEvent(RemoveBatteriesEvent event) {
         Ship s = event.player().getShip();
         Optional<Tile> ot = s.getTileOnFloorPlan(event.batteries().get(0), event.batteries().get(1));
@@ -1018,6 +1109,14 @@ public class EventHandler implements Serializable {
         }
     }
 
+    /**
+     * Moves the ship forward by a specified number of days, taking into account the travel days of other ships.
+     * It ensures that the ship's travel days are updated correctly, considering any overlaps with other ships.
+     *
+     * @param ship The ship to be moved forward.
+     * @param days The number of days to move forward.
+     * @param game The current game instance.
+     */
     public static void moveForward(Ship ship, int days, Game game) {
         synchronized (game) {
             int startposition = ship.getTravelDays();
@@ -1034,6 +1133,14 @@ public class EventHandler implements Serializable {
         }
     }
 
+    /**
+     * Moves the ship backward by a specified number of days, taking into account the travel days of other ships.
+     * It ensures that the ship's travel days are updated correctly, considering any overlaps with other ships.
+     *
+     * @param ship The ship to be moved backward.
+     * @param days The number of days to move backward.
+     * @param game The current game instance.
+     */
     public static void moveBackward(Ship ship, int days, Game game) {
         synchronized (game) {
             int startposition = ship.getTravelDays();
@@ -1050,6 +1157,13 @@ public class EventHandler implements Serializable {
         }
     }
 
+    /**
+     * Handles the RemoveTileEvent, which is triggered when a player removes a tile from their ship's floor plan.
+     * It checks if the tile exists at the specified row and column, removes it, and updates the lost tiles count.
+     *
+     * @param event The RemoveTileEvent containing the player's action.
+     * @throws IllegalEventException If no tile is found at the specified row and column.
+     */
     public static void handleEvent(RemoveTileEvent event) {
         Ship ship = event.player().getShip();
         synchronized (ship) {
@@ -1064,6 +1178,12 @@ public class EventHandler implements Serializable {
     }
 
 
+    /**
+     * Checks if any player has given up in the game. If a player has given up, it sets their ship's travel days to null
+     * if they have fewer travel days than the maximum among all active players - lap lenght or if they have no humans on board.
+     *
+     * @param game The current game instance.
+     */
     public static void checkGiveUp(Game game){
         if(game.getListOfActivePlayers().isEmpty()) {
             return;
