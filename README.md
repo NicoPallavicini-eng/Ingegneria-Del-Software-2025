@@ -18,12 +18,12 @@
 |------------------------------|---------|
 | Simplified Rules             |   ✅   |
 | Complete Rules               |   ✅   |
-| Socket Support               |   🔬   |
+| Socket Support               |   ✅   |
 | RMI Support                  |   ✅   |
-| Text-Based UI (TUI)          |   🔬   |
-| Graphical UI (GUI)           |   🛠️   |
+| Text-Based UI (TUI)          |   ✅   |
+| Graphical UI (GUI)           |   ✅   |
 | Test Flight Mode             |   🛠️   |
-| Disconnection Resilience     |   🔬   |
+| Disconnection Resilience     |   ✅   |
 | Multiple Matches             |   ❌   |
 | Persistence (Save System)    |   ❌   |
 
@@ -33,17 +33,17 @@
 - 🛠️ In progress
 - 🔬 Testing
 
-<!--## Documentation
+## Documentation
 ### Test Coverage
-You can check up our JUnit test coverage [here](Deliverables%2FTEST%20COVERAGE%2FtestCoverage.png).-->
-<!--### UML
+Testing coverage of MODEL: 72%
+### UML
 Here you can check our UML diagrams:
 - [High level UML Server-Client](Deliverables%2FUMLs%2FUML%20ALTO%20LIVELLO.png)
 - [Detailed UML Server-Client](Deliverables%2FUMLs%2FUML%20DETTAGLIO.png)
-- [Communication Protocol Diagrams](Deliverables%2FNETWORK%20SEQUENCE%20DIAGRAMS)-->
-<!--### JavaDoc
-You can read the JavaDoc [here](Deliverables%2FJavaDoc).-->
-<!--### Jar
+- [Communication Protocol Diagrams](Deliverables%2FNETWORK%20SEQUENCE%20DIAGRAMS)
+### JavaDoc
+You can read the JavaDoc [here](Deliverables%2FJavaDoc).
+### Jar
 You can download the Jar to launch the game [here](Deliverables%2FJAR).
 ## How to run
 ### Server
@@ -53,13 +53,11 @@ You can download the Jar to launch the game [here](Deliverables%2FJAR).
 ```bash
 netsh advfirewall set allprofiles state off
 ```
-3. Allow the prompt to show more characters in a single row: ```Prompt``` ➡ ```(Right click) Properties``` ➡ ```Layout``` ➡ ```Deselect "Text output wraps when resizing"``` ➡ ```Setting "9000" as width``` ➡ ```OK```
-4. Launch jar file using the following command (**pay attention to your directory**): 
+3. Launch jar file using the following command (**pay attention to your directory**): 
 ```bash
 java -jar pathToServerLauncher\ServerLauncher.jar
 ```
-5. Insert Server Ip address or press enter for localhost.
-6. When finished playing, remember to reactivate your security settings:
+5. When finished playing, remember to reactivate your security settings:
 ```bash
 netsh advfirewall set allprofiles state on
 ```
@@ -70,28 +68,18 @@ netsh advfirewall set allprofiles state on
 ```bash
 netsh advfirewall set allprofiles state off
 ```
-3. Set the registry of Windows to let it recognise colors using the following command:
-```bash
-reg add HKEY_CURRENT_USER\Console /v VirtualTerminalLevel /t REG_DWORD /d 1
-```
-4. Allow the prompt to show more characters in a single row: ```Prompt``` ➡ ```(Right click) Properties``` ➡ ```Layout``` ➡ ```Deselect "Text output wraps when resizing"``` ➡ ```Setting "9000" as width``` ➡ ```OK```
-5. Launch jar file using the following command (**pay attention to your directory**):
+3. Launch jar file using the following command (**pay attention to your directory**):
 ```bash
 java -jar pathToClientLauncher\ClientLauncher.jar
 ```
-6. Insert Server Ip address or press enter for localhost.
-7. Select the communication protocol and the UI preferred.
-8. _(Only for RMI)_ Insert Client Ip address or press enter for localhost.
-9. When finished playing, remember to reactivate your security settings:
+4. Select the communication protocol and the UI preferred.
+5. Insert Server Ip address or press -1 for localhost.
+6. When finished playing, remember to reactivate your security settings:
 ```bash
 netsh advfirewall set allprofiles state on
 ```
 
 ## How to play
 1. When you launch the clientJar you will be able to choose your preferred network protocol (RMI/TCP) and user Interface (TUI/GUI).
-2. You will then proceed with the nickname selection.
-3. After that you will be asked if you want to create a new lobby or join an already existing one.
-4. The game will start when the correct number of connected clients is reached.
-
-
--->
+2. You will then proceed with the nickname selection and max number of players selection (if needed).
+3. The game will start when the correct number of connected clients is reached.
