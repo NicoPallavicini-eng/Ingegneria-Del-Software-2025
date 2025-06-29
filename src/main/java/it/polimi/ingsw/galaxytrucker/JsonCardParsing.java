@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * JsonCards class is  used to store Json Strings
+ */
 class JsonCards{
     public String openSpaceCards;
     public String planetsCards;
@@ -25,6 +29,9 @@ class JsonCards{
     public String combatZoneCardsNotL;
     public String epidemicCards;
 
+    /**
+     * Constructor of JsonCards,it builds Json Srtrings of each Card
+     */
     public JsonCards(){
         openSpaceCards = "{\"openSpaceCard1\":{\n" +
             "\t\t\"levelTwo\":false,\n" +
@@ -269,6 +276,9 @@ class JsonCards{
     }
 }
 
+/**
+ * PiratesCardParse is used to translate the parameters from Json to actual PirateCard class
+ */
 class PiratesCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -277,18 +287,24 @@ class PiratesCardParse {
     public int daysToLose;
     public List<CannonballParse> cannonballList;
 }
-
+/**
+ * CannonballParse is used to translate the parameters from Json to actual Cannonball class
+ */
 class CannonballParse {
     public boolean bigCannonball;
     public String direction;
     public String rowOrColumn;
 }
-
+/**
+ * SpaceCardParse is used to translate the parameters from Json to actual OpenSpaceCard class
+ */
 class SpaceCardParse {
     public boolean levelTwo;
     public boolean used;
 }
-
+/**
+ * StationCardParse is used to translate the parameters from Json to actual StationCard class
+ */
 class StationCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -296,7 +312,9 @@ class StationCardParse {
     public int daysToLose;
     public List<Integer> blocks;
 }
-
+/**
+ * ShipCardParse is used to translate the parameters from Json to actual ShipCard class
+ */
 class ShipCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -304,7 +322,9 @@ class ShipCardParse {
     public int daysToLose;
     public int credits;
 }
-
+/**
+ * SlaversCardParse is used to translate the parameters from Json to actual SlaversCard class
+ */
 class SlaversCardParse{
     public boolean levelTwo;
     public boolean used;
@@ -314,6 +334,9 @@ class SlaversCardParse{
     public int daysToLose;
 }
 
+/**
+ *  SmugglersCardParse is used to translate the parameters from Json to actual  SmugglersCard class
+ */
 class SmugglersCardParse {
     public boolean levelTwo;
     public boolean used;
@@ -322,40 +345,54 @@ class SmugglersCardParse {
     public int lostBlocksNumber;
     public int daysToLose;
 }
-
+/**
+ *  StardustCardParse is used to translate the parameters from Json to actual  StardustCard class
+ */
 class StardustCardParse{
     public boolean levelTwo;
     public boolean used;
 }
-
+/**
+ *  EpidemicCardParse is used to translate the parameters from Json to actual  EpidemicCard class
+ */
 class EpidemicCardParse{
     public boolean levelTwo;
     public boolean used;
 }
-
+/**
+ *  PlanetsCardParse is used to translate the parameters from Json to actual PlanetsCard class
+ */
 class PlanetsCardParse{
     public boolean levelTwo;
     public boolean used;
     public List<PlanetParse> planets;
     public int daysToLose;
 }
-
+/**
+ *  PlanetsParse is used to translate the parameters from Json to actual Planets class
+ */
 class PlanetParse{
     public List<Integer> blocks;
 }
-
+/**
+ *  MeteorParse is used to translate the parameters from Json to actual Meteor class
+ */
 class MeteorParse {
     public boolean bigMeteor;
     public String direction;
     public String rowOrColumn;
 }
-
+/**
+ *  MeteorsCardParse is used to translate the parameters from Json to actual MeteorsCard class
+ */
 class MeteorsCardParse {
     public boolean levelTwo;
     public boolean used;
     public List<MeteorParse> meteors;
 }
-
+/**
+ *  BattleZoneCardLParse  is used to translate the parameters from Json to actual BattleZoneCardL class
+ */
 class BattleZoneCardLParse {
     public boolean levelTwo;
     public boolean used;
@@ -364,7 +401,9 @@ class BattleZoneCardLParse {
     public int cargoLost;
     public List<CannonballParse> cannonballList;
 }
-
+/**
+ *  BattleZoneCardNotLParse  is used to translate the parameters from Json to actual BattleZoneCardNotL class
+ */
 class BattleZoneCardNotLParse {
     public boolean levelTwo;
     public boolean used;
@@ -374,6 +413,9 @@ class BattleZoneCardNotLParse {
     public List<CannonballParse> cannonballList;
 }
 
+/**
+ * JsonCardParsing is class,that actually converts Json Strings (using Json) into actual Card Class
+ */
 public class JsonCardParsing {
 
     private ArrayList<PiratesCard> piratesCards;
@@ -389,91 +431,202 @@ public class JsonCardParsing {
     private ArrayList<CombatZoneCardL> combatZoneLCards;
     private ArrayList<CombatZoneCardNotL> combatZoneNotLCards;
 
+    /**
+     * This function return a array-list of CombatZoneCardL
+     * @return ArrayList<CombatZoneCardL>
+     */
     public ArrayList<CombatZoneCardL> getCombatZoneLCards() {
         return combatZoneLCards;
     }
+
+    /**
+     * This function return a array-list of CombatZoneCardNotL
+     * @return ArrayList<CombatZoneCardNotL>
+     */
     public ArrayList<CombatZoneCardNotL> getCombatZoneNotLCards() {
         return combatZoneNotLCards;
     }
+
+    /**
+     * This function return a array-list of CombatZoneCardNotL
+     * @return ArrayList<StationCard>
+     */
     public ArrayList<StationCard> getStationCards() {
         return stationCards;
     }
+
+    /**
+     * This function return a array-list of SlaversCard
+     * @return ArrayList<SlaversCard>
+     */
     public ArrayList<SlaversCard> getSlaversCards() {
         return slaversCards;
     }
+
+    /**
+     * This function return a array-list of StardustCard
+     * @return ArrayList<StardustCard>
+     */
     public ArrayList<StardustCard> getStardustCards() {
         return stardustCards;
     }
+
+    /**
+     * This function return a array-list of ShipCard
+     * @return ArrayList<ShipCard>
+     */
     public ArrayList<ShipCard> getShipCards() {
         return shipCards;
     }
+
+    /**
+     * This function return an array-list of SmugglersCard
+     * @return ArrayList<SmugglersCard>
+     */
     public ArrayList<SmugglersCard> getSmugglersCards() {
         return smugglersCards;
     }
+
+    /**
+     * This function return an array-list of SpaceCards
+     * @return ArrayList<OpenSpaceCard>
+     */
     public ArrayList<OpenSpaceCard> getSpaceCards(){
         return openSpaceCards;
     }
+
+    /**
+     * This function return an array-list of PlanetsCard
+     * @return ArrayList<PlanetsCard>
+     */
     public ArrayList<PlanetsCard> getPlanetsCards() {
         return planetsCards;
     }
+
+    /**
+     * This function return an array-list of MeteorsCard
+     * @return ArrayList<MeteorsCard>
+     */
     public ArrayList<MeteorsCard> getMeteorsCards() {
         return meteorsCards;
     }
+
+    /**
+     * This function return an array-list of PiratesCard
+     * @return ArrayList<PiratesCard>
+     */
     public ArrayList<PiratesCard> getPiratesCards() {
         return piratesCards;
     }
+
+    /**
+     * This function return an array-list of EpidemicCard
+     * @return ArrayList<EpidemicCard>
+     */
     public ArrayList<EpidemicCard> getEpidemicCards() {
         return epidemicCards;
     }
 
+    /**
+     * Sets combatZoneLCards ArrayList in JsonCardParsing
+     * @param combatZoneLCards
+     */
     public void setCombatZoneLCards(ArrayList<CombatZoneCardL> combatZoneLCards) {
         this.combatZoneLCards = combatZoneLCards;
     }
 
+    /**
+     * Sets combatZoneNotLCards ArrayList in JsonCardParsing
+     * @param combatZoneNotLCards
+     */
     public void setCombatZoneNotLCards(ArrayList<CombatZoneCardNotL> combatZoneNotLCards) {
         this.combatZoneNotLCards = combatZoneNotLCards;
     }
 
+    /**
+     * Sets stationCards ArrayList in JsonCardParsing
+     * @param stationCards
+     */
     public void setStationCards(ArrayList<StationCard> stationCards) {
         this.stationCards = stationCards;
     }
 
+    /**
+     * Sets slaversCards ArrayList in JsonCardParsing
+     * @param slaversCards
+     */
     public void setSlaversCards(ArrayList<SlaversCard> slaversCards) {
         this.slaversCards = slaversCards;
     }
 
+    /**
+     * Sets planetsCards ArrayList in JsonCardParsing
+     * @param planetsCards
+     */
     public void setPlanetsCards(ArrayList<PlanetsCard> planetsCards) {
         this.planetsCards = planetsCards;
     }
 
+    /**
+     * Sets epidemicCards ArrayList in JsonCardParsing
+     * @param epidemicCards
+     */
     public void setEpidemicCards(ArrayList<EpidemicCard> epidemicCards) {
         this.epidemicCards = epidemicCards;
     }
 
+    /**
+     * Sets meteorsCards ArrayList in JsonCardParsing
+     * @param meteorsCards
+     */
     public void setMeteorsCards(ArrayList<MeteorsCard> meteorsCards) {
         this.meteorsCards = meteorsCards;
     }
 
+    /**
+     * Sets piratesCards ArrayList in JsonCardParsing
+     * @param piratesCards
+     */
     public void setPiratesCards(ArrayList<PiratesCard> piratesCards) {
         this.piratesCards = piratesCards;
     }
 
+    /**
+     * Sets shipCards ArrayList in JsonCardParsing
+     * @param shipCards
+     */
     public void setShipCards(ArrayList<ShipCard> shipCards) {
         this.shipCards = shipCards;
     }
 
+    /**
+     * Sets shipCards ArrayList in JsonCardParsing
+     * @param smugglersCards
+     */
     public void setSmugglersCards(ArrayList<SmugglersCard> smugglersCards) {
         this.smugglersCards = smugglersCards;
     }
 
+    /**
+     * Sets openSpaceCards ArrayList in JsonCardParsing
+     * @param openSpaceCards
+     */
     public void setSpaceCards(ArrayList<OpenSpaceCard> openSpaceCards) {
         this.openSpaceCards = openSpaceCards;
     }
 
+    /**
+     * Sets stardustCards ArrayList in JsonCardParsing
+     * @param stardustCards
+     */
     public void setStardustCards(ArrayList<StardustCard> stardustCards) {
         this.stardustCards = stardustCards;
     }
 
+    /**
+     * This function return a list of All Cards in Game
+     * @return List<Card>
+     */
     public List<Card> getCompleteList(){
         List<Card> completeList = new ArrayList<>();
         completeList.addAll(piratesCards);
@@ -491,6 +644,10 @@ public class JsonCardParsing {
         return completeList;
     }
 
+    /**
+     * This function returns a complete List of Level 1 Cards
+     * @return List<Card>
+     */
     public List<Card> getCompleteListLevel1(){
         List<Card> completeList = new ArrayList<>();
         for(Card card:getCompleteList()){
@@ -500,7 +657,10 @@ public class JsonCardParsing {
         }
         return completeList;
     }
-
+    /**
+     * This function returns a complete List of Level 2 Cards
+     * @return List<Card>
+     */
     public List<Card> getCompleteListLevel2(){
         List<Card> completeList = new ArrayList<>();
         for(Card card:getCompleteList()){
@@ -511,6 +671,9 @@ public class JsonCardParsing {
         return completeList;
     }
 
+    /**
+     * Constructor of JsonCardParsing,it builds all Card present in Game
+     */
     public JsonCardParsing(){
         JsonCards jsonCards = new JsonCards();
         Gson gson = new Gson();

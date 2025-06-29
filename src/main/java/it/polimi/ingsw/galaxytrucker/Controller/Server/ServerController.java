@@ -540,9 +540,109 @@ public class ServerController {
                         }
                         case "combatZone" -> {
                             //TODO finish this card
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
                         }
                         case "combatZoneL" -> {
                             //TODO finish this card
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in Combat ZoneL Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "combatPeopleChallenge" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in combatPeopleChallenge\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "combatEngineChallenge" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "combatCannonChallenge" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in combatCannonChallenge\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "peoplePenalty" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in peoplePenality");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "cannonsPenalty" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in cannonsPenalty");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case "enginePenalty" ->{
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in enginePenalty");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
                         }
 
                     }
@@ -1260,12 +1360,191 @@ public class ServerController {
                             e.printStackTrace();
                         }
                     }
-                    case "combatZone" -> {
+                    case "combatZoneNotL" -> {
                         //TODO finish this card
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    //rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     case "combatZoneL" -> {
                         //TODO finish this card
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    //rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    case "combatPeopleChallenge" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in combatPeopleChallenge\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+//                                    rmiClient.printMessage("\nYou are now in combatPeopleChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    case "combatEngineChallenge" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in combatEngineChallenge\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    //rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    case "combatCannonChallenge" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in combatCannonChallenge\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    //rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    case "peoplePenalty" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in peoplePenality");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    //rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    case "cannonsPenalty" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in cannonsPenalty");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    //rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    case "enginePenalty" ->{
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player!=null){
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+                                    Message msg = new Message ("String", null, "\nYou are now in enginePenalty");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+
+                                    Message msg2 = new Message("Game", game, "viewMyShip");
+                                    msg2.setNickname(socketClient.getNickname());
+                                    objOut.writeObject(msg2);
+                                    objOut.flush();
+                                    objOut.reset();
+
+                                    //rmiClient.printMessage("\nYou are now in combatEngineChallenge\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
                 }
             }
         });
@@ -1333,7 +1612,14 @@ public class ServerController {
                     .toList();
         }
         if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
-            executeCommand(command, firstParameters, secondParameters, objOut, msg);
+            try{
+                executeCommand(command, firstParameters, secondParameters, objOut, msg);
+            }catch(NumberFormatException e) {
+                Message newMessage = new Message("String", null, "Invalid command");
+                objOut.writeObject(newMessage);
+                objOut.flush();
+            }
+
         }
         else{
             Message newMessage = new Message("String", null, "The game needs at least 2 players to continue");
@@ -2967,7 +3253,12 @@ public class ServerController {
                     .toList();
         }
         if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
-            executeCommand(command, firstParameters, secondParameters, client);
+            try{
+                executeCommand(command, firstParameters, secondParameters, client);
+            }catch(NumberFormatException e){
+                client.invalidCommand("Invalid command");
+            }
+
         }
         else{
             client.invalidCommand("The game needs at least 2 players to continue");
