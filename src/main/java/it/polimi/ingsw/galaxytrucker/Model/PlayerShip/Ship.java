@@ -603,6 +603,7 @@ public class Ship implements Serializable {
 
         Tile tile = floorplanArrayList.get(row).get(column);
         floorplanArrayList.get(row).set(column,null);
+        addLostTiles(1);
     }
 
     /**

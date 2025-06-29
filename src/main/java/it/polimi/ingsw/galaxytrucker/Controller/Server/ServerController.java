@@ -432,7 +432,7 @@ public class ServerController {
                                     Player player = checkPlayer(rmiClient.getNickname());
                                     if (player != null){
                                         rmiClient.printMessage("\nYou are now in the pirates state.\n" +
-                                                "Every player have to fight the pirates.\n" +
+                                                "Every player has to fight the pirates.\n" +
                                                 "You can activate your cannons (/activatecannons), your shields (/activateshields) or do nothing (/nochoice).\n" +
                                                 "The player that defeats the pirates can loot them with the /claimreward command.\n");
                                         rmiClient.viewCard(game);
@@ -511,7 +511,7 @@ public class ServerController {
                                     Player player = checkPlayer(rmiClient.getNickname());
                                     if (player != null) {
                                         rmiClient.printMessage("\nYou are now in the smugglers state.\n" +
-                                                "Every player have to fight the smugglers.\n" +
+                                                "Every player has to fight the smugglers.\n" +
                                                 "You can activate your cannons (/activatecannons) or do nothing (/nochoice).\n" +
                                                 "When defeated you can claim your reward (/claimreward) and the adjust your cargo with the commands (/addcargo, /removecargo or /switchcargo).\n" +
                                                 "Now playing: " + ((SmugglersState) gameState).getCurrentPlayer().getNickname() + ".\n");
@@ -1184,7 +1184,7 @@ public class ServerController {
                                     ObjectOutputStream objOut = socketClient.getObjOut();
 
                                     Message msg = new Message ("String", null, "\nYou are now in the pirates state.\n" +
-                                            "Every player have to fight the pirates.\n" +
+                                            "Every player has to fight the pirates.\n" +
                                             "You can activate your cannons (/activatecannons), your shields (/activateshields) or do nothing (/nochoice).\n" +
                                             "The player that defeats the pirates can loot them with the /claimreward command.\n");
                                     objOut.writeObject(msg);
@@ -1313,7 +1313,7 @@ public class ServerController {
                                     ObjectOutputStream objOut = socketClient.getObjOut();
 
                                     Message msg = new Message ("String", null, "\nYou are now in the smugglers state.\n" +
-                                            "Every player have to fight the smugglers.\n" +
+                                            "Every player has to fight the smugglers.\n" +
                                             "You can activate your cannons (/activatecannons) or do nothing (/nochoice).\n" +
                                             "When defeated you can claim your reward (/claimreward) and the adjust your cargo with the commands (/addcargo, /removecargo or /switchcargo).\n" +
                                             "Now playing: " + ((SmugglersState) gameState).getCurrentPlayer().getNickname() + ".\n");
@@ -1622,7 +1622,7 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
+        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect") || command.equals("disconnect")) {
             try{
                 executeCommand(command, firstParameters, secondParameters, objOut, msg);
             }catch(NumberFormatException e) {
@@ -3263,7 +3263,7 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
+        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect") || command.equals("disconnect")) {
             try{
                 executeCommand(command, firstParameters, secondParameters, client);
             }catch(NumberFormatException e){

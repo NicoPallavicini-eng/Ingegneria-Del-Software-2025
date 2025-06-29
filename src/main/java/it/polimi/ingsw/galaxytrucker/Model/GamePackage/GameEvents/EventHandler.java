@@ -110,6 +110,7 @@ public class EventHandler implements Serializable {
             for (Tile t : list) {
                 if (!pieceOfShip.contains(t)&&t!=null) {
                     ship.setTileOnFloorPlan(ship.findTileOnFloorplanRow(t),ship.findTileOnFloorPlanColumn(t),null);
+                    ship.addLostTiles(1);
                 }
             }
         }
