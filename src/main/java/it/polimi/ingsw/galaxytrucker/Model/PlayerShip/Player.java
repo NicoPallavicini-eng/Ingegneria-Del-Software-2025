@@ -5,6 +5,7 @@ import it.polimi.ingsw.galaxytrucker.Model.Color;
 import java.io.Serializable;
 
 
+
 /**
  * This class represent actual Player of Game
  */

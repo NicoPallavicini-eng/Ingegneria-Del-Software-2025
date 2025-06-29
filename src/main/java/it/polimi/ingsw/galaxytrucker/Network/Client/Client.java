@@ -17,12 +17,26 @@ import java.rmi.registry.Registry;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Client class that initializes the connection to the server and starts the user interface.
+ * It allows the user to choose between RMI and Socket connections, as well as between TUI and GUI.
+ */
 public class Client {
     private static RMIClient rmi;
     private static SocketClient socketClient;
     private static UI ui;
     private static boolean okConnection = false;
 
+    /**
+     * Main method that runs the client application.
+     * It prompts the user to select the UI type and connection method,
+     * then establishes the connection and starts the appropriate client.
+     *
+     * @param args command line arguments (not used)
+     * @throws RemoteException if there is an error in RMI communication
+     * @throws NotBoundException if the server is not bound in the RMI registry
+     * @throws InterruptedException if the thread is interrupted
+     */
     public static void main(String[] args) throws RemoteException, NotBoundException, InterruptedException {
         while (!okConnection) {
             System.out.println("Select the method for the UI: (1) TUI, (2) GUI (Default is TUI)");
