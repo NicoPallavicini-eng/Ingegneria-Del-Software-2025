@@ -140,6 +140,7 @@ public class Client {
                         while(!finish){
                             try{
                                 serverPort = scanner.nextInt();
+                                finish = true;
                             }catch(InputMismatchException e){
                                 System.out.print("Enter server port: ");
                                 scanner.nextLine();
