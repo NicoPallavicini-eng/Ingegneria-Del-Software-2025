@@ -569,7 +569,6 @@ public class ServerController {
                             }
                         }
                         case "combatZone" -> {
-                            //TODO finish this card
                             try{
                                 for (VirtualClient rmiClient : rmiClients) {
                                     Player player = checkPlayer(rmiClient.getNickname());
@@ -583,7 +582,6 @@ public class ServerController {
                             }
                         }
                         case "combatZoneL" -> {
-                            //TODO finish this card
                             try{
                                 for (VirtualClient rmiClient : rmiClients) {
                                     Player player = checkPlayer(rmiClient.getNickname());
@@ -1400,7 +1398,6 @@ public class ServerController {
                         }
                     }
                     case "combatZoneNotL" -> {
-                        //TODO finish this card
                         try{
                             for (SocketClientHandler socketClient : socketClients) {
                                 Player player = checkPlayer(socketClient.getNickname());
@@ -1420,7 +1417,6 @@ public class ServerController {
                         }
                     }
                     case "combatZoneL" -> {
-                        //TODO finish this card
                         try{
                             for (SocketClientHandler socketClient : socketClients) {
                                 Player player = checkPlayer(socketClient.getNickname());
@@ -1776,7 +1772,6 @@ public class ServerController {
                                     objOut.writeObject(newMessage);
                                     objOut.flush();
                                     objOut.reset();
-                                    // TODO update view
                                 } catch (IllegalArgumentException | IllegalEventException e) {
                                     newMessage = new Message("String", null, e.getMessage());
                                     objOut.writeObject(newMessage);
@@ -3455,7 +3450,7 @@ public class ServerController {
                                     ConnectEvent event = new ConnectEvent(nickname, "localhost");
                                     game.getGameState().handleEvent(event, game);
                                     client.setNickname(nickname);
-                                    client.setMainCabin(game); // TODO fix - what? how?
+                                    client.setMainCabin(game);
                                     client.connectView(game);
                                 } catch (IllegalEventException e) {
                                     client.invalidCommand("Error: " + e.getMessage());

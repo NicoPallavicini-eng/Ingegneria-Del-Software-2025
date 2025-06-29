@@ -61,7 +61,7 @@ public class SceneManager extends Application {
         waitingScene = new WaitingScene(game, this);
         primaryStage = stage;
         primaryStage.setScene(waitingScene.getScene());
-        primaryStage.setResizable(true); // TODO choose if keep
+        primaryStage.setResizable(true);
         primaryStage.setTitle("Waiting State");
         primaryStage.getIcons().add(new javafx.scene.image.Image(getClass().getResource("/Images/misc/window_simple_icon.png").toExternalForm()));
         primaryStage.show();
@@ -167,10 +167,14 @@ public class SceneManager extends Application {
     }
 
     public void next(WaitingScene waitingScene) {
-        BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(this.game, nickname, this);
-        primaryStage.setTitle("Building State - User Ship");
-        primaryStage.setScene(buildingSceneUserShip.getScene());
-        primaryStage.show();
+        try {
+            BuildingSceneUserShip buildingSceneUserShip = new BuildingSceneUserShip(this.game, nickname, this);
+            primaryStage.setTitle("Building State - User Ship");
+            primaryStage.setScene(buildingSceneUserShip.getScene());
+            primaryStage.show();
+        }catch(NullPointerException e) {
+
+        }
     }
 
     public void next(BuildingSceneUserShip buildingSceneUserShip) {
