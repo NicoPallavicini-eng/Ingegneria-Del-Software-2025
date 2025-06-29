@@ -6,6 +6,10 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventEx
 
 import java.io.Serializable;
 
+/**
+ * Factory class for creating different types of GameState objects based on the type of card.
+ * This class provides static methods to create GameState instances for various card types.
+ */
 public class TravellingStateFactory implements Serializable {
 
     public static GameState createGameState(Game game, CombatZoneCardL card){
@@ -56,7 +60,7 @@ public class TravellingStateFactory implements Serializable {
         return new StationState(game, card);
     }
 
-    // shall never be called, here just for overloads2
+    // shall never be called, here just for overloads
     public static GameState createGameState(Game game, Card card){
         throw new IllegalEventException("TravellingStateFactory has failed");
     }
