@@ -540,9 +540,31 @@ public class ServerController {
                         }
                         case "combatZone" -> {
                             //TODO finish this card
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
                         }
                         case "combatZoneL" -> {
                             //TODO finish this card
+                            try{
+                                for (VirtualClient rmiClient : rmiClients) {
+                                    Player player = checkPlayer(rmiClient.getNickname());
+                                    if(player!=null){
+                                        rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                        rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                    }
+                                }
+                            }catch(RemoteException e){
+                                throw new RuntimeException(e);
+                            }
                         }
 
                     }
@@ -1262,9 +1284,43 @@ public class ServerController {
                     }
                     case "combatZone" -> {
                         //TODO finish this card
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    //rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     case "combatZoneL" -> {
                         //TODO finish this card
+                        try{
+                            for (SocketClientHandler socketClient : socketClients) {
+                                Player player = checkPlayer(socketClient.getNickname());
+                                if(player != null) {
+                                    ObjectOutputStream objOut = socketClient.getObjOut();
+
+                                    Message msg = new Message ("String", null, "\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    objOut.writeObject(msg);
+                                    objOut.flush();
+                                    //rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                    //rmiClient.viewMyShip(game, rmiClient.getNickname());
+                                }
+
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
