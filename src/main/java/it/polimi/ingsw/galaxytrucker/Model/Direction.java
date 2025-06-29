@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model;
 
-public enum Direction {
+import java.io.Serializable;
+
+public enum Direction implements Serializable {
     NORTH,
     WEST,
     SOUTH,

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-public enum RowOrColumn {
+import java.io.Serializable;
+
+public enum RowOrColumn implements Serializable {
     ROW,
     COLUMN
 }

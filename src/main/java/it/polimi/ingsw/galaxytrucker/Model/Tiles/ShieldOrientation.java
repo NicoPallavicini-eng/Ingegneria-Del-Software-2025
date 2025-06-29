@@ -1,6 +1,8 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum ShieldOrientation {
+import java.io.Serializable;
+
+public enum ShieldOrientation implements Serializable {
     NORTHWEST,
     SOUTHWEST,
     SOUTHEAST,

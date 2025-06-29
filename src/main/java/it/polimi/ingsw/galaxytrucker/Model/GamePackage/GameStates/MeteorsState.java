@@ -1,0 +1,242 @@
+package it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates;
+
+import it.polimi.ingsw.galaxytrucker.Model.Cards.Meteor;
+import it.polimi.ingsw.galaxytrucker.Model.Cards.MeteorsCard;
+import it.polimi.ingsw.galaxytrucker.Model.Direction;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.*;
+import it.polimi.ingsw.galaxytrucker.Model.PlayerShip.Player;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.CannonTile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.ShieldOrientation;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.Tile;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.CannonTileVisitor;
+import it.polimi.ingsw.galaxytrucker.Model.Tiles.TilesVisitor.ShieldTileVisitor;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+
+/**
+ * The metheors are cycled and for every one of them all players have to defend or nochoice
+ * then the players undergo the hit if they are not defended.
+ * A check is made to ensure that an action made from the player actually defends them
+ */
+public class MeteorsState extends TravellingState implements Serializable {
+    private MeteorsCard currentCard;
+    private ArrayList<Player> handledPlayers;
+    private List<Meteor> meteors;
+    private Meteor currentMeteor;
+    private List<Player> playersWithIllegalShips;
+    public MeteorsState(Game game, MeteorsCard card) {
+        super(game, card);
+        currentCard = card;
+    }
+
+    /**
+     * This function is used to initialize MeteorState
+     */
+    public void init(){
+        super.init();
+        handledPlayers = new ArrayList<>();
+        meteors = currentCard.getMeteorsList();
+        currentMeteor = meteors.getFirst();
+        meteors.remove(0);
+        game.notifyObservers(game, "meteors");
+        playersWithIllegalShips = new ArrayList<>();
+    }
+
+    /**
+     * This function represent an auxiliary function that checks if Shiled defends from Meteor
+     * @param shieldOrientation
+     * @param direction
+     * @return
+     */
+    private boolean shieldDefends(ShieldOrientation shieldOrientation, Direction direction) {
+        switch (shieldOrientation) {
+            case NORTHEAST -> {
+                return direction == Direction.NORTH || direction == Direction.EAST;
+            }
+            case NORTHWEST -> {
+                return direction == Direction.NORTH || direction == Direction.WEST;
+            }
+            case SOUTHEAST -> {
+                return direction == Direction.SOUTH || direction == Direction.EAST;
+            }
+            case SOUTHWEST -> {
+                return direction == Direction.SOUTH || direction == Direction.WEST;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * ActivateShieldEvent is possible to call in Meteor State
+     * @param event
+     */
+    public void handleEvent(ActivateShieldEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
+        if(handledPlayers.contains(event.player())){
+            throw new IllegalEventException("You are already defended");
+        }
+        if(currentMeteor.bigMeteor()){
+            throw new IllegalEventException("You can't defend yourself from a big meteor with a shield");
+        }
+        Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());
+        ShieldTileVisitor stv = new ShieldTileVisitor();
+        tile.ifPresent(t -> t.accept(stv));
+        if(stv.getList().isEmpty() || !shieldDefends(stv.getList().getFirst().getOrientation(), currentMeteor.direction())){
+            throw new IllegalEventException("You didn't select a shield able to defend you");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            handledPlayers.add(event.player());
+            checkNext();
+        }
+    }
+    /**
+     * ActivateCannonsEvent is possible to call in Meteor State
+     * @param event
+     */
+    public void handleEvent(ActivateCannonsEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
+        if(handledPlayers.contains(event.player())){
+            throw new IllegalEventException("You are already defended");
+        }
+        if(!currentMeteor.bigMeteor()){
+            throw new IllegalEventException("You can't defend yourself from a small meteor with a cannon");
+        }
+        Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.cannons().getFirst().getFirst(), event.cannons().getFirst().get(1));
+        CannonTileVisitor ctv = new CannonTileVisitor();
+        tile.ifPresent(t -> t.accept(ctv));
+        if(ctv.getList().isEmpty()){
+            throw new IllegalEventException("You didn't select a cannon");
+        }
+
+        CannonTile cannon  = ctv.getList().getFirst();
+        if(currentMeteor.direction() != cannon.getDirection()) {//nb
+            throw new IllegalEventException("The cannon is not oriented towards the incoming meteor");
+        }
+        Direction direction = currentMeteor.direction();
+        int cannonRow = event.cannons().get(0).get(1);
+        int cannonCol = event.cannons().get(0).get(0);
+        if(!( (direction == Direction.NORTH && currentMeteor.diceRoll() == cannonCol)
+        || (direction == Direction.SOUTH && (currentMeteor.diceRoll() >= cannonCol - 1 && currentMeteor.diceRoll() <= cannonCol + 1))
+        || (direction == Direction.EAST && (currentMeteor.diceRoll() >= cannonRow - 1 && currentMeteor.diceRoll() <= cannonRow + 1))
+        || (direction == Direction.WEST && (currentMeteor.diceRoll() >= cannonRow - 1 && currentMeteor.diceRoll() <= cannonRow + 1)) )){
+            throw new IllegalEventException("The cannon's position makes it impossible to fire the incoming meteor");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            handledPlayers.add(event.player());
+            checkNext();
+        }
+    }
+    /**
+     * NoChoiceEvent is possible to call in Meteor State
+     * @param event
+     */
+    public void handleEvent(NoChoiceEvent event){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Your ship is broken, fix it before defending");
+        }
+        if(handledPlayers.contains(event.player())){
+            throw new IllegalEventException("You are already defended");
+        }
+        else{
+            handledPlayers.add(event.player());
+            checkNext();
+        }
+    }
+
+    /**
+     * Checks if all Player were handled,and if so,process Meteor
+     */
+    private void checkNext() {
+        if (handledPlayers.containsAll(game.getListOfActivePlayers())) {
+            for (Player player : game.getListOfActivePlayers()) {
+                currentMeteor.getHit(player.getShip());
+                if(player.getShip().isShipBroken()){
+                    playersWithIllegalShips.add(player);
+                }
+            }
+            game.notifyObservers(game,"finalMeteors");
+            if(meteors.isEmpty()){
+                currentMeteor = null;
+                checkNextCard();
+            }
+            else {
+                currentMeteor = meteors.get(0);
+                meteors.remove(0);
+                for (Player player : game.getListOfActivePlayers()) {
+                    player.getShip().disactivateEverything();
+                }
+                handledPlayers.clear();
+            }
+        }
+    }
+
+    /**
+     * This function checks if it is possible to change card
+     */
+    private void checkNextCard(){
+        if(playersWithIllegalShips.isEmpty() && currentMeteor == null){
+            next();
+        }
+        else{
+            //checkNext();
+        }
+    }
+
+    /**
+     * ChooseSubShipEvent is possible to call in Meteor State
+     * @param event
+     */
+    public void handleEvent(ChooseSubShipEvent event) {
+        if(!playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("You have already a functioning spaceship");
+        }
+        else{
+            EventHandler.handleEvent(event);
+            synchronized (playersWithIllegalShips) {
+                if(!event.player().getShip().isShipBroken()){
+                    playersWithIllegalShips.remove(event.player());
+                }
+            }
+            game.notifyObservers(game, "legalship");
+            checkNextCard();
+        }
+    }
+
+    /**
+     * This function handles Player,that disconnected from Game
+     * @param p
+     */
+    @Override
+    protected void disconnectionConsequences(Player p) {
+        super.disconnectionConsequences(p);
+        checkNext();
+    }
+
+    /**
+     * This function return an array list of players that were handled during Meteor State
+     * @return ArrayList<Player>
+     */
+    @Override
+    public ArrayList<Player> getHandledPlayers() {
+        return handledPlayers;
+    }
+
+    /**
+     * This function return a current Meteor
+     * @return Meteor
+     */
+    public Meteor getCurrentMeteor() {
+        return currentMeteor;
+    }
+}

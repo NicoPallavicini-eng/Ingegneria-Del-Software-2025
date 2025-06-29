@@ -1,6 +1,9 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
-public enum CabinInhabitants {
+import java.io.Serializable;
+
+
+public enum CabinInhabitants implements Serializable {
     NONE,
     ONE,
     TWO,

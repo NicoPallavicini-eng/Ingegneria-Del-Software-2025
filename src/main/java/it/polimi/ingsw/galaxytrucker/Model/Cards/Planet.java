@@ -1,23 +1,23 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-import it.polimi.ingsw.galaxytrucker.Model.Ship;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class Planet {
-    // TODO add Ship link
+/**
+ * Planet is the collection of Cargos
+ */
+public class Planet implements Serializable {
     private final List <Integer> blocks;
-    private Ship shipLanded;
-
     public Planet(List <Integer> blocks) {
         this.blocks = blocks;
     }
 
+    /**
+     * This function returns a List of Cargo,that planet has
+     * @return List <Integer>
+     */
     public List <Integer> getBlocks() {
         return blocks;
     }
 
-    public Ship getShipLanded() {
-        return shipLanded;
-    }
 }

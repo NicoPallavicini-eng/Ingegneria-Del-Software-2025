@@ -1,8 +1,36 @@
 package it.polimi.ingsw.galaxytrucker.Model.Cards;
 
-public class EpidemicCard extends Card {
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.Game;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.GameState;
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStateFactory;
+
+import java.io.Serializable;
+
+
+/**
+ * EpidemicCard represent Epidemic Card of Board Game
+ */
+public class EpidemicCard extends Card implements Serializable {
+    private String name;
+
+    /**
+     * @param levelTwo
+     * @param used
+     */
     public EpidemicCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
-        this.category = CardCategory.EPIDEMIC;
+    }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getName() { return name; }
+
+    /**
+     * This function is used to create a specific state,that depends on the type of the Card
+     * @param game
+     * @return GameState
+     */
+    public GameState createGameState(Game game){
+        return TravellingStateFactory.createGameState(game, this);
     }
 }

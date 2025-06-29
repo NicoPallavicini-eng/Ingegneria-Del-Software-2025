@@ -1,9 +1,32 @@
 module it.polimi.ingsw.galaxytrucker {
+
     requires javafx.controls;
+    requires javafx.graphics;
     requires javafx.fxml;
 
-    requires org.controlsfx.controls;
+    exports it.polimi.ingsw.galaxytrucker.View to javafx.graphics;
 
-    opens it.polimi.ingsw.galaxytrucker to javafx.fxml;
+    exports it.polimi.ingsw.galaxytrucker.Network.Server;
+    exports it.polimi.ingsw.galaxytrucker.Network.Client;
+
+    requires org.controlsfx.controls;
+    requires java.rmi;
+    requires jdk.jfr;
+
+    requires jackson.core;
+    requires jackson.databind;
+    requires jackson.annotations;
+    requires com.google.gson;
+
+    requires java.sql;
+    requires java.desktop;
+
+    opens it.polimi.ingsw.galaxytrucker to javafx.fxml, com.google.gson;
+    opens it.polimi.ingsw.galaxytrucker.Model.Tiles to com.google.gson;
+
+    exports it.polimi.ingsw.galaxytrucker.Model to com.google.gson;
     exports it.polimi.ingsw.galaxytrucker;
+    exports it.polimi.ingsw.galaxytrucker.Controller.Server;
+    exports it.polimi.ingsw.galaxytrucker.View.Trials;
+    opens it.polimi.ingsw.galaxytrucker.View.Trials to com.google.gson, javafx.fxml;
 }

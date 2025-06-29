@@ -1,0 +1,80 @@
+sequenceDiagram
+    participant client as Client
+    participant user as User
+    participant rmi as RMIClient
+    participant server as Server
+    participant sc as ServerController
+    participant game as Game
+    participant gs as GameState
+
+    client->>+user: Select the method for the UI: (1) TUI, (2) GUI (Default is TUI)
+    alt try
+        user-->>+client: uiChoice = scanner.nextInt()
+        client->>+user: Select the method of connection: (1) RMI, (2) Socket
+        alt try
+            user-->>+client: connectionChoice = scanner.nextInt()
+            client->>+user: Connecting via RMI, please choose IP and port of the server. For default connection press '-1'.
+            alt try
+                user-->>+client: input = scanner.nextInt()
+                alt input == -1 try
+                    client->>+rmi: rmi = new RMIClient(server, uiChoice)
+                    client->>+rmi: rmi.run()
+                    alt try
+                        rmi->>+server: server.connect(this)
+                        alt uiChoice != 2 try
+                            rmi->>+rmi: this.runCl()
+                            alt try while(!input.equals("/disconnect"))
+                                rmi->>+user: Enter command: 
+                                user->>+rmi: input = scanner.nextLine()
+                                rmi->>+server: server.handleUserInput(this,input)
+                                server->>+sc: serverController.handleUserInput(virtualClient,input)
+                                alt 
+                                    alt try
+                                        sc->>+sc: executeCommand(command, firstParameters, secondParameters, client)
+                                        alt switch (command) case "connect"
+                                            alt firstParameters.size() == 1
+                                                alt
+                                                    alt try -> see pt 2
+                                                    else IllegalArgumentException | IllegalEventException e
+                                                        sc-->>+user: e.getMessage()
+                                                    end
+                                                else clientNickname != null
+                                                    sc-->>+user: It's forbidden for one client to connect to the game more than once!
+                                                end
+                                            else
+                                                sc-->>+user: /connect request one parameter.
+                                            end
+                                        else default
+                                            sc-->>-rmi: client.invalidCommand("Invalid command. Type /help for a list of available commands.")
+                                        end
+                                    else NumberFormatException
+                                        sc-->>-rmi: client.invalidCommand("Invalid command")
+                                    end
+                                else input == null || !input.startsWith("/")
+                                    sc->>+rmi: client.invalidCommand("Invalid command")
+                                end
+                            else RemoteException e
+                                rmi-->>-rmi: throw new RuntimeException(e)
+                            else IllegalEventException
+                                rmi-->>-user: "Error: "+ e.getMessage()
+                            end
+                        else RemoteException e
+                            rmi-->>-rmi: throw new RuntimeException(e)
+                        end
+                    else RemoteException e
+                        rmi-->>-rmi: throw new RuntimeException(e)
+                    end
+                else ConnectException
+                    client->>+user: Server is not available
+                end
+            else InputMismatchException
+                user-->>-client: input = -1
+            end
+        else InputMismatchException
+            user-->>-client: connectionChoice = 1
+        end
+    else InputMismatchException
+        user-->>-client: uiChoice = 1
+    end
+
+    

@@ -1,0 +1,80 @@
+.tile-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 1; /* Full opacity, but still transparent */
+    -fx-cursor: hand;
+    -fx-effect: null; /* No effect by default */
+    -fx-border-color: transparent; /* Just in case */
+    -fx-border-width: 0;
+}
+
+.tile-button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Optional soft glow */
+}
+
+.card-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 1; /* Full opacity, but still transparent */
+    -fx-cursor: hand;
+    -fx-effect: null; /* No effect by default */
+    -fx-border-color: transparent; /* Just in case */
+    -fx-border-width: 0;
+}
+
+.card-button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Optional soft glow */
+}
+
+.bottom-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-background-color: #3399cc;
+    -fx-text-fill: white;
+}
+
+.bottom-button:hover {
+    -fx-background-color: derive(#3399cc, 20%);
+    -fx-cursor: hand;
+}
+
+.next-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-background-color: #875f87;
+    -fx-text-fill: white;
+}
+
+.next-button:hover {
+    -fx-background-color: derive(#875f87, 20%);
+    -fx-cursor: hand;
+}
+
+.action-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-background-color: #cc5555;
+    -fx-text-fill: white;
+}
+
+.action-button:hover {
+    -fx-background-color: derive(#cc5555, 20%);
+    -fx-cursor: hand;
+}
+
+.rotate-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 14;
+    -fx-background-radius: 5;
+    -fx-background-color: #875f87;
+    -fx-text-fill: white;
+}
+
+.rotate-button:hover {
+    -fx-background-color: derive(#875f87, 20%);
+    -fx-cursor: hand;
+}

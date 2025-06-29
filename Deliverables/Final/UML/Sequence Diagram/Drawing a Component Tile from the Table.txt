@@ -1,0 +1,73 @@
+sequenceDiagram
+    participant user as User
+    participant rmi as RMIClient
+    participant server as Server
+    participant sc as ServerController
+    participant game as Game
+    participant gs as GameState
+    participant eh as EventHandler
+
+    alt try while(!input.equals("/disconnect"))
+        rmi->>+user: Enter command: 
+        user->>+rmi: input = scanner.nextLine()
+        rmi->>+server: server.handleUserInput(this,input)
+        server->>+sc: serverController.handleUserInput(virtualClient,input)
+        alt 
+            alt try
+                sc->>+sc: executeCommand(command, firstParameters, secondParameters, client)
+                alt switch (command) case "pickuptile"
+                    alt player != null
+                        alt secondParameters.isEmpty()
+                            alt firstParameters.size() == 2
+                                alt tilePositionInt >= 0 && tilePositionInt <= 152
+                                    alt try
+                                        sc->>+sc: PickUpTileEvent(player, tilePositionInt)
+                                        sc->>+game: game.getGameState().handleEvent(event, game)
+                                        game->>+gs: handleEvent(event, game)
+                                        alt
+                                            gs->>+eh: EventHandler.handleEvent(event)
+                                            alt
+                                                alt
+                                                    eh-->>+game: ship.setTileInHand(tile);
+                                                    eh-->>+game: ship.setLastPlacedTile(null);
+                                                    eh-->>+game: tile.setFacingUp(true);
+                                                    eh-->>+game: tile.setChoosable(false);
+                                                else ship.getTileInHand() != null
+                                                    eh->>+eh: throw new IllegalEventException("you have already picked up a tile")
+                                                end
+                                            else pile.get(event.index()) == null
+                                                eh->>+eh: throw new IllegalEventException("Tile is not present")
+                                            end
+
+                                        else finishedBuildingPlayers.contains(event.player()) || timeIsUp
+                                            gs-->>-gs: throw new IllegalEventException("You can no longer pick up any tiles")
+                                        end
+                                    else IllegalEventException e
+                                        rmi-->>+user: e.getMessage()
+                                    end
+                                else 
+                                    sc-->>+user: Tile position not valid. It must be between 1 and 156
+                                end
+                            else
+                                sc-->>+user: /pickuptile supports only one parameter!
+                            end
+                        else
+                            sc-->>+user: /pickuptile supports only one parameter!
+                        end
+                    else
+                        sc-->>+user: You are not connected to the game!
+                    end
+                else default
+                    sc-->>-rmi: client.invalidCommand("Invalid command. Type /help for a list of available commands.")
+                end
+            else NumberFormatException
+                sc-->>-rmi: client.invalidCommand("Invalid command")
+            end
+        else input == null || !input.startsWith("/")
+            sc->>+rmi: client.invalidCommand("Invalid command")
+        end
+    else RemoteException e
+        rmi-->>-rmi: throw new RuntimeException(e)
+    else IllegalEventException
+        rmi-->>-user: "Error: "+ e.getMessage()
+    end
