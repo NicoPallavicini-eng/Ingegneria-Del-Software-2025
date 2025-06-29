@@ -15,7 +15,7 @@ import static it.polimi.ingsw.galaxytrucker.Model.Tiles.CabinInhabitants.*;
 // all is done indipendently
 
 /**
- * Epidemic State eliminates from eache cabin an Inhabitant,if it's connected to other Cabins
+ * Epidemic State eliminates from each cabin an Inhabitant,if it's connected to other Cabins
  */
 public class EpidemicState extends TravellingState implements Serializable {
     private EpidemicCard currentCard;
@@ -41,7 +41,9 @@ public class EpidemicState extends TravellingState implements Serializable {
     }
 
     /**
-     * This function process an Epidemic State,it eliminate oneInhabitants from Cabins that are connected to other Cabins
+     * This function processes the epidemic state by checking each player's ship for inhabited cabins.
+     * It identifies cabins that are connected to other inhabited cabins and updates their inhabitants accordingly.
+     * It runs in parallel for each player to ensure efficient processing of the epidemic state.
      */
     public void process(){
         for(Player player : game.getListOfActivePlayers()){

@@ -50,8 +50,7 @@ public class BuildingState extends GameState implements Serializable {
         return game;
     }
 
-    /**
-     * This function change the Game State of Game
+    /** * This function sets the next Game Set
      */
     public void next() {
         for(Player p : game.getListOfActivePlayers()){
@@ -83,8 +82,7 @@ public class BuildingState extends GameState implements Serializable {
 
 
     /**
-     * This function is used for Testing building State
-     * @param ship
+     * This function is used to set a predefined ship for testing purposes.
      */
     public void handleEvent(Ship ship){
 
@@ -126,7 +124,8 @@ public class BuildingState extends GameState implements Serializable {
         tile.setFacingUp(true);
     }
 
-    /**ChooseSubshipEvent is possible during Building State
+    /**This function handles ChooseSubShipEvent
+     *
      * @param event
      */
     public void handleEvent(ChooseSubShipEvent event){
@@ -145,7 +144,11 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
-    /**SetPositionEvent is possible during Building State
+    /**This function handles SetPositionEvent, after checking if the player has already placed their rocket.
+     * If the player has not placed their rocket yet, it processes the event and updates the game state.
+     * If all players have placed their rockets, it checks the legality of each player's ship.
+     * If a player's ship is legal, they are added to the playersWithLegalShips list,
+     * otherwise, they are added to the playersWithIllegalShips list.
      * @param event
      */
     public void handleEvent(SetPositionEvent event) {
@@ -181,7 +184,11 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
 
-    /**RemoveTileEvent is possible during Building State
+    /** This function handles RemoveTileEvent, which is used to remove a tile from a player's ship.
+     * It checks if all players have finished building their ships,
+     * if not, it throws an exception.
+     * If the player has already a legal ship, it throws an exception as well.
+     * If the player has not a legal ship, it processes the event and checks if the ship is still legal after the removal.
      * @param event
      */
     public void handleEvent(RemoveTileEvent event) {
@@ -207,7 +214,8 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     /**
-     * PickUpTileEvent is possible during Building State
+     * this function handles PickUpTileEvent, which is used to pick up a tile from the game board.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(PickUpTileEvent event) {
@@ -220,7 +228,8 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     /**
-     * PutDownTileEvent is possible during Building State
+     * This function handles PutDownTileEvent, which is used to put down a tile on a player's ship.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(PutDownTileEvent event) {
@@ -232,7 +241,8 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * PickUpFromShipEvent is possible during Building State
+     * This function handles PickUpFromShipEvent, which is used to pick up a tile from a player's ship.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(PickUpFromShipEvent event) {
@@ -244,7 +254,8 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * PickUpReservedTileEvent is possible during Building State
+     * this function handles PickUpReservedTileEvent, which is used to pick up a reserved tile.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(PickUpReservedTileEvent event) {
@@ -256,7 +267,8 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * PlaceTileEvent is possible during Building State
+     * This function handles PlaceTileEvent, which is used to place a tile on a player's ship.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(PlaceTileEvent event) {
@@ -268,7 +280,8 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * ReserveTileEvent is possible during Building State
+     * This function handles PlaceTileEvent, which is used to place a tile on a player's ship.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(ReserveTileEvent event) {
@@ -280,7 +293,8 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * RotateTileEvent is possible during Building State
+     * This function handles PlaceTileEvent, which is used to place a tile on a player's ship.
+     * It checks if the player has already finished building their ship or if the time is up.
      * @param event
      */
     public void handleEvent(RotateTileEvent event) {
@@ -292,7 +306,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * PlaceOrangeAlienEvent is possible during Building State
+     * THis function handles PlaceOrangeAlienEvent, which is used to place an orange alien on a player's ship.
+     * It checks if the player has a legal ship ready to takeoff and if they have already placed an orange alien.
+     * If the player has not placed an orange alien yet, it processes the event and updates the placedAliens map.
      * @param event
      */
     public void handleEvent(PlaceOrangeAlienEvent event) {
@@ -311,7 +327,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * PlacePurpleAlienEvent is possible during Building State
+     * This function handles PlacePurpleAlienEvent, which is used to place a purple alien on a player's ship.
+     * It checks if the player has a legal ship ready to takeoff and if they have already placed a purple alien.
+     * If the player has not placed a purple alien yet, it processes the event and updates the placedAliens map.
      * @param event
      */
     public void handleEvent(PlacePurpleAlienEvent event) {
@@ -330,7 +348,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * DoneEvent is possible during Building State
+     * This function handles DoneEvent, which is used to signal that a player has finished placing their aliens.
+     * It checks if the player has a legal ship ready to takeoff and if they have already signaled done.
+     * If the player has not signaled done yet, it updates the placedAliens map and checks if all players have finished placing their aliens.
      * @param event
      */
     public void handleEvent(DoneEvent event) {
@@ -343,7 +363,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * FlipHourglassEvent is possible during Building State
+     * This function handles FlipHourglassEvent, which is used to flip the hourglass during the building phase.
+     * It checks if the time is already up, and if so, it throws an exception.
+     * If the time is not up, it processes the event using the EventHandler.
      * @param event
      */
     public void handleEvent(FlipHourglassEvent event,Game game) {
@@ -355,7 +377,9 @@ public class BuildingState extends GameState implements Serializable {
         }
     }
     /**
-     * ViewDeckEvent is possible during Building State
+     * This function handles ViewDeckEvent, which is used to view the deck during the building phase.
+     * It checks if the player has already finished building their ship or if the time is up.
+     * If the player has finished building their ship or if the time is up, it throws an exception.
      * @param event
      */
     public void handleEvent(ViewDeckEvent event) {
@@ -365,7 +389,9 @@ public class BuildingState extends GameState implements Serializable {
     }
 
     /**
-     * This function checks if you can change a Game State
+     * This function checks if all players have placed their aliens.
+     * If all players have placed both their orange and purple aliens,
+     * it calls the next() function to proceed to the next game state.
      */
     private void checkNext(){
         boolean flag = false;

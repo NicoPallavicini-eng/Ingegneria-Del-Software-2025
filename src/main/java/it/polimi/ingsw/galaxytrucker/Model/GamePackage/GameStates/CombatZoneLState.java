@@ -61,8 +61,9 @@ public class CombatZoneLState extends CombatZoneState implements Serializable {
     }
 
     /**
-     * EjectPeopleEvent is possible during CombatZoneLState
-     * @param event
+     * This function handles the EjectPeopleEvent during the people ejecting phase.
+     * It checks if the event is valid, verifies that the player is the current loser,
+     * and ensures that the number of ejected crew members matches the required amount.
      */
     public void handleEvent(EjectPeopleEvent event) {
         if (!currentChallenge.equals(CombatZonePenalty.PEOPLE)) {

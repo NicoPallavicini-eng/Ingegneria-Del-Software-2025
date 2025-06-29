@@ -19,7 +19,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Game Class unite different Classes,such as Players,GameDeck,TilePile,GameState,Hourglass
+ * This is the Game Class. It contains all the information about the Game.
+ * It manages the players, the game state, the tile pile, and the deck.
+ * It also implements the Observable interface to notify observers of changes in the game state.
+ * The Game class is responsible for initializing the game, adding players, updating the list of active players,
+ * sorting players based on their travel days, and managing the game state transitions.
  */
 public class Game implements Serializable, Observable {
     private final List<Observer> observers = new ArrayList<>();
