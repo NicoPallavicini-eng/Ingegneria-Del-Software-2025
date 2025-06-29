@@ -5,6 +5,9 @@ import it.polimi.ingsw.galaxytrucker.Model.Direction;
 
 import java.io.Serializable;
 
+/**
+ * CannonTile represent the Cannon Tile from Board Game
+ */
 public class CannonTile extends Tile implements Serializable {
     private final boolean doublePower;
     private boolean activeState;
@@ -15,6 +18,15 @@ public class CannonTile extends Tile implements Serializable {
     private boolean reserved;
     private String name;
 
+    /**
+     * Constructor of Cannon Tile,some parameters are set to default values
+     * @param north
+     * @param south
+     * @param east
+     * @param west
+     * @param doublePower
+     * @param activeState
+     */
     @JsonCreator
     public CannonTile(ConnectorType north, ConnectorType south, ConnectorType east, ConnectorType west, boolean doublePower, boolean activeState) {
         super(north, south, east, west);
@@ -26,10 +38,18 @@ public class CannonTile extends Tile implements Serializable {
         this.reserved = false;
     }
 
+    /**
+     * This function returns direction of a Cannon
+     * @return Direction
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * This function Override method rotate from ,and is adding some changes for cannon
+     * @param side The direction to rotate the tile (LEFT or RIGHT).
+     */
     @Override
     public void rotate(Side side) {
         super.rotate(side);
@@ -56,18 +76,38 @@ public class CannonTile extends Tile implements Serializable {
         }
     }
 
+    /**
+     * This function tells you whether ship is Double Power or no
+     * @return boolean
+     */
     public boolean getDoublePower() {
         return doublePower;
     }
 
+    /**
+     * This function set the active status of Cannon
+     * @param activeState boolean
+     */
     public void setActiveState(boolean activeState) {
         this.activeState = activeState;
     }
 
+    /**
+     * This function tells you whether Cannon is activated or not
+     * @return boolean
+     */
     public boolean getActiveState() {
         return activeState;
     }
 
+    /**
+     * @param visitor The visitor to accept.
+     */
+
+    /**
+     * This function is used to find the Tile Type
+     * @param visitor The visitor to accept.
+     */
     @Override
     public void accept(TileVisitor visitor) {
         visitor.visit(this);

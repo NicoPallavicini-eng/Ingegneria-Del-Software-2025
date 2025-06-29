@@ -629,18 +629,48 @@ public class JsonCardParsing {
      */
     public List<Card> getCompleteList(){
         List<Card> completeList = new ArrayList<>();
+//        completeList.addAll(piratesCards);
+//        completeList.addAll(planetsCards);
+//        completeList.addAll(meteorsCards);
+//        completeList.addAll(epidemicCards);
+//        completeList.addAll(combatZoneLCards);
+//        completeList.addAll(combatZoneNotLCards);
+//        completeList.addAll(openSpaceCards);
+//        completeList.addAll(stardustCards);
+//        completeList.addAll(smugglersCards);
+//        completeList.addAll(shipCards);
+//        completeList.addAll(stationCards);
+//        completeList.addAll(stardustCards);
+
         completeList.addAll(piratesCards);
-        completeList.addAll(planetsCards);
-        completeList.addAll(meteorsCards);
         completeList.addAll(epidemicCards);
-        //completeList.addAll(combatZoneLCards);
-        //completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(epidemicCards);
+        completeList.addAll(epidemicCards);
+        completeList.addAll(epidemicCards);
         completeList.addAll(openSpaceCards);
-        completeList.addAll(stardustCards);
-        completeList.addAll(smugglersCards);
-        completeList.addAll(shipCards);
-        completeList.addAll(stationCards);
-        completeList.addAll(stardustCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+        completeList.addAll(combatZoneLCards);
+        completeList.addAll(combatZoneNotLCards);
+
         return completeList;
     }
 
