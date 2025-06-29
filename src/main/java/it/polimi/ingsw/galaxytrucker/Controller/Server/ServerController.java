@@ -190,7 +190,10 @@ public class ServerController {
                                     if (rmiClient != null) {
                                         try {
                                             rmiClient.printMessage("\nGame is over, the final state has been reached");
-                                            rmiClient.viewLeaderboard(game);
+                                            rmiClient.printMessage("\nStandings:\n");
+                                            for(Player player : game.getListOfPlayers()){
+                                                rmiClient.printMessage(player.getNickname() +"\t credits: " + player.getShip().getCredits() + "\n");
+                                            }
                                         } catch (RemoteException e) {
                                             throw new RuntimeException(e);
                                         }
@@ -698,14 +701,26 @@ public class ServerController {
                             for (SocketClientHandler socketClient : socketClients) {
                                 if (socketClient != null) {
                                     try {
-                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached\n");
+                                        Message msg = new Message("String", game, "\nGame is over, the final state has been reached");
                                         ObjectOutputStream objOut = socketClient.getObjOut();
                                         objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
-                                        Message msg2 = new Message("Game", game, "viewLeaderboard");
-                                        msg2.setNickname(socketClient.getNickname());
-                                        objOut.writeObject(msg2);
+                                        msg = new Message("String", game, "Standings:");
+                                        objOut = socketClient.getObjOut();
+                                        objOut.writeObject(msg);
+                                        objOut.flush();
+                                        objOut.reset();
+                                        for(Player player : game.getListOfPlayers()){
+                                            msg = new Message("String", game,player.getNickname() +"\t credits: " + player.getShip().getCredits());
+                                            objOut = socketClient.getObjOut();
+                                            objOut.writeObject(msg);
+                                            objOut.flush();
+                                            objOut.reset();
+                                        }
+                                        msg = new Message("String", game,"\n");
+                                        objOut = socketClient.getObjOut();
+                                        objOut.writeObject(msg);
                                         objOut.flush();
                                         objOut.reset();
                                     } catch (IOException e) {
@@ -1317,7 +1332,14 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        executeCommand(command, firstParameters, secondParameters, objOut, msg);
+        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
+            executeCommand(command, firstParameters, secondParameters, objOut, msg);
+        }
+        else{
+            Message newMessage = new Message("String", null, "The game needs at least 2 players to continue");
+            objOut.writeObject(newMessage);
+            objOut.flush();
+        }
     }
 
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
@@ -2944,7 +2966,12 @@ public class ServerController {
                     .filter(s -> !s.isEmpty())
                     .toList();
         }
-        executeCommand(command, firstParameters, secondParameters, client);
+        if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
+            executeCommand(command, firstParameters, secondParameters, client);
+        }
+        else{
+            client.invalidCommand("The game needs at least 2 players to continue");
+        }
     }
 
     /**

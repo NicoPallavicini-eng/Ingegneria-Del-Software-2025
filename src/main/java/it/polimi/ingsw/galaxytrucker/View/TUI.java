@@ -505,33 +505,19 @@ public class TUI implements UI {
         for (CargoTile cargo : cargoList) {
             if (cargo.fitsRed()) {
                 redCargo += cargo.getSlotsNumber();
+                redCargo -= cargo.getTileContent().size();
             } else {
                 normCargo += cargo.getSlotsNumber();
+                normCargo -= cargo.getTileContent().size();
             }
         }
         int allCargo = redCargo + normCargo;
-        System.out.println(AnsiColor.CARGO_COLOR.fg() + "Cargo: " + allCargo + AnsiColor.RESET);
+        System.out.println(AnsiColor.CARGO_COLOR.fg() + "Available cargo: " + allCargo + AnsiColor.RESET);
         System.out.println(AnsiColor.REGULAR_CARGO_COLOR.fg() + "   Normal: " + normCargo + AnsiColor.RESET);
         System.out.println(AnsiColor.RED_CARGO_COLOR.fg() + "   red: " + redCargo + AnsiColor.RESET);
-        int firepower = 0;
-        List <CannonTile> cannonList = ship.getListOfFirepower();
-        for (CannonTile cannon : cannonList) {
-            if (cannon.getDoublePower()) {
-                firepower += 2;
-            } else {
-                firepower += 1;
-            }
-        }
+        double firepower = ship.getFirepower();
         System.out.println(AnsiColor.CANNON_COLOR.fg() + "Firepower: " + firepower + AnsiColor.RESET);
-        int enginePower = 0;
-        List <EngineTile> engineList = ship.getListOfEngine();
-        for (EngineTile engine : engineList) {
-            if (engine.getDoublePower()) {
-                enginePower += 2;
-            } else {
-                enginePower += 1;
-            }
-        }
+        double enginePower = ship.getEnginePower();
         System.out.println(AnsiColor.ENGINE_COLOR.fg() + "Engine Power: " + enginePower + AnsiColor.RESET);
         boolean north = false;
         boolean east = false;
@@ -816,8 +802,8 @@ public class TUI implements UI {
                         "/chooseplanet - Choose a planet when the planet card is revealed. Requires the index of the planet you want to choose.\n" +
                         "/nochoice - Declares that you won't do any choice. No parameters needed.\n" +
                         "/done - Declare that you are done with your action. No parameters needed.\n" +
-                        "\nEND GAME PHASE\n" +
-                        "/claimreward - Claim the end of the game reward. No parameters needed.\n"
+                        "/claimreward - Claim a reward, can be used afeter defeating enemies or during ship card.\n"
+
         );
     }
 
@@ -1066,7 +1052,9 @@ public class TUI implements UI {
                         System.out.println("Size = Small, ");
                     }
                     System.out.println("Direction = " + ball.direction());
-                    System.out.println("Dice = " + ball.diceRoll());
+                    if(i==1) {
+                        System.out.println("Dice = " + ball.diceRoll());
+                    }
                     i++;
                 }
             }

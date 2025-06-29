@@ -84,6 +84,21 @@ public class GUI extends Application implements UI, Serializable {
         // TODO: set the sceneManager's initial scene
         started = true;
         stage.show();
+        stage.setOnCloseRequest(e -> {
+            if (rmiClient != null){
+                try{
+                    rmiClient.getServer().handleUserInput(rmiClient, "/disconnect");
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else if (socketClient != null){
+                try{
+                    socketClient.getServerSocket().sendMessageToServer("/disconnect", null);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         if (staticRmiClient != null) {
             if (staticRmiClient instanceof RMIClient rmiRealClient) {

@@ -27,7 +27,6 @@ in which they can place aliens and signal "done".
 Once all players have placed their aliens next() is called.
  */
 public class BuildingState extends GameState implements Serializable {
-    private final Game game;
     private ArrayList<Player> finishedBuildingPlayers;
     private ArrayList<Player> playersWithLegalShips;
     private ArrayList<Player> playersWithIllegalShips;

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.galaxytrucker.Model.Tiles;
 
+import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameEvents.IllegalEventException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class CargoTile extends Tile implements Serializable {
     }
 
     public void addBlock(Integer block) {
+        if(block == 4 && !fitsRed){
+            throw new IllegalEventException("You can't put red cargo in this normal cargo tile");
+        }
         this.tileContent.add(block);
     }
 

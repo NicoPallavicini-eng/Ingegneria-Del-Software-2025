@@ -11,9 +11,9 @@ import java.util.List;
 //calculates the rewards
 
 public class FinalState extends GameState implements Serializable {
-    private final Game game;
-    private List<Ship> ships = new ArrayList<>();
+    private List<Ship> activeShips = new ArrayList<>();
     private List<Ship> gaveUpShips = new ArrayList<>();
+    private List<Ship> ships = new  ArrayList<>();
 
 
 
@@ -32,7 +32,17 @@ public class FinalState extends GameState implements Serializable {
 
 
     public void init(){
-        ships = game.getListOfActivePlayers().stream().map(Player::getShip).toList();
+        for(Player p : game.getListOfActivePlayers()){
+            Ship s = p.getShip();
+            ships.add(s);
+            if(s.getTravelDays() == null){
+                gaveUpShips.add(s);
+            }
+            else{
+                activeShips.add(s);
+            }
+        }
+        activeShips.sort( (s1, s2) -> s2.getTravelDays()-s1.getTravelDays());
         process();
     }
 
@@ -41,12 +51,13 @@ public class FinalState extends GameState implements Serializable {
         computeBLSReward();
         computeSaleOfGoods();
         computeLosses();
+        game.getListOfPlayers().sort( (p1, p2) -> p2.getShip().getCredits() - p1.getShip().getCredits());
         game.notifyObservers(game, "final");
     }
 
     private void computeFinishOrderReward() {
         int i=0;
-        for(Ship ship : ships){
+        for(Ship ship : activeShips){
             if(ship.getTravelDays()!=null){
                 ship.setCredits(ship.getCredits()+8-2*i);
                 i++;
@@ -68,20 +79,22 @@ public class FinalState extends GameState implements Serializable {
     }
 
     private void computeSaleOfGoods() {
-        if(!ships.isEmpty()){
-            ships.stream().
+        if (!activeShips.isEmpty()) {
+            activeShips.stream().
                     forEach(s -> s.setCredits(s.getCredits() +
                             s.getListOfCargo().stream().
                                     flatMapToInt(c -> c.getTileContent().stream().
                                             mapToInt(Integer::intValue)).
                                     sum())
                     );
+        }
+        if (!gaveUpShips.isEmpty()) {
             gaveUpShips.stream().
                     forEach(s -> s.setCredits(s.getCredits() +
                             (s.getListOfCargo().stream().
                                     flatMapToInt(c -> c.getTileContent().stream().
                                             mapToInt(Integer::intValue)).
-                                    sum())/2
+                                    sum()) / 2
                     ));
         }
     }
@@ -91,4 +104,6 @@ public class FinalState extends GameState implements Serializable {
             ships.stream().forEach(s -> s.setCredits(s.getCredits() - s.getLostTiles()));
         }
     }
+
+
 }

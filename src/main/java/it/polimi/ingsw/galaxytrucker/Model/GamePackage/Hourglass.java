@@ -16,7 +16,7 @@ public class Hourglass implements Serializable {
     private long startTime;
     private BuildingState state;
     private transient final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private boolean someoneHasReconnected = false;
+    private boolean someoneHasReconnected = true;
 
     public Hourglass(BuildingState state) {
         this.state = state;
@@ -34,7 +34,7 @@ public class Hourglass implements Serializable {
             if(flipNumber == 3){
                 state.timeUp();
             }
-        }, 3, TimeUnit.SECONDS);//todo change to 60
+        }, 60, TimeUnit.SECONDS);
     }
 
     public int getFlipNumber() {
@@ -58,10 +58,14 @@ public class Hourglass implements Serializable {
                 game.getGameState().init();
                 throw new IllegalEventException(winner + "has won for disconnections");
             }
-        }, 3, TimeUnit.SECONDS);
+        }, 30, TimeUnit.SECONDS);
     }
 
     public void connection(){
         someoneHasReconnected = true;
+    }
+
+    public boolean hasSomeoneReconnected() {
+        return someoneHasReconnected;
     }
 }
