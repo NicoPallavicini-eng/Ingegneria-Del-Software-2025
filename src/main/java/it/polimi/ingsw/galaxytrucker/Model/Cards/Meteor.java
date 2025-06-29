@@ -65,7 +65,6 @@ public record Meteor(boolean bigMeteor, Direction direction, RowOrColumn rowOrCo
             }
         }
     }
-    //TODO i think diceroll is ok now
     /**
      * This function checks Active Cannons on specific Row(diceroll).If Meteor is not in North,it also checks adjacent Rows,and if there is not,removes first element of Row.
      * @param ship
