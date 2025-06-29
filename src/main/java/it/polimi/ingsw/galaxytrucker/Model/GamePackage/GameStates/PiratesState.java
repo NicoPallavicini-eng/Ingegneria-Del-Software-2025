@@ -94,7 +94,10 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(NoChoiceEvent event){
-        if(claimingPhase){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Fix your ship first");
+        }
+        else if(claimingPhase){
             if(!event.player().equals(piratesSlayer)){
                 throw new IllegalEventException("You have not slain the pirates");
             }
@@ -189,7 +192,10 @@ public class PiratesState extends TravellingState implements Serializable {
     }
 
     public void handleEvent(ActivateShieldEvent event){
-        if(!reckoningPhase){
+        if(playersWithIllegalShips.contains(event.player())){
+            throw new IllegalEventException("Fix your ship first");
+        }
+        else if(!reckoningPhase){
             throw new IllegalEventException("Not time for activating shield");
         }
         else if(!defeatedPlayers.contains(event.player()) || defendedPlayers.contains(event.player())){
@@ -198,6 +204,7 @@ public class PiratesState extends TravellingState implements Serializable {
         Optional<Tile> tile = event.player().getShip().getTileOnFloorPlan(event.shieldRow(), event.shieldCol());
         ShieldTileVisitor stv = new ShieldTileVisitor();
         tile.ifPresent(t -> t.accept(stv));
+
         if(stv.getList().isEmpty() || !shieldDefends(stv.getList().getFirst().getOrientation(), currentCannonball.direction())){
             throw new IllegalEventException("You didn't select a shield able to defend you");
         }
