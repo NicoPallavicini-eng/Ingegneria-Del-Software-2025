@@ -26,6 +26,7 @@ public class WaitingState extends GameState implements Serializable {
     public void next() {
         getGame().setGameState(new BuildingState(game));
         game.getGameState().init();
+        game.notifyObservers(game, "buildingState");
     }
 
    public void handleEvent(ConnectEvent event, Game game) throws IllegalEventException {

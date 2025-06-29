@@ -26,4 +26,6 @@ public interface VirtualClient extends Remote {
     void viewDeck(Game game, int index) throws RemoteException;
     VirtualServer getServer() throws RemoteException;
     void updateGame(Game game) throws RemoteException;
+    void close() throws RemoteException;
+    void next(Game game, String message) throws RemoteException;
 }

@@ -25,6 +25,8 @@ public interface UI {
     void viewCard(Game game);
     void printHelpMessage();
     void updateGame(Game game);
+    void invalidCommand(String error);
+    void nextScene(Game game, String message);
 
     static void launchGUI(Game game, VirtualClient rmiClient, SocketClient socketClient) { /* default empty */ }
 }

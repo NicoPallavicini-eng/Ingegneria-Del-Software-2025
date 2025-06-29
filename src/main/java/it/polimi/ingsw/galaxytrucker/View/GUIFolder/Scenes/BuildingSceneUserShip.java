@@ -90,7 +90,7 @@ public class BuildingSceneUserShip extends MyScene {
             try {
                 sendMessageToServer("/fliphourglass", this.nickname);
             } catch (IllegalGUIEventException ex) {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
             }
         });
         travelButton.setOnAction(e -> {
