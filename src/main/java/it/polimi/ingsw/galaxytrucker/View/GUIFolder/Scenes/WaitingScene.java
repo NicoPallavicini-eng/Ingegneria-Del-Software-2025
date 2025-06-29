@@ -55,16 +55,6 @@ public class WaitingScene extends MyScene{
         nextButton.setDisable(false);
         // Disabled until conditions met
         nextButton.setOnAction(e -> {
-            if (isFirstPlayer) {
-                if ( true || playersNum == game.getListOfPlayers().size() ) {
-                    // TODO link with building state here
-                    sceneManager.updateGame(this.game, this);
-                    sceneManager.next(this);
-                } else {
-                    // TODO update for others too
-                    // smt like waitForFirst();
-                }
-            }
             sceneManager.next(this);
         });
 

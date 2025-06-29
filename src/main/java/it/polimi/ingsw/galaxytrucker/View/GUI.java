@@ -117,6 +117,11 @@ public class GUI extends Application implements UI, Serializable {
                     System.setIn(new ByteArrayInputStream(disconnectionMessage.getBytes()));
                     rmiClient.close();
                 } catch (RemoteException ex) {
+                    try {
+                        rmiClient.close();
+                    } catch (RemoteException e1) {
+                        e1.printStackTrace();
+                    }
                     throw new RuntimeException(ex);
                 }
             } else if (socketClient != null){
