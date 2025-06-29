@@ -162,7 +162,7 @@ public class SocketClient {
 
             }case "disconnect" ->{
                 flag = false;
-                System.exit(0); //TODO: Capire se va bene...
+                System.exit(0);
             }
             case "NewGame" -> {
                 this.game = msg.getGame();
@@ -207,12 +207,7 @@ public class SocketClient {
     }
 }
 
-    /**
-     * Displays a message from the server.
-     * This method is used to print messages received from the server to the console.
-     *
-     * @param message the message to display
-     */
+
     public void viewCard(Game game) throws RemoteException{
         ui.viewCard(game);
     }
@@ -330,12 +325,7 @@ public class SocketClient {
         return server;
     }
 
-    /**
-     * Returns the nickname of the player.
-     * This method is used to retrieve the player's nickname.
-     *
-     * @return the nickname of the player
-     */
+
     public static void main(String[] args) throws IOException, UnknownHostException {
         String host = "192.168.224.181";
         int port = 1091;
