@@ -35,14 +35,11 @@
 ### Test Coverage
 Testing coverage of MODEL: 72%
 ### UML
-Here you can check our UML diagrams:
-- [High level UML Server-Client](Deliverables%2FUMLs%2FUML%20ALTO%20LIVELLO.png)
-- [Detailed UML Server-Client](Deliverables%2FUMLs%2FUML%20DETTAGLIO.png)
-- [Communication Protocol Diagrams](Deliverables%2FNETWORK%20SEQUENCE%20DIAGRAMS)
+You can check our UML diagrams [here](Deliverables/Final/UML).
 ### JavaDoc
-You can read the JavaDoc [here](Deliverables%2FJavaDoc).
+You can read the JavaDoc [here](Deliverables/Final/JavaDOC/apidocs).
 ### Jar
-You can download the Jar to launch the game [here](Deliverables%2FJAR).
+You can download the Jar to launch the game [here](Deliverables/Final/Jar).
 ## How to run
 ### Server
 1. Open the prompt as **administrator**.
