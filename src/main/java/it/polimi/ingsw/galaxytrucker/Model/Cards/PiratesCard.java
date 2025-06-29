@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.List;
 
 
+/**
+ * PiratesCard represent Pirates Card of Board Game
+ */
 public class PiratesCard extends Card implements Serializable {
     private final int firepower;
     private final int credits;
@@ -15,6 +18,14 @@ public class PiratesCard extends Card implements Serializable {
     private final List <Cannonball> cannonballList;
     private String name;
 
+    /**
+     * @param levelTwo
+     * @param used
+     * @param firepower
+     * @param credits
+     * @param daysToLose
+     * @param cannonballList
+     */
     public PiratesCard(boolean levelTwo, boolean used, int firepower, int credits, int daysToLose, List <Cannonball> cannonballList) {
         super(levelTwo, used);
         this.firepower = firepower;
@@ -27,22 +38,41 @@ public class PiratesCard extends Card implements Serializable {
 
     public String getName() { return name; }
 
+    /**
+     * This function return a firepower that is required to defeat Pirates
+     * @return int
+     */
     public int getFirepower() {
         return firepower;
     }
 
+    /**
+     * These function return the number of credit that player can win,if he defeat pirates
+     * @return int
+     */
     public int getCredits() {
         return credits;
     }
-
+    /**
+     * These function return the number of days that player need to loose in order to. claim reward.
+     * @return int
+     */
     public int getDaysToLose() {
         return daysToLose;
     }
 
+    /**
+     * This function returns a List of Cannonballs that Pirates will shoot
+     * @return List <Cannonball>
+     */
     public List <Cannonball> getCannonballList() {
         return cannonballList;
     }
-
+    /**
+     * This function is used to create a specific state,that depends on the type of the Card
+     * @param game
+     * @return GameState
+     */
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }

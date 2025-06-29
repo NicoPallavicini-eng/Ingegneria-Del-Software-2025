@@ -7,9 +7,16 @@ import it.polimi.ingsw.galaxytrucker.Model.GamePackage.GameStates.TravellingStat
 import java.io.Serializable;
 
 
+/**
+ * StardustCard represent Stardust Card of Board Game
+ */
 public class StardustCard extends Card implements Serializable {
     private String name;
 
+    /**
+     * @param levelTwo
+     * @param used
+     */
     public StardustCard(boolean levelTwo, boolean used) {
         super(levelTwo, used);
     }
@@ -17,7 +24,11 @@ public class StardustCard extends Card implements Serializable {
     public void setName(String name) { this.name = name; }
 
     public String getName() { return name; }
-
+    /**
+     * This function is used to create a specific state,that depends on the type of the Card
+     * @param game
+     * @return GameState
+     */
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }

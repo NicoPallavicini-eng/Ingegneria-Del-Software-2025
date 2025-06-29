@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Deck Class represent a collection of cards that Game has
+ */
 public class Deck implements Serializable {
     private final List <Card> allCardsLev1;
     private final List <Card> allCardsLev2;
@@ -14,16 +17,28 @@ public class Deck implements Serializable {
     private final List <Card> subDeck4 = new ArrayList <>();
     private List <Card> gameDeck = new ArrayList <>();
 
+    /**
+     * Constructor of Deck,it assembles Deck.
+     * @param allCardsLev1
+     * @param allCardsLev2
+     */
     public Deck(List <Card> allCardsLev1, List <Card> allCardsLev2) {
         this.allCardsLev1 = allCardsLev1;
         this.allCardsLev2 = allCardsLev2;
         this.assembleGameDeck();
     }
 
+    /**This function returns gameDeck of Game
+     * @return  List <Card>
+     */
     public List <Card> getGameDeck() {
         return gameDeck;
     }
 
+    /**
+     * This function return you a Card from Deck.If there is no Card,it returns Null
+     * @return Card
+     */
     public Card drawCard() {
         Card firstCard;
         try{
@@ -35,11 +50,17 @@ public class Deck implements Serializable {
         return firstCard;
     }
 
+    /**This function shuffle Deck
+     * @param cards
+     */
     public void shuffle(List <Card> cards) {
         // Shuffle the deck using Collections.shuffle() with a randomizer
         Collections.shuffle(cards);
     }
 
+    /**
+     * This function create a valid Game Deck,it also create sub Desk that is possible to visualize
+     */
     public void assembleGameDeck() { // TODO implement CardNumber logic for also tut
         Collections.shuffle(allCardsLev1);
         Collections.shuffle(allCardsLev2);
@@ -74,18 +95,31 @@ public class Deck implements Serializable {
         }
     }
 
+    /**
+     * This function returns a Sub Deck 1
+     * @return List<Card>
+     */
     public List<Card> getSubDeck1() {
         return subDeck1;
     }
-
+    /**
+     * This function returns a Sub Deck 2
+     * @return List<Card>
+     */
     public List<Card> getSubDeck2() {
         return subDeck2;
     }
-
+    /**
+     * This function returns a Sub Deck 3
+     * @return List<Card>
+     */
     public List<Card> getSubDeck3() {
         return subDeck3;
     }
-
+    /**
+     * This function returns a Sub Deck 4
+     * @return List<Card>
+     */
     public List<Card> getSubDeck4() {
         return subDeck4;
     }

@@ -12,6 +12,11 @@ import java.util.List;
 public class CombatZoneCardNotL extends CombatZoneCard implements Serializable {
     private String name;
 
+    /**
+     * @param levelTwo
+     * @param used
+     * @param cannonballList
+     */
     public CombatZoneCardNotL(boolean levelTwo, boolean used, List<Cannonball> cannonballList) {
         super(levelTwo, used, 4, 0, 3, cannonballList);
     }
@@ -20,6 +25,11 @@ public class CombatZoneCardNotL extends CombatZoneCard implements Serializable {
 
     public String getName() { return name; }
 
+    /**
+     * This function is used to create a specific state,that depends on the type of the Card
+     * @param game
+     * @return GameState
+     */
     public GameState createGameState(Game game){
         return TravellingStateFactory.createGameState(game, this);
     }
