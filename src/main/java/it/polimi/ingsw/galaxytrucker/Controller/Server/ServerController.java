@@ -558,7 +558,7 @@ public class ServerController {
                                 for (VirtualClient rmiClient : rmiClients) {
                                     Player player = checkPlayer(rmiClient.getNickname());
                                     if(player!=null){
-                                        rmiClient.printMessage("\nYou are now in Combat Zone Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
+                                        rmiClient.printMessage("\nYou are now in Combat ZoneL Card\n" + "Every Player is against each others\n"+"You can activate your cannons (/activatecannons),activate your engines(/activateengines) or do nothing (/nochoice).\n");
                                         rmiClient.viewMyShip(game, rmiClient.getNickname());
                                     }
                                 }
@@ -1389,7 +1389,14 @@ public class ServerController {
                     .toList();
         }
         if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
-            executeCommand(command, firstParameters, secondParameters, objOut, msg);
+            try{
+                executeCommand(command, firstParameters, secondParameters, objOut, msg);
+            }catch(NumberFormatException e) {
+                Message newMessage = new Message("String", null, "Invalid command");
+                objOut.writeObject(newMessage);
+                objOut.flush();
+            }
+
         }
         else{
             Message newMessage = new Message("String", null, "The game needs at least 2 players to continue");
@@ -3023,7 +3030,12 @@ public class ServerController {
                     .toList();
         }
         if(game.getHourglass().hasSomeoneReconnected() || command.equals("connect")) {
-            executeCommand(command, firstParameters, secondParameters, client);
+            try{
+                executeCommand(command, firstParameters, secondParameters, client);
+            }catch(NumberFormatException e){
+                client.invalidCommand("Invalid command");
+            }
+
         }
         else{
             client.invalidCommand("The game needs at least 2 players to continue");
