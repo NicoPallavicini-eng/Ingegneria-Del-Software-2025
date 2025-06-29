@@ -8,6 +8,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * Interface for the VirtualServer, which extends Remote to allow RMI communication.
+ * It provides methods for connecting clients, handling user input, and managing game state.
+ */
 public interface VirtualServer extends Remote {
     void connect(VirtualClient virtualClient) throws RemoteException;
     void showMessage(String input) throws RemoteException;

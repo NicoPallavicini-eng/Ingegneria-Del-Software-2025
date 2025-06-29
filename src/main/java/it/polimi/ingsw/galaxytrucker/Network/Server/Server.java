@@ -10,10 +10,22 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Server class that initializes both RMI and Socket servers.
+ * It binds the RMI server to the registry and starts the Socket server.
+ * It also periodically pings connected clients to check their status.
+ */
 public class Server {
     public VirtualServer rmiServer;
     public SocketServer socketServer;
 
+    /**
+     * Constructor for the Server class.
+     * It sets up the RMI server and the Socket server.
+     *
+     * @throws RemoteException if there is an error during RMI setup
+     * @throws IOException if there is an error during Socket setup
+     */
     public Server() throws RemoteException , IOException {
         final String serverName = "AdderServer";
         int port = 1090;
@@ -52,6 +64,13 @@ public class Server {
         }
     }
 
+    /**
+     * Main method to start the server.
+     * It creates an instance of the Server class, which initializes both RMI and Socket servers.
+     *
+     * @param args command line arguments (not used)
+     * @throws RemoteException if there is an error during RMI setup
+     */
     public static void main(String[] args) throws RemoteException {
         try{
             Server server = new Server();

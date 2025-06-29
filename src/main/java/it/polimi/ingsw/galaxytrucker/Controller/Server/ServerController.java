@@ -22,10 +22,9 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 /**
- * The ServerController class handles user input and manages the game state on the server side.
- * It also creates the game when instantiated.
+ * ServerController is responsible for managing the game state and communicating with clients.
+ * It handles updates to the game, notifies clients of changes, and processes user inputs.
  */
-
 public class ServerController {
     private static final Game game = new Game();
     private static RMIServer rmiServer = null;
@@ -35,10 +34,20 @@ public class ServerController {
     private List<SocketClientHandler> socketClients = new ArrayList<>();
     private int hourglassCounter = 1;
 
+    /**
+     * Constructor for the ServerController class.
+     * Initializes the controller with an RMIServer instance.
+     * @param rmiServer the RMIServer instance to use
+     */
     public ServerController(RMIServer rmiServer) {
         ServerController.rmiServer = rmiServer;
     }
 
+    /**
+     * Constructor for the ServerController class.
+     * Initializes the controller with a SocketServer instance.
+     * @param socketServer the SocketServer instance to use
+     */
     public ServerController(SocketServer socketServer) {
         ServerController.socketServer = socketServer;
     }
@@ -59,6 +68,12 @@ public class ServerController {
         }
     }
 
+    /**
+     * Updates the view of the game for all connected clients.
+     * This method is called whenever there is a change in the game state.
+     * It uses two separate threads to handle RMI and socket clients.
+     * @throws RemoteException if there is an error during the remote method call
+     */
     public void updateView(Game game, String message){
         GameState gameState = game.getGameState();
         Thread rmiThread = new Thread(() -> {
@@ -207,7 +222,7 @@ public class ServerController {
                                             }
                                             Player winner = ((FinalState)gameState).getDisconnectionWinner();
                                             if(winner!=null){
-                                                rmiClient.printMessage("\n" + winner + " has won for disconnections");
+                                                rmiClient.printMessage("\n" + winner.getNickname() + " has won for disconnections");
                                             }
                                         } catch (RemoteException e) {
                                             throw new RuntimeException(e);
@@ -836,7 +851,7 @@ public class ServerController {
 
                                         Player winner = ((FinalState)gameState).getDisconnectionWinner();
                                         if(winner!=null){
-                                            msg = new Message("String", game,"\n" + winner + " has won for disconnections");
+                                            msg = new Message("String", game,"\n" + winner.getNickname() + " has won for disconnections");
                                             objOut = socketClient.getObjOut();
                                             objOut.writeObject(msg);
                                             objOut.flush();
@@ -1584,9 +1599,6 @@ public class ServerController {
             }
     }
 
-    /**
-     * Handles user input from the client and executes the corresponding command.
-     */
 
     /*
 
@@ -1594,6 +1606,14 @@ public class ServerController {
 
      */
 
+    /**
+     * Handles user input from a SOCKET client.
+     * This method processes the input command and its parameters, executing the appropriate game actions.
+     *
+     * @param msg    the message containing the user input
+     * @param objOut the output stream to send responses back to the client
+     * @throws IOException if an I/O error occurs while sending messages
+     */
     public void handleUserInput(Message msg, ObjectOutputStream objOut) throws IOException {
         String input = msg.getMessage();
         if (Objects.equals(input, "GAME")) {
@@ -1652,6 +1672,17 @@ public class ServerController {
         }
     }
 
+    /**
+     * Executes the command received from the client.
+     * This method processes various game commands and sends appropriate responses back to the client.
+     *
+     * @param command          the command to execute
+     * @param firstParameters  the first set of parameters for the command
+     * @param secondParameters the second set of parameters for the command
+     * @param objOut           the output stream to send responses back to the client
+     * @param msg              the message containing additional information (e.g., nickname)
+     * @throws IOException if an I/O error occurs while sending messages
+     */
     public void executeCommand(String command, List<String> firstParameters, List<String> secondParameters, ObjectOutputStream objOut, Message msg) throws IOException {
             switch (command) {
                 case "ship" -> {
@@ -3217,10 +3248,16 @@ public class ServerController {
         }
     }
 
+    /**
+     * Checks if the player with the given nickname is connected to the game.
+     *
+     * @param nickname The nickname of the player to check.
+     * @return The Player object if found, null otherwise.
+     */
     public void disconnect(String nickname) {
         Player player = checkPlayer(nickname);
         if (player != null) {
-            //gestire la disconessione
+            // If the player is connected, handle the disconnect event
             Optional<Player> playerOptional = game.getListOfPlayers().stream()
                     .filter(player1 -> player1.getNickname().equals(nickname))
                     .findAny();
@@ -3239,6 +3276,13 @@ public class ServerController {
 
      */
 
+    /**
+     * Handles user input from a RMIClient.
+     *
+     * @param client The VirtualClient instance representing the client.
+     * @param input  The input string from the client.
+     * @throws RemoteException If there is an error during remote method invocation.
+     */
     public void handleUserInput(VirtualClient client, String input) throws RemoteException {
         if (input == null || !input.startsWith("/")) {
             client.invalidCommand("Invalid command");
@@ -4401,7 +4445,6 @@ public class ServerController {
      * @return The Player instance if found, or null if not found.
      */
 
-    // Check if the player is in the game
     public Player checkPlayer(String nickname) {
         Optional<Player> playerOptional = game.getListOfPlayers().stream()
                 .filter(player -> player.getNickname().equals(nickname))
