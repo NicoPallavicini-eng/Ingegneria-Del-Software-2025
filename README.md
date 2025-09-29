@@ -1,6 +1,8 @@
 <h1 align="center"> Software Engineering 2024-2025 </h1>
 <h3 align="center"> Prova Finale - Ingegneria del Software - Gruppo 6 </h3>
 
+
+## Disclaimer
 Gioco distribuito da Cranio Creations, questa repository fa parte del progetto finale di ingegneria del software presso il Politecnico di Milano è stata creata con i soli scopi universitari. 
 
 ## Authors
